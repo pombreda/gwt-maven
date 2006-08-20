@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<project 
+  xmlns:j="jelly:core"
+  xmlns:util="jelly:util"
+  xmlns:ant="jelly:ant"
+  xmlns:maven="jelly:maven"
+  xmlns:x="jelly:xml"
+  xmlns:artifact="artifact">
+
+  <!--==================================================================-->
+  <!-- Default goal -->
+  <!--==================================================================-->    
+  <goal 
+    name="gwt" 
+    prereqs="war:webapp" 
+    description="Runs the Google Web Toolkit">
+      <echo>compile src: ${pom.build.sourceDirectory}</echo>
+      <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:arg value="-out"/>
+          <ant:arg value="${maven.war.webapp.dir}" />
+          <ant:arg value="-style" />
+          <ant:arg value="${google.webtoolkit.style}" />
+          <!--ant:arg value="-gen" />
+          <ant:arg value="google.webtoolkit.gen" /-->
+          <ant:arg value="-port" />
+          <ant:arg value="${google.webtoolkit.port}" />
+          <ant:arg value="-logLevel" />
+          <ant:arg value="${google.webtoolkit.logLevel}" />
+          <ant:arg value="${google.webtoolkit.runtarget}" />
+          <ant:classpath>
+                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:pathelement path="${google.webtoolkit.home}/${google.webtoolkit.dev}" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-user.jar" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  <!-- -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y -->
+  <goal 
+    name="gwt:debug" 
+    prereqs="war:webapp" 
+    description="Runs the Google Web Toolkit">
+      <ant:echo message="jvmargs=${maven.mevenide.debug.jvmargs} ${maven.mevenide.run.jvmargs}"/>
+      <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:jvmarg line="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y"/>
+          <ant:arg value="-out"/>
+          <ant:arg value="${maven.war.webapp.dir}" />
+          <ant:arg value="-style" />
+          <ant:arg value="${google.webtoolkit.style}" />
+          <!--ant:arg value="-gen" />
+          <ant:arg value="google.webtoolkit.gen" /-->
+          <ant:arg value="-port" />
+          <ant:arg value="${google.webtoolkit.port}" />
+          <ant:arg value="-logLevel" />
+          <ant:arg value="${google.webtoolkit.logLevel}" />
+          <ant:arg value="${google.webtoolkit.runtarget}" />
+          <ant:classpath>
+                    <ant:pathelement path="${google.webtoolkit.home}/${google.webtoolkit.dev}" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-user.jar" />
+                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  <goal 
+    name="gwt:compile" 
+    prereqs="war:webapp" 
+    description="Runs the Google Web Toolkit">
+      <echo>compile src: ${pom.build.sourceDirectory}</echo>
+      <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
+          <ant:arg value="-out"/>
+          <ant:arg value="${maven.war.webapp.dir}" />
+          <ant:arg value="${google.webtoolkit.compiletarget}" />
+          <ant:classpath>
+                    <ant:pathelement path="${google.webtoolkit.home}/${google.webtoolkit.dev}" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-user.jar" />
+                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+
+  <!--==================================================================-->
+  <!-- Initializations                                                  -->
+  <!--==================================================================-->    
+  <goal name="xxx:init">
+    <ant:echo>hello world!</ant:echo>
+  </goal>
+
+</project>
