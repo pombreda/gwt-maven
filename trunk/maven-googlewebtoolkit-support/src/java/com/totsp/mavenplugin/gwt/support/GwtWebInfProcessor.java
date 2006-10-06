@@ -59,9 +59,25 @@ public class GwtWebInfProcessor
         String returnValue = null;
         File webXml = null;
         File gwtMod = null;
-
+        
         // obtain gwt module
-        gwtMod = new File(gwtModFilePath);
+        String gwtModFilePathConversion = null;
+        if (!gwtModFilePath.endsWith(".gwt.xml"))
+        {
+            return "supplied moduleFilePath is invalid (does not end with .gwt.xml) - " + gwtModFilePath;
+        }
+        else
+        {        
+            // in cases where the "google.webtoolkit.compiletarget" may be passed as a reference to the module
+            // have to convert periods before .gwt.xml into File.separator
+            String preXml = gwtModFilePath.substring(0, gwtModFilePath.length() - 8);
+            if (preXml.indexOf(".") != -1)
+            {
+               preXml = GwtWebInfProcessor.replacePeriodsWithFileSeparator(preXml); 
+               gwtModFilePathConversion = preXml + ".gwt.xml";
+            }            
+        }
+        gwtMod = new File(gwtModFilePathConversion);
         if ((gwtMod.exists()) && (gwtMod.canRead()) && (gwtMod.canWrite()))
         {
             ///System.out.println("found gwtMod and its viable");
@@ -69,7 +85,7 @@ public class GwtWebInfProcessor
         else
         {
             ///System.out.println("gwtMod problem");
-            return "supplied moduleFilePath is invalid (not present or invalid permissions) - " + gwtModFilePath;
+            return "supplied moduleFilePath is invalid (not present or invalid permissions) - " + gwtModFilePathConversion;
         }
 
         // obtain web.xml
@@ -314,6 +330,36 @@ public class GwtWebInfProcessor
         return servletElements;
     }
 
+    /**
+     * Had issues with straight up String.replaceAll (even with knowledge of regexp, 
+     * could get the periods replaced but not WITH File.separator, could hard code one
+     * or the other, but not dynamic get it and make it part of the replaceAll call)
+     * so made this helper method - lame but its better than another dependency (such as commons StringUtils).
+     * 
+     * @param input
+     * @return
+     */
+    private static String replacePeriodsWithFileSeparator(final String input)
+    {
+        String returnValue = null;
+        if ((input != null) && (input.indexOf(".") != -1))
+        {
+            StringBuffer sb = new StringBuffer();
+            String[] s = input.split("\\.(?=\\S)");
+            for (int i = 0; i < s.length; i++)
+            {
+                sb.append(s[i]);
+                if (i != s.length - 1)
+                {
+                    sb.append(File.separator);
+                }
+            }
+            returnValue = sb.toString();
+        }        
+        return returnValue;
+    }
+    
+    
     /**
      * Main runner.
      * 
