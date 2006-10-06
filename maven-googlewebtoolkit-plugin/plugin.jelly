@@ -14,7 +14,7 @@
   <goal 
     name="gwt" 
     prereqs="war:webapp" 
-    description="Runs the Google Web Toolkit">
+    description="Runs GWTShell">
       <echo>compile src: ${pom.build.sourceDirectory}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:arg value="-out"/>
@@ -42,7 +42,7 @@
   <goal 
     name="gwt:debug" 
     prereqs="war:webapp" 
-    description="Runs the Google Web Toolkit">
+    description="Runs GWTShell debug">
       <ant:echo message="jvmargs=${maven.mevenide.debug.jvmargs} ${maven.mevenide.run.jvmargs}"/>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:jvmarg line="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y"/>
@@ -70,7 +70,7 @@
   <goal 
     name="gwt:compile" 
     prereqs="war:webapp" 
-    description="Runs the Google Web Toolkit">
+    description="Runs GWTCompiler">
       <echo>compile src: ${pom.build.sourceDirectory}</echo>
       <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
           <ant:arg value="-out"/>
@@ -85,6 +85,37 @@
           </ant:classpath>
       </ant:java>
   </goal>
+    
+  <goal 
+    name="gwt:war" 
+    prereqs="gwt:syncwebxml, war:webapp" 
+    description="Creates deployable GWT war file (including sychronizing module with web.xml)">
+  </goal>  
+  
+  <goal 
+    name="gwt:syncwebxml"    
+    description="Synchronize GWT module service servlets with web.xml file">
+      <echo>syncwebxml - still expirimental</echo>
+      <echo>module name - ${google.webtoolkit.compiletarget}</echo>
+      <echo>module path - ${pom.build.sourceDirectory}/${google.webtoolkit.compiletarget}.gwt.xml (periods before .gwt.xml will be converted to File.separator)</echo>
+      <echo>web.xml path - ${basedir}/${maven.war.src}/WEB-INF/web.xml</echo>
+      <echo>maven dep classpath = ${maven.dependency.classpath}</echo>
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor" fork="true" dir="${basedir}">
+          <ant:arg value="-moduleName"/>
+          <ant:arg value="${google.webtoolkit.compiletarget}" />
+          <ant:arg value="-modulePath"/>
+          <ant:arg value="${pom.build.sourceDirectory}/${google.webtoolkit.compiletarget}.gwt.xml" />
+          <ant:arg value="-webXmlPath"/>
+          <ant:arg value="${basedir}/${maven.war.src}/WEB-INF/web.xml" />          
+          <ant:classpath>
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
 
   <!--==================================================================-->
   <!-- Initializations                                                  -->
