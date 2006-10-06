@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<project>
+  <pomVersion>3</pomVersion>
+  <artifactId>maven-googlewebtoolkit-support</artifactId>
+  <groupId>com.totsp.mavenplugin</groupId>
+  <currentVersion>1.0</currentVersion>
+  <name>Maven Google Web Toolkit Plugin Support</name>
+  <package>com.totsp.mavenplugin.gwt</package>
+  <logo>/images/logo.gif</logo>
+  <inceptionYear>2006</inceptionYear>
+  
+  <description>This is a helper/util library for the TotSP maven gwt plugin.</description>
+  
+<!--  <licenses>
+    <license>
+        <name>Apache Public License 2.0 - for the plugin itself</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license> 
+  </licenses>-->
+  
+  <build> 
+    <resources> 
+       <resource> 
+         <directory>${basedir}/src</directory>           
+       </resource> 
+     </resources> 
+   </build>   
+  
+   <reports>
+        <report>maven-changes-plugin</report> 
+        <report>maven-faq-plugin</report> 
+        <report>maven-changelog-plugin</report>
+	<report>maven-file-activity-plugin</report>
+	<report>maven-developer-activity-plugin</report>        
+    </reports>
+    
+    
+    <dependencies>
+    	<!--  commons cli -->
+    	<!--  jdom -->
+    </dependencies>
+</project>
