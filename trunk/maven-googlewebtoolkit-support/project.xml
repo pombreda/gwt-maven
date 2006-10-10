@@ -25,18 +25,9 @@
 		<sourceDirectory>src/java</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/java</directory>
-				<includes>
-					<include>**/*</include>
-				</includes>
+				<directory>src/conf</directory>				
 			</resource>
-		</resources>
-		<unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-		<unitTest>
-			<includes>
-				<include>**/*Test.java</include>
-			</includes>
-		</unitTest>
+		</resources>		
 	</build>
 
 	<developers>
