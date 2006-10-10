@@ -218,6 +218,7 @@ public class GwtWebInfProcessor {
             Element servletMapping = new Element("servlet-mapping");
             Element servletName = new Element("servlet-name");
             servletName.setText(d.getClassName() + d.getPath());
+            servletMapping.addContent(servletName);
             
             Element urlPattern = new Element("url-pattern");
             urlPattern.setText("/" + this.moduleName + d.getPath());
