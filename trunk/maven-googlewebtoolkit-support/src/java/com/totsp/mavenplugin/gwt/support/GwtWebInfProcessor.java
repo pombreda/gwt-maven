@@ -1,11 +1,5 @@
 package com.totsp.mavenplugin.gwt.support;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -14,394 +8,234 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+
+import org.jdom.Comment;
+import org.jdom.Content;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-public class GwtWebInfProcessor
-{
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-    // TODO get web.xml DTD and make sure to get things in correct order
+import java.util.ArrayList;
+import java.util.List;
 
-    // command line opts
-    private static Option helpOpt = new Option("help", "print this message");
-    private static Option moduleNameOpt = OptionBuilder.withArgName("moduleName").hasArg().withDescription(
-            "specify GWT module name (complete, com.mystuff.module.Module)").create("moduleName");
-    private static Option moduleFilePathOpt = OptionBuilder.withArgName("modulePath").hasArg().withDescription(
-            "specify GWT module to inspect for service servlet definitions").create("modulePath");
-    private static Option webXmlFilePathOpt = OptionBuilder.withArgName("webXmlPath").hasArg().withDescription(
-            "src web.xml file (maven.war.src/WEB-INF/web.xml)").create("webXmlPath");
-    private static Options options = new Options();
-    static
-    {
-        options.addOption(helpOpt);
-        options.addOption(moduleNameOpt);
-        options.addOption(moduleFilePathOpt);
-        options.addOption(webXmlFilePathOpt);
-    }
-    private static HelpFormatter formatter = new HelpFormatter();
 
-    /**
-     * Process supplied values for GWT module file and web.xml file
-     * and create relative servlet mappings in web.xml for respective GWT service servlet entries.
-     * (Peek at the GWT module file and extract all service servlet entries, then make sure 
-     * those entries are in the web.xml, if they are not there then create them.)
-     * 
-     * @param gwtModName name of gwt module (complete name com.myproject.module.Module)
-     * @param gwtModFilePath path to GWT module file
-     * @param webXmlFilePath path to Maven maven.war.src
-     * @return
-     */
-    private static String process(final String gwtModName, final String gwtModFilePath, final String webXmlFilePath)
-    {
-        String returnValue = null;
-        File webXml = null;
-        File gwtMod = null;
-        
-        // obtain gwt module
-        String gwtModFilePathConversion = null;
-        if (!gwtModFilePath.endsWith(".gwt.xml"))
-        {
-            System.err.println("supplied moduleFilePath is invalid (does not end with .gwt.xml) - " + gwtModFilePath);
-            System.exit(1);
-        }
-        else
-        {        
-            // in cases where the "google.webtoolkit.compiletarget" may be passed as a reference to the module
-            // have to convert periods before .gwt.xml into File.separator
-            String preXml = gwtModFilePath.substring(0, gwtModFilePath.length() - 8);
-            if (preXml.indexOf(".") != -1)
-            {
-               preXml = GwtWebInfProcessor.replacePeriodsWithFileSeparator(preXml); 
-               gwtModFilePathConversion = preXml + ".gwt.xml";
-            }            
-        }
-        gwtMod = new File(gwtModFilePathConversion);
-        if ((gwtMod.exists()) && (gwtMod.canRead()) && (gwtMod.canWrite()))
-        {
-            ///System.out.println("found gwtMod and its viable");
-        }
-        else
-        {            
-            System.err.println("supplied moduleFilePath is invalid (not present or invalid permissions) - " + gwtModFilePathConversion);
-            System.exit(1);
-        }
-
+public class GwtWebInfProcessor {
+    
+    private Document webXml;
+    private File destination;
+    private List servletDescriptors;
+    private String moduleName;
+    private String webXmlPath;
+    
+    public GwtWebInfProcessor(
+            String moduleName, String targetWebXml, String sourceWebXml
+            ) throws Exception {
+        this.moduleName = moduleName;
         // obtain web.xml
-        webXml = new File(webXmlFilePath);
-        if ((webXml.exists()) && (webXml.canRead()) && (webXml.canWrite()))
-        {
-            ///System.out.println("found web.xml and its viable");
+        this.webXmlPath = sourceWebXml;
+        
+        File webXml = new File(sourceWebXml);
+        
+        if(!webXml.exists() || !webXml.canRead()) {
+            throw new Exception("Unable to locate source web.xml");
         }
-        else
-        {
-            // TODO - create web.xml here if it does not exist?
-            System.err.println("supplied webXmlFilePath is not valid (not present or invalid permissions) - " + webXmlFilePath);
-            System.exit(1);
-        }
-
-        // get servlet descriptors for the gwt module - and if present continue
-        List gwtServlets = GwtWebInfProcessor.getGwtServletDescriptors(gwtMod);
-        if ((gwtServlets != null) && (gwtServlets.size() > 0))
-        {
-            // get servlet descriptors for web.xml
-            List webServlets = GwtWebInfProcessor.getWebServletDescriptors(webXml);            
-
-            // get List of items that NEED TO BE ADDED to web.xml (those that are in gwt and not in web.xml)
-            List servletsForWebXml = GwtWebInfProcessor.getServletsForWebXml(gwtServlets, webServlets);
-            if (servletsForWebXml == null)
-            {
-                returnValue = "nothing to do - gwt module and web.xml already synchronized";
-            }
-            else
-            {
-                // ADD em to web.xml
-                boolean success = GwtWebInfProcessor.addServletsToWebXml(servletsForWebXml, webXml, gwtModName);
-                if (success)
-                {
-                    returnValue = "complete - synchronized gwt module and web.xml (" + servletsForWebXml.size()
-                            + " servlet(s) from gwt module added to web.xml)";
-                }
-                else
-                {
-                    System.err.println("ERROR - unable to synchronize gwt module and web.xml");
-                    System.exit(1);
-                }
-            }
-        }
-        else
-        {
-            returnValue = "nothing to do - gwt module contains no servlet definitions";
-        }
-        return returnValue;
-    }
-
-    /**
-     * Based on supplied List of ServletDescriptors add items to the web.xml file.
-     *
-     * 
-     * @param servlets
-     * @return
-     */
-    private static boolean addServletsToWebXml(List servlets, File webXml, String gwtModName)
-    {
-        boolean success = false;
-
-        // get root element 
-        try
-        {
-            Document document = new SAXBuilder().build(webXml);
-            Element root = document.getRootElement();
-            if (root.getName().equalsIgnoreCase("web-app"))
-            {
-                // TODO - get DTD and put servlet and servlet-mapping elements in correct locations        
-
-                if (servlets != null)
-                {
-                    for (int i = 0; i < servlets.size(); i++)
-                    {
-                        ServletDescriptor servletDesc = (ServletDescriptor) servlets.get(i);
-                        String path = servletDesc.getPath();
-                        if (path.startsWith("/"))
-                        {
-                            path = path.substring(1, path.length());
-                        }
-                        String className = servletDesc.getClassName();
-
-                        // servlet section
-                        Element servlet = new Element("servlet");
-                        Element servletName = new Element("servlet-name");
-                        servletName.setText(path);
-                        Element servletClass = new Element("servlet-class");
-                        servletClass.setText(className);
-                        servlet.addContent(servletName);
-                        servlet.addContent(servletClass);
-
-                        // servlet mapping section
-                        Element servletMapping = new Element("servlet-mapping");
-                        Element servletNameAgain = new Element("servlet-name");
-                        servletNameAgain.setText(path);
-                        Element urlPattern = new Element("url-pattern");
-                        urlPattern.setText("/" + gwtModName + "/" + path);
-                        servletMapping.addContent(servletNameAgain);
-                        servletMapping.addContent(urlPattern);
-                        
-                        root.addContent(servlet);
-                        root.addContent(servletMapping);
-                    }
-                    XMLOutputter outputter = new XMLOutputter();
-                    FileWriter writer = new FileWriter(webXml);
-                    outputter.output(document, writer);
-                    writer.close();
-                    success = true;
-                }
+        
+        destination = new File(targetWebXml);
+        
+        if(
+                GwtWebInfProcessor.class.getResource("/"+moduleName.replace('.', '/') + ".gwt.xml") == null
                 
-            }
-            else
-            {
-                System.err.println("root element in web.xml not web-app");
-            }
+                ) {
+            
+            throw new Exception("Unable to locate module definition file.");
         }
-        catch (IOException e)
-        {
-            System.err.println(e.getMessage());
+        
+        this.servletDescriptors = this.getGwtServletDescriptors(moduleName);
+        
+        if(servletDescriptors.size() == 0) {
+            throw new ExitException("No servlets found.");
         }
-        catch (JDOMException e)
-        {
-            System.err.println(e.getMessage());
-        }
-        return success;
     }
-
-    /**
-     * Get List of servlet elements which are present in gwt module 
-     * and NOT present in web.xml - the ServletDescriptor(s) which 
-     * need to be added to the web.xml.     
-     * 
-     * @param gwtServlets
-     * @param webServlets
-     * @return
-     */
-    private static List getServletsForWebXml(List gwtServlets, List webServlets)
-    {
-        List servletsForWebXml = null;
-        // parse to obtain list of servlets in gwt mod that are NOT present in web.xml
-        for (int i = 0; gwtServlets != null && i < gwtServlets.size(); i++)
-        {
-            ServletDescriptor gwtServlet = (ServletDescriptor) gwtServlets.get(i);
-            String gwtServletClass = gwtServlet.getClassName();
-            boolean present = false;
-            for (int j = 0; webServlets != null && j < webServlets.size(); j++)
-            {
-                ServletDescriptor webServlet = (ServletDescriptor) webServlets.get(j);
-                String webServletClass = webServlet.getClassName();
-                if (webServletClass.equals(gwtServletClass))
-                {
-                    present = true;
-                    break;
-                }
-            }
-            if (!present)
-            {
-                if (servletsForWebXml == null)
-                {
-                    servletsForWebXml = new ArrayList();
-                }
-                servletsForWebXml.add(gwtServlet);
-            }
-        }
-        return servletsForWebXml;
-    }
-
+    
     /**
      * Return List of ServletDescriptor from gwt module file.
-     * 
+     *
      * @param gwtModFile
      * @return
      */
-    private static List getGwtServletDescriptors(File gwtModFile)
-    {
-        ArrayList servletElements = null;
-        try
-        {
-            Document document = new SAXBuilder().build(gwtModFile);
-            Element element = document.getRootElement();
-            List servlets = element.getChildren("servlet");
-            for (int i = 0; i < servlets.size(); i++)
-            {
-                Element servlet = (Element) servlets.get(i);
-                String servletPath = servlet.getAttributeValue("path");
-                String servletClass = servlet.getAttributeValue("class");
-                ServletDescriptor servletDesc = new ServletDescriptor(servletPath, servletClass);
-                if (servletElements == null)
-                {
-                    servletElements = new ArrayList();
-                }
-                servletElements.add(servletDesc);
-            }
+    private List getGwtServletDescriptors(String moduleName) throws IOException, JDOMException {
+        ArrayList servletElements = new ArrayList();
+        
+        
+        Document document = new SAXBuilder().build(
+                GwtWebInfProcessor.class.getResourceAsStream(
+                "/"+moduleName.replace('.', '/') + ".gwt.xml"
+                )
+                );
+        Element element = document.getRootElement();
+        List inherits = element.getChildren("inherits");
+        
+        for(int i = 0; (inherits != null) && (i < inherits.size()); i++) {
+            Element inherit = (Element) inherits.get(i);
+            servletElements.addAll(
+                    this.getGwtServletDescriptors(
+                    inherit.getAttributeValue("name")
+                    )
+                    );
         }
-        catch (IOException e)
-        {
-            System.err.println(e.getMessage());
+        
+        List servlets = element.getChildren("servlet");
+        
+        for(int i = 0; i < servlets.size(); i++) {
+            Element servlet = (Element) servlets.get(i);
+            String servletPath = servlet.getAttributeValue("path");
+            String servletClass = servlet.getAttributeValue("class");
+            ServletDescriptor servletDesc = new ServletDescriptor(
+                    servletPath, servletClass
+                    );
+            servletElements.add(servletDesc);
         }
-        catch (JDOMException e)
-        {
-            System.err.println(e.getMessage());
-        }
+        
         return servletElements;
     }
-
-
-    /**
-     * Return List of ServletDescriptor from web.xml file.
-     * 
-     * @param webXmlFile
-     * @return
-     */
-    private static List getWebServletDescriptors(File webXmlFile)
-    {
-        ArrayList servletElements = null;
-        try
-        {
-            Document document = new SAXBuilder().build(webXmlFile);
-            Element element = document.getRootElement();
-            List servlets = element.getChildren("servlet");
-            for (int i = 0; i < servlets.size(); i++)
-            {
-                Element servlet = (Element) servlets.get(i);
-                String servletPath = servlet.getChildText("servlet-name");
-                String servletClass = servlet.getChildText("servlet-class");
-                ServletDescriptor servletDesc = new ServletDescriptor(servletPath, servletClass);
-                if (servletElements == null)
-                {
-                    servletElements = new ArrayList();
+    
+    private int getInsertPosition(String[] startAfter, String[] stopBefore
+            ) throws JDOMException, IOException {
+        Element webapp = this.getWebXml().getRootElement();
+        
+        List children = webapp.getContent();
+        Content insertAfter = insertAfter = new Comment(
+                "inserted by gwt-maven"
+                );
+        
+        ArrayList namesBefore = new ArrayList();
+        ArrayList namesAfter = new ArrayList();
+        
+        for(int i = 0; i < startAfter.length; i++) {
+            namesBefore.add(startAfter[i]);
+        }
+        
+        for(int i = 0; i < stopBefore.length; i++) {
+            namesAfter.add(stopBefore[i]);
+        }
+        
+        if((children == null) || (children.size() == 0)) {
+            webapp.addContent(insertAfter);
+        } else {
+            for(int i = 0; i < children.size(); i++) {
+                Object o = children.get(i);
+                
+                if(!(o instanceof Element)) {
+                    continue;
                 }
-                servletElements.add(servletDesc);
+                
+                Element child = (Element) o;
+                
+                if(namesAfter.contains(child.getName())) {
+                    webapp.addContent(i, insertAfter);
+                    
+                    break;
+                }
+                
+                if(!namesBefore.contains(child.getName())) {
+                    webapp.addContent(i + 1, insertAfter);
+                    
+                    break;
+                }
             }
         }
-        catch (IOException e)
-        {
-            System.err.println(e.getMessage());
-        }
-        catch (JDOMException e)
-        {
-            System.err.println(e.getMessage());
-        }
-        return servletElements;
+        
+        return webapp.indexOf(insertAfter);
     }
-
-    /**
-     * Had issues with straight up String.replaceAll (even with knowledge of regexp, 
-     * could get the periods replaced but not WITH File.separator, could hard code one
-     * or the other, but not dynamic get it and make it part of the replaceAll call)
-     * so made this helper method - lame but its better than another dependency (such as commons StringUtils).
-     * 
-     * @param input
-     * @return
-     */
-    private static String replacePeriodsWithFileSeparator(final String input)
-    {
-        String returnValue = null;
-        if ((input != null) && (input.indexOf(".") != -1))
-        {
-            StringBuffer sb = new StringBuffer();
-            String[] s = input.split("\\.(?=\\S)");
-            for (int i = 0; i < s.length; i++)
-            {
-                sb.append(s[i]);
-                if (i != s.length - 1)
-                {
-                    sb.append(File.separator);
-                }
-            }
-            returnValue = sb.toString();
-        }        
-        return returnValue;
+    
+    private Document getWebXml() throws JDOMException, IOException {
+        return webXml = (webXml == null) ? new SAXBuilder().build(webXmlPath)
+        : webXml;
+    }
+    
+    private void insertServlets() throws JDOMException, IOException {
+        /*
+         <!ELEMENT web-app (icon?, display-name?, description?, distributable?,
+            context-param*, filter*, filter-mapping*, listener*, servlet*,
+            servlet-mapping*, session-config?, mime-mapping*, welcome-file-list?,
+            error-page*, taglib*, resource-env-ref*, resource-ref*, security-constraint*,
+            login-config?, security-role*, env-entry*, ejb-ref*,  ejb-local-ref*)>
+         */
+        Element webapp = this.getWebXml().getRootElement();
+        String[] beforeServlets = {
+            "icon", "display-name", "description", "distributable",
+            "context-param", "filter", "filter-mapping", "listener"
+        };
+        String[] afterServlets = {
+            "servlet-mapping", "session-config", "mime-mapping",
+            "welcome-file-list", "error-page", "taglib", "resource-env-ref",
+            "resource-ref", "security-constraint", "login-config",
+            "security-role", "env-entry", "ejb-ref", "ejb-local-ref"
+        };
+        
+        String[] beforeMappings = {
+            "icon", "display-name", "description", "distributable",
+            "context-param", "filter", "filter-mapping", "listener",
+            "servlet"
+        };
+        String[] afterMappings = {
+            "session-config", "mime-mapping", "welcome-file-list",
+            "error-page", "taglib", "resource-env-ref", "resource-ref",
+            "security-constraint", "login-config", "security-role",
+            "env-entry", "ejb-ref", "ejb-local-ref"
+        };
+        
+        int insertAfter = this.getInsertPosition(beforeServlets, afterServlets
+                );
+        
+        for(int i = 0; i < servletDescriptors.size(); i++) {
+            insertAfter++;
+            
+            ServletDescriptor d = (ServletDescriptor) servletDescriptors.get(i);
+            Element servlet = new Element("servlet");
+            Element servletName = new Element("servlet-name");
+            servletName.setText(d.getClassName() + d.getPath());
+            servlet.addContent(servletName);
+            
+            Element servletClass = new Element("servlet-class");
+            servletClass.setText(d.getClassName());
+            servlet.addContent(servletClass);
+            webapp.addContent(insertAfter, servlet);
+        }
+        
+        insertAfter = this.getInsertPosition(
+                beforeMappings, afterMappings
+                );
+        
+        for(int i = 0; i < servletDescriptors.size(); i++) {
+            insertAfter++;
+            
+            ServletDescriptor d = (ServletDescriptor) servletDescriptors.get(i);
+            Element servletMapping = new Element("servlet-mapping");
+            Element servletName = new Element("servlet-name");
+            servletName.setText(d.getClassName() + d.getPath());
+            
+            Element urlPattern = new Element("url-pattern");
+            urlPattern.setText("/" + moduleName + d.getPath());
+            servletMapping.addContent(urlPattern);
+            webapp.addContent(insertAfter, servletMapping);
+        }
     }
     
     
-    /**
-     * Main runner.
-     * 
-     * 
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        CommandLineParser parser = new GnuParser();
-        try
-        {
-            // parse the command line arguments
-            CommandLine line = parser.parse(options, args);
-
-            // help
-            if ((line == null) || (line.getOptions() == null) || (line.getOptions().length == 0)
-                    || (line.hasOption("help")))
-            {
-                GwtWebInfProcessor.formatter.printHelp("GwtWebInfProcessor", options);
-            }
-            else
-            {
-                // process
-                if ((line.hasOption("modulePath")) && (line.hasOption("moduleName")) && (line.hasOption("webXmlPath")))
-                {
-                    System.out.println(GwtWebInfProcessor.process(line.getOptionValue("moduleName"), line
-                            .getOptionValue("modulePath"), line.getOptionValue("webXmlPath")));
-                }
-                else
-                {
-                    GwtWebInfProcessor.formatter.printHelp("GwtWebInfProcessor", options);
-                }
-            }
-
-        }
-        catch (ParseException exp)
-        {
-            // oops, something went wrong
-            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
-        }        
+    
+    public void process() throws Exception {
+        this.insertServlets();
+        
+        XMLOutputter out = new XMLOutputter( Format.getPrettyFormat() );
+        out.output(webXml, new FileWriter(destination));
     }
-
 }
