@@ -88,19 +88,18 @@
     
   <goal 
     name="gwt:war" 
-    prereqs="gwt:syncwebxml, war:webapp" 
+    prereqs="gwt:webxml, war:webapp" 
     description="Creates deployable GWT war file (including sychronizing module with web.xml)">
   </goal>  
   
   <goal 
-    name="gwt:syncwebxml"    
-    description="Synchronize GWT module service servlets with web.xml file">
-      <echo>syncwebxml - still expirimental</echo>
+    name="gwt:webxml"    
+    description="Update web.xml target with servlet entries for GWT module service servlet definitions">
+      <echo>syncwebxml - still experimental</echo>
       <echo>module name - ${google.webtoolkit.compiletarget}</echo>
       <echo>module path - ${pom.build.sourceDirectory}/${google.webtoolkit.compiletarget}.gwt.xml (periods before .gwt.xml will be converted to File.separator)</echo>
       <echo>web.xml path - ${basedir}/${maven.war.src}/WEB-INF/web.xml</echo>
-      <echo>maven dep classpath = ${maven.dependency.classpath}</echo>
-      <ant:java classname="com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor" fork="true" dir="${basedir}">
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor" fork="true" failonerror="true" dir="${basedir}">
           <ant:arg value="-moduleName"/>
           <ant:arg value="${google.webtoolkit.compiletarget}" />
           <ant:arg value="-modulePath"/>
