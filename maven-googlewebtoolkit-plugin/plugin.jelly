@@ -95,7 +95,7 @@
   <goal 
     name="gwt:webxml"    
     description="Update web.xml target with servlet entries for GWT module service servlet definitions">
-      <echo>syncwebxml - still experimental</echo>
+      <echo>webxml - still experimental</echo>
       <echo>module name - ${google.webtoolkit.compiletarget}</echo>
       <echo>module path - ${pom.build.sourceDirectory}/${google.webtoolkit.compiletarget}.gwt.xml (periods before .gwt.xml will be converted to File.separator)</echo>
       <echo>web.xml path - ${basedir}/${maven.war.src}/WEB-INF/web.xml</echo>
