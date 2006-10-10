@@ -88,14 +88,14 @@
     
   <goal 
     name="gwt:war" 
-    prereqs="gwt:syncwebxml, war:webapp" 
-    description="Creates deployable GWT war file (including sychronizing module with web.xml)">
+    prereqs="gwt:mergewebxml, gwt:compile, war:webapp" 
+    description="Creates deployable GWT war file (including merging GWT module with target web.xml and compiling with GWTCompiler)">
   </goal>  
   
   <goal 
     name="gwt:mergewebxml"    
-    description="Merges servlets in module definitions with the project web.xml file.">
-      <echo>syncwebxml - still expirimental</echo>
+    description="Merges servlets in module definitions with the project target web.xml file.">
+      <echo>mergewebxml - still experimental</echo>
       <echo>module name - ${google.webtoolkit.compiletarget}</echo>
       <ant:java classname="com.totsp.mavenplugin.gwt.support.Main" fork="false" dir="${basedir}">
           <ant:arg value="-moduleName"/>
