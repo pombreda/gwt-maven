@@ -35,8 +35,11 @@ public class GwtWebInfProcessorTest extends TestCase {
          GwtWebInfProcessor instance = new GwtWebInfProcessor( "testModule.Test",
                 this.getTestFile("target/web.xml"),
                 this.getTestFile("src/test/testWeb.xml"));
-        
-        instance.process();
+         instance.process();
+         instance = new GwtWebInfProcessor( "testModule.Test",
+                this.getTestFile("target/web2.xml"),
+                this.getTestFile("src/test/testWeb2.xml"));
+         instance.process();
         
         // TODO review the generated test code and remove the default call to fail.
         
