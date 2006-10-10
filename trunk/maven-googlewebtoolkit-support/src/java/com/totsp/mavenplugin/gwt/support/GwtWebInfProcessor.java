@@ -106,7 +106,7 @@ public class GwtWebInfProcessor {
     private int getInsertPosition(String[] startAfter, String[] stopBefore
             ) throws JDOMException, IOException {
         Element webapp = this.getWebXml().getRootElement();
-        
+        System.out.println("---");
         List children = webapp.getContent();
         Content insertAfter = new Comment(
                 "inserted by gwt-maven"
@@ -126,9 +126,10 @@ public class GwtWebInfProcessor {
         if((children == null) || (children.size() == 0)) {
             webapp.addContent(insertAfter);
         } else {
-            for(int i = 0; i < children.size(); i++) {
+            boolean foundPoint = false;;
+            for(int i = 0; !foundPoint && i < children.size(); i++) {
                 Object o = children.get(i);
-                
+                System.out.println( o );
                 if(!(o instanceof Element)) {
                     continue;
                 }
@@ -137,15 +138,18 @@ public class GwtWebInfProcessor {
                 
                 if(namesAfter.contains(child.getName())) {
                     webapp.addContent(i, insertAfter);
-                    
-                    break;
+                    foundPoint = true;
                 }
                 
                 if(!namesBefore.contains(child.getName())) {
                     webapp.addContent(i + 1, insertAfter);
-                    
-                    break;
+                    foundPoint = true;
+                   
                 }
+               
+            }
+            if( !foundPoint ){
+                webapp.addContent( insertAfter );
             }
         }
         
