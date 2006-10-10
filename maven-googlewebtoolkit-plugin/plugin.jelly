@@ -93,8 +93,8 @@
   </goal>  
   
   <goal 
-    name="gwt:syncwebxml"    
-    description="Synchronize GWT module service servlets with web.xml file">
+    name="gwt:mergewebxml"    
+    description="Merges servlets in module definitions with the project web.xml file.">
       <echo>syncwebxml - still expirimental</echo>
       <echo>module name - ${google.webtoolkit.compiletarget}</echo>
       <ant:java classname="com.totsp.mavenplugin.gwt.support.Main" fork="false" dir="${basedir}">
