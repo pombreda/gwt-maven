@@ -79,7 +79,7 @@
           <ant:classpath>
                     <ant:pathelement path="${pom.build.sourceDirectory}" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
-                    <ant:pathelement path="${google.webtoolkit.home}/gwt=dev-linux.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
                     <ant:path refid="maven.dependency.classpath" />
                     <ant:pathelement location="${maven.build.dest}" />
           </ant:classpath>
