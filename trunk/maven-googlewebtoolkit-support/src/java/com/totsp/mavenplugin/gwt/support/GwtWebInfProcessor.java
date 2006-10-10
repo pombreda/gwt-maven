@@ -64,7 +64,8 @@ public class GwtWebInfProcessor
         String gwtModFilePathConversion = null;
         if (!gwtModFilePath.endsWith(".gwt.xml"))
         {
-            return "supplied moduleFilePath is invalid (does not end with .gwt.xml) - " + gwtModFilePath;
+            System.err.println("supplied moduleFilePath is invalid (does not end with .gwt.xml) - " + gwtModFilePath);
+            System.exit(1);
         }
         else
         {        
@@ -83,9 +84,9 @@ public class GwtWebInfProcessor
             ///System.out.println("found gwtMod and its viable");
         }
         else
-        {
-            ///System.out.println("gwtMod problem");
-            return "supplied moduleFilePath is invalid (not present or invalid permissions) - " + gwtModFilePathConversion;
+        {            
+            System.err.println("supplied moduleFilePath is invalid (not present or invalid permissions) - " + gwtModFilePathConversion);
+            System.exit(1);
         }
 
         // obtain web.xml
@@ -96,9 +97,9 @@ public class GwtWebInfProcessor
         }
         else
         {
-            ///System.out.println("web.xml problem");
             // TODO - create web.xml here if it does not exist?
-            return "supplied webXmlFilePath is not valid (not present or invalid permissions) - " + webXmlFilePath;
+            System.err.println("supplied webXmlFilePath is not valid (not present or invalid permissions) - " + webXmlFilePath);
+            System.exit(1);
         }
 
         // get servlet descriptors for the gwt module - and if present continue
@@ -125,7 +126,8 @@ public class GwtWebInfProcessor
                 }
                 else
                 {
-                    returnValue = "ERROR - unable to synchronize gwt module and web.xml";
+                    System.err.println("ERROR - unable to synchronize gwt module and web.xml");
+                    System.exit(1);
                 }
             }
         }
@@ -368,7 +370,6 @@ public class GwtWebInfProcessor
      */
     public static void main(String[] args)
     {
-
         CommandLineParser parser = new GnuParser();
         try
         {
@@ -400,7 +401,7 @@ public class GwtWebInfProcessor
         {
             // oops, something went wrong
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
-        }
+        }        
     }
 
 }
