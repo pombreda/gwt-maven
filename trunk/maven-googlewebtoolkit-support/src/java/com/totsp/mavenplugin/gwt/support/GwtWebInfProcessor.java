@@ -31,13 +31,13 @@ public class GwtWebInfProcessor {
         // obtain web.xml
         this.webXmlPath = sourceWebXml;
         
-        File webXml = new File(sourceWebXml);
+        File webXmlFile = new File(sourceWebXml);
         
-        if(!webXml.exists() || !webXml.canRead()) {
+        if(!webXmlFile.exists() || !webXmlFile.canRead()) {
             throw new Exception("Unable to locate source web.xml");
         }
         
-        destination = new File(targetWebXml);
+        this.destination = new File(targetWebXml);
         
         if(
                 GwtWebInfProcessor.class.getResource("/"+moduleName.replace('.', '/') + ".gwt.xml") == null
@@ -49,7 +49,7 @@ public class GwtWebInfProcessor {
         
         this.servletDescriptors = this.getGwtServletDescriptors(moduleName);
         
-        if(servletDescriptors.size() == 0) {
+        if(this.servletDescriptors.size() == 0) {
             throw new ExitException("No servlets found.");
         }
     }
@@ -60,13 +60,13 @@ public class GwtWebInfProcessor {
      * @param gwtModFile
      * @return
      */
-    private List getGwtServletDescriptors(String moduleName) throws IOException, JDOMException {
+    private List getGwtServletDescriptors(String module) throws IOException, JDOMException {
         ArrayList servletElements = new ArrayList();
         
         
         Document document = new SAXBuilder().build(
                 GwtWebInfProcessor.class.getResourceAsStream(
-                "/"+moduleName.replace('.', '/') + ".gwt.xml"
+                "/"+module.replace('.', '/') + ".gwt.xml"
                 )
                 );
         Element element = document.getRootElement();
@@ -101,7 +101,7 @@ public class GwtWebInfProcessor {
         Element webapp = this.getWebXml().getRootElement();
         
         List children = webapp.getContent();
-        Content insertAfter = insertAfter = new Comment(
+        Content insertAfter = new Comment(
                 "inserted by gwt-maven"
                 );
         
@@ -146,8 +146,8 @@ public class GwtWebInfProcessor {
     }
     
     private Document getWebXml() throws JDOMException, IOException {
-        return webXml = (webXml == null) ? new SAXBuilder().build(webXmlPath)
-        : webXml;
+        return this.webXml = (this.webXml == null) ? new SAXBuilder().build(this.webXmlPath)
+        : this.webXml;
     }
     
     private void insertServlets() throws JDOMException, IOException {
@@ -185,10 +185,10 @@ public class GwtWebInfProcessor {
         int insertAfter = this.getInsertPosition(beforeServlets, afterServlets
                 );
         
-        for(int i = 0; i < servletDescriptors.size(); i++) {
+        for(int i = 0; i < this.servletDescriptors.size(); i++) {
             insertAfter++;
             
-            ServletDescriptor d = (ServletDescriptor) servletDescriptors.get(i);
+            ServletDescriptor d = (ServletDescriptor) this.servletDescriptors.get(i);
             Element servlet = new Element("servlet");
             Element servletName = new Element("servlet-name");
             servletName.setText(d.getClassName() + d.getPath());
@@ -204,16 +204,16 @@ public class GwtWebInfProcessor {
                 beforeMappings, afterMappings
                 );
         
-        for(int i = 0; i < servletDescriptors.size(); i++) {
+        for(int i = 0; i < this.servletDescriptors.size(); i++) {
             insertAfter++;
             
-            ServletDescriptor d = (ServletDescriptor) servletDescriptors.get(i);
+            ServletDescriptor d = (ServletDescriptor) this.servletDescriptors.get(i);
             Element servletMapping = new Element("servlet-mapping");
             Element servletName = new Element("servlet-name");
             servletName.setText(d.getClassName() + d.getPath());
             
             Element urlPattern = new Element("url-pattern");
-            urlPattern.setText("/" + moduleName + d.getPath());
+            urlPattern.setText("/" + this.moduleName + d.getPath());
             servletMapping.addContent(urlPattern);
             webapp.addContent(insertAfter, servletMapping);
         }
@@ -225,6 +225,6 @@ public class GwtWebInfProcessor {
         this.insertServlets();
         
         XMLOutputter out = new XMLOutputter( Format.getPrettyFormat() );
-        out.output(webXml, new FileWriter(destination));
+        out.output(this.webXml, new FileWriter(this.destination));
     }
 }
