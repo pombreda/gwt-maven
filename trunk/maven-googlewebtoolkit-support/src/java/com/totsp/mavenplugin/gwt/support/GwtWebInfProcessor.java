@@ -137,11 +137,13 @@ public class GwtWebInfProcessor {
                 if(namesAfter.contains(child.getName())) {
                     webapp.addContent(i, insertAfter);
                     foundPoint = true;
+                    break;
                 }
                 
                 if(!namesBefore.contains(child.getName())) {
                     webapp.addContent(i + 1, insertAfter);
                     foundPoint = true;
+                    break;
                    
                 }
                
