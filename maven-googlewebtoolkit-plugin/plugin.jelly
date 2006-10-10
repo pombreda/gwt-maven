@@ -88,7 +88,7 @@
     
   <goal 
     name="gwt:war" 
-    prereqs="gwt:mergewebxml, gwt:compile, war:webapp" 
+    prereqs="gwt:compile, war:webapp, gwt:mergewebxml, war:war" 
     description="Creates deployable GWT war file (including merging GWT module with target web.xml and compiling with GWTCompiler)">
   </goal>  
   
