@@ -64,11 +64,18 @@ public class GwtWebInfProcessor {
         ArrayList servletElements = new ArrayList();
         
         
-        Document document = new SAXBuilder().build(
+        Document document = null;
+        try{
+            document = new SAXBuilder().build(
+        
                 GwtWebInfProcessor.class.getResourceAsStream(
                 "/"+module.replace('.', '/') + ".gwt.xml"
                 )
                 );
+        } catch(Exception e){
+            System.err.println("Unable to parse module: "+ moduleName );
+            return servletElements;
+        }
         Element element = document.getRootElement();
         List inherits = element.getChildren("inherits");
         

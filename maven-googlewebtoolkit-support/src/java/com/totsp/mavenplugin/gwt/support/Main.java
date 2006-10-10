@@ -99,7 +99,7 @@ public class Main {
                     } catch(ExitException ee ){
                         System.exit(0);
                     } catch(Exception e){
-                        System.err.println( e.getMessage() );
+                        e.printStackTrace();
                         System.exit(1);
                     }
                     
