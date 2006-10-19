@@ -17,6 +17,7 @@
     description="Runs GWTShell">
       <echo>compile src: ${pom.build.sourceDirectory}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
           <ant:arg value="-out"/>
           <ant:arg value="${maven.war.webapp.dir}" />
           <ant:arg value="-style" />
@@ -45,6 +46,7 @@
     description="Runs GWTShell debug">
       <ant:echo message="jvmargs=${maven.mevenide.debug.jvmargs} ${maven.mevenide.run.jvmargs}"/>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
           <ant:jvmarg line="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y"/>
           <ant:arg value="-out"/>
           <ant:arg value="${maven.war.webapp.dir}" />
@@ -113,14 +115,6 @@
                 <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
           </ant:classpath>
       </ant:java>
-  </goal>
-  
-
-  <!--==================================================================-->
-  <!-- Initializations                                                  -->
-  <!--==================================================================-->    
-  <goal name="xxx:init">
-    <ant:echo>hello world!</ant:echo>
   </goal>
 
 </project>
