@@ -5,6 +5,7 @@ public class ServletDescriptor
 
     private String className;
     private String path;
+    private String name;
 
     public ServletDescriptor(String path, String className)
     {
@@ -35,5 +36,13 @@ public class ServletDescriptor
     public String toString()
     {
         return "Path:" + this.path + " Class:" + this.className;        
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
