@@ -11,6 +11,7 @@ import org.jdom.Content;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -19,10 +20,14 @@ import org.jdom.output.XMLOutputter;
 public class GwtWebInfProcessor {
     
     private Document webXml;
-    private File destination;
-    private List servletDescriptors;
+    protected File destination;
+    protected List servletDescriptors;
     private String moduleName;
-    private String webXmlPath;
+    protected String webXmlPath;
+    
+    protected GwtWebInfProcessor(){
+        super();
+    }
     
     public GwtWebInfProcessor(
             String moduleName, String targetWebXml, String sourceWebXml
@@ -60,7 +65,7 @@ public class GwtWebInfProcessor {
      * @param gwtModFile
      * @return
      */
-    private List getGwtServletDescriptors(String module) throws IOException, JDOMException {
+    protected List getGwtServletDescriptors(String module) throws IOException, JDOMException {
         ArrayList servletElements = new ArrayList();
         
         
@@ -172,7 +177,7 @@ public class GwtWebInfProcessor {
         Element webapp = this.getWebXml().getRootElement();
         String[] beforeServlets = {
             "icon", "display-name", "description", "distributable",
-            "context-param", "filter", "filter-mapping", "listener"
+            "context-param", "filter", "filter-mapping", "listener", "servlet"
         };
         String[] afterServlets = {
             "servlet-mapping", "session-config", "mime-mapping",
@@ -187,7 +192,7 @@ public class GwtWebInfProcessor {
             "servlet"
         };
         String[] afterMappings = {
-            "session-config", "mime-mapping", "welcome-file-list",
+            "servlet-mapping", "session-config", "mime-mapping", "welcome-file-list",
             "error-page", "taglib", "resource-env-ref", "resource-ref",
             "security-constraint", "login-config", "security-role",
             "env-entry", "ejb-ref", "ejb-local-ref"
@@ -200,12 +205,12 @@ public class GwtWebInfProcessor {
             insertAfter++;
             
             ServletDescriptor d = (ServletDescriptor) this.servletDescriptors.get(i);
-            Element servlet = new Element("servlet");
-            Element servletName = new Element("servlet-name");
-            servletName.setText(d.getClassName() + d.getPath());
+            Element servlet = new Element("servlet" , webapp.getNamespace());
+            Element servletName = new Element("servlet-name", webapp.getNamespace());
+            servletName.setText(d.getName() == null ? d.getClassName() + d.getPath() : d.getName());
             servlet.addContent(servletName);
             
-            Element servletClass = new Element("servlet-class");
+            Element servletClass = new Element("servlet-class", webapp.getNamespace());
             servletClass.setText(d.getClassName());
             servlet.addContent(servletClass);
             webapp.addContent(insertAfter, servlet);
@@ -219,13 +224,14 @@ public class GwtWebInfProcessor {
             insertAfter++;
             
             ServletDescriptor d = (ServletDescriptor) this.servletDescriptors.get(i);
-            Element servletMapping = new Element("servlet-mapping");
-            Element servletName = new Element("servlet-name");
-            servletName.setText(d.getClassName() + d.getPath());
+            Element servletMapping = new Element("servlet-mapping", webapp.getNamespace());
+            Element servletName = new Element("servlet-name", webapp.getNamespace());
+            servletName.setText(d.getName() == null ? d.getClassName() + d.getPath() : d.getName());
             servletMapping.addContent(servletName);
             
-            Element urlPattern = new Element("url-pattern");
-            urlPattern.setText("/" + this.moduleName + d.getPath());
+            Element urlPattern = new Element("url-pattern", webapp.getNamespace());
+           
+            urlPattern.setText( this.moduleName == null ? d.getPath() : "/" + this.moduleName + d.getPath());
             servletMapping.addContent(urlPattern);
             webapp.addContent(insertAfter, servletMapping);
         }
