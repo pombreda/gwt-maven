@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<pomVersion>3</pomVersion>
+	<artifactId></artifactId>
+	<id>gwt-maven-referenceimpl</id>
+	<currentVersion>1.0</currentVersion>
+	<name>gwt-maven-referenceimpl</name>
+	<package>com.totsp.gwtrefimpl</package>
+	<inceptionYear>2006</inceptionYear>
+	<organization>
+		<name>TotSP</name>
+		<url>http://www.screaming-penguin.com</url>
+	</organization>
+	<shortDescription>Reference Impl for Maven gwt plugin</shortDescription>
+
+	<build>
+		<sourceDirectory>src/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/conf</directory>							
+			</resource>
+		</resources>		
+	</build>
+
+	<developers>
+		<developer>
+			<name>Charlie Collins</name>
+			<email>charlie . collins @ gmail.com</email>
+			<organization>TotSP</organization>
+			<timezone>EST</timezone>
+		</developer>
+	</developers>
+
+	<reports>
+		<!--  TODO -->
+	</reports>
+
+	<dependencies>
+		
+		<!--  stuff that IS war bundled -->		
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>1.2.22</version>			
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		
+
+		<!--  stuff that is NOT war bundled -->		
+		
+		<!--  dev-build only for GWT -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.2.22</version>			
+			<type>jar</type>			
+		</dependency>		
+		
+		<!--  dev-build only for GWT -->
+		<!--  this dependency must be jar overriden in project.properties because of licensing -->
+		<!--  you must accept the GWT license and manually make this dependency present (see project.properties) -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<type>jar</type>			
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.2.1.6</version>			
+			<type>jar</type>						
+		</dependency>
+	</dependencies> 
+</project>
