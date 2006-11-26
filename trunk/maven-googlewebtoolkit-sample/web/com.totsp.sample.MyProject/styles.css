@@ -1,0 +1,183 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: smaller;
+  margin: 20px 20px 20px 20px;
+}
+
+code {
+  font-size: small;
+}
+
+a {
+  color: darkblue;
+}
+
+a:visited {
+  color: darkblue;
+}
+.gwt-BorderedPanel {
+}
+
+.gwt-Button {
+	font-family: Arial, sans-serif;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	color: #003300;
+	background-color: #CCCCCC;
+	border-style: outset;
+	border-width: 2px;
+	border-color: #CCCCCC;
+}
+
+.gwt-Canvas {
+}
+
+.gwt-CheckBox {
+  font-size: smaller;
+}
+
+.gwt-DialogBox {
+  sborder: 2px solid #C3D9FF;
+  border: 1px outset;
+  background-color: white;
+}
+
+.gwt-DialogBox .Caption {
+  background-color: white;
+  padding: 1px;
+  margin: 1px;
+  font-weight: normal;
+  cursor: default;
+  font-size: smaller;
+}
+
+.gwt-FileUpload {
+}
+
+.gwt-Frame {
+}
+
+.gwt-HorizontalSplitter .Bar {
+  width: 8px;
+  background-color: #C3D9FF;
+}
+
+.gwt-VerticalSplitter .Bar {
+  height: 8px;
+  background-color: #C3D9FF;
+}
+
+.gwt-HTML {
+  font-size: smaller;
+}
+
+.gwt-Hyperlink {
+}
+
+.gwt-Image {
+}
+
+.gwt-Label {
+  font-size: smaller;
+}
+
+.gwt-ListBox {
+}
+
+.gwt-MenuBar {
+  background-color: #C3D9FF;
+  border: 1px solid #87B3FF;
+  cursor: default;
+}
+
+.gwt-MenuBar .gwt-MenuItem {
+  padding: 1px 4px 1px 4px;
+  font-size: smaller;
+  cursor: default;
+}
+
+.gwt-MenuBar .gwt-MenuItem-selected {
+  background-color: #E8EEF7;
+}
+
+.gwt-PasswordTextBox {
+}
+
+.gwt-RadioButton {
+  font-size: smaller;
+}
+
+.gwt-TabPanel {
+}
+
+.gwt-TabPanelBottom {
+  border-left: 1px solid #87B3FF;
+}
+
+.gwt-TabBar {
+  background-color: #C3D9FF;
+  font-size: smaller;
+}
+
+.gwt-TabBar .gwt-TabBarFirst {
+  height: 100%;
+  border-bottom: 1px solid #87B3FF;
+  padding-left: 3px;
+}
+
+.gwt-TabBar .gwt-TabBarRest {
+  border-bottom: 1px solid #87B3FF;
+  padding-right: 3px;
+}
+
+.gwt-TabBar .gwt-TabBarItem {
+  border-top: 1px solid #C3D9FF;
+  border-bottom: 1px solid #87B3FF;
+  padding: 2px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-TabBar .gwt-TabBarItem-selected {
+  font-weight: bold;
+  background-color: #E8EEF7;
+  border-top: 1px solid #87B3FF;
+  border-left: 1px solid #87B3FF;
+  border-right: 1px solid #87B3FF;
+  border-bottom: 1px solid #E8EEF7;
+  padding: 2px;
+  cursor: default;
+}
+
+.gwt-TextArea {
+}
+
+.gwt-TextBox {
+}
+
+.gwt-Tree {
+  font-weight: bold;  
+}
+
+.gwt-Tree .gwt-TreeItem {
+  font-weight: normal;  
+}
+
+.gwt-Tree .gwt-TreeItem-selected {
+  background-color: #C3D9FF;
+}
+
+.gwt-StackPanel {
+}
+
+.gwt-StackPanel .gwt-StackPanelItem {
+  background-color: #C3D9FF;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-StackPanel .gwt-StackPanelItem-selected {
+}
