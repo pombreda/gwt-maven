@@ -4,7 +4,7 @@
 -->
 
 <Context privileged="true" antiResourceLocking="false"
-	antiJARLocking="false" path="/gwtmavensample">
+	antiJARLocking="false" path="/gwt-maven-sample">
  
           
 </Context>	
