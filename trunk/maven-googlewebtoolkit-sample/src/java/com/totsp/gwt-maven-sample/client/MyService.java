@@ -1,4 +1,4 @@
-package com.totsp.gwtrefimpl.client;
+package com.totsp.gwtmavensample.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
