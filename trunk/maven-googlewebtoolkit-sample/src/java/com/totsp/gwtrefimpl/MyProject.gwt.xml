@@ -4,10 +4,10 @@
 	<inherits name='com.google.gwt.user.User'/>
 
 	<!-- Specify the app entry point class. -->
-	<entry-point class='com.totsp.gwtrefimpl.client.MyProjectEntryPoint'/>
+	<entry-point class='com.totsp.gwt-maven-sample.client.MyProjectEntryPoint'/>
   
     <!-- example service servlet -->
-    <servlet path="/MyService" class="com.totsp.gwtrefimpl.server.MyServiceImpl"/>    
+    <servlet path="/MyService" class="com.totsp.gwt-maven-sample.server.MyServiceImpl"/>    
     
     <stylesheet src='styles.css'/>
 </module>
