@@ -2,16 +2,16 @@
 <project>
 	<pomVersion>3</pomVersion>
 	<artifactId></artifactId>
-	<id>gwt-maven-referenceimpl</id>
+	<id>gwt-maven-sample</id>
 	<currentVersion>1.0</currentVersion>
-	<name>gwt-maven-referenceimpl</name>
-	<package>com.totsp.gwtrefimpl</package>
+	<name>gwt-maven-sample</name>
+	<package>com.totsp.sample</package>
 	<inceptionYear>2006</inceptionYear>
 	<organization>
 		<name>TotSP</name>
 		<url>http://www.screaming-penguin.com</url>
 	</organization>
-	<shortDescription>Reference Impl for Maven gwt plugin</shortDescription>
+	<shortDescription>Sample for Maven gwt plugin</shortDescription>
 
 	<build>
 		<sourceDirectory>src/java</sourceDirectory>
@@ -66,13 +66,7 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<type>jar</type>			
-		</dependency>
+		</dependency>		
 		
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.2.1.6</version>			
-			<type>jar</type>						
-		</dependency>
 	</dependencies> 
 </project>
