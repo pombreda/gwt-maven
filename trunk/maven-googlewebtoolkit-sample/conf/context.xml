@@ -4,13 +4,8 @@
 -->
 
 <Context privileged="true" antiResourceLocking="false"
-	antiJARLocking="false" path="/gwt-maven-referenceimpl">
-
-<Resource name="jdbc/derby-demo" auth="Container"
-          type="javax.sql.DataSource" username="user" password="password"
-          driverClassName="org.apache.derby.jdbc.EmbeddedDriver" 
-          url="jdbc:derby:embedded:demo;create=true"
-          maxActive="5" maxIdle="5"/>    
+	antiJARLocking="false" path="/gwtmavensample">
+ 
           
 </Context>	
 	
