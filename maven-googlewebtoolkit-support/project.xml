@@ -7,30 +7,25 @@
     <organization>
         <name>TotSP</name>
     </organization>
-    <shortDescription>
-        Support for TotSP Maven GWT Plugin(s)
-    </shortDescription>
+    <shortDescription>Support for TotSP Maven GWT Plugin(s)</shortDescription>
     <name>Maven-GoogleWebToolkit-Support</name>
     <package>com.totsp.mavenplugin.gwt</package>
     <inceptionYear>2006</inceptionYear>
-    
     <!--  <licenses>
     <license>
     <name>Apache Public License 2.0 - for the plugin itself</name>
     <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license> 
     </licenses>-->
-    
     <build>
         <sourceDirectory>src/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>src/conf</directory>				
+                <directory>src/conf</directory>
             </resource>
-        </resources>	
+        </resources>
         <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
         <unitTest>
-            
             <includes>
                 <include>**/*Test.java</include>
             </includes>
@@ -45,7 +40,6 @@
             </resource>
         </resources>
     </build>
-    
     <developers>
         <developer>
             <name>Charlie Collins</name>
@@ -60,9 +54,6 @@
             <timezone>EST</timezone>
         </developer>
     </developers>
-    
-    <reports />
-    
     <dependencies>
         <dependency>
             <groupId>commons-cli</groupId>
@@ -76,6 +67,18 @@
             <version>1.0</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.2.11rc1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.totsp.gwt</groupId>
+            <artifactId>googlewebtoolkit-beanmapping</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
-    
 </project>
+
