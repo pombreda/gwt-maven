@@ -1,4 +1,4 @@
-package com.totsp.gwtrefimpl.client;
+package com.totsp.gwtmavensample.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
