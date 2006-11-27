@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<document>
+
+  <properties>
+    <title>Welcome</title>
+    <author>Charlie Collins</author>
+  </properties>
+
+  <body>
+    <section name="Welcome to gwt-maven">
+      
+      
+      <p>
+        gwt-maven is a Google Web Toolkit plugin for Maven.  
+      </p>
+      
+
+      
+
+      <subsection name="Getting Started">
+        <dl>
+        
+        <dt>Incude the totsp mavenrepo in the maven.repo.remote location in your Maven project.</dt>
+		<dd>maven.repo.remote=http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/,http://www.ibiblio.org/maven/ </dd>
+		<dt>Obtain the plugin</dt>
+<dd>maven -DartifactId=maven-googlewebtoolkit-plugin -DgroupId=com.totsp.gwt -Dversion=1.0.3 plugin:download</dd>
+<dt>Make sure the plugin is present and have a look around at the goals</dt>
+<dd>
+<pre>
+maven -P gwt
+ __  __
+|  \/  |__ _Apache__ ___
+| |\/| / _` \ V / -_) ' \  ~ intelligent projects ~
+|_|  |_\__,_|\_/\___|_||_|  v. 1.0.2
+
+Goals in gwt
+============
+
+[gwt]                               Runs GWTShell
+  compile  ........................ Runs GWTCompiler
+  debug  .......................... Runs GWTShell debug
+  mergewebxml  .................... Merges servlets in module definitions with
+                                    the project target web.xml file.
+  war  ............................ Creates deployable GWT war file (including
+                                    merging GWT module with target web.xml and
+                                    compiling with GWTCompiler)
+</pre>
+</dd>
+<dt>Setup the gwt-maven plugin properties</dt>
+<dd>TODO</dd>
+</dl>
+        
+        
+
+      </subsection>
+
+      
+
+    </section>
+  </body>
+</document>
