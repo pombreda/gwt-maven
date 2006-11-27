@@ -15,7 +15,7 @@
         gwt-maven is a Google Web Toolkit plugin for Maven.  
       </p>
       
-      <subsection name="What's in it for me">
+      <subsection name="What Does gwt-maven Do?">
       <dl>
       <dd>Specialness with context.xml and web.xml</dd>
       <dt>context.xml:<br />
@@ -35,7 +35,8 @@
       local web.xml file when creating a WAR.  This means service servlet entries need only be defined in the module, yet will be deployed, along
       with any other web.xml elements, automatically.
       </dt>
-      </dl>      
+      </dl>
+</subsection>     
 
       <subsection name="Getting Started">
         <dl>
