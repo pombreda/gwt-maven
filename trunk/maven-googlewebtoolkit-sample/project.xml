@@ -21,6 +21,14 @@
 			</resource>
 		</resources>		
 	</build>
+	
+	<siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+  <repository>
+    <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
+    <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
+    <url>http://gwt-maven.googlecode.com/svn</url>
+  </repository>
+	
 
 	<developers>
 		<developer>
@@ -32,8 +40,11 @@
 	</developers>
 
 	<reports>
-		<!--  TODO -->
-	</reports>
+        <report>maven-faq-plugin</report>
+        <report>maven-changelog-plugin</report>
+        <report>maven-file-activity-plugin</report>
+        <report>maven-developer-activity-plugin</report>
+    </reports>
 
 	<dependencies>
 		
