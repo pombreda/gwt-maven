@@ -15,8 +15,27 @@
         gwt-maven is a Google Web Toolkit plugin for Maven.  
       </p>
       
-
-      
+      <subsection name="What's in it for me">
+      <dl>
+      <dd>Specialness with context.xml and web.xml</dd>
+      <dt>context.xml:<br />
+      This is a Tomcat specific file that sets container stuff such as JNDI data sources, realms, etc.
+      <br />
+      Hosted Mode: gwt-maven will use an app local context.xml *with* the GWT Hosted Mode development server by merging 
+      app local content (context.xml) with the required service servlet entries, creating the Tomcat root structure
+      before running Hosted Mode.  Basically this allows you to HAVE a context.xml that will matter im Hosted Mode.
+      </dt> 
+      <dt>web.xml:<br />
+      This is a JEE specification file known as the "deployment descriptor".
+      <br />
+      Hosted Mode: gwt-maven will use an app local web.xml *with* the GWT Hosted Mode development server, similarly to what it does
+      with context.xml.  Any web.xml resources defined will be available in Hosted Mode.  
+      <br />
+      Creating a WAR: In addition to Hosted Mode conveniences gwt-maven will merge the GWT module file Service Servlet entries into an application
+      local web.xml file when creating a WAR.  This means service servlet entries need only be defined in the module, yet will be deployed, along
+      with any other web.xml elements, automatically.
+      </dt>
+      </dl>      
 
       <subsection name="Getting Started">
         <dl>
