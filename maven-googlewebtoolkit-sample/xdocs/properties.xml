@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+  <properties>
+    <title>gwt-maven plugin properties</title>    
+  </properties>
+
+  <body>
+    <section name="Properties">
+      <table>
+        <tr>
+          <th>Property name</th>
+          <th>Optional?</th>
+          <th>Description</th>
+        </tr>
+        <tr>        
+          <td>google.webtoolkit.home</td>
+          <td>No</td>
+          <td>
+            Specifies the location where the Google Web Toolkit is installed.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.style</td>
+          <td>Yes</td>
+          <td>
+            Specifies the style of the GWTCompiler JavaScript output (PRETTY, DETAILED, OBF).
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.runtarget</td>
+          <td>No</td>
+          <td>
+            Specifies the runtarget (GWT module and Host Page) the Hosted Mode Browser should invoke when launched.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.compiletarget</td>
+          <td>No</td>
+          <td>
+            Specifies the compiletarget (GWT module) the GWTShell and GWTCompiler will invoke.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.port</td>
+          <td>Yes</td>
+          <td>
+            Specifies the port where the development mode server will run (default 8888).
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.gen</td>
+          <td>No</td>
+          <td>
+            Specifies the -gen flag to the GWTShell (which does? - TODO).
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.loglevel</td>
+          <td>Yes</td>
+          <td>
+            Specifies the logging level the GWTShell console will display.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.headless</td>
+          <td>No</td>
+          <td>
+            Specifies whether or not headless mode GWTShell should be run.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.extrajvmargs</td>
+          <td>No</td>
+          <td>
+            Specifies extra args that are passed to the GWTShell, most importantly used for Macs to specify "-XstartOnFirstThread" (required on the Mac).
+          </td>
+        </tr>
+      </table>
+    </section>
+    
+  </body>
+</document>
