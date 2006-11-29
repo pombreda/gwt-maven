@@ -5,7 +5,7 @@
  *
  */
 
-package com.totsp.gwt.beans.client;
+package com.totsp.gwt.emul.java.beans;
 
 
 import java.util.ArrayList;
