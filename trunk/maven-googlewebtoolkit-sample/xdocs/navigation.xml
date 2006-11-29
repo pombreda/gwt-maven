@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="gwt-maven-sample">
-
-	<title>maven-gwt Plugin Sample</title>
-
-	<body>
-
-	<breadcrumbs>
+<project name="Maven xdoc Plugin">
+  <title>Maven xdoc Plugin</title>
+  <body>
+    <breadcrumbs>
       <item name="Apache" href="http://www.apache.org"/>
-      <item name="Maven" href="http://maven.apache.org/"/>
+      <item name="Maven" href="http://maven.apache.org/"/>      
     </breadcrumbs>
-
     <links>
       <item name="gwt-maven" href="http://code.google.com/p/gwt-maven/"/>
     </links>
-
     <sitemap/>
-
-
-   
-
-    
-
-	</body>
+    <menu name="Overview">
+      <item name="Goals" href="/goals.html"/>
+      <item name="Properties" href="/properties.html"/>      
+      <item name="FAQ" href="/faq.html"/>
+    </menu>
+  </body>
 </project>
