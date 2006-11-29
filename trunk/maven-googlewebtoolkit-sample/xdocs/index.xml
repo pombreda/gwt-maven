@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<document>
+  <properties>
+    <title>About</title>
+  </properties>
+  <body>
+    <section name="GWT Maven 1.x Plug-in (gwt-maven)">
+      <subsection name="Overview">
+        <p>The gwt-maven plugin is used to develop, build and package GWT applications.</p>
+        <p>gwt-maven can invoke GWTShell and GWTCompiler, and can also merge deployment resources such as a deployment descriptor (web.xml) and a Tomcat specific Context XML descriptor (context.xml) with the GWT module file and vice versa (MyProject.gwt.xml).</p>       
+      </subsection>
+      
+    </section>
+  </body>
+</document>
