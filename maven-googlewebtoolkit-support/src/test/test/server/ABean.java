@@ -22,6 +22,7 @@ public class ABean {
     private HashMap<String, ? extends Number> hashOfNumbers;
     private String stringProperty;
     private int intProperty;
+    private List<BBean> bbeans;
     
     /** Creates a new instance of ABean */
     public ABean() {
@@ -57,6 +58,14 @@ public class ABean {
 
     public void setIntProperty(int intProperty) {
         this.intProperty = intProperty;
+    }
+
+    public List<BBean> getBbeans() {
+        return bbeans;
+    }
+
+    public void setBbeans(List<BBean> bbeans) {
+        this.bbeans = bbeans;
     }
     
     

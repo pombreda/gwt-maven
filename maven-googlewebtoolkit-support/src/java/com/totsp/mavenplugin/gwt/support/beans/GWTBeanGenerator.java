@@ -46,7 +46,7 @@ public class GWTBeanGenerator {
             "create getters and setters for GWT classes");
     private static final Option withPropertyChangeSupport = new Option( "withPropertyChangeSupport",
             "create change events for beans (implies withGetSet)");
-            
+    
     private final static Options options = new Options();
     
     static {
@@ -87,6 +87,7 @@ public class GWTBeanGenerator {
         String packageName = line.getOptionValue( "destinationPackage");
         String packagePath = packageName.replace( '.', File.separatorChar );
         File packageDirectory = new File( directory, packagePath );
+        
         packageDirectory.mkdirs();
         boolean getSet = line.hasOption("withGetSet");
         boolean propertyChangeSupport = line.hasOption("withPropertyChangeSupport");
@@ -106,15 +107,16 @@ public class GWTBeanGenerator {
         pw.print( "package ");
         pw.print( packageName );
         pw.println(";");
+        pw.println("import com.google.gwt.user.client.rpc.IsSerializable;");
         
         if( propSupport ){
-            pw.println( "import com.totsp.gwt.beans.client.PropertyChangeSupport;");
-            pw.println( "import com.totsp.gwt.beans.client.PropertyChangeListener;");
+            pw.println( "import java.beans.PropertyChangeSupport;");
+            pw.println( "import java.beans.PropertyChangeListener;");
         }
         
         pw.print( "public class ");
         pw.print( bean.name.substring(0, bean.name.indexOf(".") ) );
-        pw.println( "{");
+        pw.println( " implements IsSerializable {");
         String access = getSet || propSupport ? "private " : "public ";
         String propSupportName = "changes"+System.currentTimeMillis();
         if( propSupport ){
@@ -157,6 +159,10 @@ public class GWTBeanGenerator {
             String att = attributes.next();
             Bean attType = bean.properties.get( att );
             String typeString = resolveType( attType.getType() );
+            for( int i=0; i < attType.getArrayDepth() ; i++){
+                typeString +="[]";
+            }
+            typeString +=" ";
             if( attType.getTypeArgs() != null ){
                 pw.println("/**");
                 pw.print( " * @gwt.typeArgs ");
@@ -192,7 +198,7 @@ public class GWTBeanGenerator {
                 
                 if( attType.getTypeArgs() != null ){
                     pw.println("/**");
-                    pw.print( " * @gwt.typeArgs newValue");
+                    pw.print( " * @gwt.typeArgs newValue ");
                     pw.println( attType.getTypeArgs() );
                     pw.println( " */");
                 }
@@ -227,34 +233,41 @@ public class GWTBeanGenerator {
         pw.close();
         //Write custom beans
         for( Iterator<String> attributes = bean.properties.keySet().iterator();
-            attributes.hasNext(); ){
+        attributes.hasNext(); ){
             String att = attributes.next();
             Bean attType = bean.properties.get( att );
             if( attType.isCustom() ){
                 writeBean( packageName, packageDirectory, getSet, propSupport, attType );
             }
+            for(Bean b : attType.getParameterTypes() ){
+                if( b.isCustom() ){
+                    writeBean( packageName, packageDirectory, getSet, propSupport, b );
+                }
+            }
         }
+        
+        
     }
     
     
     private static String resolveType( Class clazz ){
         String type = null;
         if( clazz == Integer.TYPE ){
-            type = "int ";
+            type = "int";
         } else if( clazz == Long.TYPE ){
-            type = "long ";
+            type = "long";
         } else if( clazz == Float.TYPE ){
-            type = "float ";
+            type = "float";
         } else if( clazz == Double.TYPE ){
-            type = "double ";
+            type = "double";
         } else if( clazz == Boolean.TYPE ){
-            type = "boolean ";
+            type = "boolean";
         } else if( clazz == Character.TYPE ){
-            type = "char ";
+            type = "char";
         } else if( clazz == Byte.TYPE ){
-            type = "byte ";
+            type = "byte";
         } else {
-            type = clazz.getName()+" ";
+            type = clazz.getName();
         }
         return type;
     }

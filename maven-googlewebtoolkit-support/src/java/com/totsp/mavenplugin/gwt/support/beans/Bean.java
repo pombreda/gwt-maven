@@ -10,6 +10,7 @@ import com.totsp.gwt.beans.server.GwtOmit;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
@@ -29,7 +30,9 @@ public class Bean {
         java.lang.Boolean.class, java.lang.Boolean.TYPE,
         java.lang.Double.class, java.lang.Double.TYPE,
         java.lang.Float.class, java.lang.Float.TYPE,
-        java.lang.String.class, java.util.Date.class
+        java.lang.String.class, java.util.Date.class,
+        java.lang.Number.class, java.lang.CharSequence.class
+                
     };
     static final Class[] COLLECTION_TYPES = {
         java.util.Map.class, java.util.Collection.class,
@@ -42,17 +45,27 @@ public class Bean {
     Class clazz;
     private InnerParameterizedType ipt;
     HashMap<String, Bean> properties = new HashMap<String, Bean>();
+    private ArrayList<Bean> parameterTypes = new ArrayList<Bean>();
+    private int arrayDepth;
     
     /** Creates a new instance of Bean */
     public Bean(String name, Type type) throws IntrospectionException {
         super();
         
         this.name = name;
+        while( type instanceof GenericArrayType ){
+            arrayDepth++;
+            type = ((GenericArrayType) type).getGenericComponentType();
+        }
         if( type instanceof Class ){
             this.clazz = (Class) type;
         } else if (type instanceof ParameterizedType ){
             this.ipt = new InnerParameterizedType( name, (ParameterizedType) type );
             this.clazz = ipt.clazz;
+            for( Class param: ipt.types){
+                System.out.println("adding param type"+param.getName() );
+                this.parameterTypes.add( new Bean( name, param ) );
+            }
         }
         if( !arrayContains( BASE_TYPES, this.clazz) ){
             
@@ -163,6 +176,14 @@ public class Bean {
             sb.append( ">");
             return sb.toString();
         }
+    }
+
+    public ArrayList<Bean> getParameterTypes() {
+        return parameterTypes;
+    }
+
+    public int getArrayDepth() {
+        return arrayDepth;
     }
     
 }
