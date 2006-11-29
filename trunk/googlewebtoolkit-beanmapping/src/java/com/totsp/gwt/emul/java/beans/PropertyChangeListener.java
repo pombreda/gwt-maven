@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package com.totsp.gwt.beans.client;
+package com.totsp.gwt.emul.java.beans;
 
 /**
  *
