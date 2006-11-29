@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+  <properties>
+    <title>gwt-maven plugin goals</title>
+  </properties>
+
+  <body>
+    <goals>
+      <goal>
+        <name>gwt</name>
+        <description>
+           The default goal. This goal does several main things, including creating a Catalina structure with an application specific context.xml file and an application specific web.xml file, and then launching the GWTShell. 
+           <br /><br />
+           1. Calls war:webapp as a prerequisite so that a local webapp directory, with nothing specific to GWT, all standard Maven setup, is created. 
+           <br />
+           Calling war:webapp is important *before* the GWTShell is invoked for two reasons.
+           <br /> 
+           One it places an application defined deployment descriptor (web.xml) in 
+           the target ${maven.war.webapp.dir}/WEB-INF/ directory, which is used then used in the GWT development mode Tomcat server instance. 
+           This means an application specific web.xml, with servlets *other than* the GWTShellServlet or GWT service servlets CAN BE USED with GWTShell and the GWT Hosted Mode development Tomcat instance (automatically, GWTShell is automatically added to the application specific web.xml during this step).
+           <br />
+           Two it places an application defined context XML descriptor (context.xml) in the target ${maven.war.webapp.dir}/META-INF/ directory
+           which is then used in the GWT development mode Tomcat server instance (if it exists, it is copied into the Catalina structure used by GWT that the plugin creates, if it does not exist the same default context.xml GWT normally uses still applies).
+           This means an application specific context.xml, with DataSources defined, Realms, etc, CAN BE USED with GWTShell and the GWT Hosted Mode development Tomcat instance (automatically).
+           <br /><br />
+           2.  Launches the GWTShell and Hosted Mode Browser against the hosted mode Tomcat instance using project specific properties from project.properties.
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:compile</name>
+        <description>
+           Launches the GWTCompiler in order to compile the GWT project.
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:debug</name>
+        <description>
+           Launches the GWTShell in debug mode so that a debugger can easily be attached (also performs all the same prerequisite steps as does the plain gwt goal).
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:mergewebxml</name>
+        <description>
+           Used primarily by the gwt:war goal as a prerequisite in order to merge the application specific web.xml file (created by war:webapp in the target directory) with the 
+           GWT module file.  This "merge" step will create service servlet entries in the web.xml file for each such entry present in the GWT module file.  Note that this happens
+           on the deployable artifact from the target directory (not the source), so it can safely be done at each deployment and enables you to not have to maintain service servlet
+           entries in multiple places (yet still have them available in a deployable artifact).
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:war</name>
+        <description>
+           In one shot creates a deployable WAR file from a GWT application.  Includes invoking mergewebxml as a prerequisite so that an application specific
+           web.xml file is merged with the GWT module file to create the correct service servlet entries in web.xml automatically. 
+        </description>
+      </goal>
+      
+    </goals>      
+  </body>
+</document>

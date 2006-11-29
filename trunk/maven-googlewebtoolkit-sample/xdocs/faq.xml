@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<faqs title="Frequently Asked Questions">
+
+  <part id="general">
+    
+    <title>General</title>
+
+    <faq id="gwt-shell">
+      <question>How do I run the GWTShell?</question>
+      <answer>
+        example here
+        <source>maven gwt</source>
+      </answer>
+    </faq>
+    
+  </part>
+    
+</faqs>
+   

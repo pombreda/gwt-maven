@@ -5,10 +5,25 @@
     <title>About</title>
   </properties>
   <body>
-    <section name="GWT Maven 1.x Plug-in (gwt-maven)">
+    <section name="GWT Maven 1.x Plug-in Sample (gwt-maven)">
       <subsection name="Overview">
-        <p>The gwt-maven plugin is used to develop, build and package GWT applications.</p>
+        <p>The gwt-maven 1.x plugin is used to develop, build and package GWT applications.</p>
+        <br /><br />
         <p>gwt-maven can invoke GWTShell and GWTCompiler, and can also merge deployment resources such as a deployment descriptor (web.xml) and a Tomcat specific Context XML descriptor (context.xml) with the GWT module file and vice versa (MyProject.gwt.xml).</p>       
+      </subsection>
+      
+      <subsection name="GWT-RPC Example using the gwt-maven plugin">
+        <p>The "sample" application using the gwt-maven plugin is a very simple GWT RPC "Hello World" type application
+        that is intended to demonstrate several things:</p>
+        <ul>
+        <li>Simple GWT RPC itself</li>
+        <li>Setting up the gwt-maven plugin and using it for GWTShell and GWTCompiler invocation</li>
+        <li>Compiling a WAR for Tomcat deployment from a gwt-maven enabled GWT project (in one simple step)</li>
+        </ul>
+        <br /><br />
+        <p>The easiest way to get started is probably just to have a look at the code: <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/</a>.</p>
+        <br />
+        Also see the goals and properties pages within this documentation.         
       </subsection>
       
     </section>
