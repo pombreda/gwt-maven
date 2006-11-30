@@ -46,6 +46,7 @@ public class BeanMappingTest extends TestCase {
         map.put( "Foo", bbeans[0][0] );
         map.put( "Bar", bbeans[0][1] );
         source.setBeanMap( map );
+        bbeans[0][0].setParent( source );
         
         source.setBeanArray( bbeans );
         test.destination.ABean result = (test.destination.ABean) 
@@ -65,6 +66,7 @@ public class BeanMappingTest extends TestCase {
         }
         this.assertEquals("beanMap", map.get("Foo").getValue(), result.beanMap.get("Foo").getValue() );
         this.assertEquals("beanMap", map.get("Bar").getValue(), result.beanMap.get("Bar").getValue() );
+        this.assertTrue( "cyclic", result.beanMap.get("Foo").getParent() == result );
     }
     
 }

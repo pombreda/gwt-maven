@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ import java.util.Set;
 
 
 /**
- *
+ * This is a class that uses reflection to
  * @author cooper
  */
 public class BeanMapping {
@@ -38,15 +39,37 @@ public class BeanMapping {
             java.lang.CharSequence.class
         };
 
+    private static final HashMap<Class, HashMap<String, Object>> inspections = new HashMap<Class, HashMap<String, Object>>();
+        
     /** Creates a new instance of BeanMapping */
     private BeanMapping() {
         super();
     }
 
-    public static Object convert(Properties mappings, Object bean)
+    
+    
+    public static Object convert(Properties mappings, Object bean)throws IntrospectionException, ClassNotFoundException, 
+            InstantiationException, IllegalAccessException, 
+            InvocationTargetException, MappingException {
+        IdentityHashMap<Object, Object> instances = new IdentityHashMap<Object, Object>();
+        return convertInternal( instances, mappings, bean );
+    }
+    
+    private static Object convertInternal(IdentityHashMap<Object,Object> instances, Properties mappings, Object bean)
         throws IntrospectionException, ClassNotFoundException, 
             InstantiationException, IllegalAccessException, 
             InvocationTargetException, MappingException {
+        
+        // if null
+        if( bean == null ){
+            return null;
+        }
+        // if we have already seen this instance.
+        if( instances.containsKey( bean ) ){
+            return instances.get( bean );
+        }
+        
+        // if this is an array, backstep the array and return it.
         if(bean.getClass().isArray()) {
             Object[] beans = (Object[]) bean;
             Class arrayClass = resolveArray(mappings, bean);
@@ -54,26 +77,33 @@ public class BeanMapping {
                     arrayClass, beans.length);
 
             for(int i = 0; i < beans.length; i++) {
-                destination[i] = convert(mappings, beans[i]);
+                destination[i] = convertInternal(instances, mappings, beans[i]);
             }
 
             return destination;
         }
 
+        // if this is a primitve or a common type, just return it.
         if(
             bean.getClass().isPrimitive() ||
                 arrayContains(BASE_TYPES, bean.getClass())) {
             return bean;
         }
 
+        
+        // if we have gotten here,
+        // this is a class that requires resolution mapping.
         Class destinationClass = resolveClass(mappings, bean.getClass());
 
         if(destinationClass == null) {
             throw new MappingException(
                 "Unable to resolve class" + bean.getClass().getName());
         }
-
+        
         Object dest = destinationClass.newInstance();
+        
+        // store the instance so it is there when we recurse into the properties.
+        instances.put( bean, dest );
         HashMap<String,Object> sourceProperties = inspectObject(bean);
         HashMap<String,Object> destinationProperties = inspectObject(dest);
 
@@ -113,21 +143,21 @@ public class BeanMapping {
                         isInterface(Map.class, valueDestinationClass)) {
                     Map map = (Map) resolveMapType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertMap(mappings, (Map) valueObject, map);
+                    convertMap(instances, mappings, (Map) valueObject, map);
                     f.set(dest, map);
                 } else if(
                     isInterface(List.class, valueClass) &&
                         isInterface(List.class, valueDestinationClass)) {
                     List list = (List) resolveListType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertCollection(mappings, (List) valueObject, list);
+                    convertCollection(instances, mappings, (List) valueObject, list);
                     f.set(dest, list);
                 } else if(
                     isInterface(Collection.class, valueClass) &&
                         isInterface(Collection.class, valueDestinationClass)) {
                     Collection collection = (Collection) resolveCollecitonType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertCollection(
+                    convertCollection(instances,
                         mappings, (Collection) valueObject, collection);
                     f.set(dest, collection);
                 } else if(valueClass == valueDestinationClass) {
@@ -137,7 +167,7 @@ public class BeanMapping {
                             mappings, valueClass)) ||
                         (valueDestinationClass.isArray() &&
                         valueClass.isArray())) {
-                    f.set(dest, convert(mappings, valueObject));
+                    f.set(dest, convertInternal(instances, mappings, valueObject));
                 } else {
                     continue;
                 }
@@ -150,21 +180,23 @@ public class BeanMapping {
                         isInterface(Map.class, valueDestinationClass)) {
                     Map map = (Map) resolveMapType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertMap(mappings, (Map) valueObject, map);
+                    convertMap(instances,
+                            mappings, (Map) valueObject, map);
                     pd.getWriteMethod().invoke(dest, map);
                 } else if(
                     isInterface(List.class, valueClass) &&
                         isInterface(List.class, valueDestinationClass)) {
                     List list = (List) resolveListType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertCollection(mappings, (List) valueObject, list);
+                    convertCollection(instances,
+                            mappings, (List) valueObject, list);
                     pd.getWriteMethod().invoke(dest, list);
                 } else if(
                     isInterface(Collection.class, valueClass) &&
                         isInterface(Collection.class, valueDestinationClass)) {
                     Collection collection = (Collection) resolveCollecitonType(
                             valueClass, valueDestinationClass).newInstance();
-                    convertCollection(
+                    convertCollection(instances, 
                         mappings, (Collection) valueObject, collection);
                     pd.getWriteMethod().invoke(dest, collection);
                 } else if(valueClass == valueDestinationClass) { 
@@ -175,13 +207,13 @@ public class BeanMapping {
                         (valueDestinationClass.isArray() &&
                         valueClass.isArray())) {
                     pd.getWriteMethod().invoke(
-                        dest, convert(mappings, valueObject));
+                        dest, convertInternal(instances, mappings, valueObject));
                 } else {
                     continue;
                 }
             }
         }
-
+        
         return dest;
     }
 
@@ -200,7 +232,7 @@ public class BeanMapping {
         return false;
     }
 
-    private static void convertCollection(
+    private static void convertCollection(IdentityHashMap<Object,Object> instances,
         Properties mappings, Collection source, Collection destination)
         throws IntrospectionException, ClassNotFoundException, 
             InstantiationException, IllegalAccessException, 
@@ -209,14 +241,14 @@ public class BeanMapping {
             Object o = it.next();
 
             if(!arrayContains(BASE_TYPES, o.getClass())) {
-                o = convert(mappings, o);
+                o = convertInternal(instances, mappings, o);
             }
 
             destination.add(o);
         }
     }
 
-    private static void convertMap(
+    private static void convertMap(IdentityHashMap<Object,Object> instances,
         Properties mappings, Map source, Map destination)
         throws IntrospectionException, ClassNotFoundException, 
             InstantiationException, IllegalAccessException, 
@@ -228,13 +260,13 @@ public class BeanMapping {
             Object key = entry.getKey();
 
             if(!arrayContains(BASE_TYPES, key.getClass())) {
-                key = convert(mappings, key);
+                key = convertInternal(instances, mappings, key);
             }
 
             Object value = entry.getValue();
 
             if(!arrayContains(BASE_TYPES, value.getClass())) {
-                value = convert(mappings, value);
+                value = convertInternal(instances, mappings, value);
             }
 
             destination.put(key, value);
@@ -243,6 +275,9 @@ public class BeanMapping {
 
     private static HashMap<String,Object> inspectObject(Object o)
         throws IntrospectionException {
+        if( inspections.containsKey( o.getClass() ) ){
+            return inspections.get( o.getClass() );
+        }
         PropertyDescriptor[] pds = Introspector.getBeanInfo(o.getClass())
                                                .getPropertyDescriptors();
         HashMap<String,Object> values = new HashMap<String,Object>();
@@ -264,7 +299,7 @@ public class BeanMapping {
                 values.put(field.getName(), field);
             }
         }
-
+        inspections.put( o.getClass(), values);
         return values;
     }
 
@@ -301,7 +336,6 @@ public class BeanMapping {
         assert ((mappings != null) && (mappings.size() > 0));
         assert (clazz != null);
 
-        //System.out.println( "Resolving class:"+ clazz.getName() + "::" + trimPackage( clazz.getName() ));
         if(mappings.containsKey(clazz.getName())) {
             return Class.forName(mappings.getProperty(clazz.getName()));
         } else if(mappings.containsValue(clazz.getName())) {
