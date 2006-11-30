@@ -9,6 +9,8 @@
 
 package test.source;
 
+import java.util.Map;
+
 /**
  *
  * @author cooper
@@ -19,6 +21,7 @@ public class ABean {
     private int intProperty;
     private String[] arrayProperty;
     private BBean[][] beanArray;
+    private Map<String, BBean> beanMap; 
     /** Creates a new instance of ABean */
     public ABean() {
     }
@@ -53,6 +56,14 @@ public class ABean {
 
     public void setBeanArray(BBean[][] beanArray) {
         this.beanArray = beanArray;
+    }
+
+    public Map<String, BBean> getBeanMap() {
+        return beanMap;
+    }
+
+    public void setBeanMap(Map<String, BBean> beanMap) {
+        this.beanMap = beanMap;
     }
     
 }

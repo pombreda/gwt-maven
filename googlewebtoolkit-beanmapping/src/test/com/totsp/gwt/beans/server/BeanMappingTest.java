@@ -7,6 +7,7 @@
 
 package com.totsp.gwt.beans.server;
 
+import java.util.HashMap;
 import junit.framework.*;
 import java.util.Properties;
 import java.util.Random;
@@ -40,6 +41,12 @@ public class BeanMappingTest extends TestCase {
                 bbeans[i][j].setValue( ""+ r.nextLong() );
             }
         }
+        
+        HashMap<String,  test.source.BBean> map = new HashMap<String,  test.source.BBean>();
+        map.put( "Foo", bbeans[0][0] );
+        map.put( "Bar", bbeans[0][1] );
+        source.setBeanMap( map );
+        
         source.setBeanArray( bbeans );
         test.destination.ABean result = (test.destination.ABean) 
             BeanMapping.convert(mappings, source);
@@ -56,6 +63,8 @@ public class BeanMappingTest extends TestCase {
                         result.beanArray[i][j].getValue());
             }
         }
+        this.assertEquals("beanMap", map.get("Foo").getValue(), result.beanMap.get("Foo").getValue() );
+        this.assertEquals("beanMap", map.get("Bar").getValue(), result.beanMap.get("Bar").getValue() );
     }
     
 }
