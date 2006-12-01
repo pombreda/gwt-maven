@@ -1,6 +1,22 @@
 /*
  * BeanMapping.java
  *
+ *  Copyright (C) 2006  Robert "kebernet" Cooper <cooper@screaming-penguin.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  */
 package com.totsp.gwt.beans.server;
 
@@ -27,8 +43,32 @@ import java.util.Set;
 
 
 /**
- * This is a class that uses reflection to
- * @author cooper
+ * This is a class that uses reflection to map similar sets of beans to each other.
+ * <p>
+ *     It has a single public static method, convert, that takes in a 
+ *     properties object with mapping information and a bean to
+ *     convert to another kind of bean.
+ * </p>
+ * <p>
+ *     The properties object is in the format of:
+ *     com.package.SomeClass=com.otherpackage.OtherClass
+ *     
+ *     or if you have two packages with like named sets of classes,
+ *     you can simply specify:
+ *     com.package.*=com.otherpackage.*
+ *     
+ *     This will mean that com.package.Bean maps to com.otherpackage.Bean.
+ * </p>
+ * <p>
+ *     Once a class is passed in, and a mapping match is found,
+ *     properties and public non-final attributes on the bean
+ *     will be matched to properties and non-final attributes
+ *     on the mapped object. Any properties that do not exist on
+ *     both classes will be ignored. Properties and attributes are
+ *     considered interchangable, so a public attribute on one bean
+ *     can be a property on another.
+ * </p>
+ * @author <a href="cooper@screaming-penguin.com">Robert "kebernet" Cooper</a>
  */
 public class BeanMapping {
     static final Class[] BASE_TYPES = {
@@ -48,6 +88,18 @@ public class BeanMapping {
 
     
     
+    /**
+     * Converts a bean to its mapped type.
+     * @param mappings The mappings properties
+     * @param bean The bean to convert to its mapped type
+     * @throws java.beans.IntrospectionException 
+     * @throws java.lang.ClassNotFoundException 
+     * @throws java.lang.InstantiationException 
+     * @throws java.lang.IllegalAccessException 
+     * @throws java.lang.reflect.InvocationTargetException 
+     * @throws com.totsp.gwt.beans.server.MappingException 
+     * @return An object of the appropriate mapped type.
+     */
     public static Object convert(Properties mappings, Object bean)throws IntrospectionException, ClassNotFoundException, 
             InstantiationException, IllegalAccessException, 
             InvocationTargetException, MappingException {
