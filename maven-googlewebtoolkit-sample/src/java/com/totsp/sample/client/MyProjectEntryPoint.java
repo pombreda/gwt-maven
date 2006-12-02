@@ -33,7 +33,7 @@ public class MyProjectEntryPoint implements EntryPoint {
      */
     public void onModuleLoad() {
         // direct the endpoint to the service name as defined in the MyProject.gwt.xml module file
-        endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "/MyService");
+        endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "MyService");
 
         // add some basic layout and input elements
         final VerticalPanel panel = new VerticalPanel();
