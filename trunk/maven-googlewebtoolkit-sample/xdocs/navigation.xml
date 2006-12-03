@@ -14,8 +14,7 @@
     <menu name="Overview">
       <item name="Goals" href="/goals.html"/>
       <item name="Properties" href="/properties.html"/>
-      <item name="Walk-Thru Example" href="/gwtrpcexample.html"/>      
-      <item name="FAQ" href="/faq.html"/>
+      <item name="Walk-Thru Example" href="/gwtrpcexample.html"/>            
     </menu>
   </body>
 </project>
