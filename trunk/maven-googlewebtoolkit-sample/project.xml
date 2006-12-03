@@ -27,13 +27,18 @@
     <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
     <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
     <url>http://gwt-maven.googlecode.com/svn</url>
-  </repository>
-	
+  </repository>	
 
 	<developers>
 		<developer>
 			<name>Charlie Collins</name>
 			<email>charlie . collins @ gmail.com</email>
+			<organization>TotSP</organization>
+			<timezone>EST</timezone>
+		</developer>
+		<developer>
+			<name>Robert Cooper</name>
+			<email>kebernet @ gmail.com</email>
 			<organization>TotSP</organization>
 			<timezone>EST</timezone>
 		</developer>
