@@ -53,7 +53,7 @@
           <td>google.webtoolkit.gen</td>
           <td>No</td>
           <td>
-            Specifies the -gen flag to the GWTShell (which does? - TODO).
+            Specifies the -gen flag to the GWTShell.
           </td>
         </tr>
         <tr>
