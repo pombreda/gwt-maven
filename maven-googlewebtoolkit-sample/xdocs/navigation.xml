@@ -12,7 +12,6 @@
     </links>
     <sitemap/>
     <menu name="Overview">
-      <item name="Home" href="/index.html"/>
       <item name="Goals" href="/goals.html"/>
       <item name="Properties" href="/properties.html"/>
       <item name="Walk-Thru Example" href="/gwtrpcexample.html"/>      

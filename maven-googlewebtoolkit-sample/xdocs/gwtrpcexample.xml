@@ -8,6 +8,21 @@
   </properties>
 
   <body>
-         
+  <section name="GWT RPC and gwt-maven plugin walk-thru">
+    <subsection name="Simple GWT RPC Overview">
+       <p>
+       
+        
+      </p>         
+      </subsection>
+      <subsection name="gwt-maven project properties setup">
+        
+               
+      </subsection>
+      <subsection name="Running gwt-maven goals">
+        
+               
+      </subsection>
+  </section>
   </body>
 </document>
