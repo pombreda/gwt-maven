@@ -43,15 +43,13 @@
     <developers>
         <developer>
             <name>Charlie Collins</name>
-            <email>charlie.collins@gmail.com</email>
+            <email>charlie . collins@gmail.com</email>
             <organization>TotSP</organization>
-            <timezone>EST</timezone>
         </developer>
         <developer>
             <name>Robert Cooper</name>
-            <email>kebernet@gmail.com</email>
+            <email>kebernet @ gmail.com</email>
             <organization>TotSP</organization>
-            <timezone>EST</timezone>
         </developer>
     </developers>
     <dependencies>
@@ -70,15 +68,15 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>1.2.11rc1</version>
+            <version>1.2.22</version>
             <type>jar</type>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>com.totsp.gwt</groupId>
             <artifactId>googlewebtoolkit-beanmapping</artifactId>
             <version>1.0.0</version>
             <type>jar</type>
-        </dependency>
+        </dependency>        
     </dependencies>
 </project>
 
