@@ -41,18 +41,15 @@
       <p>
       The point of the gwt-maven plugin is to simplify GWT project setup and the creation of GWT deployable artifacts (WAR files), while allowing project resources to be placed where you want them (flexibility).
       <br /><br />
-      In order to use the maven-googlewebtoolkit-sample project you first have to obtain and unpack the <a href="TODO">sample code itself</a>.
+      In order to use the maven-googlewebtoolkit-sample project you first have to obtain the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">sample code itself</a>.
       <br /><br />
-      Then you will also need to have the maven-googlwebtoolkit-plugin <a href="install.html">installed</a>.
+      Then you will also need to have the maven-googlwebtoolkit-plugin <a href="install.html">installed</a> (along with of course Maven itself, Java, so on).
       <br /><br />
-      Next you will need to set a few platform and location specific values in the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">project.properties</a> file.
+      Next you will need to set a platform specific value in the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">project.properties</a> file.
       <br />
       You need to specify the "google.webtoolkit.home" value, this should denote where you have GWT installed, the default is "/opt/gwt-mac-1.2.22" (note that simply switching this to "windows" or "linux" in place of "mac" does work, even on Windows, assuming you have installed GWT in c:\opt or /opt).
-      <br />
-      You also need to specify the "maven.jar.gwt-dev" value, this should denote the "dev" jar which is in use, the default is ${google.webtoolkit.home}/gwt-dev-mac.jar (again this can be changed to "windows" or "linux" as required).
-      This is a jar OVERRIDE because of the proprietary nature of the gwt "dev" jar (it cannot be hosted in a public repo, you have to download it yourself and agree to the terms, so on).
       <br /><br />
-      Once you have the sample code, the plugin itself, and have set the appropriate platform properties (assuming you also have standard Maven prerequisites such as Maven itself and Java, etc) you then can invoke the following:
+      Once you have the sample code, the plugin itself, and have set the appropriate platform properties you then can invoke the following:
       <source>maven gwt</source> (This will invoke the GWTShell with the sample.)
       <br /><br />
       or
