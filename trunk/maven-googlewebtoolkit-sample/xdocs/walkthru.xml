@@ -53,13 +53,11 @@
       This is a jar OVERRIDE because of the proprietary nature of the gwt "dev" jar (it cannot be hosted in a public repo, you have to download it yourself and agree to the terms, so on).
       <br /><br />
       Once you have the sample code, the plugin itself, and have set the appropriate platform properties (assuming you also have standard Maven prerequisites such as Maven itself and Java, etc) you then can invoke the following:
-      <br /><br />
       <source>maven gwt</source> (This will invoke the GWTShell with the sample.)
       <br /><br />
       or
-      <br />
       <source>maven gwt:war</source> (This will create a deployable Tomcat WAR file with the sample.)
-      <br />
+      <br /><br />
       or any of the other <a href="goals.html">goals</a>.      
       </p>               
       </subsection>
