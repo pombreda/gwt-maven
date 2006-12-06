@@ -5,26 +5,17 @@
     <title>About</title>
   </properties>
   <body>
-    <section name="GWT Maven 1.x Plug-in (gwt-maven)">
+    <section name="maven-googlewebtoolkit-plugin 1.x (gwt-maven)">
       <subsection name="Overview">
         <p>The gwt-maven 1.x plugin is used to develop, build and package GWT applications.</p>
         <p>gwt-maven can invoke GWTShell and GWTCompiler, merge application deployment resources 
         (web.xml, context.xml) with the GWT Hosted Mode development server instance, and can also easily create deployable WAR files
         for GWT applications (with the correct GWT RPC service servlet entries automatically injected based on the GWT module file).</p> 
       </subsection>      
-      <subsection name="GWT-RPC Example using the gwt-maven plugin">
-        <p>The "sample" application using the gwt-maven plugin is a very simple GWT RPC "Hello World" type application
-        that is intended to demonstrate several things:</p>
-        <ul>
-        <li>Simple GWT RPC itself</li>
-        <li>Setting up the gwt-maven plugin and using it for GWTShell and GWTCompiler invocation</li>
-        <li>Compiling a WAR for Tomcat deployment from a gwt-maven enabled GWT project (in one simple step)</li>
-        </ul>      
-        <p>To get started you may want to take a look at the <a href="gwtrpcexample.html">GWT RPC Walk-Thru Example</a> 
-        which provides an overview of GWT RPC itself and makes references to the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">maven-googlewebtoolkit-sample/</a>
-        project that demonstrates a "Hello World" style GWT RPC example using the gwt-maven plugin.</p>
-        <br />
-        Also see the goals and properties pages within this documentation.         
+      <subsection name="GWT-RPC Walk-Thru and Sample using the gwt-maven plugin">
+        <p>
+        Please see the <a href="/walkthru.html">walk-thru</a> and <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">sample</a> for more information.
+        </p>       
       </subsection>
       
     </section>
