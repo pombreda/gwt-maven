@@ -75,14 +75,6 @@
 			<type>jar</type>			
 		</dependency>		
 		
-		<!--  dev-build only for GWT -->
-		<!--  this dependency must be jar overriden in project.properties because of licensing -->
-		<!--  you must accept the GWT license and manually make this dependency present (see project.properties) -->
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-			<type>jar</type>			
-		</dependency>		
 		
 	</dependencies> 
 </project>
