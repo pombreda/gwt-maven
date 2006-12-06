@@ -21,6 +21,39 @@
 		</license> 
 		</licenses>-->
 
+	<siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+	<repository>
+		<connection>
+			scm:svn:http://gwt-maven.googlecode.com/svn
+		</connection>
+		<developerConnection>
+			scm:svn:https://gwt-maven.googlecode.com/svn
+		</developerConnection>
+		<url>http://gwt-maven.googlecode.com/svn</url>
+	</repository>
+
+	<developers>
+		<developer>
+			<name>Charlie Collins</name>
+			<email>charlie . collins @ gmail.com</email>
+			<organization>TotSP</organization>
+		</developer>
+		<developer>
+			<name>Robert Cooper</name>
+			<email>kebernet @ gmail.com</email>
+			<organization>TotSP</organization>
+		</developer>
+	</developers>
+
+	<reports>
+        <report>maven-faq-plugin</report>
+        <!-- 
+        <report>maven-changelog-plugin</report>
+        <report>maven-file-activity-plugin</report>
+        <report>maven-developer-activity-plugin</report>
+        -->
+    </reports>
+
 	<build>
 		<resources>
 			<resource>
@@ -40,14 +73,6 @@
 		</resources>
 	</build>
 
-	<reports>
-		<report>maven-changes-plugin</report>
-		<report>maven-faq-plugin</report>
-		<report>maven-changelog-plugin</report>
-		<report>maven-file-activity-plugin</report>
-		<report>maven-developer-activity-plugin</report>
-	</reports>
-
 	<dependencies>
 
 		<dependency>
@@ -61,7 +86,7 @@
 			<artifactId>commons-cli</artifactId>
 			<version>1.0</version>
 			<type>jar</type>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>jdom</groupId>
 			<artifactId>jdom</artifactId>
@@ -70,7 +95,5 @@
 		</dependency>
 
 	</dependencies>
-
-
 
 </project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+	<properties>
+		<title>maven-googlewebtoolkit-plugin 1.x (gwt-maven)</title>
+	</properties>
+
+	<body>
+		<section name="maven-googlewebtoolkit-plugin 1.x (gwt-maven) Install">
+			<subsection
+				name="Add the gwt-maven repository location to your maven.repo.remote property">
+				<source>maven.repo.remote=http://mirrors.ibiblio.org/pub/mirrors/maven/,http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</source>
+			</subsection>
+			<subsection name="Download/Install the gwt-maven plugin">
+				<source>maven -DartifactId=maven-googlewebtoolkit-plugin -DgroupId=com.totsp.gwt -Dversion=1.0.3 plugin:download</source>
+			</subsection>
+		</section>
+	</body>
+</document>
