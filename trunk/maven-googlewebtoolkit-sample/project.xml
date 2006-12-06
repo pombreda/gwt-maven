@@ -22,7 +22,7 @@
 		</resources>		
 	</build>
 	
-	<siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+  <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
   <repository>
     <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
     <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
@@ -34,13 +34,11 @@
 			<name>Charlie Collins</name>
 			<email>charlie . collins @ gmail.com</email>
 			<organization>TotSP</organization>
-			<timezone>EST</timezone>
 		</developer>
 		<developer>
 			<name>Robert Cooper</name>
 			<email>kebernet @ gmail.com</email>
 			<organization>TotSP</organization>
-			<timezone>EST</timezone>
 		</developer>
 	</developers>
 
