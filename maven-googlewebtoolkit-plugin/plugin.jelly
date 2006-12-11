@@ -29,7 +29,8 @@
            </ant:classpath>
       </ant:java>
       <ant:copy file="${maven.war.webapp.dir}/META-INF/context.xml" 
-         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" />
+         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" 
+         failonerror="false"/>
       <echo>compile src: ${pom.build.sourceDirectory}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
@@ -75,7 +76,8 @@
            </ant:classpath>
       </ant:java>
       <ant:copy file="${maven.war.webapp.dir}/META-INF/context.xml" 
-         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" />
+         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" 
+         failonerror="false"/>
       <ant:echo message="jvmargs=${maven.mevenide.debug.jvmargs} ${maven.mevenide.run.jvmargs}"/>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
