@@ -14,7 +14,7 @@
 				<source>maven.repo.remote=http://mirrors.ibiblio.org/pub/mirrors/maven/,http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</source>
 			</subsection>
 			<subsection name="Download/Install the gwt-maven plugin">
-				<source>maven -DartifactId=maven-googlewebtoolkit-plugin -DgroupId=com.totsp.gwt -Dversion=1.0.3 plugin:download</source>
+				<source>maven -DartifactId=maven-googlewebtoolkit-plugin -DgroupId=com.totsp.gwt -Dversion=1.0.4 plugin:download</source>
 			</subsection>
 		</section>
 	</body>
