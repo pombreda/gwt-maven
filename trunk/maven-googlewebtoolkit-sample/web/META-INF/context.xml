@@ -4,20 +4,16 @@
 -->
 
 <Context privileged="true" antiResourceLocking="false"
-	antiJARLocking="false">
+	antiJARLocking="false" path="/" docBase="/">
 
-	<!--  this is the Tomcat 5.5.x style of JNDI resource definition -->
-	<!-- 
-		<Resource name="jdbc/hsqldb" auth="Container"
-		type="javax.sql.DataSource" driverClassName="org.hsqldb.jdbcDriver"
-		url="jdbc:hsqldb:mem:testdb"
-		username="sa" password="" maxActive="20" maxIdle="10" maxWait="-1"
-		removeAbandoned="true" removeAbandonedTimeout="60" />
-	-->
 
 	<!--  GWT uses Tomcat 5.0.28 - use the 5.0 "style" for defining resources -->
+	<!--  note that you ALSO have to add stuff like commons-pool, commons-dbcp and your JDBC driver to the GWTShell classpath -->
+	<!--  (the gwt-maven plugin does this FOR you, all maven deps will be on the GWTShell classpath -->
 	<Resource name="jdbc/hsqldb" auth="Container"
 		type="javax.sql.DataSource" />
+		
+	<ResourceLink name="jdbc/hsqldb" type="javax.sql.DataSource" global="jdbc/hsqldb"/>
 
 	<ResourceParams name="jdbc/hsqldb">
 		<parameter>
@@ -43,6 +39,8 @@
 			<value>jdbc:hsqldb:mem:testdb</value>
 		</parameter>
 	</ResourceParams>
+	
+	
 
 </Context>
 

@@ -14,12 +14,7 @@
 	<shortDescription>Sample for Maven gwt plugin</shortDescription>
 
 	<build>
-		<sourceDirectory>src/java</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>src/conf</directory>							
-			</resource>
-		</resources>		
+		<sourceDirectory>src/java</sourceDirectory>			
 	</build>
 	
   <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
@@ -53,7 +48,19 @@
 
 	<dependencies>
 		
-		<!--  stuff that IS war bundled -->		
+		<!--  stuff that IS war bundled -->	
+			
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		
+			
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -64,6 +71,28 @@
 			</properties>
 		</dependency>
 		
+		
+		<!--  war bundled for HOSTED MODE inclusion (but may not be required when deploying to standard Tomcat) -->
+		<!--  (Stuff that IS war bundled true, is included in the deps to GWTShell when it is started with gwt-maven plugin.) -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.3</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
 
 		<!--  stuff that is NOT war bundled -->		
 		
@@ -73,6 +102,13 @@
 			<artifactId>gwt-user</artifactId>
 			<version>1.2.22</version>			
 			<type>jar</type>			
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<type>jar</type>
 		</dependency>		
 		
 		
