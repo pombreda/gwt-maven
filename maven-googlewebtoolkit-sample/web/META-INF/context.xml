@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	Tomcat context.xml file. 
+-->
+
+<Context privileged="true" antiResourceLocking="false"
+	antiJARLocking="false">
+
+	<!--  this is the Tomcat 5.5.x style of JNDI resource definition -->
+	<!-- 
+		<Resource name="jdbc/hsqldb" auth="Container"
+		type="javax.sql.DataSource" driverClassName="org.hsqldb.jdbcDriver"
+		url="jdbc:hsqldb:mem:testdb"
+		username="sa" password="" maxActive="20" maxIdle="10" maxWait="-1"
+		removeAbandoned="true" removeAbandonedTimeout="60" />
+	-->
+
+	<!--  GWT uses Tomcat 5.0.28 - use the 5.0 "style" for defining resources -->
+	<Resource name="jdbc/hsqldb" auth="Container"
+		type="javax.sql.DataSource" />
+
+	<ResourceParams name="jdbc/hsqldb">
+		<parameter>
+			<name>factory</name>
+			<value>
+				org.apache.commons.dbcp.BasicDataSourceFactory
+			</value>
+		</parameter>
+		<parameter>
+			<name>username</name>
+			<value>sa</value>
+		</parameter>
+		<parameter>
+			<name>password</name>
+			<value />
+		</parameter>
+		<parameter>
+			<name>driverClassName</name>
+			<value>org.hsqldb.jdbcDriver</value>
+		</parameter>
+		<parameter>
+			<name>url</name>
+			<value>jdbc:hsqldb:mem:testdb</value>
+		</parameter>
+	</ResourceParams>
+
+</Context>
+
