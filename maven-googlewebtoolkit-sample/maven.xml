@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:j="jelly:core" xmlns:ant="jelly:ant">
 
-  <preGoal name="war:war">
-        
-  	<ant:mkdir dir="${maven.war.webapp.dir}/META-INF/" />  	  	
-  	<ant:copy file="${basedir}/conf/context.xml" toDir="${maven.war.webapp.dir}/META-INF/" />
-  	
-  </preGoal>
-  
-	
   <postGoal name="jar">
   	<!-- do something after jar goal -->
   </postGoal>

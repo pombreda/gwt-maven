@@ -79,7 +79,7 @@ public class DBConnTest
             int colmax = meta.getColumnCount();
             int i;
             Object o = null;
-            for (; rs.next();)
+            while (rs.next())
             {
                 for (i = 0; i < colmax; ++i)
                 {
