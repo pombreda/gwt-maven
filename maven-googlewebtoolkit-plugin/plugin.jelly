@@ -28,6 +28,8 @@
                 <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
            </ant:classpath>
       </ant:java>
+      <ant:copy file="${maven.war.webapp.dir}/META-INF/context.xml" 
+         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" />
       <echo>compile src: ${pom.build.sourceDirectory}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
@@ -59,6 +61,21 @@
     name="gwt:debug" 
     prereqs="war:webapp" 
     description="Runs GWTShell debug">
+        <ant:java classname="com.totsp.mavenplugin.gwt.support.MakeCatalinaBase" fork="true"
+      dir="${basedir}" >
+            <ant:arg value="${google.webtoolkit.tomcat}" />
+            <ant:arg value="${maven.war.webxml}" />
+            <ant:classpath>
+                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+           </ant:classpath>
+      </ant:java>
+      <ant:copy file="${maven.war.webapp.dir}/META-INF/context.xml" 
+         tofile="${google.webtoolkit.tomcat}/conf/Catalina/localhost/ROOT.xml" />
       <ant:echo message="jvmargs=${maven.mevenide.debug.jvmargs} ${maven.mevenide.run.jvmargs}"/>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
