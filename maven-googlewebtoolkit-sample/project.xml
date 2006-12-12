@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<pomVersion>3</pomVersion>
-	<artifactId></artifactId>
-	<id>gwt-maven-sample</id>
-	<currentVersion>1.0</currentVersion>
-	<name>gwt-maven-sample</name>
-	<package>com.totsp.sample</package>
-	<inceptionYear>2006</inceptionYear>
-	<organization>
-		<name>TotSP</name>
-		<url>http://www.screaming-penguin.com</url>
-	</organization>
-	<shortDescription>Sample for Maven gwt plugin</shortDescription>
-
-	<build>
-		<sourceDirectory>src/java</sourceDirectory>			
-	</build>
-	
-  <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
-  <repository>
-    <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
-    <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
-    <url>http://gwt-maven.googlecode.com/svn</url>
-  </repository>	
-
-	<developers>
-		<developer>
-			<name>Charlie Collins</name>
-			<email>charlie . collins @ gmail.com</email>
-			<organization>TotSP</organization>
-		</developer>
-		<developer>
-			<name>Robert Cooper</name>
-			<email>kebernet @ gmail.com</email>
-			<organization>TotSP</organization>
-		</developer>
-	</developers>
-
-	<reports>
+    <pomVersion>3</pomVersion>
+    <id>gwt-maven-sample</id>
+    <currentVersion>1.0.0</currentVersion>
+    <name>gwt-maven-sample</name>
+    <package>com.totsp.sample</package>
+    <inceptionYear>2006</inceptionYear>
+    <organization>
+        <name>TotSP</name>
+        <url>http://www.screaming-penguin.com</url>
+    </organization>
+    <shortDescription>Sample for Maven gwt plugin</shortDescription>
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+    </build>
+    <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+    <repository>
+        <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
+        <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
+        <url>http://gwt-maven.googlecode.com/svn</url>
+    </repository>
+    <developers>
+        <developer>
+            <name>Charlie Collins</name>
+            <email>charlie . collins @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+        <developer>
+            <name>Robert Cooper</name>
+            <email>kebernet @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+    </developers>
+    <reports>
         <report>maven-faq-plugin</report>
         <!-- 
         <report>maven-changelog-plugin</report>
@@ -45,72 +40,52 @@
         <report>maven-developer-activity-plugin</report>
         -->
     </reports>
-
-	<dependencies>
-		
-		<!--  stuff that IS war bundled -->	
-			
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
-			<type>jar</type>
-			<properties>
-				<war.bundle>true</war.bundle>
-			</properties>
-		</dependency>
-		
-			
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<version>1.2.22</version>			
-			<type>jar</type>
-			<properties>
-				<war.bundle>true</war.bundle>
-			</properties>
-		</dependency>
-		
-		
-		<!--  war bundled for HOSTED MODE inclusion (but may not be required when deploying to standard Tomcat) -->
-		<!--  (Stuff that IS war bundled true, is included in the deps to GWTShell when it is started with gwt-maven plugin.) -->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.2</version>
-			<type>jar</type>
-			<properties>
-				<war.bundle>true</war.bundle>
-			</properties>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>1.3</version>
-			<type>jar</type>
-			<properties>
-				<war.bundle>true</war.bundle>
-			</properties>
-		</dependency>
-
-		<!--  stuff that is NOT war bundled -->		
-		
-		<!--  dev-build only for GWT -->
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>1.2.22</version>			
-			<type>jar</type>			
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
-			<type>jar</type>
-		</dependency>		
-		
-		
-	</dependencies> 
+    <dependencies>
+        <!--  stuff that IS war bundled -->
+       
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>1.2.22</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        <!--  war bundled for HOSTED MODE inclusion (but may not be required when deploying to standard Tomcat) -->
+        <!--  (Stuff that IS war bundled true, is included in the deps to GWTShell when it is started with gwt-maven plugin.) -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <!--  stuff that is NOT war bundled -->
+        <!--  dev-build only for GWT -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.2.22</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+        </dependency>
+         <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.7</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
+
