@@ -21,6 +21,9 @@ import com.totsp.sample.client.model.Entry;
  * EntryPoint example of a GWT RPC call,
  * in order to demonstrate using the TotSP Maven GWT plugin:
  * http://code.google.com/p/gwt-maven.
+ * 
+ * In the real world do not put all your crap in an EntryPoint like this 
+ * (this is an example which is meant to be quick and dirty).
  *
  * @author ccollins
  *
@@ -31,7 +34,7 @@ public class MyProjectEntryPoint implements EntryPoint {
     ServiceDefTarget endpoint = (ServiceDefTarget) service;
 
     /**
-     * Default EntryPoint onModuleLoad.
+     * EntryPoint onModuleLoad.
      *
      */
     public void onModuleLoad() {
@@ -80,7 +83,7 @@ public class MyProjectEntryPoint implements EntryPoint {
                         for (int i=0; i < entries.size(); i++)
                         {
                             Entry entry = (Entry) entries.get(i);
-                            resultBuffer.append("name - " + entry.name + "  time - " + entry.time + "\n");
+                            resultBuffer.append("name - " + entry.name + "  | time - " + entry.time + "\n");
                         }
                     }
                     
