@@ -17,7 +17,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.totsp.sample.client.MyService;
 import com.totsp.sample.client.exception.DataException;
 import com.totsp.sample.client.model.Entry;
-import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  * Service Impl class, this is the GWT SERVER side code, runs on the server, not bound by the JRE emulation
