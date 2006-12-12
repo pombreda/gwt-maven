@@ -149,12 +149,12 @@
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/server/MyServiceImpl.java">
 						MyServiceImpl.java
 					</a>
-					class. 
+					class.
 					<br />
 					<br />
-					Note that this sample class retrieves a
-					DataSource via JNDI and then uses a small self
-					created HSQL database to store and retrieve data.
+					Note that this sample class retrieves a DataSource
+					via JNDI and then uses a small self created HSQL
+					database to store and retrieve data.
 				</p>
 			</subsection>
 			<subsection
@@ -173,22 +173,23 @@
 					<br />
 					<br />
 					In order to use the maven-googlewebtoolkit-sample
-					project you first have to obtain the
-					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">
-						sample code itself
-					</a>
-					.
-					<br />
-					<br />
-					Then you will also need to have the
+					project you first need to have the
 					maven-googlwebtoolkit-plugin
 					<a href="install.html">installed</a>
 					(along with of course Maven itself, Java, so on).
 					<br />
 					<br />
-					Next you will need to set a platform specific value
-					in the
+					Then you also will need to setup a project that
+					mirrors the
+					<a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">
+						sample code
+					</a>
+					.
+					<br />
+					<br />
+					Next you will need to set your project properties
+					accordingly. in the
 					<a
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">
 						project.properties
@@ -196,19 +197,20 @@
 					file.
 					<br />
 					You need to specify the "google.webtoolkit.home"
-					value, this should denote where you have GWT
-					installed, the default is "/opt/gwt-mac-1.2.22"
-					(note that simply switching this to "windows" or
-					"linux" in place of "mac" does work, even on
-					Windows, assuming you have installed GWT in c:\opt
-					or /opt).
+					value at a minimum, this should denote where you
+					have GWT installed. This can aslo be set
+					(actually more appropriately) in Maven wide build.properties
+					on a per machine basis - either way it must be
+					addressed.
 					<br />
 					<br />
 					Once you have the sample code, the plugin itself,
 					and have set the appropriate platform properties you
 					then can invoke the following:
 					<source>maven gwt</source>
-					(This will invoke the GWTShell with the sample.)
+					(This will invoke the GWTShell with the sample so
+					that you are running in Hosted Mode and doing RPC
+					with a DataSource.)
 					<br />
 					<br />
 					or
