@@ -12,62 +12,15 @@
         <tr>
           <th>Property name</th>
           <th>Optional?</th>
+          <th>Default</th>
           <th>Description</th>
         </tr>
         <tr>        
           <td>google.webtoolkit.home</td>
           <td>No</td>
+          <td>${basedir}/../gwt-amiga-1.7.58 (make sure to change this, please)</td>
           <td>
             Specifies the location where the Google Web Toolkit is installed.
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.style</td>
-          <td>Yes</td>
-          <td>
-            Specifies the style of the GWTCompiler JavaScript output (PRETTY, DETAILED, OBF).
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.runtarget</td>
-          <td>No</td>
-          <td>
-            Specifies the runtarget (GWT module and Host Page) the Hosted Mode Browser should invoke when launched.
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.compiletarget</td>
-          <td>No</td>
-          <td>
-            Specifies the compiletarget (GWT module) the GWTShell and GWTCompiler will invoke.
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.port</td>
-          <td>Yes</td>
-          <td>
-            Specifies the port where the development mode server will run (default 8888).
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.gen</td>
-          <td>No</td>
-          <td>
-            Specifies the -gen flag to the GWTShell.
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.loglevel</td>
-          <td>Yes</td>
-          <td>
-            Specifies the logging level the GWTShell console will display.
-          </td>
-        </tr>
-        <tr>
-          <td>google.webtoolkit.headless</td>
-          <td>No</td>
-          <td>
-            Specifies whether or not headless mode GWTShell should be run.
           </td>
         </tr>
         <tr>
@@ -77,6 +30,80 @@
             Specifies extra args that are passed to the GWTShell, most importantly used for Macs to specify "-XstartOnFirstThread" (required on the Mac).
           </td>
         </tr>
+        <tr>
+          <td>google.webtoolkit.runtarget</td>
+          <td>No</td>
+          <td>MyModule/MyModule.html</td>
+          <td>
+            Specifies the relative URL (GWT module and Host Page) the Hosted Mode Browser should invoke when launched.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.compiletarget</td>
+          <td>No</td>
+          <td>MyModule</td>
+          <td>
+            Specifies the GWT module the GWTCompiler will build.
+          </td>
+        </tr>
+        <tr>        
+          <td>google.webtoolkit.output</td>
+          <td>No</td>
+          <td>${maven.war.webapp.dir}</td>
+          <td>
+            Specifies the location where generated web files will be written.
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.style</td>
+          <td>Yes</td>
+          <td>OBF</td>
+          <td>
+            Specifies the style of the GWTCompiler JavaScript output (PRETTY, DETAILED, OBF).
+          </td>
+        </tr>  
+        <tr>        
+          <td>google.webtoolkit.tomcat</td>
+          <td>No</td>
+          <td>${maven.build.dir}/tomcat</td>
+          <td>
+            Specifies the location where tomcat directory will be created.
+          </td>
+        </tr>              
+        <tr>
+          <td>google.webtoolkit.port</td>
+          <td>Yes</td>
+          <td>8888</td>
+          <td>
+            Specifies the port where the development mode server will run (default 8888).
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.gen</td>
+          <td>No</td>
+          <td>${maven.war.webapp.dir}</td>
+          <td>
+            Specifies the -gen flag to the GWTShell (temporary output files location).
+          </td>
+        </tr>
+        <tr>
+          <td>google.webtoolkit.loglevel</td>
+          <td>Yes</td>
+          <td>INFO</td>
+          <td>
+            Specifies the logging level the GWTShell console will display.
+          </td>
+        </tr>
+        <!-- 
+        <tr>
+          <td>google.webtoolkit.headless</td>
+          <td>No</td>
+          <td>
+            Specifies whether or not headless mode GWTShell should be run.
+          </td>
+        </tr>
+        -->
+        
       </table>
     </section>
     

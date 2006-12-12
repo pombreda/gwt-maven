@@ -22,7 +22,7 @@
 				</a>
 			</subsection>
 
-			<subsection name="What's in the sample">
+			<subsection name="What is in the sample">
 				The sample is provided to demonstrate using the
 				maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
 				with a sample project.  Other projects can be setup in 
