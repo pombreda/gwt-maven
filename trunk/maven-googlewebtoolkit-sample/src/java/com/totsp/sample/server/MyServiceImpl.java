@@ -17,6 +17,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.totsp.sample.client.MyService;
 import com.totsp.sample.client.exception.DataException;
 import com.totsp.sample.client.model.Entry;
+import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  * Service Impl class, this is the GWT SERVER side code, runs on the server, not bound by the JRE emulation
@@ -41,7 +42,8 @@ public class MyServiceImpl extends RemoteServiceServlet implements MyService {
         try {
             initContext = new InitialContext();
             envContext = (Context) initContext.lookup("java:/comp/env");
-            ds = (DataSource) envContext.lookup("jdbc/hsqldb");
+            ds = (DataSource) envContext.lookup("jdbc/DataSource");
+            
         } catch (NamingException e) {
             e.printStackTrace();
             throw new DataException("UNABLE TO GET DATASOURCE - \n" +

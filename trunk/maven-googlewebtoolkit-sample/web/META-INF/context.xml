@@ -4,21 +4,23 @@
 -->
 
 <Context privileged="true" antiResourceLocking="false"
-	antiJARLocking="false" path="/" docBase="/">
+	antiJARLocking="false" debug="1" reloadable="true" path="">
 
 
 	<!--  GWT uses Tomcat 5.0.28 - use the 5.0 "style" for defining resources -->
 	<!--  note that you ALSO have to add stuff like commons-pool, commons-dbcp and your JDBC driver to the GWTShell classpath -->
 	<!--  (the gwt-maven plugin does this FOR you, all maven deps will be on the GWTShell classpath -->
-	<Resource name="jdbc/hsqldb" auth="Container"
-		type="javax.sql.DataSource" />
 
-	<ResourceParams name="jdbc/hsqldb">
+	<Resource name="jdbc/DataSource" 
+            auth="Container"
+            type="javax.sql.DataSource" 
+            />
+	
+	<ResourceParams name="jdbc/DataSource">
+
 		<parameter>
 			<name>factory</name>
-			<value>
-				org.apache.commons.dbcp.BasicDataSourceFactory
-			</value>
+			<value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
 		</parameter>
 		<parameter>
 			<name>username</name>
@@ -26,7 +28,7 @@
 		</parameter>
 		<parameter>
 			<name>password</name>
-			<value />
+                        <value></value>
 		</parameter>
 		<parameter>
 			<name>driverClassName</name>
@@ -37,8 +39,6 @@
 			<value>jdbc:hsqldb:mem:testdb</value>
 		</parameter>
 	</ResourceParams>
-	
-	
 
 </Context>
 
