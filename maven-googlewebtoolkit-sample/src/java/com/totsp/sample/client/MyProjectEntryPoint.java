@@ -1,7 +1,5 @@
 package com.totsp.sample.client;
 
-import java.util.List;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -14,15 +12,18 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 import com.totsp.sample.client.model.Entry;
+
+import java.util.List;
 
 
 /**
  * EntryPoint example of a GWT RPC call,
  * in order to demonstrate using the TotSP Maven GWT plugin:
  * http://code.google.com/p/gwt-maven.
- * 
- * In the real world do not put all your crap in an EntryPoint like this 
+ *
+ * In the real world do not put all your crap in an EntryPoint like this
  * (this is an example which is meant to be quick and dirty).
  *
  * @author ccollins
@@ -75,19 +76,20 @@ public class MyProjectEntryPoint implements EntryPoint {
         service.myMethod(s,
             new AsyncCallback() {
                 // what to do if it works
-                public void onSuccess(Object result) {                    
+                public void onSuccess(Object result) {
                     List entries = (List) result;
                     StringBuffer resultBuffer = new StringBuffer();
-                    if (entries != null)
-                    {
-                        for (int i=0; i < entries.size(); i++)
-                        {
+
+                    if (entries != null) {
+                        for (int i = 0; i < entries.size(); i++) {
                             Entry entry = (Entry) entries.get(i);
-                            resultBuffer.append("name - " + entry.name + "  | time - " + entry.time + "\n");
+                            resultBuffer.append("name - " + entry.name +
+                                "  | time - " + entry.time + "\n");
                         }
                     }
-                    
-                    l.setText("The current DataSource store result set is: \n" + resultBuffer.toString());
+
+                    l.setText("The current DataSource store result set is: \n" +
+                        resultBuffer.toString());
                 }
 
                 // what to do if it fails
