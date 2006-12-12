@@ -6,7 +6,7 @@
 
   <resource-ref>
       <description>DB Connection</description>
-      <res-ref-name>bean/DataSource</res-ref-name>
+      <res-ref-name>jdbc/DataSource</res-ref-name>
       <res-type>javax.sql.DataSource</res-type>
       <res-auth>Container</res-auth>
   </resource-ref>
