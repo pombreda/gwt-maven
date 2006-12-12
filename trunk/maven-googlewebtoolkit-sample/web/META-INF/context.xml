@@ -12,8 +12,6 @@
 	<!--  (the gwt-maven plugin does this FOR you, all maven deps will be on the GWTShell classpath -->
 	<Resource name="jdbc/hsqldb" auth="Container"
 		type="javax.sql.DataSource" />
-		
-	<ResourceLink name="jdbc/hsqldb" type="javax.sql.DataSource" global="jdbc/hsqldb"/>
 
 	<ResourceParams name="jdbc/hsqldb">
 		<parameter>
