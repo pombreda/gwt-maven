@@ -17,7 +17,7 @@
       </subsection>          
       <subsection name="GWT-RPC Walk-Thru and Sample using the gwt-maven plugin">
         <p>
-        Please see the <a href="walkthru.html">walk-thru</a> and <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">sample</a> for more information.
+        Please see the <a href="sample.html">sample</a> for more information, examples, and all that good stuff.
         </p>
       </subsection>      
     </section>
