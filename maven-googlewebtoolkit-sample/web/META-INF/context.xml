@@ -9,7 +9,7 @@
 
 	<!--  GWT uses Tomcat 5.0.28 - use the 5.0 "style" for defining resources -->
 	<!--  note that you ALSO have to add stuff like commons-pool, commons-dbcp and your JDBC driver to the GWTShell classpath -->
-	<!--  (the gwt-maven plugin does this FOR you, all maven deps will be on the GWTShell classpath -->
+	<!--  (the gwt-maven plugin does this FOR you, all maven deps will be on the GWTShell classpath) -->
 
 	<Resource name="jdbc/DataSource" 
             auth="Container"
