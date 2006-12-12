@@ -23,31 +23,45 @@
 			</subsection>
 
 			<subsection name="What is in the sample">
-				The sample is provided to demonstrate using the
-				maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
-				with a sample project.  Other projects can be setup in 
-				the same manner as the sample to get things rolling 
-				(use the sample as a template). 
-
-				The sample however is more than that, it is *also* a
-				useful overview of GWT RPC in general and provides an
-				example of USING A DATASOURCE with GWT RPC which works
-				in Hosted Mode and when deployed. (It's a valuable
-				reference even if you are not using Maven.)
-
-				The sample is a simple GWT web app with a single form
-				element where you enter your name. That entry is then
-				sent to the server via GWT RPC and it is stored in an
-				HSQL database along with a timestamp. Then the results
-				of all the entries (since the server was last started,
-				mem db) are returned to the client and displayed on the
-				page.
-
-				This demonstrates configuring the gwt-maven plugin along
-				with *<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">context.xml</a>* 
-				and *<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">web.xml</a>* in order to setup a
-				container managed DataSource and have that setup matter
-				in the "Tomcat Lite" that is used in GWT Hosted Mode.				 				
+				<p>
+					The sample is provided to demonstrate using the
+					maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
+					with a sample project. Other projects can be setup
+					in the same manner as the sample to get things
+					rolling (use the sample as a template).
+				</p>
+				<p>
+					The sample however is more than that, it is *also* a
+					useful overview of GWT RPC in general and provides
+					an example of USING A DATASOURCE with GWT RPC which
+					works in Hosted Mode and when deployed. (It's a
+					valuable reference even if you are not using Maven.)
+				</p>
+				<p>
+					The sample is a simple GWT web app with a single
+					form element where you enter your name. That entry
+					is then sent to the server via GWT RPC and it is
+					stored in an HSQL database along with a timestamp.
+					Then the results of all the entries (since the
+					server was last started, mem db) are returned to the
+					client and displayed on the page.
+				</p>
+				<p>
+					This demonstrates configuring the gwt-maven plugin
+					along with *
+					<a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
+						context.xml
+					</a>
+					* and *
+					<a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">
+						web.xml
+					</a>
+					* in order to setup a container managed DataSource
+					and have that setup matter in the "Tomcat Lite" that
+					is used in GWT Hosted Mode.
+				</p>
 			</subsection>
 
 			<subsection name="Step by Step GWT RPC in the sample">
@@ -190,47 +204,89 @@
 					.
 				</p>
 			</subsection>
-			
-			<subsection name="How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)">
-				If you do not use Maven and are not using the gwt-maven plugin then you can still
-				do this stuff, you will simply need to configure things manually.  (If you DO use the plugin, 
-				which is recommened - just setup your project like the sample - then all of this is done FOR
-				you automatically, using the Maven properties.)
-				
-				First up understand that to get things working with regard to GWT and RPC services that require
-				resources such as DataSources in Hosted Mode, there are several ways to get things working.  This 
-				way, what the plugin ultimately does, is only one approach.  That approach is to MUNGE the Hosted Mode
-				Tomcat Lite instance to include the resources it needs to run your project in hosted mode - these are 
-				typically a context descriptor (context.xml) a deployment descriptor (web.xml) and dependencies (JDBC drivers and so on).
-				
-				Alternative techniques are using an entirely different Tomcat instance that is OUTSIDE of GWT (as elaborated upon here:
-				<a href="http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39/">http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39</a>
-				and or using MOCK objects while working in Hosted Mode.  All of these techniques (munge, externalize, mock) are viable and have pros and cons. 
-				
-				TO DO THE MUNGING THING:
-				
-				1.  Put context.xml where it needs to be:
-				target/tomcat/conf/gwt/localhost/ROOT.xml 
-				
-				Rename context.xml to ROOT.xml and place it in tomcat/conf/gwt/localhost. 
-				
-				Also be aware that as of today (GWT version 1.2.22) the Hosted Mode
-				"Tomcat Lite" is Tomcat version 5.0.28.  This means you need to use the long form
-				for defining resources within context.xml (this form changed in Tomcat 5.5.x - see the sample
-				<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">context.xml</a>).
-				
-				2.  Put web.xml where it needs to be:
-				/target/tomcat/webapps/ROOT/WEB-INF/web.xml 
-				
-				Pretty self explanatory there, same name, goes in target/tomcat/webapps/ROOT/WEB-INF.
-				
-				3.  Include dependencies your setup needs ON the classpath when you start GWTShell. 
-				
-				The Tomcat Lite provided with GWT does not have commons-pool or commons-dbcp and so on.  
-				Whatever you need with your project needs to be supplied on the classpath when starting GWTShell. 
-				Take a look at a simple MyProject-shell script (what ApplicationCreator creates) and you will see
-				how the shell is invoked and what is included on the classpath, edit that (or provide an env var, or so on)
-				to manipulate the classpath as needed.			
+
+			<subsection
+				name="How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)">
+				<p>
+					If you do not use Maven and are not using the
+					gwt-maven plugin then you can still do this stuff,
+					you will simply need to configure things manually.
+					(If you DO use the plugin, which is recommened -
+					just setup your project like the sample - then all
+					of this is done FOR you automatically, using the
+					Maven properties.)
+				</p>
+				<p>
+					First up understand that to get things working with
+					regard to GWT and RPC services that require
+					resources such as DataSources in Hosted Mode, there
+					are several ways to get things working. This way,
+					what the plugin ultimately does, is only one
+					approach. That approach is to MUNGE the Hosted Mode
+					Tomcat Lite instance to include the resources it
+					needs to run your project in hosted mode - these are
+					typically a context descriptor (context.xml) a
+					deployment descriptor (web.xml) and dependencies
+					(JDBC drivers and so on).
+				</p>
+				<p>
+					Alternative techniques are using an entirely
+					different Tomcat instance that is OUTSIDE of GWT (as
+					elaborated upon here:
+					<a
+						href="http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39/">
+						http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39
+					</a>
+				</p>
+				<p>
+					and or using MOCK objects while working in Hosted
+					Mode. All of these techniques (munge, externalize,
+					mock) are viable and have pros and cons.
+				</p>
+				<p>TO DO THE MUNGING THING:</p>
+				<p>
+					1. Put context.xml where it needs to be:
+					target/tomcat/conf/gwt/localhost/ROOT.xml
+				</p>
+				<p>
+					Rename context.xml to ROOT.xml and place it in
+					tomcat/conf/gwt/localhost.
+				</p>
+				<p>
+					Also be aware that as of today (GWT version 1.2.22)
+					the Hosted Mode "Tomcat Lite" is Tomcat version
+					5.0.28. This means you need to use the long form for
+					defining resources within context.xml (this form
+					changed in Tomcat 5.5.x - see the sample
+					<a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
+						context.xml
+					</a>
+					).
+				</p>
+				<p>
+					2. Put web.xml where it needs to be:
+					/target/tomcat/webapps/ROOT/WEB-INF/web.xml
+				</p>
+				<p>
+					Pretty self explanatory there, same name, goes in
+					target/tomcat/webapps/ROOT/WEB-INF.
+				</p>
+				<p>
+					3. Include dependencies your setup needs ON the
+					classpath when you start GWTShell.
+				</p>
+				<p>
+					The Tomcat Lite provided with GWT does not have
+					commons-pool or commons-dbcp and so on. Whatever you
+					need with your project needs to be supplied on the
+					classpath when starting GWTShell. Take a look at a
+					simple MyProject-shell script (what
+					ApplicationCreator creates) and you will see how the
+					shell is invoked and what is included on the
+					classpath, edit that (or provide an env var, or so
+					on) to manipulate the classpath as needed.
+				</p>
 			</subsection>
 
 		</section>
