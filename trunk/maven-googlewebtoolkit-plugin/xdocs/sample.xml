@@ -31,11 +31,12 @@
 					rolling (use the sample as a template).
 				</p>
 				<p>
-					The sample however is more than that, it is *also* a
-					useful overview of GWT RPC in general and provides
-					an example of USING A DATASOURCE with GWT RPC which
-					works in Hosted Mode and when deployed. (It's a
-					valuable reference even if you are not using Maven.)
+					The sample, however, is also more than that. It
+					additionally provides a useful overview of GWT RPC
+					in general with an example of using a DataSource
+					along with GWT RPC, which works in Hosted Mode and
+					when deployed. (It's a valuable reference even if
+					you are not using Maven.)
 				</p>
 				<p>
 					The sample is a simple GWT web app with a single
@@ -124,6 +125,20 @@
 					when later deployed to a servlet container.
 					<br />
 					<br />
+					Also note the RPC handling. The Button oject has a
+					ClickListener that invokes a method named
+					<code>callMyService</code>
+					which calls the MyService implementation on the
+					server. The method has both
+					<code>onSuccess</code>
+					and
+					<code>onFailure</code>
+					methods in the anonymous AsynCallBack object that it
+					passes in to the server method. These handle the
+					resulting server callback when things work and do
+					not work respectively.
+					<br />
+					<br />
 					STEP 4:
 					<br />
 					Create a SERVER side implementation of the client
@@ -134,7 +149,10 @@
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/server/MyServiceImpl.java">
 						MyServiceImpl.java
 					</a>
-					class. Note that this sample class retrieves a
+					class. 
+					<br />
+					<br />
+					Note that this sample class retrieves a
 					DataSource via JNDI and then uses a small self
 					created HSQL database to store and retrieve data.
 				</p>
