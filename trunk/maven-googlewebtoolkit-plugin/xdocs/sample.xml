@@ -198,8 +198,8 @@
 					<br />
 					You need to specify the "google.webtoolkit.home"
 					value at a minimum, this should denote where you
-					have GWT installed. This can aslo be set
-					(actually more appropriately) in Maven wide build.properties
+					have GWT installed. This can aslo be set (actually
+					more appropriately) in Maven wide build.properties
 					on a per machine basis - either way it must be
 					addressed.
 					<br />
@@ -238,21 +238,24 @@
 				</p>
 				<p>
 					First up understand that to get things working with
-					regard to GWT and RPC services that require
-					resources such as DataSources in Hosted Mode, there
-					are several ways to get things working. This way,
-					what the plugin ultimately does, is only one
-					approach. That approach is to MUNGE the Hosted Mode
-					Tomcat Lite instance to include the resources it
-					needs to run your project in hosted mode - these are
+					regard to GWT and projects that require resources
+					such as DataSources in Hosted Mode (from context.xml
+					and web.xml), there are several ways to get things
+					rolling. This way, what the plugin ultimately does,
+					is only one approach.
+					<br />
+					<br />
+					That approach is to MUNGE the Hosted Mode Tomcat
+					Lite instance to include the resources it needs to
+					run your project in hosted mode - these are
 					typically a context descriptor (context.xml) a
 					deployment descriptor (web.xml) and dependencies
 					(JDBC drivers and so on).
 				</p>
 				<p>
-					Alternative techniques are using an entirely
-					different Tomcat instance that is OUTSIDE of GWT (as
-					elaborated upon here:
+					Alternative techniques include the following: using
+					an entirely different Tomcat instance that is
+					OUTSIDE of GWT (as elaborated upon here:
 					<a
 						href="http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39/">
 						http://groups.google.com/group/Google-Web-Toolkit/browse_thread/thread/338c4b765d7dfc39
@@ -263,10 +266,13 @@
 					Mode. All of these techniques (munge, externalize,
 					mock) are viable and have pros and cons.
 				</p>
-				<p>TO DO THE MUNGING THING:</p>
+				<p>
+					TAKING THE MUNGING APPROACH (manipulating the Hosted
+					Mode Tomcat Lite):
+				</p>
 				<p>
 					1. Put context.xml where it needs to be:
-					target/tomcat/conf/gwt/localhost/ROOT.xml
+					target/tomcat/conf/gwt/localhost/ROOT.xml.
 				</p>
 				<p>
 					Rename context.xml to ROOT.xml and place it in
@@ -277,7 +283,8 @@
 					the Hosted Mode "Tomcat Lite" is Tomcat version
 					5.0.28. This means you need to use the long form for
 					defining resources within context.xml (this form
-					changed in Tomcat 5.5.x - see the sample
+					changed in Tomcat 5.5.x - see the sample for how it
+					works on 5.0.x,
 					<a
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
 						context.xml
@@ -306,6 +313,13 @@
 					shell is invoked and what is included on the
 					classpath, edit that (or provide an env var, or so
 					on) to manipulate the classpath as needed.
+					<br />
+					<br />
+					The sample includes dependencies through the plugin
+					creating the classpath, based on the maven
+					dependencies, before it invokes the shell (the
+					sample will not help you if you are not using maven
+					and the plugin).
 				</p>
 			</subsection>
 
