@@ -1,9 +1,16 @@
 package com.totsp.sample.server;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import com.totsp.sample.client.MyService;
+import com.totsp.sample.client.exception.DataException;
+import com.totsp.sample.client.model.Entry;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,18 +18,15 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import javax.sql.DataSource;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.totsp.sample.client.MyService;
-import com.totsp.sample.client.exception.DataException;
-import com.totsp.sample.client.model.Entry;
 
 /**
  * Service Impl class, this is the GWT SERVER side code, runs on the server, not bound by the JRE emulation
  * library or Java 1.5.  In this case getting a DataSource from Tomcat and storing stuff, in "real life" would pass
- * off such to your DAO or other and just be a "wrapper" with no logic. 
- * 
+ * off such to your DAO or other and just be a "wrapper" with no logic.
+ *
  * @author ccollins
  *
  */
@@ -42,7 +46,6 @@ public class MyServiceImpl extends RemoteServiceServlet implements MyService {
             initContext = new InitialContext();
             envContext = (Context) initContext.lookup("java:/comp/env");
             ds = (DataSource) envContext.lookup("jdbc/DataSource");
-            
         } catch (NamingException e) {
             e.printStackTrace();
             throw new DataException("UNABLE TO GET DATASOURCE - \n" +
@@ -76,19 +79,18 @@ public class MyServiceImpl extends RemoteServiceServlet implements MyService {
                 Entry entry = new Entry();
                 entry.name = name;
                 entry.time = time;
-                resultList.add(entry);                
+                resultList.add(entry);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataException("SQLException - " + e.getMessage());
         } finally {
             try {
-                if (conn != null)
-                {
+                if (conn != null) {
                     conn.close();
                 }
-                if (st != null)
-                {
+
+                if (st != null) {
                     st.close();
                 }
             } catch (SQLException e) {
