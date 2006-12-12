@@ -26,6 +26,7 @@
         <tr>
           <td>google.webtoolkit.extrajvmargs</td>
           <td>No</td>
+          <td>none</td>
           <td>
             Specifies extra args that are passed to the GWTShell, most importantly used for Macs to specify "-XstartOnFirstThread" (required on the Mac).
           </td>
