@@ -5,14 +5,13 @@
 
 	<properties>
 		<title>
-			GWT RPC Sample using the maven-googlewebtoolkit-plugin 1.x
-			(gwt-maven)
+			GWT RPC Sample using the maven-googlewebtoolkit-plugin
 		</title>
 	</properties>
 
 	<body>
 		<section
-			name="GWT RPC Sample using the maven-googlewebtoolkit-plugin 1.x (gwt-maven)">
+			name="GWT RPC Sample using the maven-googlewebtoolkit-plugin">
 			<subsection name="Where is the sample">
 				The maven-googlewebtoolkit-sample code is hosted at
 				Google Code:
