@@ -1,0 +1,20 @@
+Overview
+
+= Introduction =
+
+gwt-maven is a set of Java Maven support classes, and Maven 1.x and 2.x plugins, that
+facilitate both hosted mode development for GWT projects with container managed resources
+(such as DataSources) and one step simple construction of deployable WAR files.  
+
+In addition gwt-maven allows you to setup your GWT projects with any structure you like,
+defining resource locations in project.properties, and allows you quick access to GWTShell
+and GWTCompiler.  
+
+
+
+= Details =
+See the <a
+href="http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/index.html">sample</a>
+for more information and documentation (we are using Maven to gen the documentation, and
+do not yet have it in the new Google Code Wiki format - but there are docs!). 
+
