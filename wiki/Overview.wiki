@@ -1,4 +1,4 @@
-Overview
+
 
 = Introduction =
 
@@ -13,8 +13,7 @@ and GWTCompiler.
 
 
 = Details =
-See the <a
-href="http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/index.html">sample</a>
+See the [http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/index.html
+sample]
 for more information and documentation (we are using Maven to gen the documentation, and
 do not yet have it in the new Google Code Wiki format - but there are docs!). 
-
