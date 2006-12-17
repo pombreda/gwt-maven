@@ -1,5 +1,4 @@
 
-
 = Introduction =
 
 gwt-maven is a set of Java Maven support classes, and Maven 1.x and 2.x plugins, that
@@ -13,7 +12,7 @@ and GWTCompiler.
 
 
 = Details =
-See the [http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/index.html
-sample]
+See the sample
+[http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/index.html]
 for more information and documentation (we are using Maven to gen the documentation, and
 do not yet have it in the new Google Code Wiki format - but there are docs!). 
