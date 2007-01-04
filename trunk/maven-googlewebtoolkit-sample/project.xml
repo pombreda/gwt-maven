@@ -10,10 +10,7 @@
         <name>TotSP</name>
         <url>http://www.screaming-penguin.com</url>
     </organization>
-    <shortDescription>Sample for Maven gwt plugin</shortDescription>
-    <build>
-        <sourceDirectory>src/java</sourceDirectory>
-    </build>
+    <shortDescription>Sample for Maven gwt plugin</shortDescription>    
     <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
     <repository>
         <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
@@ -31,7 +28,7 @@
             <email>kebernet @ gmail.com</email>
             <organization>TotSP</organization>
         </developer>
-    </developers>
+    </developers>   
     <reports>
         <report>maven-faq-plugin</report>
         <!-- 
@@ -40,6 +37,11 @@
         <report>maven-developer-activity-plugin</report>
         -->
     </reports>
+     
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+    </build>
+    
     <dependencies>
         <!--  stuff that IS war bundled -->       
         <dependency>
