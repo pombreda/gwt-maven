@@ -124,7 +124,7 @@
 					when later deployed to a servlet container.
 					<br />
 					<br />
-					Also note the RPC handling. The Button oject has a
+					Also note the RPC handling. The Button object has a
 					ClickListener that invokes a method named
 					<code>callMyService</code>
 					which calls the MyService implementation on the
