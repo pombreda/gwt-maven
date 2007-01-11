@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pluginMetadata>
+    <mojos>
+        <mojo>
+            <goal>hello</goal>
+            
+            <!-- this element refers to the Ant target we'll invoke -->
+            <call>hello</call>
+            <requiresProject>true</requiresProject>
+            <description>
+                Says Hello.
+            </description>
+            <parameters>
+                <parameter>
+                    <name>google.webtoolkit.home</name> 
+                    <property>google.webtoolkit.home</property> 
+                    <required>true</required> 
+                    <expression>${google.webtoolkit.home}</expression>
+                    <type>java.lang.String</type>
+                    <description>The name of the user to greet.</description>
+                </parameter>
+                
+                <parameter>
+                    <name>projectName</name> 
+                    <property>projectName</property>
+                    <required>true</required>
+                    <readonly>true</readonly>
+                    <defaultValue>${project.name}</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The name of the project currently being built.</description>
+                </parameter>
+            </parameters>
+        </mojo>
+        <mojo>
+            <goal>gwt</goal>
+            
+            <!-- this element refers to the Ant target we'll invoke -->
+            <call>gwt</call>
+            
+            <requiresProject>true</requiresProject>
+            <description>
+                Runs the project in the GWT shell.
+            </description>
+            <parameters>
+                <parameter>
+                    <name>google.webtoolkit.source</name>
+                    <property>google.webtoolkit.source</property>
+                    <defaultValue>src/main/java</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Path to Java Sources</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.home</name> 
+                    <property>google.webtoolkit.home</property> 
+                    <required>true</required> 
+                    <defaultValue>../gwt-amiga-2.0.0</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the GWT Home folder</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.tomcat</name> 
+                    <property>google.webtoolkit.tomcat</property> 
+                    <required>true</required> 
+                    <defaultValue>target/tomcat</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the catalina base.</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.webapp</name> 
+                    <property>google.webtoolkit.webapp</property> 
+                    <required>true</required> 
+                    <defaultValue>${project.build.directory}/${project.build.finalName}</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the catalina base.</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.webxml</name> 
+                    <property>google.webtoolkit.webxml</property> 
+                    <required>true</required> 
+                    <defaultValue>src/main/webapp/WEB-INF/web.xml</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the catalina base.</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.output</name> 
+                    <property>google.webtoolkit.output</property> 
+                    <required>true</required> 
+                    <defaultValue>${google.webtoolkit.webapp}</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the catalina base.</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.style</name> 
+                    <property>google.webtoolkit.style</property> 
+                    <required>true</required> 
+                    <defaultValue>OBF</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The location of the catalina base.</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.runtarget</name> 
+                    <property>google.webtoolkit.runtarget</property> 
+                    <required>true</required> 
+                    <defaultValue>MyModule/MyModule.html</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The URL to open in the shell</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.compiletarget</name> 
+                    <property>google.webtoolkit.compiletarget</property> 
+                    <required>true</required> 
+                    <defaultValue>MyModule</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>The fully qualified module name for the compiler</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.port</name> 
+                    <property>google.webtoolkit.port</property> 
+                    <required>true</required> 
+                    <defaultValue>8888</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Port to start the webserver/debugger connection</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.gen</name> 
+                    <property>google.webtoolkit.gen</property> 
+                    <required>true</required> 
+                    <defaultValue>${project.build.directory}</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Directory to write generated files to</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.logLevel</name> 
+                    <property>google.webtoolkit.logLevel</property> 
+                    <required>true</required> 
+                    <defaultValue>INFO</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Log level to output from GWT</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.extrajvmargs</name> 
+                    <property>google.webtoolkit.extrajvmargs</property> 
+                    <required>false</required>
+                    <defaultValue>-Xmx512m</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Extra JVM arguements to pass during startup</description>
+                </parameter>
+                <parameter>
+                    <name>google.webtoolkit.classpath</name> 
+                    <property>google.webtoolkit.classpath</property> 
+                    <required>false</required>
+                    <defaultValue>${maven.project.classpath}</defaultValue>
+                    <type>java.lang.String</type>
+                    <description>Extra JVM arguements to pass during startup</description>
+                </parameter>
+            </parameters>
+        </mojo>
+    </mojos>
+</pluginMetadata>
