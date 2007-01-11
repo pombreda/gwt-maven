@@ -23,7 +23,7 @@ public class GwtWebInfProcessorTest extends TestCase {
      * Basedir for all file I/O. Important when running tests from
      * the reactor.
      */
-    public static String basedir = System.getProperty("basedir");
+    public static String basedir = System.getProperty("basedir", "./");
     
     public GwtWebInfProcessorTest(String testName) {
         super(testName);
