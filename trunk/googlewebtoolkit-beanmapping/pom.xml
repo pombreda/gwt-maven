@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.totsp.gwt</groupId>
+    <artifactId>googlewebtoolkit-beanmapping</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0</version>
+    <parent>
+	    <groupId>com.totsp.gwt</groupId>
+	    <artifactId>maven-googlewebtoolkit</artifactId>
+	    <version>1.0.1</version>
+    </parent>
+    <name>Maven-GoogleWebToolkit-BeanMapping</name>
+    <url>http://code.google.com/p/gwt-maven/</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+    	<!-- Manually specifying source directories for maven1 compatibility -->
+    	<sourceDirectory>src/java</sourceDirectory>
+    	<testSourceDirectory>src/test</testSourceDirectory>
+    	<testResources>
+    		<testResource>
+    			<directory>src/test</directory>
+    			<excludes>
+    				<exclude>**/*.java</exclude>
+    			</excludes>
+    		</testResource>
+    	</testResources>
+    </build>
+</project>
+
