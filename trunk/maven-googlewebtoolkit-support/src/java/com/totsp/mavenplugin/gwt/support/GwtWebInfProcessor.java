@@ -89,7 +89,8 @@ public class GwtWebInfProcessor {
         
         Document document = null;
         try{
-            document = new SAXBuilder().build(
+            SAXBuilder builder = new SAXBuilder(false);
+            document = builder.build(
         
                 GwtWebInfProcessor.class.getResourceAsStream(
                 "/"+module.replace('.', '/') + ".gwt.xml"
@@ -180,7 +181,7 @@ public class GwtWebInfProcessor {
     }
     
     private Document getWebXml() throws JDOMException, IOException {
-        return this.webXml = (this.webXml == null) ? new SAXBuilder().build(this.webXmlPath)
+        return this.webXml = (this.webXml == null) ? new SAXBuilder( false ).build(this.webXmlPath)
         : this.webXml;
     }
     
