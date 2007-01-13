@@ -6,12 +6,19 @@
     <packaging>jar</packaging>
     <version>1.0.0</version>
     <parent>
-	    <groupId>com.totsp.gwt</groupId>
-	    <artifactId>maven-googlewebtoolkit</artifactId>
-	    <version>1.0.1</version>
+        <groupId>com.totsp.gwt</groupId>
+        <artifactId>maven-googlewebtoolkit</artifactId>
+        <version>1.0.1</version>
     </parent>
     <name>Maven-GoogleWebToolkit-BeanMapping</name>
     <url>http://code.google.com/p/gwt-maven/</url>
+    <distributionManagement>
+        <repository>
+            <id>local.repo</id>
+            <name>file repository to svn</name>
+            <url>file://${basedir}/mavenrepo</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -21,17 +28,17 @@
         </dependency>
     </dependencies>
     <build>
-    	<!-- Manually specifying source directories for maven1 compatibility -->
-    	<sourceDirectory>src/java</sourceDirectory>
-    	<testSourceDirectory>src/test</testSourceDirectory>
-    	<testResources>
-    		<testResource>
-    			<directory>src/test</directory>
-    			<excludes>
-    				<exclude>**/*.java</exclude>
-    			</excludes>
-    		</testResource>
-    	</testResources>
+        <!-- Manually specifying source directories for maven1 compatibility -->
+        <sourceDirectory>src/java</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>src/test</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
     </build>
 </project>
 
