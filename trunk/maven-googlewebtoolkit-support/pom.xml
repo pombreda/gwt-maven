@@ -11,6 +11,13 @@
     </parent>
     <name>Maven-GoogleWebToolkit-Support</name>
     <url>http://maven.apache.org</url>
+    <distributionManagement>
+        <repository>
+            <id>local.repo</id>
+            <name>file repository to svn</name>
+            <url>file://${basedir}/mavenrepo</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>com.totsp.gwt</groupId>
@@ -54,10 +61,10 @@
             </testResource>
         </testResources>
         <resources>
-        <resource>
-            <directory>src/conf</directory>
-        </resource>
-    </resources>
+            <resource>
+                <directory>src/conf</directory>
+            </resource>
+        </resources>
     </build>
 </project>
 

@@ -12,6 +12,13 @@
     </parent>
     <name>Maven 2 Plugin for Google Web Toolkit</name>
     <url>http://code.google.com/p/gwt-maven</url>
+    <distributionManagement>
+        <repository>
+            <id>local.repo</id>
+            <name>file repository to svn</name>
+            <url>file://${basedir}/../mavenrepo</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>com.totsp.gwt</groupId>
