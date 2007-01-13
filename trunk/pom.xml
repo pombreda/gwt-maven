@@ -6,7 +6,13 @@
     <packaging>pom</packaging>
     <version>1.0.1</version>
     <name>Maven-GoogleWebToolkit</name>
-    <url>http://maven.apache.org</url>
+    <url>http://code.google.com/p/gwt-maven</url>
+    <repositories>
+    <repository>
+      <id>gwt-maven</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </repository>
+  </repositories>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -35,8 +41,10 @@
 		</plugins>
 	</build>
 	<modules>
+                <module>googlewebtoolkit-beanmapping</module>
+                <module>maven-googlewebtoolkit-support</module>
 		<module>maven-googlewebtoolkit2-plugin</module>
-		<module>maven-googlewebtoolkit-support</module>
-	</modules>
+		
+    <module>Maven2GWTProject</module>
+  </modules>
 </project>
-
