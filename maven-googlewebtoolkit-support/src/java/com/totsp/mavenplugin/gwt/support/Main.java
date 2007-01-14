@@ -97,6 +97,7 @@ public class Main {
                         );
                         processor.process();
                     } catch(ExitException ee ){
+                        ee.printStackTrace();
                         System.exit(0);
                     } catch(Exception e){
                         e.printStackTrace();
@@ -110,6 +111,7 @@ public class Main {
                 }
             }
         } catch(ParseException exp) {
+            exp.printStackTrace();
             // oops, something went wrong
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
         }
