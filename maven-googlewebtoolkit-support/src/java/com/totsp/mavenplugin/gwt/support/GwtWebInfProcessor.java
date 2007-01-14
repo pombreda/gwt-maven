@@ -120,7 +120,8 @@ public class GwtWebInfProcessor {
                 );
             }
         } catch(Exception e){
-            System.err.println("Unable to parse module: "+ module );
+            if( !module.startsWith("com.google.gwt.dev.") )
+                System.err.println("Unable to parse module: "+ module );
             return servletElements;
         }
         Element element = document.getRootElement();
