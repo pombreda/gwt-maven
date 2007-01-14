@@ -6,16 +6,16 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ */
 package com.totsp.mavenplugin.gwt.support;
 
 import java.io.File;
@@ -29,7 +29,6 @@ import org.jdom.Content;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -41,6 +40,7 @@ public class GwtWebInfProcessor {
     protected File destination;
     protected List servletDescriptors;
     private String moduleName;
+    private File moduleFile;
     protected String webXmlPath;
     
     protected GwtWebInfProcessor(){
@@ -76,6 +76,26 @@ public class GwtWebInfProcessor {
             throw new ExitException("No servlets found.");
         }
     }
+    public GwtWebInfProcessor(
+            File moduleDefinition, String targetWebXml, String sourceWebXml
+            ) throws Exception {
+        // obtain web.xml
+        this.webXmlPath = sourceWebXml;
+        this.moduleFile = moduleDefinition;
+        File webXmlFile = new File(sourceWebXml);
+        
+        if(!webXmlFile.exists() || !webXmlFile.canRead()) {
+            throw new Exception("Unable to locate source web.xml");
+        }
+        
+        this.destination = new File(targetWebXml);
+        
+        this.servletDescriptors = this.getGwtServletDescriptors(null);
+        
+        if(this.servletDescriptors.size() == 0) {
+            throw new ExitException("No servlets found.");
+        }
+    }
     
     /**
      * Return List of ServletDescriptor from gwt module file.
@@ -90,14 +110,17 @@ public class GwtWebInfProcessor {
         Document document = null;
         try{
             SAXBuilder builder = new SAXBuilder(false);
+            if( module == null && this.moduleFile != null){
+                document = builder.build( this.moduleFile);
+            } else {
             document = builder.build(
-        
-                GwtWebInfProcessor.class.getResourceAsStream(
-                "/"+module.replace('.', '/') + ".gwt.xml"
-                )
+                    GwtWebInfProcessor.class.getResourceAsStream(
+                        "/"+module.replace('.', '/') + ".gwt.xml"
+                    )
                 );
+            }
         } catch(Exception e){
-            System.err.println("Unable to parse module: "+ moduleName );
+            System.err.println("Unable to parse module: "+ module );
             return servletElements;
         }
         Element element = document.getRootElement();
@@ -168,9 +191,9 @@ public class GwtWebInfProcessor {
                     webapp.addContent(i + 1, insertAfter);
                     foundPoint = true;
                     break;
-                   
+                    
                 }
-               
+                
             }
             if( !foundPoint ){
                 webapp.addContent( insertAfter );
@@ -249,7 +272,7 @@ public class GwtWebInfProcessor {
             servletMapping.addContent(servletName);
             
             Element urlPattern = new Element("url-pattern", webapp.getNamespace());
-           
+            
             urlPattern.setText( this.moduleName == null ? d.getPath() : "/" + this.moduleName + d.getPath());
             servletMapping.addContent(urlPattern);
             webapp.addContent(insertAfter, servletMapping);
