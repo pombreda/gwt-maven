@@ -60,7 +60,9 @@
    <goal 
     name="gwt:noserver" 
     prereqs="war:webapp" 
-    description="Runs GWTShell with the noserver option">
+    description="Runs GWTShell with the noserver option 
+    (requires external container, with pre-configured context (localhost:{google.webtoolkit.port}/{google.webtoolkit.runtarget}
+    - and context must at a minimum have files: Module.html, Module.nocache.html, gwt.js)">
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
           <ant:arg value="-out"/>
