@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+	<properties>
+		<title>
+			Configure GWT with -noserver
+		</title>
+	</properties>
+
+	<body>
+		<section
+			name="Configure GWT with -noserver">
+			
+			<subsection
+				name="Start from a working GWT project">
+				<p>
+				Start from a project that runs in the standard GWTShell and can be successfully
+				compiled with the GWTCompiler. 
+				<br /><br />
+				Compile the project and have the following files, which should be in the compiler out directory (www is the default), handy for later copying to the external container instance:
+				<li>[ModuleName].cache.html (the bootstrap script)</li>
+				<li>[ModuleName].html (host page)</li>
+				<li>gwt.js (common GWT script)</li>
+				</p>
+			</subsection>
+			
+			<subsection
+				name="Setup an external container context">
+				<p>
+				Create an external container context where you can "point" the GWTShell.
+				<br />
+				In Tomcat terms this means create the following:
+				<li>a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor</li>
+				<li>a $CATALINA_HOME/webapps/ModuleName directory</li>
+				Then place the files from the previous GWT compile step (nocache.html, Module.html, gwt.js) in the webapps/ModuleName directory.
+				<br />
+				Then, before proceeding, BROWSE to that location in a regular browser and 
+				</p>
+			</subsection>
+			
+			<subsection
+				name="Setup an external container context">
+				<p>
+				</p>
+			</subsection>
+
+		</section>
+	</body>
+</document>
