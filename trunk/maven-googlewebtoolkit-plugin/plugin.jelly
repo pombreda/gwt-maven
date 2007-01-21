@@ -57,6 +57,34 @@
       </ant:java>
   </goal>
   
+   <goal 
+    name="gwt:noserver" 
+    prereqs="war:webapp" 
+    description="Runs GWTShell with the noserver option">
+      <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
+          <ant:arg value="-out"/>
+          <ant:arg value="${google.webtoolkit.output}" />
+          <ant:arg value="-style" />
+          <ant:arg value="${google.webtoolkit.style}" />
+          <ant:arg value="-port" />
+          <ant:arg value="${google.webtoolkit.port}" />
+          <ant:arg value="-logLevel" />
+          <ant:arg value="${google.webtoolkit.logLevel}" />
+          <ant:arg value="-noserver" />
+          <ant:arg value="${google.webtoolkit.runtarget}" />
+          <ant:classpath>
+                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  
   <!-- -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y -->
   <goal 
     name="gwt:debug" 
