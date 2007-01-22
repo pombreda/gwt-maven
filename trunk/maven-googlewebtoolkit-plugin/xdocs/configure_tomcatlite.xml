@@ -45,7 +45,7 @@
 					(JDBC drivers and so on).
 				</p>
 				<p>
-					Alternative techniques include using an <a href="configure_tomcatelite.html">external container instance</a>.
+					Alternative techniques include using an <a href="configure_noserver.html">external container instance</a>.
 					and or using MOCK objects while working in Hosted
 					Mode. All of these techniques (munge, externalize,
 					mock) are viable and have pros and cons.
@@ -62,11 +62,11 @@
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
 						context.xml
 					</a> where it needs to be:
-					target/tomcat/conf/gwt/localhost/ROOT.xml.
+					<code>[PROJECT]/tomcat/conf/gwt/localhost/ROOT.xml</code>.
 				</p>
 				<p>
 					Rename context.xml to ROOT.xml and place it in
-					tomcat/conf/gwt/localhost.
+					[PROJECT]/tomcat/conf/gwt/localhost.
 				</p>
 				<p>
 					Also be aware that as of today (GWT version 1.2.22)
@@ -83,11 +83,11 @@
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">
 						web.xml
 					</a> where it needs to be:
-					/target/tomcat/webapps/ROOT/WEB-INF/web.xml
+					<code>[PROJECT]/tomcat/webapps/ROOT/WEB-INF/web.xml</code>.
 				</p>
 				<p>
 					Pretty self explanatory there, same name, goes in
-					target/tomcat/webapps/ROOT/WEB-INF.
+					[PROJECT]/tomcat/webapps/ROOT/WEB-INF.
 				</p>
 				<p>
 				<b>Dependencies</b>

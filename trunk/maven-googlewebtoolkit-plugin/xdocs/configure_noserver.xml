@@ -20,9 +20,11 @@
 				compiled with the GWTCompiler. 
 				<br /><br />
 				Compile the project and have the following files, which should be in the compiler out directory (www is the default), handy for later copying to the external container instance:
-				<li>[ModuleName].cache.html (the bootstrap script)</li>
-				<li>[ModuleName].html (host page)</li>
-				<li>gwt.js (common GWT script)</li>
+				<source>
+[ModuleName].cache.html 
+[ModuleName].html 
+gwt.js 
+				</source>
 				</p>
 			</subsection>
 			
@@ -32,8 +34,10 @@
 				Create an external container context where you can "point" the GWTShell.
 				<br />
 				In Tomcat terms this means create the following:
-				<li>a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor</li>
-				<li>a $CATALINA_HOME/webapps/ModuleName directory</li>
+				<code>
+				a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor
+				a $CATALINA_HOME/webapps/ModuleName directory
+				</code>
 				Then place the files from the previous GWT compile step (nocache.html, Module.html, gwt.js) in the webapps/ModuleName directory.
 				<br />
 				Then, before proceeding, BROWSE to that location in a regular browser and ensure you can load the host page (it will not show dynamic elements - yet, but still should be present). 
@@ -56,7 +60,7 @@
 				</p>
 				<p>
 				An example MODIFIED shell startup script, for those NOT using gwt-maven, including the -noserver and -port options is shown below:
-				<pre>
+				<source>
 #!/bin/sh
 
 ENTRY_POINT=com.package.Module
@@ -68,7 +72,7 @@ CPGWT=$CPGWT:$GWT_HOME/gwt-user.jar
 CPGWT=$CPGWT:$GWT_HOME/gwt-dev-mac.jar
 java -XstartOnFirstThread -cp $CPGWT com.google.gwt.dev.GWTShell -logLevel DEBUG -noserver -port 8080 "$@" $ENTRY_POINT/
 $HOST_PAGE
-				</pre>
+				</source>
 				</p>
 			</subsection>
 			
