@@ -181,7 +181,7 @@
 					<br />
 					<br />
 					In addition the plugin also easily supports the -noserver option if you wish to use
-					an external container instance. 
+					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
 					<br />
 					<br />
 					In order to use the maven-googlewebtoolkit-sample
