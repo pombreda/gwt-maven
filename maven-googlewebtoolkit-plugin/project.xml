@@ -16,10 +16,10 @@
 
 	<!--  
 		<licenses>
-			<license>
-				<name>Apache Public License 2.0 - for the plugin itself</name>
-				<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			</license> 
+		<license>
+		<name>Apache Public License 2.0 - for the plugin itself</name>
+		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license> 
 		</licenses>
 	-->
 
@@ -47,14 +47,26 @@
 		</developer>
 	</developers>
 
+	<mailingLists>
+		<mailingList>
+			<name>gwt-maven/topics</name>
+			<post>http://groups.google.com/group/gwt-maven/topics</post>
+			<subscribe>http://groups.google.com/group/gwt-maven/subscribe</subscribe>
+			<unsubscribe>http://groups.google.com/group/gwt-maven/subscribe</unsubscribe>
+			<archive>
+				http://groups.google.com/group/gwt-maven/topics
+			</archive>
+		</mailingList>
+	</mailingLists>
+
 	<reports>
-        <report>maven-faq-plugin</report>
-        <!-- 
-        <report>maven-changelog-plugin</report>
-        <report>maven-file-activity-plugin</report>
-        <report>maven-developer-activity-plugin</report>
-        -->
-    </reports>
+		<report>maven-faq-plugin</report>
+		<!-- 
+			<report>maven-changelog-plugin</report>
+			<report>maven-file-activity-plugin</report>
+			<report>maven-developer-activity-plugin</report>
+		-->
+	</reports>
 
 	<build>
 		<resources>
