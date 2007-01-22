@@ -1,12 +1,1 @@
-#Plugin Docs Extras#
-
-= Introduction =
-
-gwt-maven docs include information on how to configure the embedded GWT Tomcat instance, and how to use -noserver, *whether or not* you are using the plugin. 
-
-
-= Details =
-
-http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/configure_noserver.html
-
-http://www.screaming-penguin.com/docs/maven-googlewebtoolkit-plugin/configure_tomcatlite.html
+DELETE ME
