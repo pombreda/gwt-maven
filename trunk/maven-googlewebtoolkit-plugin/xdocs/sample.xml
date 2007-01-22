@@ -64,20 +64,6 @@
 				</p>
 			</subsection>
 			
-			<subsection
-				name="How to use -noserver (with or without the plugin)">
-				<p>
-				<a href="configure_noserver.html">See the -noserver configuration page</a>.
-				</p>
-			</subsection>
-			
-			<subsection
-				name="How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)">
-				<p>
-				<a href="configure_tomcatlite.html">See the Tomcat Lite configuration page</a>.
-				</p>
-			</subsection>
-
 			<subsection name="Step by Step GWT RPC in the sample">
 				<p>
 					STEP 1:
@@ -251,6 +237,19 @@
 				</p>
 			</subsection>
 
+			<subsection
+				name="How to use -noserver (with or without the plugin)">
+				<p>
+				<a href="configure_noserver.html">See the -noserver configuration page</a>.
+				</p>
+			</subsection>
+			
+			<subsection
+				name="How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)">
+				<p>
+				<a href="configure_tomcatlite.html">See the Tomcat Lite configuration page</a>.
+				</p>
+			</subsection>
 			
 
 		</section>

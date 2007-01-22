@@ -14,11 +14,18 @@
       </subsection>  
       <subsection name="Project Home">
       	<p><a href="http://code.google.com/p/gwt-maven/">http://code.google.com/p/gwt-maven/</a></p>
-      </subsection>          
+      </subsection>  
+      <subsection name="Install">
+      	<p><a href="install.html">Install the gwt-maven plugin</a></p>
+      </subsection>              
       <subsection name="GWT-RPC Walk-Thru and Sample using the gwt-maven plugin">
-        <p>
-        Please see the <a href="sample.html">sample</a> for more information, examples, and all that good stuff.
-        </p>
+        <p><a href="sample.html">See the "Sample Example that is Quite Ample" for a complete walk through (including DataSources)</a></p>
+      </subsection>
+      <subsection name="HOWTO Configure the GWT Tomcat Instance">
+      	<p><a href="configure_tomcatlite.html">Configure the GWT embeded Tomcat Lite instance</a></p>
+      </subsection>
+      <subsection name="HOWTO Use -noserver with GWT">
+      	<p><a href="configure_noserver.html">Configure GWT Hosted Mode with -noserver</a></p>
       </subsection>      
     </section>
   </body>
