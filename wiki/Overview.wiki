@@ -1,3 +1,5 @@
+#summary Oveview of the plugin
+
 = Introduction =
 
 gwt-maven is a set of Java Maven support classes, and Maven 1.x and 2.x plugins, that
