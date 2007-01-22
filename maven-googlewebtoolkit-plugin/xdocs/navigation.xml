@@ -15,9 +15,9 @@
       <item name="Goals" href="/goals.html"/>
       <item name="Properties" href="/properties.html"/>
       <item name="Install" href="/install.html"/>
-      <item name="Sample Example That is Quite Ample" href="/sample.html"/>  
+      <item name="Sample Example" href="/sample.html"/>  
       <item name="Using -noserver" href="/configure_noserver.html"/>
-      <item name="Configuring GWT Tomcat Lite" href="/configure_tomcatlite.html"/>          
+      <item name="Configuring GWT Tomcat" href="/configure_tomcatlite.html"/>          
     </menu>
   </body>
 </project>

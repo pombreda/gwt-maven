@@ -25,7 +25,7 @@
         </tr>
         <tr>
           <td>google.webtoolkit.extrajvmargs</td>
-          <td>No</td>
+          <td>Yes</td>
           <td>none</td>
           <td>
             Specifies extra args that are passed to the GWTShell, most importantly used for Macs to specify "-XstartOnFirstThread" (required on the Mac).
@@ -49,7 +49,7 @@
         </tr>
         <tr>        
           <td>google.webtoolkit.output</td>
-          <td>No</td>
+          <td>Yes</td>
           <td>${maven.war.webapp.dir}</td>
           <td>
             Specifies the location where generated web files will be written.
@@ -65,7 +65,7 @@
         </tr>  
         <tr>        
           <td>google.webtoolkit.tomcat</td>
-          <td>No</td>
+          <td>Yes</td>
           <td>${maven.build.dir}/tomcat</td>
           <td>
             Specifies the location where tomcat directory will be created.
@@ -81,7 +81,7 @@
         </tr>
         <tr>
           <td>google.webtoolkit.gen</td>
-          <td>No</td>
+          <td>Yes</td>
           <td>${maven.war.webapp.dir}</td>
           <td>
             Specifies the -gen flag to the GWTShell (temporary output files location).
@@ -95,15 +95,6 @@
             Specifies the logging level the GWTShell console will display.
           </td>
         </tr>
-        <!-- 
-        <tr>
-          <td>google.webtoolkit.headless</td>
-          <td>No</td>
-          <td>
-            Specifies whether or not headless mode GWTShell should be run.
-          </td>
-        </tr>
-        -->
         
       </table>
     </section>
