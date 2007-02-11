@@ -29,7 +29,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 /**
  * @goal compile
- * @phase package
+ * @phase prepare-package
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{
@@ -53,7 +53,7 @@ public class CompileMojo extends AbstractGWTMojo{
         }
         System.out.println( "Using classpath: "+ classpath );
         Commandline cl = new Commandline();
-        cl.setExecutable( "java" );
+        cl.setExecutable( JAVA_COMMAND );
         if( this.getExtraJvmArgs() != null ){
             String[] extraJvmArgs = { this.getExtraJvmArgs() };
             cl.addArguments( extraJvmArgs );

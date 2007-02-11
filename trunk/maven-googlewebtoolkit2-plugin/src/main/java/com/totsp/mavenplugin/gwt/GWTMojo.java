@@ -59,7 +59,7 @@ public class GWTMojo extends AbstractGWTMojo {
         }
         System.out.println( "Using classpath: "+ classpath );
         Commandline cl = new Commandline();
-        cl.setExecutable( "java" );
+        cl.setExecutable( JAVA_COMMAND );
         if( this.getExtraJvmArgs() != null ){
             String[] extraJvmArgs = { this.getExtraJvmArgs() };
             cl.addArguments( extraJvmArgs );
