@@ -129,6 +129,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private int port;
     
+    protected static final String JAVA_COMMAND = System.getProperty( "java.home") != null ?
+        System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java" :
+        "java";
+    
     /** Creates a new instance of AbstractGWTMojo */
     public AbstractGWTMojo() {
     }
@@ -283,8 +287,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         }
         sb.append(
                 StringUtils.join(
-                resources.iterator(), File.pathSeparator));
-        
+                project.getCompileSourceRoots().iterator(), File.pathSeparator));
         return sb.toString();
     }
     

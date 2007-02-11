@@ -24,13 +24,16 @@ package com.totsp.mavenplugin.gwt;
 import com.totsp.mavenplugin.gwt.support.ExitException;
 import com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @goal mergewebxml
- * @phase package
+ * @phase prepare-package
+ * @execute
  * @author cooper
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo{
@@ -49,11 +52,19 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
             it.hasNext() && moduleFile == null; ){
                 File check = new File( it.next().toString()+ "/" +
                         this.getCompileTarget().replace('.', '/') + ".gwt.xml");
+                System.out.println( "Looking for file: "+check.getAbsolutePath() );
+                moduleFile = check.exists() ? check : moduleFile;
+            }
+            for(Iterator it = this.getProject().getResources().iterator(); it.hasNext();  ){
+                Resource r = (Resource) it.next();
+                File check = new File( r.getDirectory()+ "/" +
+                        this.getCompileTarget().replace('.', '/') + ".gwt.xml");
+                System.out.println( "Looking for file: "+check.getAbsolutePath() );
                 moduleFile = check.exists() ? check : moduleFile;
             }
             
-            
             GwtWebInfProcessor processor = null;
+            System.out.println("Module file: "+moduleFile);
             try{
                 if( moduleFile != null ) {
                     processor = new GwtWebInfProcessor(
@@ -65,6 +76,9 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
                                 this.getDefaultWebXml().getAbsolutePath()
                                 );
                 } else {
+                    System.out.println( "WebXML: "+ (this.getWebXml() != null ?
+                        this.getWebXml().getAbsolutePath() :
+                        this.getDefaultWebXml().getAbsolutePath()) );
                     processor = new GwtWebInfProcessor(
                             this.getCompileTarget(),
                             new File(this.getOutput(),
