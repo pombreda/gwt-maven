@@ -33,9 +33,9 @@ public class GWTBeanGeneratorTest extends TestCase {
     public void testMain() throws Exception {
         System.out.println("main");
         
-        String[] args = {  "-withPropertyChangeSupport", "-destinationPackage", "test.client.beans", 
+        String[] args = {  "-withPropertyChangeSupport", "-destinationPackage", "com.manning.gwtip.bookstore.client.model", 
                          "-destinationDirectory", System.getProperty("basedir")+"/target/test/gen",
-                         "-startBean", "test.server.ABean",};
+                         "-startBean", "com.manning.gwtip.bookstore.model.Book",};
         
         
         GWTBeanGenerator.main(args);
