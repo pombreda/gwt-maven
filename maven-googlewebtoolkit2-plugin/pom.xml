@@ -24,6 +24,12 @@
             <groupId>com.totsp.gwt</groupId>
             <artifactId>maven-googlewebtoolkit-support</artifactId>
             <version>1.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>googlewebtoolkit-beanmapping</artifactId>
+                    <groupId>com.totsp.gwt</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
