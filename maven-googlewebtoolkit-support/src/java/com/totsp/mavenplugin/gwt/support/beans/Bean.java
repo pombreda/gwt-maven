@@ -7,12 +7,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -20,7 +20,6 @@
 
 package com.totsp.mavenplugin.gwt.support.beans;
 
-import com.totsp.gwt.beans.server.GwtOmit;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -30,6 +29,8 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -60,6 +61,7 @@ public class Bean {
     private InnerParameterizedType ipt;
     HashMap<String, Bean> properties = new HashMap<String, Bean>();
     private ArrayList<Bean> parameterTypes = new ArrayList<Bean>();
+    private static Set<String> ALL_TYPES = new HashSet<String>();
     private int arrayDepth;
     
     /** Creates a new instance of Bean */
@@ -77,8 +79,12 @@ public class Bean {
             this.ipt = new InnerParameterizedType( name, (ParameterizedType) type );
             this.clazz = ipt.clazz;
             for( Class param: ipt.types){
-                System.out.println("adding param type"+param.getName() );
-                this.parameterTypes.add( new Bean( name, param ) );
+                if( !ALL_TYPES.contains( param.getName() ) ){
+                    System.out.println("adding param type "+param.getName() );
+                    ALL_TYPES.add( param.getName() );
+                    this.parameterTypes.add( new Bean( name, param ) );
+                    
+                }
             }
         }
         if( !arrayContains( BASE_TYPES, this.clazz) ){
@@ -87,9 +93,6 @@ public class Bean {
                     .getBeanInfo( this.clazz )
                     .getPropertyDescriptors();
             for( PropertyDescriptor pd: pds ){
-                if( pd.getReadMethod().getAnnotation( GwtOmit.class ) != null){
-                    continue;
-                }
                 String propertyName = pd.getName();
                 if( propertyName.equals( "class") ){
                     continue;
@@ -191,11 +194,11 @@ public class Bean {
             return sb.toString();
         }
     }
-
+    
     public ArrayList<Bean> getParameterTypes() {
         return parameterTypes;
     }
-
+    
     public int getArrayDepth() {
         return arrayDepth;
     }

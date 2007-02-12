@@ -67,7 +67,7 @@ public class GwtWebInfProcessor {
                 
                 ) {
             
-            throw new Exception("Unable to locate module definition file.");
+            throw new Exception("Unable to locate module definition file: "+moduleName.replace('.', '/') + ".gwt.xml");
         }
         
         this.servletDescriptors = this.getGwtServletDescriptors(moduleName);
@@ -140,7 +140,7 @@ public class GwtWebInfProcessor {
         
         for(int i = 0; i < servlets.size(); i++) {
             Element servlet = (Element) servlets.get(i);
-            String servletPath = servlet.getAttributeValue("path");
+            String servletPath = "/"+this.moduleName+servlet.getAttributeValue("path");
             String servletClass = servlet.getAttributeValue("class");
             ServletDescriptor servletDesc = new ServletDescriptor(
                     servletPath, servletClass
