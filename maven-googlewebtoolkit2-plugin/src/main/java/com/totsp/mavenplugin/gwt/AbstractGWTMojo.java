@@ -32,7 +32,10 @@ import org.codehaus.plexus.util.StringUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.apache.maven.model.Resource;
+import org.codehaus.classworlds.ClassRealm;
+import org.codehaus.classworlds.ClassWorld;
 
 
 /**
@@ -40,6 +43,26 @@ import org.apache.maven.model.Resource;
  * @author cooper
  */
 public abstract class AbstractGWTMojo extends AbstractMojo {
+    
+    /**
+     * @parameter
+     */
+    private String generatorRootClasses;
+    /**
+     * @parameter
+     */
+    private String generatorDestinationPackage;
+    
+    /**
+     * @parameter
+     */
+    private boolean generateGettersAndSetters;
+    
+    /**
+     * @parameter
+     */
+    private boolean generatePropertyChangeSupport;
+    
     /**
      * @parameter expression="${project.build.directory}"
      */
@@ -54,7 +77,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
      * @readonly
      */
-    private File defaultWebXml;
+    private File webXml;
     
     /**
      * @parameter expression="${project.build.directory}/${project.build.finalName}"
@@ -77,11 +100,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private File tomcat;
     
-    /**
-     * @parameter expression="${maven.war.webxml}"
-     *
-     */
-    private File webXml;
+    
     
     /**
      * Project instance, used to add new source directory to the build.
@@ -161,13 +180,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return contextXml;
     }
     
-    public void setDefaultWebXml(File defaultWebXml) {
-        this.defaultWebXml = defaultWebXml;
-    }
-    
-    public File getDefaultWebXml() {
-        return defaultWebXml;
-    }
     
     public void setExtraJvmArgs(String extraJvmArgs) {
         this.extraJvmArgs = extraJvmArgs;
@@ -265,34 +277,54 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return webXml;
     }
     
+    public List buildClasspathList() throws DependencyResolutionRequiredException {
+        List items = new ArrayList();
+        for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
+            items.add( new File( it.next().toString() ) );
+        }
+        items.add( new File(getGwtHome(), "gwt-dev-linux.jar") );
+        items.add( new File(getGwtHome(), "gwt-dev-mac.jar") );
+        items.add( new File(getGwtHome(), "gwt-dev-windows.jar") );
+        items.add( new File(getGwtHome(), "gwt-user.jar"));
+        for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
+            Resource r = (Resource) it.next();
+            items.add( new File( r.getDirectory()) );
+        }
+        for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
+            items.add( new File( it.next().toString() ) );
+        }
+        return items;
+    }
+    
+    public ClassLoader fixThreadClasspath(){
+        try{
+        ClassWorld world = new ClassWorld();
+
+        //use the existing ContextClassLoader in a realm of the classloading space
+        ClassRealm root = world.newRealm("gwt-plugin", Thread.currentThread().getContextClassLoader());
+        ClassRealm realm = root.createChildRealm( "gwt-project");
+        for( Iterator it = buildClasspathList().iterator(); it.hasNext(); ){
+            realm.addConstituent( ((File)it.next()).toURL() );
+        }
+        Thread.currentThread().setContextClassLoader(realm.getClassLoader());
+        return realm.getClassLoader();
+        } catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    
     public String buildClasspath() throws DependencyResolutionRequiredException {
         StringBuffer sb = new StringBuffer();
         sb.append(
                 StringUtils.join(
-                getProject().getRuntimeClasspathElements().iterator(),
+                buildClasspathList().iterator(),
                 File.pathSeparator));
-        sb.append(File.pathSeparator);
-        sb.append(new File(getGwtHome(), "gwt-dev-linux.jar"));
-        sb.append(File.pathSeparator);
-        sb.append(new File(getGwtHome(), "gwt-dev-mac.jar"));
-        sb.append(File.pathSeparator);
-        sb.append(new File(getGwtHome(), "gwt-dev-windows.jar"));
-        sb.append(File.pathSeparator);
-        sb.append(new File(getGwtHome(), "gwt-user.jar"));
-        sb.append(File.pathSeparator);
-        ArrayList resources = new ArrayList();
-        for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
-            Resource r = (Resource) it.next();
-            resources.add( r.getDirectory() );
-        }
-        sb.append(
-                StringUtils.join(
-                project.getCompileSourceRoots().iterator(), File.pathSeparator));
         return sb.toString();
     }
     
     public void makeCatalinaBase() throws Exception {
-        File webXml = ( this.getWebXml() != null ) ? this.getWebXml() : this.getDefaultWebXml();
+        File webXml = this.getWebXml();
         String[] args = {
             this.getTomcat().getAbsolutePath(),
             webXml.getAbsolutePath()
@@ -303,5 +335,37 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
                     this.getContextXml(),
                     new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
         }
+    }
+
+    public String getGeneratorRootClasses() {
+        return generatorRootClasses;
+    }
+
+    public void setGeneratorRootClasses(String generatorRootClasses) {
+        this.generatorRootClasses = generatorRootClasses;
+    }
+
+    public String getGeneratorDestinationPackage() {
+        return generatorDestinationPackage;
+    }
+
+    public void setGeneratorDestinationPackage(String generatorDestinationPackage) {
+        this.generatorDestinationPackage = generatorDestinationPackage;
+    }
+
+    public boolean isGenerateGettersAndSetters() {
+        return generateGettersAndSetters;
+    }
+
+    public void setGenerateGettersAndSetters(boolean generateGettersAndSetters) {
+        this.generateGettersAndSetters = generateGettersAndSetters;
+    }
+
+    public boolean isGeneratePropertyChangeSupport() {
+        return generatePropertyChangeSupport;
+    }
+
+    public void setGeneratePropertyChangeSupport(boolean generatePropertyChangeSupport) {
+        this.generatePropertyChangeSupport = generatePropertyChangeSupport;
     }
 }
