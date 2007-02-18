@@ -11,14 +11,7 @@
     <name>Maven 1 Plugin for the Google Web Toolkit</name>
     <package>com.totsp.gwt</package>
     <inceptionYear>2006</inceptionYear>
-    <!--  
-		<licenses>
-		<license>
-		<name>Apache Public License 2.0 - for the plugin itself</name>
-		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license> 
-		</licenses>
-	-->
+    
     <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
     <repository>
         <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
