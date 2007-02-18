@@ -29,7 +29,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 /**
  * @goal compile
- * @phase prepare-package
+ * @execute phase=compile
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{

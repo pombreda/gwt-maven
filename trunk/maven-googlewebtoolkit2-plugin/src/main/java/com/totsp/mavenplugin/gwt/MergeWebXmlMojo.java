@@ -32,8 +32,8 @@ import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @goal mergewebxml
- * @phase prepare-package
- * @execute
+ * @phase compile
+ * @execute phase=compile
  * @author cooper
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo{
@@ -62,31 +62,23 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
                 System.out.println( "Looking for file: "+check.getAbsolutePath() );
                 moduleFile = check.exists() ? check : moduleFile;
             }
-            
+            this.fixThreadClasspath();
             GwtWebInfProcessor processor = null;
             System.out.println("Module file: "+moduleFile);
             try{
                 if( moduleFile != null ) {
                     processor = new GwtWebInfProcessor(
+                            this.getCompileTarget(),
                             moduleFile,
-                            new File(this.getOutput(),
-                            "WEB-INF/web.xml").getAbsolutePath(),
-                            this.getWebXml() != null ?
-                                this.getWebXml().getAbsolutePath() :
-                                this.getDefaultWebXml().getAbsolutePath()
-                                );
+                            new File(this.getBuildDir(),
+                            "web.xml").getAbsolutePath(),
+                            this.getWebXml().getAbsolutePath() );
                 } else {
-                    System.out.println( "WebXML: "+ (this.getWebXml() != null ?
-                        this.getWebXml().getAbsolutePath() :
-                        this.getDefaultWebXml().getAbsolutePath()) );
+                    System.out.println( "WebXML: "+ this.getWebXml().getAbsolutePath() );
                     processor = new GwtWebInfProcessor(
                             this.getCompileTarget(),
-                            new File(this.getOutput(),
-                            "WEB-INF/web.xml").getAbsolutePath(),
-                            this.getWebXml() != null ?
-                                this.getWebXml().getAbsolutePath() :
-                                this.getDefaultWebXml().getAbsolutePath()
-                                );
+                            new File(this.getBuildDir(), "web.xml").getAbsolutePath(),
+                            this.getWebXml().getAbsolutePath() );
                 }
             } catch(ExitException ee){
                 this.getLog().warn( ee.getMessage() );
