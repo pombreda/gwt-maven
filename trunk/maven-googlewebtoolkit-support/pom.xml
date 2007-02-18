@@ -15,7 +15,7 @@
         <repository>
             <id>local.repo</id>
             <name>file repository to svn</name>
-            <url>file://${basedir}../mavenrepo</url>
+            <url>file://${basedir}/../mavenrepo</url>
         </repository>
     </distributionManagement>
     <dependencies>
