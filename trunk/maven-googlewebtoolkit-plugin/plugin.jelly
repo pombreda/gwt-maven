@@ -181,5 +181,36 @@
           </ant:classpath>
       </ant:java>
   </goal>
+  
+  <goal 
+    name="gwt:generateClientBeans"    
+    description="Creates client-side DTOs into your source directory.">
+      <echo>generateClientBeans - still experimental</echo>
+      <j:forEach var="startBean" items="${google.webtoolkit.generatorRootClasses}">
+      <echo>Generating ${startBean}</echo>
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.beans.GWTBeanGenerator" fork="true" dir="${basedir}">
+          <ant:arg value="-startBean"/>
+          <ant:arg value="${startBean}" />
+          <ant:arg value="-destinationDirectory"/>
+          <ant:arg value="${pom.build.sourceDirectory}" /> 
+          <ant:arg value="-destinationPackage" />
+          <ant:arg value="${google.webtoolkit.generatorDestinationPackage}" />
+          <j:if test="${google.webtoolkit.generateGettersAndSetters}" >
+              <ant:arg value="-withGetSet" /> 
+          </j:if>
+          <j:if test="${google.webtoolkit.generatePropertyChangeSupport}" >
+              <ant:arg value="-withPropertyChangeSupport" /> 
+          </j:if>
+          <ant:classpath>
+                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+          </ant:classpath>
+      </ant:java>
+      </j:forEach>
+  </goal>
 
 </project>
