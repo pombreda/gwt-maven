@@ -147,6 +147,11 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter default-value="8888"
      */
     private int port;
+    /**
+     * @parameter default-value="8888"
+     */
+    private int debugPort;
+    
     
     protected static final String JAVA_COMMAND = System.getProperty( "java.home") != null ?
         System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java" :
@@ -367,5 +372,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
     public void setGeneratePropertyChangeSupport(boolean generatePropertyChangeSupport) {
         this.generatePropertyChangeSupport = generatePropertyChangeSupport;
+    }
+
+    public int getDebugPort() {
+        return debugPort;
+    }
+
+    public void setDebugPort(int debugPort) {
+        this.debugPort = debugPort;
     }
 }
