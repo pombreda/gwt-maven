@@ -12,6 +12,7 @@ package com.totsp.mavenplugin.gwt.support.beans;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -22,6 +23,17 @@ public class BeanGeneratorBase {
     
     /** Creates a new instance of BeanGeneratorBase */
     protected BeanGeneratorBase() {
+    }
+    
+    private static final HashMap TO_BIGS = new HashMap();
+    static{
+        TO_BIGS.put( "int ", "Integer");
+        TO_BIGS.put( "double ", "Double");
+        TO_BIGS.put( "float ", "Float");
+        TO_BIGS.put( "long ", "Long");
+        TO_BIGS.put( "byte ", "Byte");
+        TO_BIGS.put( "char ", "Character");
+        TO_BIGS.put( "boolean ", "Boolean" );
     }
     
     public static void writeBean( String packageName, File packageDirectory,
@@ -152,7 +164,12 @@ public class BeanGeneratorBase {
                     pw.print( propSupportName );
                     pw.print(".firePropertyChange( \"");
                     pw.print( att );
-                    pw.println( "\", oldValue, newValue );");
+                    System.out.println( typeString +" "+ TO_BIGS.containsKey( typeString));
+                    if( TO_BIGS.containsKey( typeString) ){
+                        pw.println("\", new "+TO_BIGS.get(typeString)+"(oldValue), new "+TO_BIGS.get(typeString)+"(newValue));");
+                    }else {
+                        pw.println( "\", oldValue, newValue );");
+                    }
                 }
                 pw.println("}");
             }
