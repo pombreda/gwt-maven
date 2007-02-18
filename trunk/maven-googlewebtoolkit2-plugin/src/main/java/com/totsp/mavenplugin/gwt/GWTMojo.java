@@ -71,10 +71,15 @@ public class GWTMojo extends AbstractGWTMojo {
             "-logLevel", this.getLogLevel(),
             "-style", this.getStyle(),
             "-port", Integer.toString( this.getPort() ),
-            "-out", this.getOutput().getAbsolutePath(),
-            this.getRunTarget()
+            "-out", this.getOutput().getAbsolutePath()
         };
         cl.addArguments( baseArgs );
+        if( this.isNoServer() ){
+            String[] ns = { "-noserver" };
+            cl.addArguments(ns);
+        }
+        cl.addArguments( args );
+        String[] runTarget = { this.getRunTarget() };
         cl.addArguments( args );
         cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
         try{
