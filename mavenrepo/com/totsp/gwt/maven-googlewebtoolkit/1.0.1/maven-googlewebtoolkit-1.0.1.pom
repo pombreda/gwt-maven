@@ -48,7 +48,6 @@
 		</plugins>
 	</build>
 	<modules>
-                <module>googlewebtoolkit-beanmapping</module>
                 <module>maven-googlewebtoolkit-support</module>
 		<module>maven-googlewebtoolkit2-plugin</module>
         </modules>
