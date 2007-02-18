@@ -76,9 +76,10 @@ public class GwtWebInfProcessor {
             throw new ExitException("No servlets found.");
         }
     }
-    public GwtWebInfProcessor(
+    public GwtWebInfProcessor(String moduleName,
             File moduleDefinition, String targetWebXml, String sourceWebXml
             ) throws Exception {
+        this.moduleName = moduleName;
         // obtain web.xml
         this.webXmlPath = sourceWebXml;
         this.moduleFile = moduleDefinition;
