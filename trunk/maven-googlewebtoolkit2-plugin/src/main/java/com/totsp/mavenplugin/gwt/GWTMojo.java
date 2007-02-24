@@ -80,7 +80,7 @@ public class GWTMojo extends AbstractGWTMojo {
         }
         cl.addArguments( args );
         String[] runTarget = { this.getRunTarget() };
-        cl.addArguments( args );
+        cl.addArguments( runTarget );
         cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
         try{
             this.getLog().info( "Running GWT with command: "+cl.toString());
