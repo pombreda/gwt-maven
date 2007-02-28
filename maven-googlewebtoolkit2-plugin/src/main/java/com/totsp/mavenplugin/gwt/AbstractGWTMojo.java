@@ -75,7 +75,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     
     /**
      * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
-     * @readonly
+     * 
      */
     private File webXml;
     
