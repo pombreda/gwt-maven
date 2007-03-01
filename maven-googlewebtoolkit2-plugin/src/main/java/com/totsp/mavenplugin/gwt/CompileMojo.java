@@ -29,7 +29,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 
 /**
  * @goal compile
- * @execute phase=compile
+ * @phase compile
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{
@@ -72,7 +72,13 @@ public class CompileMojo extends AbstractGWTMojo{
             this.getLog().info( "Running GWTCompile with command: "+cl.toString());
             CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
             CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
-                this.getLog().info( "Exited with code "+CommandLineUtils.executeCommandLine( cl, stdout, stderr ) );
+                int code = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
+                
+                System.out.println( stdout.getOutput() );
+                System.err.println( stderr.getOutput() );
+                if( code != 0 ){
+                    throw new MojoExecutionException( stderr.getOutput() );
+                }
         } catch(Exception pe){
             pe.printStackTrace();
         }
