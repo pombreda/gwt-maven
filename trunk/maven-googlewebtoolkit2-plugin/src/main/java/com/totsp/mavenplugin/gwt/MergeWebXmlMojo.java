@@ -33,7 +33,6 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * @goal mergewebxml
  * @phase compile
- * @execute phase=compile
  * @author cooper
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo{

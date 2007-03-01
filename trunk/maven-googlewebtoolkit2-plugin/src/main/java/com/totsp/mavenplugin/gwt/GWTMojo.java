@@ -35,7 +35,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  */
 public class GWTMojo extends AbstractGWTMojo {
     
-    protected String[] baseArgs = new String[0];
+    String[] baseArgs = new String[0];
     
     /** Creates a new instance of GWTMojo */
     public GWTMojo() {
@@ -74,11 +74,11 @@ public class GWTMojo extends AbstractGWTMojo {
             "-out", this.getOutput().getAbsolutePath()
         };
         cl.addArguments( baseArgs );
+        cl.addArguments( args );
         if( this.isNoServer() ){
             String[] ns = { "-noserver" };
             cl.addArguments(ns);
         }
-        cl.addArguments( args );
         String[] runTarget = { this.getRunTarget() };
         cl.addArguments( runTarget );
         cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
