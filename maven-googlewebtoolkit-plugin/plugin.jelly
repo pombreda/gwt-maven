@@ -141,7 +141,7 @@
   <goal 
     name="gwt:mergewebxml"    
     description="Merges servlets in module definitions with the project target web.xml file.">
-      <echo>mergewebxml - still experimental</echo>
+      <echo>mergewebxml</echo>
       <echo>module name - ${google.webtoolkit.compiletarget}</echo>
       <ant:java classname="com.totsp.mavenplugin.gwt.support.Main" fork="false" dir="${basedir}">
           <ant:arg value="-moduleName"/>

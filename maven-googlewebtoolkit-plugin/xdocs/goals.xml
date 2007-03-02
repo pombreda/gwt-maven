@@ -70,6 +70,12 @@
            web.xml file is merged with the GWT module file to create the correct service servlet entries in web.xml automatically. 
         </description>
       </goal>
+      <goal>
+        <name>gwt:generateClientBeans</name>
+        <description>
+           Creates client-side DTOs into your source directory. 
+        </description>
+      </goal>
       
     </goals>      
   </body>
