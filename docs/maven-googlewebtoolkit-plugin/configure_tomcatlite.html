@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) - 
+			Configure GWT Tomcat Lite Instance (if not using gwt-maven)
+		</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="" id="projectLogo"><span>Maven 1 Plugin for the Google Web Toolkit</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xright">
+        
+        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">gwt-maven</a>
+      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="goals.html">Goals</a></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><a href="sample.html">Sample Example</a></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><strong><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></strong></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="none"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Configure_GWT_Tomcat_Lite_Instance__if_not_using_gwt-maven_"></a><h2>Configure GWT Tomcat Lite Instance (if not using gwt-maven)</h2><div class="subsection"><a name="How_to_configure_Hosted_Mode_Tomcat_Lite"></a><h3>How to configure Hosted Mode Tomcat Lite</h3><p>
+					If you do not use Maven and are not using the
+					gwt-maven plugin then you can still manipulate the GWT embedded Tomcat Lite instance.
+					You will simply need to configure things manually.
+					<br></br><br></br>
+					(If you DO use the plugin, which is recommended -
+					just setup your project like the <a href="sample.html">sample</a> - then all
+					of this is done FOR you automatically, using the
+					Maven properties.)
+				</p></div><div class="subsection"><a name="Understanding_the_MUNGING_approach"></a><h3>Understanding the MUNGING approach</h3><p>
+					First up understand that to get things working with
+					regard to GWT and the embedded Tomcat Lite instance, 
+					with projects that require resources
+					such as DataSources in Hosted Mode (from context.xml
+					and web.xml), there are several ways to approach it. 
+					This way, what the plugin ultimately does, munging the embedded Tomcat configuration,
+					is only one approach.
+					<br></br>
+					<br></br>
+					The MUNGE approach to configuring the Hosted Mode Tomcat
+					Lite instance allows you to include the resources to
+					run your project in hosted mode - these are
+					typically a context descriptor (context.xml) a
+					deployment descriptor (web.xml) and dependencies
+					(JDBC drivers and so on).
+				</p><p>
+					Alternative techniques include using an <a href="configure_noserver.html">external container instance</a>.
+					and or using MOCK objects while working in Hosted
+					Mode. All of these techniques (munge, externalize,
+					mock) are viable and have pros and cons.
+				</p></div><div class="subsection"><a name="Taking_the_MUNGING_approach"></a><h3>Taking the MUNGING approach</h3><p>
+					Manipulating the GWT embeded Hosted	Mode Tomcat instance, "Tomcat Lite."
+				</p><p>
+				<b>Context.xml</b>
+				<br></br>
+					1. Put <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml" class="externalLink" title="External Link">
+						context.xml
+					</a> where it needs to be:
+					<code>[PROJECT]/tomcat/conf/gwt/localhost/ROOT.xml</code>.
+				</p><p>
+					Rename context.xml to ROOT.xml and place it in
+					[PROJECT]/tomcat/conf/gwt/localhost.
+				</p><p>
+					Also be aware that as of today (GWT version 1.2.22)
+					the Hosted Mode "Tomcat Lite" is Tomcat version
+					5.0.28. This means you need to use the long form for
+					defining resources within context.xml (this form
+					changed in Tomcat 5.5.x - see the sample for how it
+					works on 5.0.x).
+				</p><p>
+				<b>web.xml</b>
+				<br></br>
+					2. Put <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml" class="externalLink" title="External Link">
+						web.xml
+					</a> where it needs to be:
+					<code>[PROJECT]/tomcat/webapps/ROOT/WEB-INF/web.xml</code>.
+				</p><p>
+					Pretty self explanatory there, same name, goes in
+					[PROJECT]/tomcat/webapps/ROOT/WEB-INF.
+				</p><p>
+				<b>Dependencies</b>
+				<br></br>
+					3. Include dependencies your setup needs ON the
+					classpath when you start GWTShell.
+				</p><p>
+					The Tomcat Lite provided with GWT does not have
+					commons-pool or commons-dbcp and so on. Whatever you
+					need with your project needs to be supplied on the
+					classpath when starting GWTShell. Take a look at a
+					simple MyProject-shell script (what
+					ApplicationCreator creates) and you will see how the
+					shell is invoked and what is included on the
+					classpath, edit that (or provide an env var, or so
+					on) to manipulate the classpath as needed.
+					<br></br>
+					<br></br>
+					The sample includes dependencies through the plugin
+					creating the classpath, based on the maven
+					dependencies, before it invokes the shell (the
+					sample will not help you if you are not using maven
+					and the plugin).
+				</p></div></div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2006-2007, TotSP</div><div class="clear"><hr></hr></div></div></body></html>

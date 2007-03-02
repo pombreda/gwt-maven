@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) - 
+			maven-googlewebtoolkit-plugin 1.x (gwt-maven) properties
+		</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="" id="projectLogo"><span>Maven 1 Plugin for the Google Web Toolkit</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xright">
+        
+        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">gwt-maven</a>
+      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="goals.html">Goals</a></li><li class="none"><strong><a href="properties.html">Properties</a></strong></li><li class="none"><a href="install.html">Install</a></li><li class="none"><a href="sample.html">Sample Example</a></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="none"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Properties"></a><h2>Properties</h2><table class="bodyTable"><tr class="b"><th>Property name</th><th>Optional?</th><th>Default</th><th>Description</th></tr><tr class="a"><td>google.webtoolkit.home</td><td>No</td><td>
+						${basedir}/../gwt-amiga-1.7.58 (make sure to
+						change this, please)
+					</td><td>
+						Specifies the location where the Google Web
+						Toolkit is installed.
+					</td></tr><tr class="b"><td>google.webtoolkit.extrajvmargs</td><td>Yes</td><td>none</td><td>
+						Specifies extra args that are passed to the
+						GWTShell, most importantly used for Macs to
+						specify "-XstartOnFirstThread" (required on the
+						Mac).
+					</td></tr><tr class="a"><td>google.webtoolkit.runtarget</td><td>No</td><td>MyModule/MyModule.html</td><td>
+						Specifies the relative URL (GWT module and Host
+						Page) the Hosted Mode Browser should invoke when
+						launched.
+					</td></tr><tr class="b"><td>google.webtoolkit.compiletarget</td><td>No</td><td>MyModule</td><td>
+						Specifies the GWT module the GWTCompiler will
+						build.
+					</td></tr><tr class="a"><td>google.webtoolkit.output</td><td>Yes</td><td>${maven.war.webapp.dir}</td><td>
+						Specifies the location where generated web files
+						will be written.
+					</td></tr><tr class="b"><td>google.webtoolkit.style</td><td>Yes</td><td>OBF</td><td>
+						Specifies the style of the GWTCompiler
+						JavaScript output (PRETTY, DETAILED, OBF).
+					</td></tr><tr class="a"><td>google.webtoolkit.tomcat</td><td>Yes</td><td>${maven.build.dir}/tomcat</td><td>
+						Specifies the location where tomcat directory
+						will be created.
+					</td></tr><tr class="b"><td>google.webtoolkit.port</td><td>Yes</td><td>8888</td><td>
+						Specifies the port where the development mode
+						server will run (default 8888).
+					</td></tr><tr class="a"><td>google.webtoolkit.gen</td><td>Yes</td><td>${maven.war.webapp.dir}</td><td>
+						Specifies the -gen flag to the GWTShell
+						(temporary output files location).
+					</td></tr><tr class="b"><td>google.webtoolkit.loglevel</td><td>Yes</td><td>INFO</td><td>
+						Specifies the logging level the GWTShell console
+						will display.
+					</td></tr><tr class="a"><td>google.webtoolkit.noserver</td><td>Yes</td><td>false</td><td>
+						Run GWTShell with the -noserver option supplied.
+					</td></tr><tr class="b"><td>google.webtoolkit.contextxml</td><td>Yes</td><td>
+						${maven.war.webapp.dir}/META-INF/context.xml
+					</td><td>
+						Location of context.xml to be copied into GWT
+						Tomcat. (Note that you can specify the location
+						of web.xml using $maven.war.webxml in the POM.)
+					</td></tr><tr class="a"><td>google.webtoolkit.generatorRootClasses</td><td>Yes</td><td>com.totsp.sample.server.ABean</td><td>
+						Generate GWT IsSerializable beans from existing
+						model beans, this defines where the existing
+						model beans are located.
+					</td></tr><tr class="b"><td>
+						google.webtoolkit.generatePropertyChangeSupport
+					</td><td>Yes</td><td>false</td><td>
+						Automatically generate PropertyChangeSupport on
+						generated beans.
+					</td></tr><tr class="a"><td>google.webtoolkit.generateGettersAndSetters</td><td>Yes</td><td>false</td><td>
+						Include getters and setters, or not, on
+						generated beans.
+					</td></tr><tr class="b"><td>
+						google.webtoolkit.generatorDestinationPackage
+					</td><td>Yes</td><td>com.totsp.sample.client</td><td>Destination package for generated beans.</td></tr></table></div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2006-2007, TotSP</div><div class="clear"><hr></hr></div></div></body></html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) - 
+			GWT RPC Sample using the maven-googlewebtoolkit-plugin
+		</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="" id="projectLogo"><span>Maven 1 Plugin for the Google Web Toolkit</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xright">
+        
+        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">gwt-maven</a>
+      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="goals.html">Goals</a></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><strong><a href="sample.html">Sample Example</a></strong></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="none"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="GWT_RPC_Sample_using_the_maven-googlewebtoolkit-plugin"></a><h2>GWT RPC Sample using the maven-googlewebtoolkit-plugin</h2><div class="subsection"><a name="Where_is_the_sample"></a><h3>Where is the sample</h3><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
+					http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/
+				</a><p>
+				The easiest way to use the sample is to checkout maven-googlewebtoolkit-sample and then run "maven gwt." 
+				This will run the sample in Hosted Mode. (You can also use "maven gwt:war" to create a deployable war file, but keep in mind
+				the included setup creates a context.xml for use with Tomcat 5.0.x, by design, if you use a newer Tomcat, or a different container,
+				you need to change the setup accordingly.)
+				</p><p>
+				You can also step through the sample here, without checking it out, and glean a lot of useful info.
+				</p></div><div class="subsection"><a name="What_is_in_the_sample"></a><h3>What is in the sample</h3><p>
+					The sample is provided to demonstrate using the
+					maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
+					with a sample project. Other projects can be setup
+					in the same manner as the sample to get things
+					rolling (use the sample as a template).
+				</p><p>
+					The sample, however, is also more than that. It
+					additionally provides a useful overview of GWT RPC
+					in general with an example of using a DataSource
+					along with GWT RPC, which works in Hosted Mode and
+					when deployed. (It's a valuable reference even if
+					you are not using Maven.)
+				</p><p>
+					The sample is a simple GWT web app with a single
+					form element where you enter your name. That entry
+					is then sent to the server via GWT RPC and it is
+					stored in an HSQL database along with a timestamp.
+					Then the results of all the entries (since the
+					server was last started, mem db) are returned to the
+					client and displayed on the page.
+				</p><p>
+					This demonstrates configuring the gwt-maven plugin
+					along with *
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml" class="externalLink" title="External Link">
+						context.xml
+					</a>
+					* and *
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml" class="externalLink" title="External Link">
+						web.xml
+					</a>
+					* in order to setup a container managed DataSource
+					and have that setup matter in the "Tomcat Lite" that
+					is used in GWT Hosted Mode. (Notes about using the -noserver option with an external container are also included below.)
+				</p></div><div class="subsection"><a name="Step_by_Step_GWT_RPC_in_the_sample"></a><h3>Step by Step GWT RPC in the sample</h3><p>
+					STEP 1:
+					<br></br>
+					Create a CLIENT side service interface which extends
+					GWT RemoteService. This is demonstrated in the
+					sample
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyService.java" class="externalLink" title="External Link">
+						MyService.java
+					</a>
+					class.
+					<br></br>
+					<br></br>
+					STEP 2:
+					<br></br>
+					Create a CLIENT side ASYNC service interface with
+					the SAME NAME and the suffix "Async" as the initial
+					client side class that extends RemoteService. This
+					class should be identical to the RemoteService
+					interface with several exceptions: the return type of
+					each method should be void, and an additional
+					AsyncCallBack object should be the last parameter of
+					each method. This is demonstrated in the sample
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyServiceAsync.java" class="externalLink" title="External Link">
+						MyServiceAsync.java
+					</a>
+					class.
+					<br></br>
+					<br></br>
+					STEP 3:
+					<br></br>
+					Still within CLIENT side code create the service
+					object with a defined endpoint (path) and invoke the
+					methods. This is demonstrated in the sample
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyProjectEntryPoint.java" class="externalLink" title="External Link">
+						MyProjectEntryPoint.java
+					</a>
+					class.
+					<br></br>
+					<br></br>
+					Note that the service object is created with the GWT
+					static create method:
+					<code>
+						MyServiceAsync service = (MyServiceAsync)
+						GWT.create(MyService.class);
+					</code>
+					and that the endpoint assigned to the service is set
+					using the "moduleBaseURL" path:
+					<code>
+						endpoint.setServiceEntryPoint(GWT.getModuleBaseURL()
+						+ "MyService");
+					</code>
+					. This ensures that the service path will be
+					accessible BOTH in Hosted Mode with GWTShell and
+					when later deployed to a servlet container.
+					<br></br>
+					<br></br>
+					Also note the RPC handling. The Button object has a
+					ClickListener that invokes a method named
+					<code>callMyService</code>
+					which calls the MyService implementation on the
+					server. The method has both
+					<code>onSuccess</code>
+					and
+					<code>onFailure</code>
+					methods in the anonymous AsynCallBack object that it
+					passes in to the server method. These handle the
+					resulting server callback when things work and do
+					not work respectively.
+					<br></br>
+					<br></br>
+					STEP 4:
+					<br></br>
+					Create a SERVER side implementation of the client
+					side side service interface which extends GWT
+					RemoteServiceServlet. This is demonstrated in the
+					sample
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/server/MyServiceImpl.java" class="externalLink" title="External Link">
+						MyServiceImpl.java
+					</a>
+					class.
+					<br></br>
+					<br></br>
+					Note that this sample class retrieves a DataSource
+					via JNDI and then uses a small self created HSQL
+					database to store and retrieve data.
+				</p></div><div class="subsection"><a name="Running_the_sample_project_using_the_gwt-maven_plugin"></a><h3>Running the sample project using the gwt-maven plugin</h3><p>
+					The point of the gwt-maven plugin is to let you easily
+					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
+					<br></br>
+					Dependencies and properties are defined in the Maven POM manner
+					and are therefore automatically available to all of your project
+					anytime you change them (you can re-use your setup easily, and do not
+					have to edit shell scripts with each change). In addition 
+					automated builds and continuous integration are of course possible.
+					<br></br>
+					<br></br>
+					The plugin supports several special features with regard to 
+					the "Hosted Mode." Primarily you can define project specifc context.xml and
+					web.xml resources, which will matter BOTH in
+					Hosted Mode and when deployed as a WAR. The plugin
+					allows you to invoke the GWTShell and run against
+					your project (DataSources, other Servlets, etc, all
+					available even in Hosted Mode) and also allows you
+					to create a deployable WAR resource in one *single
+					simple step* (maven gwt:war).
+					<br></br>
+					<br></br>
+					In addition the plugin also easily supports the -noserver option if you wish to use
+					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
+					<br></br>
+					<br></br>
+					In order to use the maven-googlewebtoolkit-sample
+					project you first need to have the
+					maven-googlwebtoolkit-plugin
+					<a href="install.html">installed</a>
+					(along with of course Maven itself, Java, so on).
+					<br></br>
+					<br></br>
+					Then you also will need to setup a project that
+					mirrors the
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
+						sample code
+					</a>
+					.
+					<br></br>
+					<br></br>
+					Next you will need to set your project properties
+					accordingly. in the
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties" class="externalLink" title="External Link">
+						project.properties
+					</a>
+					file.
+					<br></br>
+					You need to edit the "google.webtoolkit.home"
+					value at a minimum, this should denote where you
+					have GWT installed. This can also be set (actually
+					more appropriately) in Maven wide build.properties
+					on a per machine basis - either way it must be
+					addressed.
+					<br></br>
+					<br></br>
+					Once you have the sample code, the plugin itself,
+					and have set the appropriate platform properties you
+					then can invoke the following:
+					
+    <div class="source"><pre>maven gwt</pre></div>
+  
+					(This will invoke the GWTShell with the sample so
+					that you are running in Hosted Mode and doing RPC
+					with a DataSource.)
+					<br></br>
+					<br></br>
+					or
+					
+    <div class="source"><pre>maven gwt:war</pre></div>
+  
+					(This will create a deployable Tomcat WAR file with
+					the sample.)
+					<br></br>
+					<br></br>
+					or any of the other
+					<a href="goals.html">goals</a>
+					.
+				</p></div><div class="subsection"><a name="How_to_use_-noserver__with_or_without_the_plugin_"></a><h3>How to use -noserver (with or without the plugin)</h3><p>
+				<a href="configure_noserver.html">See the -noserver configuration page</a>.
+				</p></div><div class="subsection"><a name="How_to_configure_Hosted_Mode_Tomcat_Lite__if_you_are_not_using_the_plugin_"></a><h3>How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)</h3><p>
+				<a href="configure_tomcatlite.html">See the Tomcat Lite configuration page</a>.
+				</p></div></div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2006-2007, TotSP</div><div class="clear"><hr></hr></div></div></body></html>
