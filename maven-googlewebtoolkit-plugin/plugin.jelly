@@ -20,7 +20,7 @@
             <ant:arg value="${google.webtoolkit.tomcat}" />
             <ant:arg value="${maven.war.webxml}" />
             <ant:classpath>
-                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.compile.src.set}" />
                 <ant:pathelement location="${maven.build.dest}" />
                 <ant:path refid="maven.dependency.classpath" />
                 <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
@@ -31,7 +31,7 @@
       <ant:copy file="${google.webtoolkit.contextxml}" 
          tofile="${google.webtoolkit.tomcat}/conf/gwt/localhost/ROOT.xml" 
          failonerror="false"/>
-      <echo>compile src: ${pom.build.sourceDirectory}</echo>
+      <echo>compile src: ${maven.compile.src.set}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
           <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
@@ -50,7 +50,7 @@
           <ant:arg value="${google.webtoolkit.logLevel}" />
           <ant:arg value="${google.webtoolkit.runtarget}" />
           <ant:classpath>
-                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:pathelement path="${maven.compile.src.set}" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
@@ -72,7 +72,7 @@
             <ant:arg value="${google.webtoolkit.tomcat}" />
             <ant:arg value="${maven.war.webxml}" />
             <ant:classpath>
-                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.compile.src.set}" />
                 <ant:pathelement location="${maven.build.dest}" />
                 <ant:path refid="maven.dependency.classpath" />
                 <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
@@ -102,7 +102,7 @@
           <ant:arg value="${google.webtoolkit.logLevel}" />
           <ant:arg value="${google.webtoolkit.runtarget}" />
           <ant:classpath>
-                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:pathelement path="${maven.compile.src.set}" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
@@ -116,13 +116,13 @@
     name="gwt:compile" 
     prereqs="war:webapp" 
     description="Runs GWTCompiler">
-      <echo>compile src: ${pom.build.sourceDirectory}</echo>
+      <echo>compile src: ${maven.compile.src.set}</echo>
       <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
           <ant:arg value="-out"/>
           <ant:arg value="${google.webtoolkit.output}" />
           <ant:arg value="${google.webtoolkit.compiletarget}" />
           <ant:classpath>
-                    <ant:pathelement path="${pom.build.sourceDirectory}" />
+                    <ant:pathelement path="${maven.compile.src.set}" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
                     <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
@@ -151,7 +151,7 @@
           <ant:arg value="-targetWebXmlPath" />
           <ant:arg value="${maven.war.webapp.dir}/WEB-INF/web.xml" />
           <ant:classpath>
-                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.compile.src.set}" />
                 <ant:pathelement location="${maven.build.dest}" />
                 <ant:path refid="maven.dependency.classpath" />
                 <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
@@ -171,7 +171,7 @@
           <ant:arg value="-startBean"/>
           <ant:arg value="${startBean}" />
           <ant:arg value="-destinationDirectory"/>
-          <ant:arg value="${pom.build.sourceDirectory}" /> 
+          <ant:arg value="${maven.compile.src.set}" /> 
           <ant:arg value="-destinationPackage" />
           <ant:arg value="${google.webtoolkit.generatorDestinationPackage}" />
           <j:if test="${google.webtoolkit.generateGettersAndSetters}" >
@@ -181,7 +181,7 @@
               <ant:arg value="-withPropertyChangeSupport" /> 
           </j:if>
           <ant:classpath>
-                <ant:pathelement location="${pom.build.sourceDirectory}" />
+                <ant:pathelement location="${maven.compile.src.set}" />
                 <ant:pathelement location="${maven.build.dest}" />
                 <ant:path refid="maven.dependency.classpath" />
                 <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
