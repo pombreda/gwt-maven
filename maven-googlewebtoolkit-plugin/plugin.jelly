@@ -31,7 +31,7 @@
       <ant:copy file="${google.webtoolkit.contextxml}" 
          tofile="${google.webtoolkit.tomcat}/conf/gwt/localhost/ROOT.xml" 
          failonerror="false"/>
-      <echo>compile src: ${maven.compile.src.set}</echo>
+      <echo>GWTShell src: ${maven.compile.src.set}</echo>
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
           <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
