@@ -287,6 +287,10 @@ public class GwtWebInfProcessor {
         this.insertServlets();
         
         XMLOutputter out = new XMLOutputter( Format.getPrettyFormat() );
+        FileWriter writer = new FileWriter(this.destination);
         out.output(this.webXml, new FileWriter(this.destination));
+        writer.flush();
+        writer.close();
+
     }
 }
