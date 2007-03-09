@@ -19,7 +19,7 @@
         <mime-type>audio/x-aiff</mime-type>
     </mime-mapping>
     <mime-mapping>
-        <extension>aifc</extension>con
+        <extension>aifc</extension>
         <mime-type>audio/x-aiff</mime-type>
     </mime-mapping>
     <mime-mapping>
