@@ -275,7 +275,7 @@ public class GwtWebInfProcessor {
             
             Element urlPattern = new Element("url-pattern", webapp.getNamespace());
             
-            urlPattern.setText( this.moduleName == null ? d.getPath() : "/" + this.moduleName + d.getPath());
+            urlPattern.setText( d.getPath() );
             servletMapping.addContent(urlPattern);
             webapp.addContent(insertAfter, servletMapping);
         }
