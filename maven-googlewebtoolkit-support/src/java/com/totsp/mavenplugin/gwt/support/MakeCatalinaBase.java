@@ -48,6 +48,8 @@ public class MakeCatalinaBase {
             totalBytes += bytesRead;
         }
         
+        destinationStream.flush();
+        destinationStream.close();
         return totalBytes;
     }
     
