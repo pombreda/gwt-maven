@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<document>
+  <properties>
+    <title>About</title>
+  </properties>
+  <body>
+    <section name="maven-googlewebtoolkit-plugin 1.x (gwt-maven)">
+      <subsection name="Overview">
+        <p>The gwt-maven 1.x plugin is used to develop, build and package GWT applications.</p>
+        <p>gwt-maven can invoke GWTShell and GWTCompiler, merge application deployment resources 
+        (web.xml, context.xml, java dependencies) with the GWT Hosted Mode development server instance, generate GWT IsSerializable model beans from existing beans, and can also easily create deployable WAR files
+        for GWT applications (with the correct GWT RPC service servlet entries automatically injected based on the GWT module file).</p> 
+      </subsection>  
+      <subsection name="Project Home">
+      	<p><a href="http://code.google.com/p/gwt-maven/">http://code.google.com/p/gwt-maven/</a></p>
+      </subsection>  
+      <subsection name="Install">
+      	<p><a href="install.html">Install the gwt-maven plugin</a></p>
+      </subsection>              
+      <subsection name="GWT-RPC Walk-Thru and Sample using the gwt-maven plugin">
+        <p><a href="sample.html">See the "Sample Example that is Quite Ample" for a complete walk through (including DataSources)</a></p>
+      </subsection>
+      <subsection name="HOWTO Configure the GWT Tomcat Instance">
+      	<p><a href="configure_tomcatlite.html">Configure the GWT embeded Tomcat Lite instance</a></p>
+      </subsection>
+      <subsection name="HOWTO Use -noserver with GWT">
+      	<p><a href="configure_noserver.html">Configure GWT Hosted Mode with -noserver</a></p>
+      </subsection>      
+    </section>
+  </body>
+</document>
