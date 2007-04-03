@@ -4,7 +4,7 @@
     <groupId>com.totsp.gwt</groupId>
     <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.5.1</version>
+    <version>1.5.2</version>
     <parent>
         <groupId>com.totsp.gwt</groupId>
         <artifactId>maven-googlewebtoolkit</artifactId>
