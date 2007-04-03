@@ -3,7 +3,7 @@
     <pomVersion>3</pomVersion>
     <groupId>com.totsp.gwt</groupId>
     <artifactId>maven-googlewebtoolkit-support</artifactId>
-    <currentVersion>1.5.0</currentVersion>
+    <currentVersion>1.5.2</currentVersion>
     <organization>
         <name>TotSP</name>
     </organization>
