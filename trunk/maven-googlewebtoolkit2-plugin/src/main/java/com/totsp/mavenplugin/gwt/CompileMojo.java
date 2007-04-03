@@ -18,8 +18,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor. 
- *
- *
  */
 
 package com.totsp.mavenplugin.gwt;
