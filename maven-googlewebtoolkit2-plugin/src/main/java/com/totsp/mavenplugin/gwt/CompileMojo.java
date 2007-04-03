@@ -30,6 +30,7 @@ import org.codehaus.plexus.util.cli.Commandline;
 /**
  * @goal compile
  * @phase compile
+ * @requiresDependencyResolution runtime
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{
@@ -40,38 +41,40 @@ public class CompileMojo extends AbstractGWTMojo{
     }
     
     public void execute() throws MojoExecutionException, MojoFailureException {
-        String classpath = null;
-        try{
-            classpath = this.buildClasspath();
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build classpath", e );
-        }
-        try{
-            this.makeCatalinaBase();
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build catalina.base", e);
-        }
-        System.out.println( "Using classpath: "+ classpath );
-        Commandline cl = new Commandline();
-        cl.setExecutable( JAVA_COMMAND );
-        if( this.getExtraJvmArgs() != null ){
-            String[] extraJvmArgs = { this.getExtraJvmArgs() };
-            cl.addArguments( extraJvmArgs );
-        }
-        String[] args = {
-            "-classpath", classpath,
-            "com.google.gwt.dev.GWTCompiler", 
-            "-logLevel", this.getLogLevel(),
-            "-style", this.getStyle(),
-            "-out", this.getOutput().getAbsolutePath(),
-            this.getCompileTarget()
-        };
-        cl.addArguments( args );
-        cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
-        try{
-            this.getLog().info( "Running GWTCompile with command: "+cl.toString());
-            CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
-            CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
+        for( int i=0; i < this.getCompileTarget().length; i++){
+            String compileTarget = this.getCompileTarget()[i];
+            String classpath = null;
+            try{
+                classpath = this.buildClasspath();
+            } catch(Exception e){
+                throw new MojoExecutionException( "Unable to build classpath", e );
+            }
+            try{
+                this.makeCatalinaBase();
+            } catch(Exception e){
+                throw new MojoExecutionException( "Unable to build catalina.base", e);
+            }
+            System.out.println( "Using classpath: "+ classpath );
+            Commandline cl = new Commandline();
+            cl.setExecutable( JAVA_COMMAND );
+            if( this.getExtraJvmArgs() != null ){
+                String[] extraJvmArgs = { this.getExtraJvmArgs() };
+                cl.addArguments( extraJvmArgs );
+            }
+            String[] args = {
+                "-classpath", classpath,
+                "com.google.gwt.dev.GWTCompiler",
+                "-logLevel", this.getLogLevel(),
+                "-style", this.getStyle(),
+                "-out", this.getOutput().getAbsolutePath(),
+                compileTarget
+            };
+            cl.addArguments( args );
+            cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
+            try{
+                this.getLog().info( "Running GWTCompile with command: "+cl.toString());
+                CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
+                CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
                 int code = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
                 
                 System.out.println( stdout.getOutput() );
@@ -79,8 +82,9 @@ public class CompileMojo extends AbstractGWTMojo{
                 if( code != 0 ){
                     throw new MojoExecutionException( stderr.getOutput() );
                 }
-        } catch(Exception pe){
-            pe.printStackTrace();
+            } catch(Exception pe){
+                pe.printStackTrace();
+            }
         }
     }
     

@@ -44,48 +44,52 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
     
     public void execute() throws MojoExecutionException, MojoFailureException {
         try{
+            File destination = new File(this.getBuildDir(),
+                    "web.xml");
             
-            
-            File moduleFile = null;
-            for( Iterator it = this.getProject().getCompileSourceRoots().iterator();
-            it.hasNext() && moduleFile == null; ){
-                File check = new File( it.next().toString()+ "/" +
-                        this.getCompileTarget().replace('.', '/') + ".gwt.xml");
-                System.out.println( "Looking for file: "+check.getAbsolutePath() );
-                moduleFile = check.exists() ? check : moduleFile;
-            }
-            for(Iterator it = this.getProject().getResources().iterator(); it.hasNext();  ){
-                Resource r = (Resource) it.next();
-                File check = new File( r.getDirectory()+ "/" +
-                        this.getCompileTarget().replace('.', '/') + ".gwt.xml");
-                System.out.println( "Looking for file: "+check.getAbsolutePath() );
-                moduleFile = check.exists() ? check : moduleFile;
-            }
-            this.fixThreadClasspath();
-            GwtWebInfProcessor processor = null;
-            System.out.println("Module file: "+moduleFile);
-            try{
-                if( moduleFile != null ) {
-                    processor = new GwtWebInfProcessor(
-                            this.getCompileTarget(),
-                            moduleFile,
-                            new File(this.getBuildDir(),
-                            "web.xml").getAbsolutePath(),
-                            this.getWebXml().getAbsolutePath() );
-                } else {
-                    System.out.println( "WebXML: "+ this.getWebXml().getAbsolutePath() );
-                    processor = new GwtWebInfProcessor(
-                            this.getCompileTarget(),
-                            new File(this.getBuildDir(), "web.xml").getAbsolutePath(),
-                            this.getWebXml().getAbsolutePath() );
+            super.copyFile( this.getWebXml(), destination);
+            for( int i=0; i < this.getCompileTarget().length; i++){
+                File moduleFile = null;
+                for( Iterator it = this.getProject().getCompileSourceRoots().iterator();
+                it.hasNext() && moduleFile == null; ){
+                    File check = new File( it.next().toString()+ "/" +
+                            this.getCompileTarget()[i].replace('.', '/') + ".gwt.xml");
+                    System.out.println( "Looking for file: "+check.getAbsolutePath() );
+                    moduleFile = check.exists() ? check : moduleFile;
                 }
-            } catch(ExitException ee){
-                this.getLog().warn( ee.getMessage() );
-                return;
+                for(Iterator it = this.getProject().getResources().iterator(); it.hasNext();  ){
+                    Resource r = (Resource) it.next();
+                    File check = new File( r.getDirectory()+ "/" +
+                            this.getCompileTarget()[i].replace('.', '/') + ".gwt.xml");
+                    System.out.println( "Looking for file: "+check.getAbsolutePath() );
+                    moduleFile = check.exists() ? check : moduleFile;
+                }
+                this.fixThreadClasspath();
+                GwtWebInfProcessor processor = null;
+                System.out.println("Module file: "+moduleFile);
+                try{
+                    if( moduleFile != null ) {
+                        processor = new GwtWebInfProcessor(
+                                this.getCompileTarget()[i],
+                                moduleFile,
+                                destination.getAbsolutePath(),
+                                destination.getAbsolutePath());
+                    } else {
+                        System.out.println( "WebXML: "+ this.getWebXml().getAbsolutePath() );
+                        processor = new GwtWebInfProcessor(
+                                this.getCompileTarget()[i],
+                                destination.getAbsolutePath(),
+                                destination.getAbsolutePath() );
+                    }
+                } catch(ExitException ee){
+                    this.getLog().warn( ee.getMessage() );
+                    return;
+                }
+                processor.process();
             }
-            processor.process();
         } catch(Exception e){
             throw new MojoExecutionException( "Unable to merge web.xml", e );
         }
+        
     }
 }
