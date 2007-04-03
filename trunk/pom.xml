@@ -4,7 +4,7 @@
     <groupId>com.totsp.gwt</groupId>
     <artifactId>maven-googlewebtoolkit</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.5.2</version>
     <name>Maven-GoogleWebToolkit</name>
     <url>http://code.google.com/p/gwt-maven</url>
      <distributionManagement>
