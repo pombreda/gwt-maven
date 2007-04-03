@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -35,15 +36,21 @@ public class BeanGeneratorBase {
         TO_BIGS.put( "char ", "Character");
         TO_BIGS.put( "boolean ", "Boolean" );
     }
+    private static HashSet<String> done = new HashSet<String>();
     
     public static void writeBean( String packageName, File packageDirectory,
             boolean getSet, boolean propSupport, Bean bean) throws IOException {
+        System.out.println( bean.getArrayDepth()+ " "+ bean.clazz );
+        if( done.contains( bean.clazz.getName() ) ){
+            return;
+        }
+        done.add( bean.clazz.getName() );
         String beanName = bean.clazz.getSimpleName();
         File javaFile = new File( packageDirectory, beanName+".java");
         for( int i=0; javaFile.exists() ; i++ ){
             javaFile = new File( packageDirectory, beanName+i+".java");
         }
-        bean.name = javaFile.getName();
+        String name = javaFile.getName();
         PrintWriter pw = new PrintWriter( javaFile );
         pw.print( "package ");
         pw.print( packageName );
@@ -56,7 +63,7 @@ public class BeanGeneratorBase {
         }
         
         pw.print( "public class ");
-        pw.print( bean.name.substring(0, bean.name.indexOf(".") ) );
+        pw.print( name.substring(0, name.indexOf(".") ) );
         pw.println( " implements IsSerializable {");
         String access = getSet || propSupport ? "private " : "public ";
         String propSupportName = "changes"+System.currentTimeMillis();
@@ -164,7 +171,7 @@ public class BeanGeneratorBase {
                     pw.print( propSupportName );
                     pw.print(".firePropertyChange( \"");
                     pw.print( att );
-                    System.out.println( typeString +" "+ TO_BIGS.containsKey( typeString));
+                    //System.out.println( typeString +" "+ TO_BIGS.containsKey( typeString));
                     if( TO_BIGS.containsKey( typeString) ){
                         pw.println("\", new "+TO_BIGS.get(typeString)+"(oldValue), new "+TO_BIGS.get(typeString)+"(newValue));");
                     }else {
@@ -182,11 +189,11 @@ public class BeanGeneratorBase {
         attributes.hasNext(); ){
             String att = attributes.next();
             Bean attType = bean.properties.get( att );
-            if( attType.isCustom() ){
+            if( attType.isCustom() && !done.contains( attType ) ){
                 writeBean( packageName, packageDirectory, getSet, propSupport, attType );
             }
             for(Bean b : attType.getParameterTypes() ){
-                if( b.isCustom() ){
+                if( b.isCustom()  && !done.contains( attType )){
                     writeBean( packageName, packageDirectory, getSet, propSupport, b );
                 }
             }

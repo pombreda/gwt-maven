@@ -97,7 +97,7 @@ public class GWTBeanGenerator extends BeanGeneratorBase{
         Class startBean = Class.forName( line.getOptionValue("startBean") );
         File directory = new File( line.getOptionValue("destinationDirectory"));
         directory.mkdirs();
-        Bean root = new Bean( "", startBean );
+        Bean root = new Bean( startBean );
         String packageName = line.getOptionValue( "destinationPackage");
         String packagePath = packageName.replace( '.', File.separatorChar );
         File packageDirectory = new File( directory, packagePath );

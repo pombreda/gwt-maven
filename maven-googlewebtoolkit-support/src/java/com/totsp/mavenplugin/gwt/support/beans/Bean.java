@@ -29,8 +29,6 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -56,36 +54,41 @@ public class Bean {
         java.util.HashMap.class, java.util.HashSet.class,
         java.util.Stack.class, java.util.Iterator.class
     };
-    String name;
     Class clazz;
     private InnerParameterizedType ipt;
     HashMap<String, Bean> properties = new HashMap<String, Bean>();
     private ArrayList<Bean> parameterTypes = new ArrayList<Bean>();
-    private static Set<String> ALL_TYPES = new HashSet<String>();
+    private static HashMap<Type, Bean> ALL_TYPES = new HashMap<Type, Bean>();
     private int arrayDepth;
     
     /** Creates a new instance of Bean */
-    public Bean(String name, Type type) throws IntrospectionException {
+    public Bean(Type type) throws IntrospectionException {
         super();
-        
-        this.name = name;
+        System.out.println("Checking type "+type.toString());
+       
         while( type instanceof GenericArrayType ){
             arrayDepth++;
             type = ((GenericArrayType) type).getGenericComponentType();
         }
         if( type instanceof Class ){
             this.clazz = (Class) type;
+            while( clazz.isArray()  ){             //You have to check here
+                                                   // to get primitive types. 
+                                                   // I don't know why.
+                arrayDepth++;
+                clazz = clazz.getComponentType();
+            }
         } else if (type instanceof ParameterizedType ){
-            this.ipt = new InnerParameterizedType( name, (ParameterizedType) type );
+            this.ipt = new InnerParameterizedType( (ParameterizedType) type );
             this.clazz = ipt.clazz;
             for( Class param: ipt.types){
-                if( !ALL_TYPES.contains( param.getName() ) ){
-                    System.out.println("adding param type "+param.getName() );
-                    ALL_TYPES.add( param.getName() );
-                    this.parameterTypes.add( new Bean( name, param ) );
-                    
-                }
+                this.parameterTypes.add( new Bean( param ) );
             }
+        }
+        if( ALL_TYPES.get( type ) != null ){
+            System.out.println("---Cyclic reference? "+ clazz.getName() );
+        } else {
+            ALL_TYPES.put( type, this );
         }
         if( !arrayContains( BASE_TYPES, this.clazz) ){
             
@@ -94,11 +97,15 @@ public class Bean {
                     .getPropertyDescriptors();
             for( PropertyDescriptor pd: pds ){
                 String propertyName = pd.getName();
-                if( propertyName.equals( "class") ){
+                if( propertyName.equals( "class") || pd.getReadMethod() == null ){
                     continue;
                 }
                 Type returnType = pd.getReadMethod().getGenericReturnType();
-                properties.put( propertyName, new Bean( propertyName, returnType ));
+                if( ALL_TYPES.containsKey( returnType ) ){
+                    properties.put( propertyName, ALL_TYPES.get( returnType ) );
+                } else {
+                    properties.put( propertyName, new Bean( returnType ));
+                }
             }
         }
         
@@ -108,9 +115,6 @@ public class Bean {
         return this.clazz;
     }
     
-    public String getName(){
-        return this.name;
-    }
     
     public String getTypeArgs(){
         if( this.ipt == null ){
@@ -137,13 +141,13 @@ public class Bean {
         Class clazz;
         Class[] types;
         
-        InnerParameterizedType( String name, ParameterizedType pt ){
+        InnerParameterizedType( ParameterizedType pt ){
             if( !( pt.getRawType() instanceof Class)) {
-                throw new RuntimeException( name +" does not have a raw type of class.");
+                throw new RuntimeException( pt.toString() +" does not have a raw type of class.");
             }
             this.clazz = (Class) pt.getRawType();
             if( !arrayContains( COLLECTION_TYPES, this.clazz ) ){
-                throw new RuntimeException( name +" is a parameterized type"+
+                throw new RuntimeException( pt.toString() +" is a parameterized type"+
                         "(generic) that is not a standard collection:" + this.clazz);
             }
             ArrayList<Class> types = new ArrayList<Class>();
@@ -158,17 +162,17 @@ public class Bean {
                             if( wt.getUpperBounds()[0] instanceof Class){
                                 types.add( (Class) wt.getUpperBounds()[0]);
                             } else {
-                                throw new RuntimeException( name+" has an upper bound that is not a class.");
+                                throw new RuntimeException( pt.toString()+" has an upper bound that is not a class.");
                             }
                         }
                     } else if( wt.getLowerBounds().length > 0){
                         if( wt.getLowerBounds().length > 1){
-                            throw new RuntimeException( name + " has multiple lower bounds.");
+                            throw new RuntimeException( pt.toString() + " has multiple lower bounds.");
                         } else {
                             if( wt.getLowerBounds()[0] instanceof Class){
                                 types.add( (Class) wt.getLowerBounds()[0]);
                             } else {
-                                throw new RuntimeException( name+" has an lower bound that is not a class.");
+                                throw new RuntimeException( pt.toString()+" has an lower bound that is not a class.");
                             }
                         }
                         
