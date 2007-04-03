@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+	<properties>
+		<title>
+			Configure GWT Tomcat Lite Instance (if not using gwt-maven)
+		</title>
+	</properties>
+
+	<body>
+		<section
+			name="Configure GWT Tomcat Lite Instance (if not using gwt-maven)">
+			
+			<subsection
+				name="How to configure Hosted Mode Tomcat Lite">
+				<p>
+					If you do not use Maven and are not using the
+					gwt-maven plugin then you can still manipulate the GWT embedded Tomcat Lite instance.
+					You will simply need to configure things manually.
+					<br /><br />
+					(If you DO use the plugin, which is recommended -
+					just setup your project like the <a href="sample.html">sample</a> - then all
+					of this is done FOR you automatically, using the
+					Maven properties.)
+				</p>
+			</subsection>
+			<subsection name="Understanding the MUNGING approach">
+				<p>
+					First up understand that to get things working with
+					regard to GWT and the embedded Tomcat Lite instance, 
+					with projects that require resources
+					such as DataSources in Hosted Mode (from context.xml
+					and web.xml), there are several ways to approach it. 
+					This way, what the plugin ultimately does, munging the embedded Tomcat configuration,
+					is only one approach.
+					<br />
+					<br />
+					The MUNGE approach to configuring the Hosted Mode Tomcat
+					Lite instance allows you to include the resources to
+					run your project in hosted mode - these are
+					typically a context descriptor (context.xml) a
+					deployment descriptor (web.xml) and dependencies
+					(JDBC drivers and so on).
+				</p>
+				<p>
+					Alternative techniques include using an <a href="configure_noserver.html">external container instance</a>.
+					and or using MOCK objects while working in Hosted
+					Mode. All of these techniques (munge, externalize,
+					mock) are viable and have pros and cons.
+				</p>
+				</subsection>
+				<subsection name="Taking the MUNGING approach">
+				<p>
+					Manipulating the GWT embeded Hosted	Mode Tomcat instance, "Tomcat Lite."
+				</p>
+				<p>
+				<b>Context.xml</b>
+				<br />
+					1. Put <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
+						context.xml
+					</a> where it needs to be:
+					<code>[PROJECT]/tomcat/conf/gwt/localhost/ROOT.xml</code>.
+				</p>
+				<p>
+					Rename context.xml to ROOT.xml and place it in
+					[PROJECT]/tomcat/conf/gwt/localhost.
+				</p>
+				<p>
+					Also be aware that as of today (GWT version 1.2.22)
+					the Hosted Mode "Tomcat Lite" is Tomcat version
+					5.0.28. This means you need to use the long form for
+					defining resources within context.xml (this form
+					changed in Tomcat 5.5.x - see the sample for how it
+					works on 5.0.x).
+				</p>
+				<p>
+				<b>web.xml</b>
+				<br />
+					2. Put <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">
+						web.xml
+					</a> where it needs to be:
+					<code>[PROJECT]/tomcat/webapps/ROOT/WEB-INF/web.xml</code>.
+				</p>
+				<p>
+					Pretty self explanatory there, same name, goes in
+					[PROJECT]/tomcat/webapps/ROOT/WEB-INF.
+				</p>
+				<p>
+				<b>Dependencies</b>
+				<br />
+					3. Include dependencies your setup needs ON the
+					classpath when you start GWTShell.
+				</p>
+				<p>
+					The Tomcat Lite provided with GWT does not have
+					commons-pool or commons-dbcp and so on. Whatever you
+					need with your project needs to be supplied on the
+					classpath when starting GWTShell. Take a look at a
+					simple MyProject-shell script (what
+					ApplicationCreator creates) and you will see how the
+					shell is invoked and what is included on the
+					classpath, edit that (or provide an env var, or so
+					on) to manipulate the classpath as needed.
+					<br />
+					<br />
+					The sample includes dependencies through the plugin
+					creating the classpath, based on the maven
+					dependencies, before it invokes the shell (the
+					sample will not help you if you are not using maven
+					and the plugin).
+				</p>
+			</subsection>
+
+		</section>
+	</body>
+</document>

@@ -1,0 +1,40 @@
+gwt-maven Configuration
+
+* Cofiguration Parameters
+
+ * generatorRootClasses : A comma separated list of root classes to traverse creating
+   IsSerializable beans.
+ 
+ * generatorDestinationPackage:  The package generated beans should go into.
+   
+ * generateGettersAndSetters : toggles generation of get/set methods. Default = false
+    
+ * generatePropertyChangeSupport : toggles generation of PropertyChangeListener support.
+   This requires GWTx as a dependency for your project, and implies generateGettersAndSetters.
+    
+ * contextXml : specifies a context.xml file to use for GWTShell. This can be useful if the
+   default (src/main/webapp/META-INF/context.xml) is not suitable for Tomcat 5.0.x.
+    
+ * webXml : the location of your base web.xml. Default=/src/main/webapp/WEB-INF/web.xml
+    
+ * gen : the location to generate compiled files to. Default = $\{project.build.directory}/$\{project.build.finalName\}
+    
+ * tomcat : the location to build the catalina.base to for GWTShell. 
+   Default = $\{project.build.directory\}/tomcat
+
+ * compileTarget : the module name to compile.
+ 
+ * logLevel : the log level to set for GWTShell/Compile. Default = INFO
+   
+ * runTarget : the URL to open as GWTShell starts up.
+    
+ * style : The JavaScript compile style. Default = OBF[uscated].
+   
+ * noServer : supresses the default Tomcat instance. Default = false
+   requires external container, with pre-configured context:
+      http://localhost:{port}/{runTarget} 
+   and context must at a minimum have files: Module.html, Module.nocache.html, gwt.js
+     
+ * port : the port to run the GWTShell listeners on. Default = 8888
+    
+ * debugPort : the port to run the debugger listeners on. Default = 8888

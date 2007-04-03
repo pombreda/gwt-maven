@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+
+<project 
+  xmlns:j="jelly:core"
+  xmlns:util="jelly:util"
+  xmlns:ant="jelly:ant"
+  xmlns:maven="jelly:maven"
+  xmlns:x="jelly:xml"
+  xmlns:artifact="artifact">
+
+  <!--==================================================================-->
+  <!-- Default goal -->
+  <!--==================================================================-->    
+  <goal 
+    name="gwt" 
+    prereqs="war:webapp" 
+    description="Runs GWTShell">
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.MakeCatalinaBase" fork="true"
+      dir="${basedir}" >
+            <ant:arg value="${google.webtoolkit.tomcat}" />
+            <ant:arg value="${maven.war.webxml}" />
+            <ant:classpath>				
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:path refid="maven.compile.src.set" />
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+           </ant:classpath>
+      </ant:java>
+      <ant:copy file="${google.webtoolkit.contextxml}" 
+         tofile="${google.webtoolkit.tomcat}/conf/gwt/localhost/ROOT.xml" 
+         failonerror="false"/>
+      
+      <echo>GWTShell</echo>   
+      <echo>  GWT module name - ${google.webtoolkit.compiletarget}</echo>   
+      <echo>  GWT source classpath (maven.compile.src.set) - ${context.getAntProject().getReferences().get('maven.compile.src.set')}</echo>
+      <echo>  GWT compiled java classpath (maven.build.dest) - ${maven.build.dest}</echo>
+      
+      <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
+          <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
+          <ant:arg value="-out"/>
+          <ant:arg value="${google.webtoolkit.output}" />
+          <ant:arg value="-style" />
+          <ant:arg value="${google.webtoolkit.style}" />
+          <!--ant:arg value="-gen" />
+          <ant:arg value="google.webtoolkit.gen" /-->
+          <j:if test="${google.webtoolkit.noserver}" >
+              <ant:arg value="-noserver" />
+          </j:if>
+          <ant:arg value="-port" />
+          <ant:arg value="${google.webtoolkit.port}" />
+          <ant:arg value="-logLevel" />
+          <ant:arg value="${google.webtoolkit.logLevel}" />
+          <ant:arg value="${google.webtoolkit.runtarget}" />
+          <ant:classpath>                    
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:path refid="maven.compile.src.set" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  
+  
+  <!-- -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=8888,suspend=y -->
+  <goal 
+    name="gwt:debug" 
+    prereqs="war:webapp" 
+    description="Runs GWTShell debug">
+        <ant:java classname="com.totsp.mavenplugin.gwt.support.MakeCatalinaBase" fork="true"
+      dir="${basedir}" >
+            <ant:arg value="${google.webtoolkit.tomcat}" />
+            <ant:arg value="${maven.war.webxml}" />
+            <ant:classpath>                
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:path refid="maven.compile.src.set" />
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+           </ant:classpath>
+      </ant:java>
+      <ant:copy file="${google.webtoolkit.contextxml}" 
+         tofile="${google.webtoolkit.tomcat}/conf/gwt/localhost/ROOT.xml" 
+         failonerror="false"/>
+         
+      <echo>GWTShell</echo>   
+      <echo>  GWT module name - ${google.webtoolkit.compiletarget}</echo>   
+      <echo>  GWT source classpath (maven.compile.src.set) - ${context.getAntProject().getReferences().get('maven.compile.src.set')}</echo>
+      <echo>  GWT compiled java classpath (maven.build.dest) - ${maven.build.dest}</echo>
+          
+      <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
+          <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
+          <ant:jvmarg line="${google.webtoolkit.extrajvmargs} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=${google.webtoolkit.debugport},suspend=y"/>
+          <ant:arg value="-out"/>
+          <ant:arg value="${google.webtoolkit.output}" />
+          <ant:arg value="-style" />
+          <ant:arg value="${google.webtoolkit.style}" />
+          <!--ant:arg value="-gen" />
+          <ant:arg value="google.webtoolkit.gen" /-->
+          <j:if test="${google.webtoolkit.noserver}" >
+              <ant:arg value="-noserver" />
+          </j:if>
+          <ant:arg value="-port" />
+          <ant:arg value="${google.webtoolkit.port}" />
+          <ant:arg value="-logLevel" />
+          <ant:arg value="${google.webtoolkit.logLevel}" />
+          <ant:arg value="${google.webtoolkit.runtarget}" />
+          <ant:classpath>                    
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
+                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
+                    <ant:path refid="maven.dependency.classpath" />
+                    <ant:path refid="maven.compile.src.set" />
+                    <ant:pathelement location="${maven.build.dest}" />
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  <goal 
+    name="gwt:compile" 
+    prereqs="war:webapp" 
+    description="Runs GWTCompiler">
+    
+      <echo>GWTCompiler</echo>    
+      <echo>  GWT module name - ${google.webtoolkit.compiletarget}</echo>   
+      <echo>  GWT source classpath (maven.compile.src.set) - ${context.getAntProject().getReferences().get('maven.compile.src.set')}</echo>
+      <echo>  GWT compiled java classpath (maven.build.dest) - ${maven.build.dest}</echo>
+
+      <j:forEach var="target" items="${google.webtoolkit.compiletarget}">
+          <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
+              <ant:arg value="-out"/>
+              <ant:arg value="${google.webtoolkit.output}" />
+              <ant:arg value="${target}" />
+              <ant:classpath>
+                        <ant:pathelement path="${pom.build.sourceDirectory}" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
+                        <ant:path refid="maven.dependency.classpath" />
+                        <ant:pathelement location="${maven.build.dest}" />
+              </ant:classpath>
+          </ant:java>
+     </j:forEach>
+  </goal>
+    
+  <goal 
+    name="gwt:war" 
+    prereqs="gwt:compile, war:webapp, gwt:mergewebxml, war:war" 
+    description="Creates deployable GWT war file (including merging GWT module with target web.xml and compiling with GWTCompiler)">
+  </goal>  
+  
+  <goal 
+    name="gwt:mergewebxml"    
+    description="Merges servlets in module definitions with the project target web.xml file.">
+      <echo>mergewebxml - still experimental</echo>  
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.Main" fork="false" dir="${basedir}">
+          <ant:arg value="-moduleName"/>
+          <ant:arg value="${google.webtoolkit.compiletarget}" />
+          <ant:arg value="-webXmlPath"/>
+          <ant:arg value="${maven.war.webxml}" /> 
+          <ant:arg value="-targetWebXmlPath" />
+          <ant:arg value="${maven.war.webapp.dir}/WEB-INF/web.xml" />
+          <ant:classpath>
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:path refid="maven.compile.src.set" />                
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+          </ant:classpath>
+      </ant:java>
+  </goal>
+  
+  <goal 
+    name="gwt:generateClientBeans"    
+    description="Creates client-side DTOs into your source directory.">
+      <echo>generateClientBeans - still experimental</echo>     
+      <j:forEach var="startBean" items="${google.webtoolkit.generatorRootClasses}">
+      <echo>Generating ${startBean}</echo>
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.beans.GWTBeanGenerator" fork="true" dir="${basedir}">
+          <ant:arg value="-startBean"/>
+          <ant:arg value="${startBean}" />
+          <ant:arg value="-destinationDirectory"/>
+		  <!--<ant:pathelement path="${maven.compile.src.set}" />-->
+          <ant:pathelement path="${pom.build.sourceDirectory}" />
+          <ant:arg value="-destinationPackage" />
+          <ant:arg value="${google.webtoolkit.generatorDestinationPackage}" />
+          <j:if test="${google.webtoolkit.generateGettersAndSetters}" >
+              <ant:arg value="-withGetSet" /> 
+          </j:if>
+          <j:if test="${google.webtoolkit.generatePropertyChangeSupport}" >
+              <ant:arg value="-withPropertyChangeSupport" /> 
+          </j:if>
+          <ant:classpath>
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:path refid="maven.compile.src.set" />                                
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+          </ant:classpath>
+      </ant:java>
+      </j:forEach>
+  </goal>
+
+</project>
