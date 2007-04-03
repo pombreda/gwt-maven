@@ -52,7 +52,7 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
                 File packageDirectory = new File( src, packagePath );
         
                 packageDirectory.mkdirs();
-                Bean root = new Bean( "", loader.loadClass(tok.nextToken() ) );
+                Bean root = new Bean( loader.loadClass(tok.nextToken() ) );
                 BeanGeneratorBase.writeBean(
                         this.getGeneratorDestinationPackage(),
                         packageDirectory, this.isGenerateGettersAndSetters() ,
