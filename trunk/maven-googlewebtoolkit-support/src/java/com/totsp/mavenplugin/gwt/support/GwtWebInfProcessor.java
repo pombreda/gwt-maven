@@ -98,6 +98,7 @@ public class GwtWebInfProcessor {
         }
     }
     
+    
     /**
      * Return List of ServletDescriptor from gwt module file.
      *
