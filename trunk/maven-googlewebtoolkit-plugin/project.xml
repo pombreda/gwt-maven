@@ -11,7 +11,6 @@
     <name>Maven 1 Plugin for the Google Web Toolkit</name>
     <package>com.totsp.gwt</package>
     <inceptionYear>2006</inceptionYear>
-    
     <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
     <repository>
         <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
@@ -69,7 +68,7 @@
         <dependency>
             <groupId>com.totsp.gwt</groupId>
             <artifactId>maven-googlewebtoolkit-support</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.2</version>
             <type>jar</type>
         </dependency>
         <dependency>
