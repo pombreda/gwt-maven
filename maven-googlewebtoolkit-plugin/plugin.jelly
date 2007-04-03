@@ -131,20 +131,22 @@
       <echo>  GWT module name - ${google.webtoolkit.compiletarget}</echo>   
       <echo>  GWT source classpath (maven.compile.src.set) - ${context.getAntProject().getReferences().get('maven.compile.src.set')}</echo>
       <echo>  GWT compiled java classpath (maven.build.dest) - ${maven.build.dest}</echo>
-     
-      <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
-          <ant:arg value="-out"/>
-          <ant:arg value="${google.webtoolkit.output}" />
-          <ant:arg value="${google.webtoolkit.compiletarget}" />
-          <ant:classpath>
-                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
-                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
-                    <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
-                    <ant:path refid="maven.dependency.classpath" />
-                    <ant:path refid="maven.compile.src.set" />                    
-                    <ant:pathelement location="${maven.build.dest}" />
-          </ant:classpath>
-      </ant:java>
+
+      <j:forEach var="target" items="${google.webtoolkit.compiletarget}">
+          <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
+              <ant:arg value="-out"/>
+              <ant:arg value="${google.webtoolkit.output}" />
+              <ant:arg value="${target}" />
+              <ant:classpath>
+                        <ant:pathelement path="${pom.build.sourceDirectory}" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-windows.jar" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-linux.jar" />
+                        <ant:pathelement path="${google.webtoolkit.home}/gwt-dev-mac.jar" />
+                        <ant:path refid="maven.dependency.classpath" />
+                        <ant:pathelement location="${maven.build.dest}" />
+              </ant:classpath>
+          </ant:java>
+     </j:forEach>
   </goal>
     
   <goal 
