@@ -24,6 +24,7 @@ package com.totsp.mavenplugin.gwt;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
@@ -71,10 +72,11 @@ public class CompileMojo extends AbstractGWTMojo{
             };
             cl.addArguments( args );
             cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
+            CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
+            CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
+            
             try{
                 this.getLog().info( "Running GWTCompile with command: "+cl.toString());
-                CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
-                CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
                 int code = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
                 
                 System.out.println( stdout.getOutput() );
@@ -82,8 +84,26 @@ public class CompileMojo extends AbstractGWTMojo{
                 if( code != 0 ){
                     throw new MojoExecutionException( stderr.getOutput() );
                 }
-            } catch(Exception pe){
-                pe.printStackTrace();
+            }  catch (CommandLineException cle) {
+                logErrorLines(stdout.getOutput());
+                throw new MojoExecutionException("Error running GWT compiler", cle);
+            } finally {
+                getLog().debug(stdout.getOutput());
+                getLog().debug(stderr.getOutput());
+            }
+            
+        }
+    }
+    /**
+     *
+     * @param alloutput output to pick out error lines to be printed from
+     */
+    private void logErrorLines(String alloutput) {
+        final String errorTag = "[ERROR]";
+        String[] lines = alloutput.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].contains(errorTag)) {
+                getLog().error(lines[i].replace(errorTag, ""));
             }
         }
     }
