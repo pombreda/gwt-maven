@@ -159,7 +159,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     
     
     protected static final String JAVA_COMMAND = System.getProperty( "java.home") != null ?
-        "\""+System.getProperty( "java.home") + File.separator + "bin\"" + File.separator + "java" :
+        System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java" :
         "java";
     
     /** Creates a new instance of AbstractGWTMojo */
