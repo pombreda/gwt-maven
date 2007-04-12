@@ -40,19 +40,24 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
     
     public void execute() throws MojoExecutionException, MojoFailureException {
         if( this.getGeneratorRootClasses() == null ){
-            throw new MojoExecutionException( "No root classes specified.");
+            throw new MojoExecutionException( "No root classes specified : make sure your POM has a generatorRootClasses set.");
         }
+
+        if (this.getGeneratorDestinationPackage() == null) {
+            throw new MojoExecutionException( "No destination package specified :\n    <generatorRootClasses> was specified in the POM without a <generatorDestinationPackage> being specified as well.");
+        }
+
         ClassLoader loader = this.fixThreadClasspath();
         try{
-            StringTokenizer tok = new StringTokenizer( this.getGeneratorRootClasses(),"," );
+            String[]    rootClasses = this.getGeneratorRootClasses();
             String src = this.getProject().getCompileSourceRoots().get(0).toString();
-            while( tok.hasMoreTokens() ){
+            for (int i=0; i<rootClasses.length; i++) {
                 
                 String packagePath = this.getGeneratorDestinationPackage().replace( '.', File.separatorChar );
                 File packageDirectory = new File( src, packagePath );
         
                 packageDirectory.mkdirs();
-                Bean root = new Bean( loader.loadClass(tok.nextToken() ) );
+                Bean root = new Bean( loader.loadClass(rootClasses[i] ) );
                 BeanGeneratorBase.writeBean(
                         this.getGeneratorDestinationPackage(),
                         packageDirectory, this.isGenerateGettersAndSetters() ,
