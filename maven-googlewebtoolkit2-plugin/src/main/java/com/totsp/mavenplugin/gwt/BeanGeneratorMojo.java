@@ -29,6 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
+ * @requiresDependencyResolution compile
  * @goal generateClientBeans
  * @author cooper
  */

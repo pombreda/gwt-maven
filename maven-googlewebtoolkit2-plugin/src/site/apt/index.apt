@@ -156,7 +156,9 @@ gwt-maven
  options for all the details.
 
 +--
-                    <generatorRootClasses>com.me.server.MyBean</generatorRootClasses>
+                    <generatorRootClasses>
+                        <value>com.me.server.MyBean</value>
+                    </generatorRootClasses>
                     <generatorDestinationPackage>com.me.client</generatorDestinationPackage>
                     <generateGettersAndSetters>true</generateGettersAndSetters>
                 </configuration>

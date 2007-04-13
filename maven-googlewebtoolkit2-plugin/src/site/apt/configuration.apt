@@ -2,8 +2,15 @@ gwt-maven Configuration
 
 * Cofiguration Parameters
 
- * generatorRootClasses : A comma separated list of root classes to traverse creating
-   IsSerializable beans.
+ * generatorRootClasses : A list of root classes to traverse creating
+   IsSerializable beans.  These are listed as a maven multi-value parameter, e.g.
+   
++-----------------------------------------
+     <generatorRootClasses>
+       <value>foo.pkg.MyBean</value>
+       <value>foo.pkg.MyBean2</value>
+     </generatorRootClasses>
++-----------------------------------------
  
  * generatorDestinationPackage:  The package generated beans should go into.
    

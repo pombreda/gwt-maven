@@ -29,11 +29,13 @@
                     <artifactId>googlewebtoolkit-beanmapping</artifactId>
                     <groupId>com.totsp.gwt</groupId>
                 </exclusion>
-                <exclusion>
-                    <artifactId>gwt-user</artifactId>
-                    <groupId>com.google.gwt</groupId>
-                </exclusion>
+                
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.3.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
