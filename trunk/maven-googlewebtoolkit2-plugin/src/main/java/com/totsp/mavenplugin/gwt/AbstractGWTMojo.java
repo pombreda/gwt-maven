@@ -52,7 +52,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     /**
      * @parameter
      */
-    private String generatorRootClasses;
+    private String[] generatorRootClasses;
     /**
      * @parameter
      */
@@ -303,6 +303,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
+
         return items;
     }
     
@@ -313,6 +314,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         //use the existing ContextClassLoader in a realm of the classloading space
         ClassRealm root = world.newRealm("gwt-plugin", Thread.currentThread().getContextClassLoader());
         ClassRealm realm = root.createChildRealm( "gwt-project");
+        
         for( Iterator it = buildClasspathList().iterator(); it.hasNext(); ){
             realm.addConstituent( ((File)it.next()).toURL() );
         }
@@ -347,11 +349,11 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         }
     }
 
-    public String getGeneratorRootClasses() {
+    public String[] getGeneratorRootClasses() {
         return generatorRootClasses;
     }
 
-    public void setGeneratorRootClasses(String generatorRootClasses) {
+    public void setGeneratorRootClasses(String[] generatorRootClasses) {
         this.generatorRootClasses = generatorRootClasses;
     }
 
