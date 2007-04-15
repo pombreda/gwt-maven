@@ -62,7 +62,7 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
                 BeanGeneratorBase.writeBean(
                         this.getGeneratorDestinationPackage(),
                         packageDirectory, this.isGenerateGettersAndSetters() ,
-                        this.isGeneratePropertyChangeSupport(), root );
+                        this.isGeneratePropertyChangeSupport(), this.isOverwriteGeneratedClasses(), root );
             }
         } catch(Exception e){
             throw new MojoExecutionException( "Exception running Generator", e );

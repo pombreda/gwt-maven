@@ -29,6 +29,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 
 /**
  *
@@ -55,6 +56,7 @@ public class Bean {
         java.util.Stack.class, java.util.Iterator.class
     };
     Class clazz;
+    Bean  parent;
     private InnerParameterizedType ipt;
     HashMap<String, Bean> properties = new HashMap<String, Bean>();
     private ArrayList<Bean> parameterTypes = new ArrayList<Bean>();
@@ -65,7 +67,7 @@ public class Bean {
     public Bean(Type type) throws IntrospectionException {
         super();
         System.out.println("Checking type "+type.toString());
-       
+
         while( type instanceof GenericArrayType ){
             arrayDepth++;
             type = ((GenericArrayType) type).getGenericComponentType();
@@ -90,6 +92,15 @@ public class Bean {
         } else {
             ALL_TYPES.put( type, this );
         }
+
+        if (clazz.getSuperclass() != null && !clazz.getSuperclass().equals(Object.class)) {
+          if( ALL_TYPES.containsKey( clazz.getSuperclass() ) ){
+              parent = ALL_TYPES.get( clazz.getSuperclass() );
+          } else {
+              parent = new Bean(clazz.getSuperclass());
+          }
+
+        }
         if( !arrayContains( BASE_TYPES, this.clazz) ){
             
             PropertyDescriptor[] pds = Introspector
@@ -97,7 +108,8 @@ public class Bean {
                     .getPropertyDescriptors();
             for( PropertyDescriptor pd: pds ){
                 String propertyName = pd.getName();
-                if( propertyName.equals( "class") || pd.getReadMethod() == null ){
+
+                if( propertyName.equals( "class") || pd.getReadMethod() == null || !pd.getReadMethod().getDeclaringClass().equals(clazz)){
                     continue;
                 }
                 Type returnType = pd.getReadMethod().getGenericReturnType();
@@ -127,7 +139,7 @@ public class Bean {
     public boolean isCustom(){
         return !(arrayContains( BASE_TYPES, this.clazz) || arrayContains( COLLECTION_TYPES, this.clazz ) );
     }
-    
+  
     private static boolean arrayContains( Object[] array, Object find ){
         for( Object match : array ){
             if( match == find || match.equals( find ) ){
