@@ -60,6 +60,8 @@ public class GWTBeanGenerator extends BeanGeneratorBase{
             "create getters and setters for GWT classes");
     private static final Option withPropertyChangeSupport = new Option( "withPropertyChangeSupport",
             "create change events for beans (implies withGetSet)");
+    private static final Option overWrite = new Option("overwrite",
+            "if there are existing files, this will overwrite them");
     
     private final static Options options = new Options();
     
@@ -70,6 +72,7 @@ public class GWTBeanGenerator extends BeanGeneratorBase{
         options.addOption(destinationDirectory);
         options.addOption(withPropertyChangeSupport);
         options.addOption(withGetSet);
+        options.addOption(overWrite);
     }
     
     
@@ -105,7 +108,7 @@ public class GWTBeanGenerator extends BeanGeneratorBase{
         packageDirectory.mkdirs();
         boolean getSet = line.hasOption("withGetSet");
         boolean propertyChangeSupport = line.hasOption("withPropertyChangeSupport");
-        writeBean( packageName, packageDirectory, getSet, propertyChangeSupport, root );
+        writeBean( packageName, packageDirectory, getSet, propertyChangeSupport, line.hasOption("overwrite"), root );
         
     }
     

@@ -67,7 +67,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter
      */
     private boolean generatePropertyChangeSupport;
-    
+
+    /**
+     * @parameter
+     */
+    private boolean overwriteGeneratedClasses;
+
+
     /**
      * @parameter expression="${project.build.directory}"
      */
@@ -381,6 +387,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         this.generatePropertyChangeSupport = generatePropertyChangeSupport;
     }
 
+    public boolean isOverwriteGeneratedClasses() {
+      return overwriteGeneratedClasses;
+    }
+
+    public void setOverwriteGeneratedClasses(boolean overwriteGeneratedClasses) {
+      this.overwriteGeneratedClasses = overwriteGeneratedClasses;
+    }
+
     public int getDebugPort() {
         return debugPort;
     }
@@ -426,5 +440,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
         return totalBytes;
     }
+
 
 }
