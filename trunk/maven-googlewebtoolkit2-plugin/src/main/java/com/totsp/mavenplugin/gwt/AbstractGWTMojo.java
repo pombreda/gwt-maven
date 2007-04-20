@@ -57,7 +57,18 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter
      */
     private String generatorDestinationPackage;
-    
+
+    /**
+     * @parameter
+     */
+    private String translatorDestinationPackage;
+
+    /**
+     * @parameter
+     */
+    private boolean translatorTwoWay;
+
+
     /**
      * @parameter
      */
@@ -442,4 +453,19 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     }
 
 
+  public String getTranslatorDestinationPackage() {
+    return translatorDestinationPackage;
+  }
+
+  public void setTranslatorDestinationPackage(String translatorDestinationPackage) {
+    this.translatorDestinationPackage = translatorDestinationPackage;
+  }
+
+  public boolean isTranslatorTwoWay() {
+    return translatorTwoWay;
+  }
+
+  public void setTranslatorTwoWay(boolean translatorTwoWay) {
+    this.translatorTwoWay = translatorTwoWay;
+  }
 }

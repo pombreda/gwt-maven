@@ -2,9 +2,6 @@
  * BeanGeneratorBase.java
  *
  * Created on February 17, 2007, 9:09 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
  */
 
 package com.totsp.mavenplugin.gwt.support.beans;
@@ -17,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.beans.IntrospectionException;
 
 /**
  * @author cooper
@@ -84,59 +82,82 @@ public class BeanGeneratorBase {
   static protected void writePropertyChangeSupport(PrintWriter pw) {
     String propSupportName = "changes" + System.currentTimeMillis();
 
-    pw.print("private PropertyChangeSupport ");
+    pw.print("\tprivate PropertyChangeSupport ");
     pw.print(propSupportName);
-    pw.println("= new PropertyChangeSupport( this );");
-    pw.println("public void addPropertyChangeListener( PropertyChangeListener l ){ ");
-    pw.print("\t");
+    pw.println("= new PropertyChangeSupport( this );\n");
+    pw.println("\tpublic void addPropertyChangeListener( PropertyChangeListener l ){ ");
+    pw.print("\t\t");
     pw.print(propSupportName);
     pw.println(".addPropertyChangeListener( l ); ");
-    pw.println("}");
+    pw.println("}\n");
 
-    pw.println("protected PropertyChangeSupport _getPropertyChangeListener(){ ");
-    pw.print("\treturn ");
+    pw.println("\tprotected PropertyChangeSupport _getPropertyChangeListener(){ ");
+    pw.print("\t\treturn ");
     pw.print(propSupportName);
     pw.println("; ");
-    pw.println("}");
+    pw.println("}\n");
 
 
-    pw.println("public void addPropertyChangeListener( String propertyName, PropertyChangeListener l ){");
-    pw.print("\t");
+    pw.println("\tpublic void addPropertyChangeListener( String propertyName, PropertyChangeListener l ){");
+    pw.print("\t\t");
     pw.print(propSupportName);
     pw.println(".addPropertyChangeListener( propertyName, l );");
-    pw.println("}");
+    pw.println("\t}\n");
 
-    pw.println("public void removePropertyChangeListener( PropertyChangeListener l ){ ");
-    pw.print("\t");
+    pw.println("\tpublic void removePropertyChangeListener( PropertyChangeListener l ){ ");
+    pw.print("\t\t");
     pw.print(propSupportName);
     pw.println(".removePropertyChangeListener( l );");
-    pw.println("}");
+    pw.println("\t}\n");
 
-    pw.println("public void removePropertyChangeListener( String propertyName, PropertyChangeListener l ){ ");
-    pw.print("\t");
+    pw.println("\tpublic void removePropertyChangeListener( String propertyName, PropertyChangeListener l ){ ");
+    pw.print("\t\t");
     pw.print(propSupportName);
     pw.println(".removePropertyChangeListener( propertyName, l );");
-    pw.println("}");
+    pw.println("\t}\n");
 
-    pw.println("public PropertyChangeListener[] getPropertyChangeListeners(){ ");
-    pw.print("\t return ");
+    pw.println("\tpublic PropertyChangeListener[] getPropertyChangeListeners(){ ");
+    pw.print("\t\t return ");
     pw.print(propSupportName);
     pw.println(".getPropertyChangeListeners();");
-    pw.println("}");
+    pw.println("\t}\n");
   }
 
-  static protected void writeProperty(PrintWriter pw, String propertyName, Bean propertyType,
-                                      String access, String typeString, boolean getSet, boolean propSupport) {
+  static protected void writeParameterizedArgs(PrintWriter pw, String packageName, File packageDirectory, boolean getSet,
+                                              boolean propSupport, boolean overwrite, Bean propertyType,
+                                              HashMap<String, String> packageMap, boolean isNewVal) throws IOException, IntrospectionException {
+      pw.println("\t/**");
+      pw.print("\t * @gwt.typeArgs ");
+      if (isNewVal)
+        pw.print(" newValue ");
+
+      Class[] classes = propertyType.getParameterizedTypes();
+      pw.print("<");
+      for( int i=0; i < classes.length; i++ ){
+          Bean  b = Bean.loadBean(classes[i]);
+          String translatedName = resolveTranslatedType(packageName, packageDirectory, getSet,
+                                              propSupport, overwrite,  b, 
+                                              packageMap, true);
+
+          pw.print( translatedName );
+          if( i + 1 < classes.length ){
+              pw.print(", ");
+          }
+      }
+      pw.println( ">");
+      pw.println("\t */");
+  }
+
+  static protected void writeProperty(PrintWriter pw, String packageName, File packageDirectory, String propertyName, Bean propertyType,
+                                      String access, String typeString, boolean getSet, boolean propSupport, boolean overwrite, HashMap<String, String> packageMap) throws IOException, IntrospectionException {
 
     for (int i = 0; i < propertyType.getArrayDepth(); i++) {
       typeString += "[]";
     }
     typeString += " ";
     if (propertyType.getTypeArgs() != null) {
-      pw.println("\t/**");
-      pw.print("\t * @gwt.typeArgs ");
-      pw.println(propertyType.getTypeArgs());
-      pw.println("\t */");
+      writeParameterizedArgs(pw, packageName, packageDirectory, getSet,
+          propSupport, overwrite, propertyType, packageMap, false);
     }
 
     pw.print("  ");
@@ -151,14 +172,12 @@ public class BeanGeneratorBase {
         methodName += propertyName.substring(1, propertyName.length());
       }
       if (propertyType.getTypeArgs() != null) {
-        pw.println("\t/**");
-        pw.print("\t * @gwt.typeArgs ");
-        pw.println(propertyType.getTypeArgs());
-        pw.println("\t */");
+        writeParameterizedArgs(pw, packageName, packageDirectory, getSet,
+          propSupport, overwrite, propertyType, packageMap, false);
       }
       pw.print("\tpublic ");
       pw.print(typeString);
-      pw.print("get");
+      pw.print(propertyType.getGetPrefix());
       pw.print(methodName);
       pw.println("(){");
       pw.print("\t\t return this.");
@@ -167,10 +186,8 @@ public class BeanGeneratorBase {
       pw.println("\t}");
 
       if (propertyType.getTypeArgs() != null) {
-        pw.println("\t/**");
-        pw.print("\t * @gwt.typeArgs newValue ");
-        pw.println(propertyType.getTypeArgs());
-        pw.println("\t */");
+        writeParameterizedArgs(pw, packageName, packageDirectory, getSet,
+          propSupport, overwrite, propertyType, packageMap, true);
       }
       pw.print("\tpublic void set");
       pw.print(methodName);
@@ -204,13 +221,13 @@ public class BeanGeneratorBase {
   }
 
   public static void writeBean(String packageName, File packageDirectory, boolean getSet,
-                               boolean propSupport, Bean bean) throws IOException {
+                               boolean propSupport, Bean bean) throws IOException, IntrospectionException {
     writeBean(packageName, packageDirectory, getSet, propSupport, false, bean);
   }
 
 
   public static void writeBean(String packageName, File packageDirectory, boolean getSet,
-                               boolean propSupport, boolean overwrite, Bean bean) throws IOException {
+                               boolean propSupport, boolean overwrite, Bean bean) throws IOException, IntrospectionException {
     System.out.println(bean.getArrayDepth() + " " + bean.clazz);
     if (translatedClasses.containsKey(bean.clazz.getName())) {
       return;
@@ -277,7 +294,7 @@ public class BeanGeneratorBase {
         }
       }
 
-      writeProperty(pwBody, att, attType, access, typeString, getSet, propSupport);
+      writeProperty(pwBody, packageName, packageDirectory, att, attType, access, typeString, getSet, propSupport, overwrite, importMap);
 
 
     }// end atts loop
@@ -295,10 +312,17 @@ public class BeanGeneratorBase {
     pw.close();
   }
 
+  private static String resolveTranslatedType(String packageName, File packageDirectory, boolean getSet,
+                                                boolean propSupport, boolean overwrite, Bean bean,
+                                                HashMap<String, String> packageMap) throws IOException, IntrospectionException {
+    return resolveTranslatedType(packageName, packageDirectory, getSet, propSupport, overwrite, bean,
+                                              packageMap, false);
+  }
+
 
   private static String resolveTranslatedType(String packageName, File packageDirectory, boolean getSet,
                                               boolean propSupport, boolean overwrite, Bean bean,
-                                              HashMap<String, String> packageMap) throws IOException {
+                                              HashMap<String, String> packageMap, boolean dontSimplify) throws IOException, IntrospectionException {
 
     Class clazz = bean.getType();
 
@@ -326,13 +350,45 @@ public class BeanGeneratorBase {
         type = clazz.getName();
       }
 
-      String nameParts[] = type.split("\\.");
-      String simpleName = nameParts[nameParts.length - 1];
-      if (!packageMap.containsKey(simpleName) || packageMap.get(simpleName).equals(type)) {
-        packageMap.put(simpleName, type);
-        type = simpleName;                
+      if (!dontSimplify) {
+        String nameParts[] = type.split("\\.");
+        String simpleName = nameParts[nameParts.length - 1];
+        if (!packageMap.containsKey(simpleName) || packageMap.get(simpleName).equals(type)) {
+          packageMap.put(simpleName, type);
+          type = simpleName;
+        }
       }
     }
     return type;
   }
+
+  public String getUsableClassName(String type, HashMap<String, String> packageMap, boolean dontSimplify) {
+      String nameParts[] = type.split("\\.");
+      String simpleName = nameParts[nameParts.length - 1];
+
+      String packageName = type.substring(0, type.length() - simpleName.length()-1);
+      String[]  nestedNames = simpleName.split("\\$");
+
+      String  enclosingClassName = nestedNames[0];
+      String  enclosingClassNameFQ = packageName + "." + nestedNames[0];
+
+      String  retVal = enclosingClassNameFQ;
+      if (!dontSimplify) {
+        if (!packageMap.containsKey(enclosingClassName) || packageMap.get(enclosingClassName).equals(enclosingClassNameFQ)) {
+          packageMap.put(enclosingClassName, enclosingClassNameFQ);
+          retVal = enclosingClassName;
+        }
+      }
+    
+      if (nestedNames.length > 1) {
+        StringBuffer  buff = new StringBuffer(retVal);
+
+        for (int i=1; i<nestedNames.length; i++) {
+          buff.append(".").append(nestedNames[i]);
+        }
+        retVal = buff.toString();
+      }
+
+      return retVal;
+    }
 }

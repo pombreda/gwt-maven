@@ -21,8 +21,8 @@
 
 package com.totsp.mavenplugin.gwt;
 
-import com.totsp.mavenplugin.gwt.support.beans.Bean;
-import com.totsp.mavenplugin.gwt.support.beans.BeanGeneratorBase;
+import com.totsp.mavenplugin.gwt.support.beans.*;
+
 import java.io.File;
 import java.util.StringTokenizer;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -48,6 +48,8 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
             throw new MojoExecutionException( "No destination package specified :\n    <generatorRootClasses> was specified in the POM without a <generatorDestinationPackage> being specified as well.");
         }
 
+        Generator translationGenerator = null;
+        GlobalGeneratorContext  global = null;
         ClassLoader loader = this.fixThreadClasspath();
         try{
             String[]    rootClasses = this.getGeneratorRootClasses();
@@ -58,12 +60,32 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
                 File packageDirectory = new File( src, packagePath );
         
                 packageDirectory.mkdirs();
-                Bean root = new Bean( loader.loadClass(rootClasses[i] ) );
+                Bean root = Bean.loadBean( loader.loadClass(rootClasses[i]) );
                 BeanGeneratorBase.writeBean(
                         this.getGeneratorDestinationPackage(),
                         packageDirectory, this.isGenerateGettersAndSetters() ,
                         this.isGeneratePropertyChangeSupport(), this.isOverwriteGeneratedClasses(), root );
+
+                if (getTranslatorDestinationPackage() != null) {
+                  if (translationGenerator == null) {
+                    System.out.println("Generating Translator");
+                    global = new GlobalGeneratorContext(isGenerateGettersAndSetters(), isGeneratePropertyChangeSupport(), isOverwriteGeneratedClasses());
+
+                    String translatorPackagePath = getTranslatorDestinationPackage().replace( '.', File.separatorChar );
+                    File   tranlatorPath = new File( src, translatorPackagePath );
+                    tranlatorPath.mkdirs();
+                    translationGenerator = new TranslatorGenerator(getTranslatorDestinationPackage(), tranlatorPath, getGeneratorDestinationPackage(), isTranslatorTwoWay());
+                    translationGenerator.Init(global);
+                  }
+                  BeanGeneratorContext  beanContext = new BeanGeneratorContext(global, root, translationGenerator, translationGenerator.getImportMap());
+                  translationGenerator.Generate(beanContext);
+                }
             }
+
+          if (translationGenerator != null) {
+            translationGenerator.Finish(global);
+          }
+
         } catch(Exception e){
             throw new MojoExecutionException( "Exception running Generator", e );
         }

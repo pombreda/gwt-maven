@@ -9,8 +9,11 @@
 
 package test.server;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Arrays;
 
 /**
  *
@@ -67,7 +70,19 @@ public class ABean {
     public void setBbeans(List<BBean> bbeans) {
         this.bbeans = bbeans;
     }
-    
-    
-    
+
+
+  public boolean equals(Object object) {
+    ABean t = (ABean) object;
+
+    EqualsBuilder eb = new EqualsBuilder();
+
+    eb.append(strings, t.strings)
+        .append(hashOfNumbers, t.hashOfNumbers)
+        .append(stringProperty, t.stringProperty)
+        .append(intProperty, t.intProperty)
+        .append(bbeans, t.bbeans);
+
+    return eb.isEquals();
+  }
 }

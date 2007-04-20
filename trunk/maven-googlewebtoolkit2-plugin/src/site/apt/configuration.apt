@@ -15,6 +15,8 @@ gwt-maven Configuration
  * generatorDestinationPackage:  The package generated beans should go into.
    
  * generateGettersAndSetters : toggles generation of get/set methods. Default = false
+
+ * overwriteGeneratedClasses : has the class generation overwrite existing generated classes
     
  * generatePropertyChangeSupport : toggles generation of PropertyChangeListener support.
    This requires GWTx as a dependency for your project, and implies generateGettersAndSetters.
@@ -45,3 +47,4 @@ gwt-maven Configuration
  * port : the port to run the GWTShell listeners on. Default = 8888
     
  * debugPort : the port to run the debugger listeners on. Default = 8888
+
