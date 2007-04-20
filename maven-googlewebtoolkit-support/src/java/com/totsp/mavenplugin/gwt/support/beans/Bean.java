@@ -23,10 +23,7 @@ package com.totsp.mavenplugin.gwt.support.beans;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.WildcardType;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Arrays;
@@ -55,6 +52,8 @@ public class Bean {
         java.util.HashMap.class, java.util.HashSet.class,
         java.util.Stack.class, java.util.Iterator.class
     };
+
+
     Class clazz;
     Bean  parent;
     private InnerParameterizedType ipt;
@@ -62,11 +61,22 @@ public class Bean {
     private ArrayList<Bean> parameterTypes = new ArrayList<Bean>();
     private static HashMap<Type, Bean> ALL_TYPES = new HashMap<Type, Bean>();
     private int arrayDepth;
-    
+
+    public static Bean loadBean(Type type) throws IntrospectionException {
+      Bean  retVal = ALL_TYPES.get( type );
+      if ( retVal == null)
+        retVal = new Bean(type);
+      return retVal;
+    }
+
     /** Creates a new instance of Bean */
     public Bean(Type type) throws IntrospectionException {
         super();
         System.out.println("Checking type "+type.toString());
+
+        if( ALL_TYPES.get( type ) == null ){
+            ALL_TYPES.put( type, this );
+        }
 
         while( type instanceof GenericArrayType ){
             arrayDepth++;
@@ -84,23 +94,15 @@ public class Bean {
             this.ipt = new InnerParameterizedType( (ParameterizedType) type );
             this.clazz = ipt.clazz;
             for( Class param: ipt.types){
-                this.parameterTypes.add( new Bean( param ) );
+                this.parameterTypes.add( Bean.loadBean(param) );
             }
         }
-        if( ALL_TYPES.get( type ) != null ){
-            System.out.println("---Cyclic reference? "+ clazz.getName() );
-        } else {
-            ALL_TYPES.put( type, this );
-        }
+
 
         if (clazz.getSuperclass() != null && !clazz.getSuperclass().equals(Object.class)) {
-          if( ALL_TYPES.containsKey( clazz.getSuperclass() ) ){
-              parent = ALL_TYPES.get( clazz.getSuperclass() );
-          } else {
-              parent = new Bean(clazz.getSuperclass());
-          }
-
+          parent = Bean.loadBean(clazz.getSuperclass());
         }
+      
         if( !arrayContains( BASE_TYPES, this.clazz) ){
             
             PropertyDescriptor[] pds = Introspector
@@ -116,7 +118,7 @@ public class Bean {
                 if( ALL_TYPES.containsKey( returnType ) ){
                     properties.put( propertyName, ALL_TYPES.get( returnType ) );
                 } else {
-                    properties.put( propertyName, new Bean( returnType ));
+                    properties.put( propertyName, Bean.loadBean(returnType) );
                 }
             }
         }
@@ -135,11 +137,27 @@ public class Bean {
             return this.ipt.toString();
         }
     }
-    
+
+    public Class[] getParameterizedTypes() {
+      if( this.ipt == null ){
+            return null;
+        } else {
+            return this.ipt.types;
+        }
+    }
+
     public boolean isCustom(){
         return !(arrayContains( BASE_TYPES, this.clazz) || arrayContains( COLLECTION_TYPES, this.clazz ) );
     }
-  
+
+    public boolean isBaseType() {
+      return arrayContains( BASE_TYPES, this.clazz);
+    }
+
+    public boolean isCollectionType() {
+      return arrayContains( COLLECTION_TYPES, this.clazz);
+    }
+
     private static boolean arrayContains( Object[] array, Object find ){
         for( Object match : array ){
             if( match == find || match.equals( find ) ){
@@ -218,5 +236,138 @@ public class Bean {
     public int getArrayDepth() {
         return arrayDepth;
     }
+
+  static public String getCamelCase(String attName) {
+    if (attName == null)
+      return null;
+    return Character.toUpperCase(attName.charAt(0)) + attName.substring(1, attName.length());
+  }
+
+  public String getGetPrefix() {
+    if (this.clazz == Boolean.TYPE) {
+      return "is";
+    } else {
+      return "get";
+    }
+  }
+
+  public String getGeneratedGet(String object, String attr, boolean isGetSet) {
+    if (isGetSet) {
+
+      return object + "." + properties.get(attr).getGetPrefix() + getCamelCase(attr) + "()";
+    } else {
+      return object + "." + attr;
+    }
+  }
+
+  public String getGeneratedSet(String object, String attr, String value, boolean isGetSet) {
+    if (isGetSet) {
+      return object + ".set" + getCamelCase(attr) + "(" + value + ")";
+    } else {
+      return object + "." + attr + "=" + value;
+    }
+  }
+
+  enum GetSet {
+    Get,
+    Set
+  }
+
+  enum AccessorUsage {
+    Accessor,
+    Direct,
+    None
+  }
+
+  protected AccessorUsage beanUseAccessors(GetSet getset, String attName) {
+
+    AccessorUsage retVal = AccessorUsage.None;
+    try {
+      if (getset==GetSet.Get) {
+        Bean  prop = properties.get(attName);
+        String propName = prop.getGetPrefix() + getCamelCase(attName);
+        Method accessor = clazz.getMethod(propName);
+        if (Modifier.isPublic(accessor.getModifiers()))
+          return AccessorUsage.Accessor;
+
+      } else {
+
+        String propName = "set" + getCamelCase(attName);
+        Method[] methods = clazz.getMethods();
+        for (Method curr : methods) {
+          if (curr.getName().equals(propName) &&
+              curr.getParameterTypes().length == 1 &&
+              Modifier.isPublic(curr.getModifiers()))
+            return AccessorUsage.Accessor;
+        }
+      }
+    } catch (NoSuchMethodException e) {
+      //Do nothing, we now check to see if direct access is possible
+    }
+
+    try {
+      Field field = clazz.getField(attName);
+      if (Modifier.isPublic(field.getModifiers())) {
+        return AccessorUsage.Direct;
+      }
+    } catch (NoSuchFieldException e) {
+      //Need to fall through and return that we cannot access this field
+    }
+
+    return AccessorUsage.None;
+  }
+
+
+  public static final String FUNNY_MSG = "/* Cannot Access Getter */";
+  public static final String FUNNY_MSG2 = "/* Cannot Access Setter */";
+
+  public String getOriginalGet(String object, String attr) {
+    AccessorUsage accessor = beanUseAccessors(GetSet.Get, attr);
+
+    switch(accessor) {
+      case Accessor:
+        Bean  prop = properties.get(attr);
+        return object + "." + prop.getGetPrefix() + getCamelCase(attr) + "()";
+
+      case Direct:
+        return object + "." + attr;
+
+      case None:
+        try {
+          Field field = clazz.getField(attr);
+          Class cls = field.getClass();
+          if (!field.getClass().isPrimitive())
+            return FUNNY_MSG + "null";
+          else {
+            if (cls == Boolean.TYPE) {
+              return FUNNY_MSG + "false";
+            } else if (cls != Void.TYPE) {
+              return FUNNY_MSG + "0";
+            } else {
+              //Don't know what to do if we have a field of type void.  Shouldn't be possible. . .
+              assert(false);
+              return FUNNY_MSG + "0";
+            }
+          }
+
+        } catch (NoSuchFieldException e) {
+          //If we cannot access such a field, things are bad.  Just guess.
+        }
+    }
+    return "null";
+  }
+
+  public String getOriginalSet(String object, String attr, String value) {
+    AccessorUsage accessor = beanUseAccessors(GetSet.Get, attr);
+
+    switch(accessor) {
+      case Accessor:
+        return object + ".set" + getCamelCase(attr) + "(" + value + ")";
+
+      case Direct:
+        return object + "." + attr + "=" + value;
+    }
+    return FUNNY_MSG2;
+  }
     
 }

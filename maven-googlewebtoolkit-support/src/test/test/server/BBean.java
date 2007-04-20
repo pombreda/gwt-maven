@@ -9,7 +9,10 @@
 
 package test.server;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 import java.util.List;
+import java.util.Arrays;
 
 /**
  *
@@ -49,7 +52,17 @@ public class BBean {
         this.strings = strings;
     }
     
-    
+    public boolean equals(Object object) {
+    BBean t = (BBean) object;
+
+    EqualsBuilder eb = new EqualsBuilder();
+
+    eb.append(strings, t.strings)
+        .append(floatProperty, floatProperty)
+        .append(booleanProperty, t.booleanProperty);
+
+    return eb.isEquals();
+  }
     
     
     
