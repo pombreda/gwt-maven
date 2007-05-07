@@ -31,7 +31,7 @@ There is currently some work looking to base the Bean Generation off XSLT, to ma
 = Feature Requests / Changes =
 
   #  Request to add a mapping between Source Packages and Destination Packages
-  #  Request to add prefix + suffixes to generated packages
+  #  Request to add prefix + suffixes to generated classes
   #  Look at using ASM for collecting information on classes rather than inspection (this helps us get away from potential problems with static constructors).
   #  Jalopy integration for getting the formatting correct on generated classes
   #  An option to have the Bean Generation to occur on every build (so people don't need to check in generated code, and the beans track the dependencies better.)
