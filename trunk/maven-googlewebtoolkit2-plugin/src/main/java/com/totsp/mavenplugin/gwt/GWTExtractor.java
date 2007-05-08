@@ -57,8 +57,11 @@ public class GWTExtractor extends AbstractGWTMojo{
               if (entry.isDirectory()) {
                 entryFile.mkdirs();
               } else {
-                copyStream(zipFile.getInputStream(entry), new FileOutputStream(entryFile));
-              }
+                FileOutputStream  fis = new FileOutputStream(entryFile);
+                copyStream(zipFile.getInputStream(entry), fis);
+                fis.flush();
+                fis.close();
+              }              
             }
             timestampFile.createNewFile();
           }
