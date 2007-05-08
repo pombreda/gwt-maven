@@ -24,6 +24,7 @@ package com.totsp.mavenplugin.gwt;
 import com.totsp.mavenplugin.gwt.support.ExitException;
 import com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.maven.model.Resource;
@@ -32,6 +33,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @goal mergewebxml
+ * @requiresDependencyResolution compile
  * @phase compile
  * @author cooper
  */
@@ -43,6 +45,19 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
     }
     
     public void execute() throws MojoExecutionException, MojoFailureException {
+
+        //Setup the GWT Home using our auto-setup one, if one is not set
+        if (getProject().getProperties().getProperty("google.webtoolkit.home") == null) {
+
+          File  targetDir = null;
+          try {
+            targetDir = new File(getGwtBinDirectory(), GWTSetup.guessArtifactId() + "-" + getGwtVersion()).getCanonicalFile();
+            getProject().getProperties().setProperty("google.webtoolkit.home", targetDir.getCanonicalPath());
+            GWT_PATH = targetDir.getCanonicalPath();
+          } catch (IOException e) {
+             throw new MojoExecutionException(e.getMessage());
+          }          
+        }
         try{
             File destination = new File(this.getBuildDir(),
                     "web.xml");
