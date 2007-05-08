@@ -24,6 +24,7 @@ package com.totsp.mavenplugin.gwt;
 import com.totsp.mavenplugin.gwt.support.beans.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.StringTokenizer;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -40,12 +41,26 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
     }
     
     public void execute() throws MojoExecutionException, MojoFailureException {
+
         if( this.getGeneratorRootClasses() == null ){
             throw new MojoExecutionException( "No root classes specified : make sure your POM has a generatorRootClasses set.");
         }
 
         if (this.getGeneratorDestinationPackage() == null) {
             throw new MojoExecutionException( "No destination package specified :\n    <generatorRootClasses> was specified in the POM without a <generatorDestinationPackage> being specified as well.");
+        }
+
+        //Setup the GWT Home using our auto-setup one, if one is not set
+        if (getProject().getProperties().getProperty("google.webtoolkit.home") == null) {
+
+          File  targetDir = null;
+          try {
+            targetDir = new File(getGwtBinDirectory(), GWTSetup.guessArtifactId() + "-" + getGwtVersion()).getCanonicalFile();
+            getProject().getProperties().setProperty("google.webtoolkit.home", targetDir.getCanonicalPath());
+            GWT_PATH = targetDir.getCanonicalPath();
+          } catch (IOException e) {
+             throw new MojoExecutionException(e.getMessage());
+          }
         }
 
         Generator translationGenerator = null;
