@@ -1,3 +1,6 @@
+#summary 2.0 Plugin Release Criteria
+
+
 = Introduction =
 We need to come up with a list of features to define the next release.  It seems to me, that there are potentially many features that are reasonably major that we can get in, in a short amount of time.
 
@@ -9,5 +12,4 @@ I would like to see us get the following features in, and then kick out a releas
   #  Fix the bean generation bugs and feature requests
   #  Get the Bean Translator to use either Dozer or the BeanMapping classes
   
-
 
