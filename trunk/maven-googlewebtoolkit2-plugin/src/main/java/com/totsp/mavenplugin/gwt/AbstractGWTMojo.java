@@ -38,6 +38,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 import org.apache.maven.model.Resource;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
@@ -48,7 +50,12 @@ import org.codehaus.classworlds.ClassWorld;
  * @author cooper
  */
 public abstract class AbstractGWTMojo extends AbstractMojo {
-    
+
+    static public final String OS_NAME = System.getProperty( "os.name" ).toLowerCase( Locale.US );
+
+    static public String GWT_PATH = null;
+    static public String EXTA_ARG = null;
+
     /**
      * @parameter
      */
@@ -84,6 +91,19 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private boolean overwriteGeneratedClasses;
 
+    /**
+     * @parameter
+     */
+    private String groupId = "com.google.gwt";
+
+    /**
+     * @parameter
+     */
+    private String gwtVersion;
+
+    /**
+     */
+    private String type = "zip";
 
     /**
      * @parameter expression="${project.build.directory}"
@@ -108,7 +128,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     
     /**
      * @parameter expression="${google.webtoolkit.home}"
-     * @required
      */
     private File gwtHome;
     
@@ -173,7 +192,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter default-value="8888"
      */
     private int debugPort;
-    
+
+
     
     protected static final String JAVA_COMMAND = System.getProperty( "java.home") != null ?
         System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java" :
@@ -309,10 +329,22 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
-        items.add( new File(getGwtHome(), "gwt-dev-linux.jar") );
-        items.add( new File(getGwtHome(), "gwt-dev-mac.jar") );
-        items.add( new File(getGwtHome(), "gwt-dev-windows.jar") );
-        items.add( new File(getGwtHome(), "gwt-user.jar"));
+
+        for( Iterator it = getProject().getSystemClasspathElements().iterator(); it.hasNext() ;){
+            items.add( new File( it.next().toString() ) );
+        }
+
+        //Because Maven loses our properties for some odd reason, we need to double check
+        File GWTHome = getGwtHome();
+        if (GWTHome == null) {
+          GWTHome = new File(GWT_PATH);
+        }
+
+
+        items.add( new File(GWTHome, "gwt-dev-linux.jar") );
+        items.add( new File(GWTHome, "gwt-dev-mac.jar") );
+        items.add( new File(GWTHome, "gwt-dev-windows.jar") );
+        items.add( new File(GWTHome, "gwt-user.jar"));
         for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
             Resource r = (Resource) it.next();
             items.add( new File( r.getDirectory()) );
@@ -452,6 +484,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return totalBytes;
     }
 
+    protected File getGwtBinDirectory() throws IOException {
+      return new File(getProject().getBuild().getOutputDirectory(), "../gwtBin").getCanonicalFile();
+    }
+
 
   public String getTranslatorDestinationPackage() {
     return translatorDestinationPackage;
@@ -467,5 +503,29 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
   public void setTranslatorTwoWay(boolean translatorTwoWay) {
     this.translatorTwoWay = translatorTwoWay;
+  }
+
+  public String getGroupId() {
+    return groupId;
+  }
+
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+  }
+
+  public String getGwtVersion() {
+    return gwtVersion;
+  }
+
+  public void setGwtVersion(String gwtVersion) {
+    this.gwtVersion = gwtVersion;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 }

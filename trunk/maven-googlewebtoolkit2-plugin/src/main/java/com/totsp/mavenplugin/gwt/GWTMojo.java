@@ -64,6 +64,12 @@ public class GWTMojo extends AbstractGWTMojo {
             String[] extraJvmArgs = { this.getExtraJvmArgs() };
             cl.addArguments( extraJvmArgs );
         }
+
+        if (EXTA_ARG != null) {
+          String[] extraJvmArgs = { EXTA_ARG };
+          cl.addArguments( extraJvmArgs );
+        }
+
         String[] args = {
             "-Dcatalina.base="+this.getTomcat().getAbsolutePath(),
             "-classpath", classpath,
