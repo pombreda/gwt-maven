@@ -8,17 +8,6 @@
 package com.totsp.mavenplugin.gwt.support.beans;
 
 import junit.framework.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
 
 /**
  *

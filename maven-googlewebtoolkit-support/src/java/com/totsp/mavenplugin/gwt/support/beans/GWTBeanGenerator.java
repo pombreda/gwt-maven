@@ -20,9 +20,6 @@
 package com.totsp.mavenplugin.gwt.support.beans;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
