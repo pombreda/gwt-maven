@@ -1,18 +1,11 @@
 package com.totsp.mavenplugin.gwt.support.beans;
 
-import com.sun.tools.javac.tree.Tree;
-
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Field;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Author: willpugh  Apr 15, 2007 - 2:46:52 PM
