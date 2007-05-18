@@ -36,63 +36,30 @@ public class BeanGeneratorBase {
     }
     
     
-    private static HashMap<String, String> translatedClasses = new HashMap<String, String>();
     private static HashSet<File> writtenFiles = new HashSet<File>();
-    
-    
-    
-    public static void writeBean(String packageName, File packageDirectory, boolean getSet,
-            boolean propSupport, Bean bean) throws IOException, IntrospectionException {
-        writeBean(packageName, packageDirectory, getSet, propSupport, false, bean);
-    }
-    
-    
-    public static void writeBean(String packageName, File packageDirectory, boolean getSet,
-            boolean propSupport, boolean overwrite, Bean bean) throws IOException, IntrospectionException {
-        System.out.println(bean.getArrayDepth() + " " + bean.clazz);
-        if (translatedClasses.containsKey(bean.clazz.getName())) {
+    private static HashMap<String, Element> baseClasses = new HashMap<String, Element>();
+    private static HashMap<String, Element> allClasses = new HashMap<String, Element>();
+    public static void buildBeanElements( String packageName, Bean bean ){
+        String cannonical = bean.clazz.getCanonicalName();
+        if( baseClasses.containsKey( cannonical ) ){
             return;
         }
-        
-        HashMap<String, String> importMap = new HashMap<String, String>();
-        
-        String beanName = bean.clazz.getSimpleName();
-        File javaFile = new File(packageDirectory, beanName + ".java");
-        
-        //If we're not overwriting anything, we simply make sure our new
-        //classes avoid any files.  If we are overwriting, we need to make sure
-        //we avoid any of the classes we have written in the generation.
-        if (!overwrite) {
-            for (int i = 0; javaFile.exists(); i++) {
-                beanName += i;
-                javaFile = new File(packageDirectory, beanName + ".java");
-            }
-        }
-        writtenFiles.add(javaFile);
-        System.out.println( "Generating: "+ bean.clazz.getCanonicalName() );
-        System.out.println( "Generating: "+ javaFile.getAbsolutePath() );
-        
-        Document doc = new Document();
-        Element root = new Element("class");
-        doc.setRootElement( root );
-        
-        Element pkg = new Element("package");
-        System.err.println(  );
-        pkg.setText(getPackageName(bean.clazz) );
-        root.addContent(pkg);
-        
-        Element name = new Element("shortName");
-        name.setText( beanName );
-        root.addContent( name );
-        
-        Element ext = new Element("extends");
-        Element epkg = new Element("package");
-        epkg.setText( getPackageName( bean.clazz.getSuperclass()) );
-        ext.addContent( epkg );
-        Element ename = new Element("shortName");
-        ename.setText( bean.clazz.getSuperclass().getSimpleName() );
-        ext.addContent( ename );
-        root.addContent(ext);
+        Element clazz = new Element("class");
+        clazz.addContent(
+                new Element("package")
+                .setText(getPackageName(bean.clazz) )
+                ).addContent(
+                new Element("shortName")
+                .setText( bean.clazz.getSimpleName() )
+                ).addContent(
+                new Element("extends").addContent(
+                new Element("package")
+                .setText( getPackageName( bean.clazz.getSuperclass()) )
+                ).addContent(
+                new Element("shortName")
+                .setText( bean.clazz.getSuperclass().getSimpleName() )
+                )
+                );
         
         for( Entry<String, Bean> entry : bean.properties.entrySet()  ){
             Element prop = new Element("property")
@@ -120,65 +87,110 @@ public class BeanGeneratorBase {
                         )
                         );
             }
-            root.addContent( prop );
+            clazz.addContent( prop );
         } // end propertyLoop
+        boolean found = false;
         
-        TransformerFactory xformFactory =
-                TransformerFactory.newInstance();
-        try {
-            //Get an XSL Transformer object
-            Transformer transformer =
-                    xformFactory.newTransformer( new StreamSource( BeanGeneratorBase.class.getResourceAsStream("./DTO.xsl")));
-            transformer.setParameter( "propertyChangeSupport", propSupport ? "yes" : "no" );
-            transformer.setParameter("gettersAndSetters", getSet ? "yes" : "no" );
-            transformer.setParameter("destinationPackage", packageName );
-            transformer.transform( new JDOMSource(doc), new StreamResult( new FileOutputStream(javaFile)));
-            
-            Jalopy jalopy = new Jalopy();
-            
-            // specify input and output target
-            jalopy.setInput(javaFile);
-            jalopy.setOutput(javaFile);
-            
-            // format and overwrite the given input file
-            jalopy.format();
-            
-            if (jalopy.getState() == Jalopy.State.OK)
-                System.out.println(javaFile + " successfully formatted");
-            else if (jalopy.getState() == Jalopy.State.WARN)
-                System.out.println(javaFile + " formatted with warnings");
-            else if (jalopy.getState() == Jalopy.State.ERROR)
-                System.out.println(javaFile + " could not be formatted");
-            
-        } catch (TransformerConfigurationException ex) {
-            ex.printStackTrace();
-        }catch (TransformerException ex) {
-            ex.printStackTrace();
+        for( String outterClassName : allClasses.keySet() ){
+            if( cannonical.substring(0, cannonical.lastIndexOf(".") ).equals(outterClassName) ){
+                allClasses.get(outterClassName).addContent( clazz );
+                found = true;
+                break;
+            }
         }
+        if( !found ){
+            baseClasses.put(cannonical, clazz );
+        }
+        allClasses.put(cannonical, clazz );
         
         for( Bean prop : bean.properties.values() ){
-            System.out.println( "--" +prop.clazz.getCanonicalName() + prop.isCustom() );
             if( prop.isCustom() ){
-                writeBean(packageName, packageDirectory,  getSet,
-                        propSupport,  overwrite,  prop );
+                buildBeanElements(packageName,  prop );
             }
             for( Bean param : prop.getParameterTypes() ){
                 if( param.isCustom() ){
-                    writeBean(packageName, packageDirectory,  getSet,
-                            propSupport,  overwrite,  param );
+                    buildBeanElements(packageName, param );
                 }
             }
         }
         for( Bean param : bean.getParameterTypes() ){
             if( param.isCustom() ){
-                writeBean(packageName, packageDirectory,  getSet,
-                        propSupport,  overwrite,  param );
+                buildBeanElements(packageName, param );
             }
         }
         if( bean.parent != null && bean.parent.isCustom() ){
-            writeBean(packageName, packageDirectory,  getSet,
-                    propSupport,  overwrite,  bean.parent );
+            buildBeanElements(packageName, bean.parent );
         }
+        
+    }
+    
+    
+    public static void writeBean(String packageName, File packageDirectory, boolean getSet,
+            boolean propSupport, Bean bean) throws IOException, IntrospectionException {
+        writeBean(packageName, packageDirectory, getSet, propSupport, false, bean);
+    }
+    
+    
+    public static void writeBean(String packageName, File packageDirectory, boolean getSet,
+            boolean propSupport, boolean overwrite, Bean bean) throws IOException, IntrospectionException {
+        
+        
+        buildBeanElements( packageName, bean );
+        for( Entry<String, Element> entry : baseClasses.entrySet() ){
+            
+            String beanName = entry.getKey().substring( entry.getKey().lastIndexOf(".")+1 ); 
+            System.out.println( entry.getKey() );
+            File javaFile = new File(packageDirectory, beanName + ".java");
+            
+            //If we're not overwriting anything, we simply make sure our new
+            //classes avoid any files.  If we are overwriting, we need to make sure
+            //we avoid any of the classes we have written in the generation.
+            if (!overwrite) {
+                for (int i = 0; javaFile.exists(); i++) {
+                    beanName += i;
+                    javaFile = new File(packageDirectory, beanName + ".java");
+                }
+            }
+            writtenFiles.add(javaFile);
+            System.out.print( "Generating: "+ bean.clazz.getCanonicalName() );
+            System.out.println( " to file: "+ javaFile.getAbsolutePath() );
+            TransformerFactory xformFactory =
+                    TransformerFactory.newInstance();
+            try {
+                //Get an XSL Transformer object
+                Transformer transformer =
+                        xformFactory.newTransformer( new StreamSource( BeanGeneratorBase.class.getResourceAsStream("./DTO.xsl")));
+                transformer.setParameter( "propertyChangeSupport", propSupport ? "yes" : "no" );
+                transformer.setParameter("gettersAndSetters", getSet ? "yes" : "no" );
+                transformer.setParameter("destinationPackage", packageName );
+                
+                Document doc = new Document();
+                doc.setRootElement( entry.getValue() );
+                transformer.transform( new JDOMSource(doc), new StreamResult( new FileOutputStream(javaFile)));
+                doc.detachRootElement();
+                Jalopy jalopy = new Jalopy();
+                
+                // specify input and output target
+                jalopy.setInput(javaFile);
+                jalopy.setOutput(javaFile);
+                
+                // format and overwrite the given input file
+                jalopy.format();
+                
+                if (jalopy.getState() == Jalopy.State.OK)
+                    System.out.println(javaFile + " successfully formatted");
+                else if (jalopy.getState() == Jalopy.State.WARN)
+                    System.out.println(javaFile + " formatted with warnings");
+                else if (jalopy.getState() == Jalopy.State.ERROR)
+                    System.out.println(javaFile + " could not be formatted");
+                
+            } catch (TransformerConfigurationException ex) {
+                ex.printStackTrace();
+            }catch (TransformerException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
     }
     
     private static String getPackageName(Class clazz){

@@ -71,8 +71,6 @@ public class Bean {
     /** Creates a new instance of Bean */
     public Bean(Type type) throws IntrospectionException {
         super();
-        System.out.println("Checking type "+type.toString());
-
         if( ALL_TYPES.get( type ) == null ){
             ALL_TYPES.put( type, this );
         }
