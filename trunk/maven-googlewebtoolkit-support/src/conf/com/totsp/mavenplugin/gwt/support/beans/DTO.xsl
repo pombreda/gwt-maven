@@ -35,7 +35,9 @@
         <xsl:if test="$propertyChangeSupport='yes'">
             <xsl:call-template name="propertyChangeSupport" />
         </xsl:if>
-        
+        <xsl:for-each select="./property">
+            <xsl:call-template name="property" />
+        </xsl:for-each>
         
         }
     </xsl:template>
@@ -58,15 +60,12 @@
         PropertyChangeListener l) {
         __propertyChangeSupport__.removePropertyChangeListener(propertyName, l);
         }
-        <xsl:for-each select="./property">
-            <xsl:call-template name="property" />
-        </xsl:for-each>
     </xsl:template>
     <xsl:template name="property">
         <xsl:if test="count(./parameterType)!=0">
             /**
-             * @gwt.typeArgs &lt;<xsl:for-each select="./parameterType"><xsl:call-template name="packageName" />.<xsl:value-of select="./shortName" /><xsl:if test="last()!=position()">,</xsl:if></xsl:for-each>&gt;
-             */  
+            * @gwt.typeArgs &lt;<xsl:for-each select="./parameterType"><xsl:call-template name="packageName" />.<xsl:value-of select="./shortName" /><xsl:if test="last()!=position()">,</xsl:if></xsl:for-each>&gt;
+            */  
         </xsl:if>
         <xsl:choose>
             <xsl:when test="$gettersAndSetters='yes' or $propertyChangeSupport='yes'">private </xsl:when>
@@ -132,15 +131,15 @@
     <xsl:template name="type">
         <xsl:choose>
             <xsl:when test="string(./shortName)='int' or
-                          string(./shortName)='long' or
-                          string(./shortName)='float' or
-                          string(./shortName)='double' or
-                          string(./shortName)='char' or
-                          string(./shortName)='byte' or
-                          string(./shortName)='boolean'">
-                              <xsl:value-of select="./shortName" />
-                </xsl:when>
-                
+                      string(./shortName)='long' or
+                      string(./shortName)='float' or
+                      string(./shortName)='double' or
+                      string(./shortName)='char' or
+                      string(./shortName)='byte' or
+            string(./shortName)='boolean'">
+                <xsl:value-of select="./shortName" />
+            </xsl:when>
+            
             <xsl:otherwise>
                 <xsl:call-template name="packageName" />.<xsl:value-of select="./shortName" /><xsl:call-template name="array" />
             </xsl:otherwise>
