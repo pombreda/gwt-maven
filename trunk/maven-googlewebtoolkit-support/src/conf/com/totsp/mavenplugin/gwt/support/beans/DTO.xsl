@@ -177,7 +177,7 @@
     </xsl:template>
     <xsl:template name="packageName" ><xsl:choose>
             <xsl:when test="string(./package)=string(/class/package)"><xsl:value-of select="$destinationPackage"/></xsl:when>
-            <xsl:when test="starts-with(string(./package),string(/class/package))"><xsl:value-of select="concat( $destinationPackage, substring( string(./package), string-length( /class/package) + 1  ) )" /></xsl:when>
+            <xsl:when test="starts-with(string(./package),concat(string(/class/package), concat('.', string(/class/shortName))))"><xsl:value-of select="concat( $destinationPackage, substring( string(./package), string-length( /class/package) + 1  ) )" /></xsl:when>
             <xsl:when test="string(./package)!=string(/class/package)"><xsl:value-of select="./package" /></xsl:when>
             
     </xsl:choose></xsl:template>
