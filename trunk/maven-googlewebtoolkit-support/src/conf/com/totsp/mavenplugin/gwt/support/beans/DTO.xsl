@@ -14,15 +14,20 @@
     <xsl:param name="gettersAndSetters">yes</xsl:param>
     <xsl:param name="destinationPackage">com.totsp.example.client</xsl:param>
     
-    <xsl:template match="/class">
+    <xsl:template match="/">
         package <xsl:value-of select="$destinationPackage"/>;
         import com.google.gwt.user.client.rpc.IsSerializable;
         <xsl:if test="$propertyChangeSupport='yes'">
             import java.beans.PropertyChangeSupport;
             import java.beans.PropertyChangeListener;
+            <xsl:for-each select="./class">
+                <xsl:call-template name="class" />
+            </xsl:for-each>
         </xsl:if>
-        
-        public class <xsl:value-of select="./shortName" /> 
+    </xsl:template>
+    
+    <xsl:template name="class">
+        public <xsl:if test="name(..)='class'">static</xsl:if> class <xsl:value-of select="./shortName" /> 
         <xsl:choose>
             <xsl:when test="count(./extends)&gt;0 and string(./extends/package)=string(/class/package)">
                 extends <xsl:value-of select="./extends/shortName" />
@@ -38,7 +43,9 @@
         <xsl:for-each select="./property">
             <xsl:call-template name="property" />
         </xsl:for-each>
-        
+            <xsl:for-each select="./class">
+                <xsl:call-template name="class" />
+            </xsl:for-each>
         }
     </xsl:template>
     <xsl:template name="propertyChangeSupport">
