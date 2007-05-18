@@ -65,7 +65,7 @@
     <xsl:template name="property">
         <xsl:if test="count(./parameterType)!=0">
             /**
-             * @gwt.typeArgs &lt;<xsl:for-each select="./parameterType"><xsl:call-template name="packageName" />.<xsl:value-of select="./shortName" /><xsl:if test="last()!=true">,</xsl:if></xsl:for-each>&gt;
+             * @gwt.typeArgs &lt;<xsl:for-each select="./parameterType"><xsl:call-template name="packageName" />.<xsl:value-of select="./shortName" /><xsl:if test="last()!=position()">,</xsl:if></xsl:for-each>&gt;
              */  
         </xsl:if>
         <xsl:choose>
