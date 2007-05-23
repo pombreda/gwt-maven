@@ -11,5 +11,5 @@ I would like to see us get the following features in, and then kick out a releas
   #  Add tasks to the plugin that can download a GWT zip file, unzip it and use it as the GWT Home.  This allows us to enable a better CI story.
   #  Fix the bean generation bugs and feature requests
   #  Get the Bean Translator to use either Dozer or the BeanMapping classes
+(rc: I intend to add a Dozer config file XSL file to the current system. We are using the BeanMapping directly right now in all of our work, and it works well.)
   
-
