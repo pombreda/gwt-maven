@@ -36,3 +36,51 @@ You need to add a plugin repository:
   </pluginRepository>
 </pluginRepositories>
 }}}
+
+*Q)  I'm having problems compiling multi-module GWT applications.  How do I make it work?
+
+When building client code, the GWT compiler, not only needs bytecode for dependent classes, but also needs access to the source code.  This means any GWT modules your module depends on will need to have the source code packaged in it.  The easiest way to do this is to use the `resources` section of your POM's `build` stanza.  e.g.
+
+{{{
+<build>
+   <!-- All your plugins are here -->
+
+   <resources>
+    <resource>
+      <directory>src/main/java</directory>
+    </resource>
+  </resources>
+</build>  
+}}}
+
+another way to do this is to use the antrun plugin
+
+{{{
+<build>
+  <plugins>
+  ...
+    <plugin>
+      <artifactId>maven-antrun-plugin</artifactId>
+      <executions>
+        <execution>
+          <phase>process-classes</phase>
+          <configuration>
+            <tasks>
+              <copy todir="${project.build.outputDirectory}">
+                <fileset dir="${project.build.sourceDirectory}">
+                  <include name="**/*.java" />
+                </fileset>
+              </copy>
+            </tasks>
+          </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  ...
+  </plugins>
+</build>
+
+}}}
