@@ -41,7 +41,7 @@ public class BeanGeneratorBase {
     private static HashMap<String, Element> allClasses = new HashMap<String, Element>();
     public static void buildBeanElements( String packageName, Bean bean ){
         String cannonical = bean.clazz.getCanonicalName();
-        if( baseClasses.containsKey( cannonical ) ){
+        if( allClasses.containsKey( cannonical ) ){
             return;
         }
         Element clazz = new Element("class");
@@ -139,7 +139,6 @@ public class BeanGeneratorBase {
         for( Entry<String, Element> entry : baseClasses.entrySet() ){
             
             String beanName = entry.getKey().substring( entry.getKey().lastIndexOf(".")+1 ); 
-            System.out.println( entry.getKey() );
             File javaFile = new File(packageDirectory, beanName + ".java");
             
             //If we're not overwriting anything, we simply make sure our new
@@ -193,7 +192,7 @@ public class BeanGeneratorBase {
         
     }
     
-    private static String getPackageName(Class clazz){
+    static String getPackageName(Class clazz){
         
         return clazz.getCanonicalName().indexOf(".") == -1 ?
             "java.lang" :
