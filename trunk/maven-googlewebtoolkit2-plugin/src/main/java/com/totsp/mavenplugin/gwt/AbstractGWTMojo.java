@@ -35,10 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import org.apache.maven.model.Resource;
 import org.codehaus.classworlds.ClassRealm;
@@ -140,8 +137,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter expression="${project.build.directory}/tomcat"
      */
     private File tomcat;
-    
-    
+
+    /**
+     * @parameter
+     */
+    private boolean fork;
+
     
     /**
      * Project instance, used to add new source directory to the build.
@@ -194,11 +195,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private int debugPort;
 
 
-    
-    protected static final String JAVA_COMMAND = System.getProperty( "java.home") != null ?
-        System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java" :
+    protected static final String JAVA_COMMAND = System.getProperty("java.home") != null ? 
+      FileUtils.normalize(System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java") :
         "java";
-    
+
     /** Creates a new instance of AbstractGWTMojo */
     public AbstractGWTMojo() {
     }
@@ -324,8 +324,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return webXml;
     }
     
-    public List buildClasspathList() throws DependencyResolutionRequiredException {
-        List items = new ArrayList();
+    public Collection buildClasspathList() throws DependencyResolutionRequiredException {
+        Set items = new LinkedHashSet();
         for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
@@ -341,9 +341,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         }
 
 
-        items.add( new File(GWTHome, "gwt-dev-linux.jar") );
-        items.add( new File(GWTHome, "gwt-dev-mac.jar") );
-        items.add( new File(GWTHome, "gwt-dev-windows.jar") );
+        items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
         items.add( new File(GWTHome, "gwt-user.jar"));
         for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
             Resource r = (Resource) it.next();
@@ -527,5 +525,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public boolean isFork() {
+    return fork;
+  }
+
+  public void setFork(boolean fork) {
+    this.fork = fork;
   }
 }

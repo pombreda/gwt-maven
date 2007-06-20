@@ -39,8 +39,32 @@ public class GWTTest extends AbstractGWTMojo {
 
         if (!Boolean.valueOf(doNotFindGwtDev)) {
           String toolkitHomeStr = this.getProject().getProperties().getProperty("google.webtoolkit.home");
+          
+          //Setup the GWT Home using our auto-setup one, if one is not set
+          if (getProject().getProperties().getProperty("google.webtoolkit.home") == null) {
+
+            File  targetDir = null;
+            try {
+              targetDir = new File(getGwtBinDirectory(), GWTSetup.guessArtifactId() + "-" + getGwtVersion()).getCanonicalFile();
+              getProject().getProperties().setProperty("google.webtoolkit.home", targetDir.getCanonicalPath());
+              GWT_PATH = targetDir.getCanonicalPath();
+              toolkitHomeStr = GWT_PATH;
+            } catch (IOException e) {
+               throw new MojoExecutionException(e.getMessage());
+            }
+          }
+
           if (toolkitHomeStr == null) {
-            throw new MojoFailureException("Error:  google.webtoolkit.home is not set.  Please set this property an active profile in your POM or user settings.");
+            try {
+              if (getGwtHome() != null)
+                toolkitHomeStr = getGwtHome().getCanonicalPath();
+            } catch (IOException e) {
+              throw new MojoFailureException("Error:  google.webtoolkit.home is not set.  Please set this property an active profile in your POM or user settings.");
+            }
+
+            if (toolkitHomeStr == null)
+              throw new MojoFailureException("Error:  google.webtoolkit.home is not set.  Please set this property an active profile in your POM or user settings.");
+
           }
 
           File  toolkitHome = new File(toolkitHomeStr);
