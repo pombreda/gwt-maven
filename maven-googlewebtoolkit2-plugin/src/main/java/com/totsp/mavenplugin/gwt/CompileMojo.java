@@ -28,6 +28,10 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+//import com.google.gwt.dev.GWTCompiler;
+
 /**
  * @goal compile
  * @phase compile
@@ -55,6 +59,33 @@ public class CompileMojo extends AbstractGWTMojo{
             } catch(Exception e){
                 throw new MojoExecutionException( "Unable to build catalina.base", e);
             }
+
+
+          if (!isFork()) {
+            String[] args = {
+                "-logLevel", this.getLogLevel(),
+                "-style", this.getStyle(),
+                "-out", this.getOutput().getAbsolutePath(),
+                compileTarget
+            };
+
+            this.fixThreadClasspath();
+
+            try {
+              Class compilerClass = Thread.currentThread().getContextClassLoader().loadClass("com.google.gwt.dev.GWTCompiler");
+              Method m = compilerClass.getMethod("main", args.getClass());
+              m.invoke(null, new Object[] {args});
+            } catch (ClassNotFoundException e) {
+              System.out.println("ERROR:  Could not find GWTCompiler.  Make sure your classpath includes the the GWT dev jars");
+            } catch (NoSuchMethodException e) {
+              System.out.println("ERROR:  Could not find the main method on GWTCompiler.  You must be using a newer version of GWT than the plugin expects.  Send this error to the gwt-maven group, and get is fixed.");
+            } catch (IllegalAccessException e) {
+              System.out.println("ERROR:  Problem calling the main method on GWTCompiler.  Send this error to the gwt-maven group, and get is fixed.");
+            } catch (InvocationTargetException e) {
+              System.out.println("ERROR:  Problem calling the main method on GWTCompiler.  Send this error to the gwt-maven group, and get is fixed.");
+            } 
+            //GWTCompiler.main(args);
+          } else {
             System.out.println( "Using classpath: "+ classpath );
             Commandline cl = new Commandline();
             cl.setExecutable( JAVA_COMMAND );
@@ -74,11 +105,11 @@ public class CompileMojo extends AbstractGWTMojo{
             cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
             CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
             CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
-            
+
             try{
                 this.getLog().info( "Running GWTCompile with command: "+cl.toString());
                 int code = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
-                
+
                 System.out.println( stdout.getOutput() );
                 System.err.println( stderr.getOutput() );
                 if( code != 0 ){
@@ -91,7 +122,7 @@ public class CompileMojo extends AbstractGWTMojo{
                 getLog().debug(stdout.getOutput());
                 getLog().debug(stderr.getOutput());
             }
-            
+          }
         }
     }
     /**
