@@ -150,13 +150,20 @@
   </goal>
     
   <goal 
+    name="gwt:warsansmerge" 
+    prereqs="gwt:compile, war:webapp, war:war" 
+    description="Creates deployable GWT war file (skipping mergewebxml, on your own for maintainance of deployment time servlet declarations)">
+  </goal> 
+  
+  <goal 
     name="gwt:war" 
     prereqs="gwt:compile, war:webapp, gwt:mergewebxml, war:war" 
     description="Creates deployable GWT war file (including merging GWT module with target web.xml and compiling with GWTCompiler)">
-  </goal>  
+  </goal> 
   
   <goal 
-    name="gwt:mergewebxml"    
+    name="gwt:mergewebxml"  
+    prereqs="war:webapp"   
     description="Merges servlets in module definitions with the project target web.xml file.">
       <echo>mergewebxml - still experimental</echo>  
       <ant:java classname="com.totsp.mavenplugin.gwt.support.Main" fork="false" dir="${basedir}">
