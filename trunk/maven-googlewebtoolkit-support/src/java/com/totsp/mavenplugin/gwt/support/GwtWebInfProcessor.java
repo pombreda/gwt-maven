@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.jdom.Comment;
@@ -42,6 +43,7 @@ public class GwtWebInfProcessor {
     private String moduleName;
     private File moduleFile;
     protected String webXmlPath;
+    private HashSet checkedModules = new HashSet();
     
     protected GwtWebInfProcessor(){
         super();
@@ -107,19 +109,19 @@ public class GwtWebInfProcessor {
      */
     protected List getGwtServletDescriptors(String module) throws IOException, JDOMException {
         ArrayList servletElements = new ArrayList();
-        
-        
+        System.out.println("Checking module: "+ module);
+        checkedModules.add( module );
         Document document = null;
         try{
             SAXBuilder builder = new SAXBuilder(false);
             if( module == null && this.moduleFile != null){
                 document = builder.build( this.moduleFile);
             } else {
-            document = builder.build(
-                    GwtWebInfProcessor.class.getResourceAsStream(
+                document = builder.build(
+                        GwtWebInfProcessor.class.getResourceAsStream(
                         "/"+module.replace('.', '/') + ".gwt.xml"
-                    )
-                );
+                        )
+                        );
             }
         } catch(Exception e){
             if( !module.startsWith("com.google.gwt.dev.") )
@@ -131,11 +133,13 @@ public class GwtWebInfProcessor {
         
         for(int i = 0; (inherits != null) && (i < inherits.size()); i++) {
             Element inherit = (Element) inherits.get(i);
-            servletElements.addAll(
-                    this.getGwtServletDescriptors(
-                    inherit.getAttributeValue("name")
-                    )
-                    );
+            System.out.println( "Done"+inherit.getAttributeValue("name") +"="+checkedModules.contains( inherit.getAttributeValue("name")) );
+            if( !checkedModules.contains( inherit.getAttributeValue("name")) )
+                servletElements.addAll(
+                        this.getGwtServletDescriptors(
+                        inherit.getAttributeValue("name")
+                        )
+                        );
         }
         
         List servlets = element.getChildren("servlet");
@@ -234,10 +238,10 @@ public class GwtWebInfProcessor {
         String[] beforeMappings = {
             "icon", "display-name", "description", "distributable",
             "context-param", "filter", "filter-mapping", "listener",
-            "servlet"
+            "servlet", "servlet-mapping"
         };
         String[] afterMappings = {
-            "servlet-mapping", "session-config", "mime-mapping", "welcome-file-list",
+             "session-config", "mime-mapping", "welcome-file-list",
             "error-page", "taglib", "resource-env-ref", "resource-ref",
             "security-constraint", "login-config", "security-role",
             "env-entry", "ejb-ref", "ejb-local-ref"
@@ -292,6 +296,6 @@ public class GwtWebInfProcessor {
         out.output(this.webXml, new FileWriter(this.destination));
         writer.flush();
         writer.close();
-
+        
     }
 }
