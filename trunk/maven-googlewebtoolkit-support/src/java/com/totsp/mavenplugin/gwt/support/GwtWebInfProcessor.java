@@ -109,7 +109,7 @@ public class GwtWebInfProcessor {
      */
     protected List getGwtServletDescriptors(String module) throws IOException, JDOMException {
         ArrayList servletElements = new ArrayList();
-        System.out.println("Checking module: "+ module);
+        ///System.out.println("   Checking module: "+ module);
         checkedModules.add( module );
         Document document = null;
         try{
@@ -133,7 +133,7 @@ public class GwtWebInfProcessor {
         
         for(int i = 0; (inherits != null) && (i < inherits.size()); i++) {
             Element inherit = (Element) inherits.get(i);
-            System.out.println( "Done"+inherit.getAttributeValue("name") +"="+checkedModules.contains( inherit.getAttributeValue("name")) );
+            ///System.out.println( "      Done"+inherit.getAttributeValue("name") +"="+checkedModules.contains( inherit.getAttributeValue("name")) );
             if( !checkedModules.contains( inherit.getAttributeValue("name")) )
                 servletElements.addAll(
                         this.getGwtServletDescriptors(
