@@ -198,10 +198,8 @@ public class GwtWebInfProcessor {
                 if(!namesBefore.contains(child.getName())) {
                     webapp.addContent(i + 1, insertAfter);
                     foundPoint = true;
-                    break;
-                    
-                }
-                
+                    break;                    
+                }                
             }
             if( !foundPoint ){
                 webapp.addContent( insertAfter );
@@ -211,9 +209,15 @@ public class GwtWebInfProcessor {
         return webapp.indexOf(insertAfter);
     }
     
-    private Document getWebXml() throws JDOMException, IOException {
-        return this.webXml = (this.webXml == null) ? new SAXBuilder( false ).build(this.webXmlPath)
-        : this.webXml;
+    private Document getWebXml() throws JDOMException, IOException {        
+        if (this.webXml == null) {
+            SAXBuilder builder = new SAXBuilder(false);
+            builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            return this.webXml = builder.build(this.webXmlPath); 
+        }
+        else {
+            return this.webXml;
+        }        
     }
     
     private void insertServlets() throws JDOMException, IOException {
