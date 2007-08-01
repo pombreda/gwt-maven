@@ -9,11 +9,10 @@
 
 package test.server;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Arrays;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *

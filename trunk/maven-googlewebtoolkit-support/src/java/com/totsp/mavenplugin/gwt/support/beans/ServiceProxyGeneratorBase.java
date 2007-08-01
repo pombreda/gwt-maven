@@ -9,24 +9,26 @@
 
 package com.totsp.mavenplugin.gwt.support.beans;
 
-import de.hunsicker.jalopy.Jalopy;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.transform.JDOMSource;
+
+import de.hunsicker.jalopy.Jalopy;
 
 /**
  *
