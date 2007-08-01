@@ -114,6 +114,7 @@ public class GwtWebInfProcessor {
         Document document = null;
         try{
             SAXBuilder builder = new SAXBuilder(false);
+            builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             if( module == null && this.moduleFile != null){
                 document = builder.build( this.moduleFile);
             } else {
