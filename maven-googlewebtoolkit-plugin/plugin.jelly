@@ -134,6 +134,7 @@
 
       <j:forEach var="target" items="${google.webtoolkit.compiletarget}">
           <ant:java classname="com.google.gwt.dev.GWTCompiler" fork="true" dir="${basedir}">
+              <ant:jvmarg line="${google.webtoolkit.extrajvmargs}" />
               <ant:arg value="-out"/>
               <ant:arg value="${google.webtoolkit.output}" />
               <ant:arg value="${target}" />
