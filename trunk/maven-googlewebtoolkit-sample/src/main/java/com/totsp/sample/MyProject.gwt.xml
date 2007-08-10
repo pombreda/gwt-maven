@@ -9,5 +9,5 @@
     <!-- example service servlet -->
     <servlet path="/MyService" class="com.totsp.sample.server.MyServiceImpl"/>    
     
-    <stylesheet src='styles.css'/>
+    <stylesheet src='myproject.styles.css'/>
 </module>
