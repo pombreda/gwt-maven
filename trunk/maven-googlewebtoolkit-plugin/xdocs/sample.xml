@@ -71,6 +71,91 @@
 					and have that setup matter in the "Tomcat Lite" that
 					is used in GWT Hosted Mode. (Notes about using the -noserver option with an external container are also included below.)
 				</p>
+			</subsection>		
+			
+			<subsection
+				name="Running the sample project using the GWT-Maven plugin">
+				<p>
+					The point of the GWT-Maven (1.x) plugin is to let you easily
+					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
+					<br />
+					<br />
+					Dependencies and properties are defined in the Maven POM manner
+					and are therefore automatically available to all of your project
+					anytime you change them (you can re-use your setup easily, and do not
+					have to edit shell scripts with each change). In addition 
+					automated builds and continuous integration are of course possible.
+					<br />
+					<br />
+					The plugin supports several special features with regard to 
+					the "Hosted Mode." Primarily you can define project specifc context.xml and
+					web.xml resources, which will matter BOTH in
+					Hosted Mode and when deployed as a WAR. The plugin
+					allows you to invoke the GWTShell and run against
+					your project (DataSources, other Servlets, etc, all
+					available even in Hosted Mode) and also allows you
+					to create a deployable WAR resource in one *single
+					simple step* (maven gwt:war).
+					<br />
+					<br />
+					In addition the plugin also easily supports the -noserver option if you wish to use
+					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
+					<br />
+					<br />
+					In order to use the maven-googlewebtoolkit-sample
+					project you first need to have the
+					maven-googlwebtoolkit-plugin
+					<a href="install.html">installed</a>
+					(along with of course Maven itself, Java, so on).
+					<br />
+					<br />
+					Then you also will need to setup a project that
+					mirrors the
+					<a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">
+						sample code
+					</a>
+					.
+					Basically you need the structure shown in the sample, and a <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.xml">
+						project.xml file</a> (POM) and a <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">
+						project.properties file</a>.
+					<br />
+					<br />
+					Next you will need to set your project properties
+					accordingly.
+					<br />
+					<br />
+					You need to edit the "google.webtoolkit.home"
+					value, and the maven.jar.gwt-dev-platform location at a minimum.
+					These denote where where you
+					have GWT installed, and what platform the GWT "dev" jar is for respectively. 
+					These values can also be set (actually
+					more appropriately) in Maven wide build.properties
+					on a per machine basis - either way they must be
+					addressed. 
+					<br />
+					<br />
+					Once you have a project with said structure and configuration, the plugin itself,
+					and have set the appropriate platform properties you
+					then can invoke the following:
+					<source>maven gwt</source>
+					(This will invoke the GWTShell with the sample so
+					that you are running in Hosted Mode and doing RPC
+					with a DataSource.)
+					<br />
+					<br />
+					or
+					<source>maven gwt:war</source>
+					(This will create a deployable Tomcat WAR file with
+					the sample.)
+					<br />
+					<br />
+					or any of the other
+					<a href="goals.html">goals</a>
+					.
+				</p>
 			</subsection>
 			
 			<subsection name="Step by Step GWT RPC in the sample">
@@ -163,90 +248,6 @@
 					Note that this sample class retrieves a DataSource
 					via JNDI and then uses a small self created HSQL
 					database to store and retrieve data.
-				</p>
-			</subsection>
-			<subsection
-				name="Running the sample project using the GWT-Maven plugin">
-				<p>
-					The point of the GWT-Maven (1.x) plugin is to let you easily
-					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
-					<br />
-					<br />
-					Dependencies and properties are defined in the Maven POM manner
-					and are therefore automatically available to all of your project
-					anytime you change them (you can re-use your setup easily, and do not
-					have to edit shell scripts with each change). In addition 
-					automated builds and continuous integration are of course possible.
-					<br />
-					<br />
-					The plugin supports several special features with regard to 
-					the "Hosted Mode." Primarily you can define project specifc context.xml and
-					web.xml resources, which will matter BOTH in
-					Hosted Mode and when deployed as a WAR. The plugin
-					allows you to invoke the GWTShell and run against
-					your project (DataSources, other Servlets, etc, all
-					available even in Hosted Mode) and also allows you
-					to create a deployable WAR resource in one *single
-					simple step* (maven gwt:war).
-					<br />
-					<br />
-					In addition the plugin also easily supports the -noserver option if you wish to use
-					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
-					<br />
-					<br />
-					In order to use the maven-googlewebtoolkit-sample
-					project you first need to have the
-					maven-googlwebtoolkit-plugin
-					<a href="install.html">installed</a>
-					(along with of course Maven itself, Java, so on).
-					<br />
-					<br />
-					Then you also will need to setup a project that
-					mirrors the
-					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">
-						sample code
-					</a>
-					.
-					Basically you need the structure shown in the sample, and a <a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.xml">
-						project.xml file</a> (POM) and a <a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">
-						project.properties file</a>.
-					<br />
-					<br />
-					Next you will need to set your project properties
-					accordingly.
-					<br />
-					<br />
-					You need to edit the "google.webtoolkit.home"
-					value, and the maven.jar.gwt-dev-platform location at a minimum.
-					These denote where where you
-					have GWT installed, and what platform the GWT "dev" jar is for respectively. 
-					These values can also be set (actually
-					more appropriately) in Maven wide build.properties
-					on a per machine basis - either way they must be
-					addressed. 
-					<br />
-					<br />
-					Once you have a project with said structure and configuration, the plugin itself,
-					and have set the appropriate platform properties you
-					then can invoke the following:
-					<source>maven gwt</source>
-					(This will invoke the GWTShell with the sample so
-					that you are running in Hosted Mode and doing RPC
-					with a DataSource.)
-					<br />
-					<br />
-					or
-					<source>maven gwt:war</source>
-					(This will create a deployable Tomcat WAR file with
-					the sample.)
-					<br />
-					<br />
-					or any of the other
-					<a href="goals.html">goals</a>
-					.
 				</p>
 			</subsection>
 
