@@ -171,6 +171,7 @@
 					The point of the GWT-Maven (1.x) plugin is to let you easily
 					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
 					<br />
+					<br />
 					Dependencies and properties are defined in the Maven POM manner
 					and are therefore automatically available to all of your project
 					anytime you change them (you can re-use your setup easily, and do not
@@ -207,25 +208,28 @@
 						sample code
 					</a>
 					.
+					Basically you need the structure shown in the sample, and a <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.xml">
+						project.xml file</a> (POM) and a <a
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">
+						project.properties file</a>.
 					<br />
 					<br />
 					Next you will need to set your project properties
-					accordingly. in the
-					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties">
-						project.properties
-					</a>
-					file.
+					accordingly.
+					<br />
 					<br />
 					You need to edit the "google.webtoolkit.home"
-					value at a minimum, this should denote where you
-					have GWT installed. This can also be set (actually
+					value, and the maven.jar.gwt-dev-platform location at a minimum.
+					These denote where where you
+					have GWT installed, and what platform the GWT "dev" jar is for respectively. 
+					These values can also be set (actually
 					more appropriately) in Maven wide build.properties
-					on a per machine basis - either way it must be
-					addressed.
+					on a per machine basis - either way they must be
+					addressed. 
 					<br />
 					<br />
-					Once you have the sample code, the plugin itself,
+					Once you have a project with said structure and configuration, the plugin itself,
 					and have set the appropriate platform properties you
 					then can invoke the following:
 					<source>maven gwt</source>
