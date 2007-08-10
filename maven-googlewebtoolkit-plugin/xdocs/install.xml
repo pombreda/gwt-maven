@@ -11,11 +11,11 @@
 		<section
 			name="maven-googlewebtoolkit-plugin 1.x (gwt-maven) Install">
 
-			<subsection name="Download/Install the gwt-maven plugin">
+			<subsection name="Download/Install the GWT-Maven plugin">
 				<source>
  maven plugin:download -DgroupId=com.totsp.gwt
  -DartifactId=maven-googlewebtoolkit-plugin
- -Dversion=1.5.1
+ -Dversion=1.5.4
  -Dmaven.repo.remote=http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/,http://repo1.maven.org/maven
 				</source>
 			</subsection>

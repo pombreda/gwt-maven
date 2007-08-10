@@ -5,19 +5,19 @@
 
 	<properties>
 		<title>
-			Configure GWT Tomcat Lite Instance (if not using gwt-maven)
+			Configure GWT Tomcat Lite Instance
 		</title>
 	</properties>
 
 	<body>
 		<section
-			name="Configure GWT Tomcat Lite Instance (if not using gwt-maven)">
+			name="Configure GWT Tomcat Lite Instance (if not using GWT-Maven)">
 			
 			<subsection
 				name="How to configure Hosted Mode Tomcat Lite">
 				<p>
 					If you do not use Maven and are not using the
-					gwt-maven plugin then you can still manipulate the GWT embedded Tomcat Lite instance.
+					GWT-Maven plugin then you can still manipulate the GWT embedded Tomcat Lite instance.
 					You will simply need to configure things manually.
 					<br /><br />
 					(If you DO use the plugin, which is recommended -
