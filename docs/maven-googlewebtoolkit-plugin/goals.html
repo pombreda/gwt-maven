@@ -3,8 +3,8 @@
           
 			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="" id="projectLogo"><span>Maven 1 Plugin for the Google Web Toolkit</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xright">
         
-        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">gwt-maven</a>
-      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><strong><a href="goals.html">Goals</a></strong></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><a href="sample.html">Sample Example</a></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="none"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="h3"><a name="Goals"></a><h3>Goals</h3><table class="bodyTable"><thead><tr><th>Goal</th><th>Description</th></tr></thead><tbody><tr class="a"><td style="width:20%"><a name="gwt"></a>gwt</td><td>
+        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">GWT-Maven</a>
+      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><strong><a href="goals.html">Goals</a></strong></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><a href="sample.html">Sample Example</a></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="collapsed"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="h3"><a name="Goals"></a><h3>Goals</h3><table class="bodyTable"><thead><tr><th>Goal</th><th>Description</th></tr></thead><tbody><tr class="a"><td style="width:20%"><a name="gwt"></a>gwt</td><td>
            The default goal. This goal does several main things, including creating a Catalina structure with an application specific context.xml file and an application specific web.xml file, and then launching the GWTShell. 
            <br></br><br></br>
            1. Calls war:webapp as a prerequisite so that a local webapp directory, with nothing specific to GWT, all standard Maven setup, is created. 
@@ -27,12 +27,6 @@
            in the GWT development Tomcat instance (the GWTShellServlet is automatically added to web.xml, as are service servlets based on the GWT module file, and the context.xml is added).
         </td></tr><tr class="b"><td style="width:20%"><a name="gwt:compile"></a>gwt:compile</td><td>
            Launches the GWTCompiler in order to compile the GWT project.
-        </td></tr><tr class="a"><td style="width:20%"><a name="gwt:noserver"></a>gwt:noserver</td><td>
-           Launches the GWTShell with the -noserver option. Uses the properties google.webtoolkit.port/google.webtoolkit.runtarget to launch the Hosted Mode Browser.
-           <br></br>
-           Requires an external server pre-configured with a context matching the specified google.webtoolkit.runtarget. At a MINIMUM this context must have Module.html (host page), Module.nocache.html (obtained by compiling your project), and gwt.js. 
-        </td></tr><tr class="b"><td style="width:20%"><a name="gwt:debug"></a>gwt:debug</td><td>
-           Launches the GWTShell in debug mode so that a debugger can easily be attached (also performs all the same prerequisite steps as does the plain gwt goal).
         </td></tr><tr class="a"><td style="width:20%"><a name="gwt:mergewebxml"></a>gwt:mergewebxml</td><td>
            Used primarily by the gwt:war goal as a prerequisite in order to merge the application specific web.xml file (created by war:webapp in the target directory) with the 
            GWT module file.  This "merge" step will create service servlet entries in the web.xml file for each such entry present in the GWT module file.  Note that this happens
@@ -41,6 +35,8 @@
         </td></tr><tr class="b"><td style="width:20%"><a name="gwt:war"></a>gwt:war</td><td>
            In one shot creates a deployable WAR file from a GWT application.  Includes invoking mergewebxml as a prerequisite so that an application specific
            web.xml file is merged with the GWT module file to create the correct service servlet entries in web.xml automatically. 
-        </td></tr><tr class="a"><td style="width:20%"><a name="gwt:generateClientBeans"></a>gwt:generateClientBeans</td><td>
-           Creates client-side DTOs into your source directory. 
+        </td></tr><tr class="a"><td style="width:20%"><a name="gwt:warsansmerge"></a>gwt:warsansmerge</td><td>
+        	Convenience shortcut which runs gwt:war but does NOT run mergewebxml (if you do not wish to use that feature, you can skip/avoid it).  
+        </td></tr><tr class="b"><td style="width:20%"><a name="gwt:generateClientBeans"></a>gwt:generateClientBeans</td><td>
+           Creates client-side DTOs into your source directory. [TODO BeanMapper documentation with more information].
         </td></tr></tbody></table></div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2006-2007, TotSP</div><div class="clear"><hr></hr></div></div></body></html>

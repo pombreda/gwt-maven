@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) - 
-			GWT RPC Sample using the maven-googlewebtoolkit-plugin
+			GWT RPC Sample using the GWT-Maven 1.x 
 		</title><style type="text/css" media="all">
           @import url("./style/maven-base.css");
           
 			    @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="" id="projectLogo"><span>Maven 1 Plugin for the Google Web Toolkit</span></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xright">
         
-        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">gwt-maven</a>
-      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="goals.html">Goals</a></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><strong><a href="sample.html">Sample Example</a></strong></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="none"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="GWT_RPC_Sample_using_the_maven-googlewebtoolkit-plugin"></a><h2>GWT RPC Sample using the maven-googlewebtoolkit-plugin</h2><div class="subsection"><a name="Where_is_the_sample"></a><h3>Where is the sample</h3><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
+        <a href="http://code.google.com/p/gwt-maven/" class="externalLink" title="External Link">GWT-Maven</a>
+      </div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuOverview"><h5>Overview</h5><ul><li class="none"><a href="goals.html">Goals</a></li><li class="none"><a href="properties.html">Properties</a></li><li class="none"><a href="install.html">Install</a></li><li class="none"><strong><a href="sample.html">Sample Example</a></strong></li><li class="none"><a href="configure_noserver.html">Using -noserver</a></li><li class="none"><a href="configure_tomcatlite.html">Configuring GWT Tomcat</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="none"><a href="index.html">About Maven 1 Plugin for the Google Web Toolkit</a></li><li class="collapsed"><a href="project-info.html">Project Info</a></li><li class="collapsed"><a href="maven-reports.html">Project Reports</a></li><li class="none"><a href="http://maven.apache.org/development-process.html" class="externalLink" title="External Link">Development Process</a></li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="GWT_RPC_Sample_using_GWT-Maven_1_x"></a><h2>GWT RPC Sample using GWT-Maven 1.x</h2><div class="subsection"><a name="Where_is_the_sample"></a><h3>Where is the sample</h3><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
 					http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/
 				</a><p>
 				The easiest way to use the sample is to checkout maven-googlewebtoolkit-sample and then run "maven gwt." 
@@ -16,9 +16,9 @@
 				</p><p>
 				You can also step through the sample here, without checking it out, and glean a lot of useful info.
 				</p></div><div class="subsection"><a name="What_is_in_the_sample"></a><h3>What is in the sample</h3><p>
-					The sample is provided to demonstrate using the
-					maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
-					with a sample project. Other projects can be setup
+					The sample is provided to demonstrate using GWT-Maven version 1.x
+					(maven-googlwebtoolkit-plugin) 
+					with an example project. Other projects can be setup
 					in the same manner as the sample to get things
 					rolling (use the sample as a template).
 				</p><p>
@@ -37,7 +37,7 @@
 					server was last started, mem db) are returned to the
 					client and displayed on the page.
 				</p><p>
-					This demonstrates configuring the gwt-maven plugin
+					This demonstrates configuring the GWT-Maven plugin
 					along with *
 					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml" class="externalLink" title="External Link">
 						context.xml
@@ -134,8 +134,8 @@
 					Note that this sample class retrieves a DataSource
 					via JNDI and then uses a small self created HSQL
 					database to store and retrieve data.
-				</p></div><div class="subsection"><a name="Running_the_sample_project_using_the_gwt-maven_plugin"></a><h3>Running the sample project using the gwt-maven plugin</h3><p>
-					The point of the gwt-maven plugin is to let you easily
+				</p></div><div class="subsection"><a name="Running_the_sample_project_using_the_GWT-Maven_plugin"></a><h3>Running the sample project using the GWT-Maven plugin</h3><p>
+					The point of the GWT-Maven (1.x) plugin is to let you easily
 					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
 					<br></br>
 					Dependencies and properties are defined in the Maven POM manner
