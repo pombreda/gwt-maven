@@ -41,20 +41,6 @@
         </description>
       </goal>
       <goal>
-        <name>gwt:noserver</name>
-        <description>
-           Launches the GWTShell with the -noserver option. Uses the properties google.webtoolkit.port/google.webtoolkit.runtarget to launch the Hosted Mode Browser.
-           <br />
-           Requires an external server pre-configured with a context matching the specified google.webtoolkit.runtarget. At a MINIMUM this context must have Module.html (host page), Module.nocache.html (obtained by compiling your project), and gwt.js. 
-        </description>
-      </goal>
-      <goal>
-        <name>gwt:debug</name>
-        <description>
-           Launches the GWTShell in debug mode so that a debugger can easily be attached (also performs all the same prerequisite steps as does the plain gwt goal).
-        </description>
-      </goal>
-      <goal>
         <name>gwt:mergewebxml</name>
         <description>
            Used primarily by the gwt:war goal as a prerequisite in order to merge the application specific web.xml file (created by war:webapp in the target directory) with the 
@@ -71,9 +57,15 @@
         </description>
       </goal>
       <goal>
+        <name>gwt:warsansmerge</name>
+        <description>
+        	Convenience shortcut which runs gwt:war but does NOT run mergewebxml (if you do not wish to use that feature, you can skip/avoid it).  
+        </description>
+      </goal>
+      <goal>
         <name>gwt:generateClientBeans</name>
         <description>
-           Creates client-side DTOs into your source directory. 
+           Creates client-side DTOs into your source directory. [TODO BeanMapper documentation with more information].
         </description>
       </goal>
       

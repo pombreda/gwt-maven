@@ -8,7 +8,7 @@
       <item name="Maven" href="http://maven.apache.org/"/>      
     </breadcrumbs>
     <links>
-      <item name="gwt-maven" href="http://code.google.com/p/gwt-maven/"/>
+      <item name="GWT-Maven" href="http://code.google.com/p/gwt-maven/"/>
     </links>
     <sitemap/>
     <menu name="Overview">

@@ -5,15 +5,15 @@
 
 	<properties>
 		<title>
-			GWT RPC Sample using the maven-googlewebtoolkit-plugin
+			GWT RPC Sample using the GWT-Maven 1.x 
 		</title>
 	</properties>
 
 	<body>
 		<section
-			name="GWT RPC Sample using the maven-googlewebtoolkit-plugin">
+			name="GWT RPC Sample using GWT-Maven 1.x">
 			<subsection name="Where is the sample">
-				The maven-googlewebtoolkit-sample code is hosted at
+				The GWT-Maven 1.x (maven-googlewebtoolkit-sample) code is hosted at
 				Google Code:
 				<a
 					href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/">
@@ -32,9 +32,9 @@
 
 			<subsection name="What is in the sample">
 				<p>
-					The sample is provided to demonstrate using the
-					maven-googlwebtoolkit-plugin 1.x version (gwt-maven)
-					with a sample project. Other projects can be setup
+					The sample is provided to demonstrate using GWT-Maven version 1.x
+					(maven-googlwebtoolkit-plugin) 
+					with an example project. Other projects can be setup
 					in the same manner as the sample to get things
 					rolling (use the sample as a template).
 				</p>
@@ -56,7 +56,7 @@
 					client and displayed on the page.
 				</p>
 				<p>
-					This demonstrates configuring the gwt-maven plugin
+					This demonstrates configuring the GWT-Maven plugin
 					along with *
 					<a
 						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
@@ -166,9 +166,9 @@
 				</p>
 			</subsection>
 			<subsection
-				name="Running the sample project using the gwt-maven plugin">
+				name="Running the sample project using the GWT-Maven plugin">
 				<p>
-					The point of the gwt-maven plugin is to let you easily
+					The point of the GWT-Maven (1.x) plugin is to let you easily
 					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
 					<br />
 					Dependencies and properties are defined in the Maven POM manner

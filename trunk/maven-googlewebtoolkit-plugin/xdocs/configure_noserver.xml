@@ -21,7 +21,7 @@
 				<br /><br />
 				Compile the project and have the following files, which should be in the compiler out directory (www is the default), handy for later copying to the external container instance:
 				<source>
-[ModuleName].cache.html 
+[ModuleName].nocache.js 
 [ModuleName].html 
 gwt.js 
 				</source>
@@ -38,7 +38,7 @@ gwt.js
 				a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor
 				a $CATALINA_HOME/webapps/ModuleName directory
 				</code>
-				Then place the files from the previous GWT compile step (nocache.html, Module.html, gwt.js) in the webapps/ModuleName directory.
+				Then place the files from the previous GWT compile step (nocache.js, Module.html, gwt.js) in the webapps/ModuleName directory.
 				<br />
 				Then, before proceeding, BROWSE to that location in a regular browser and ensure you can load the host page (it will not show dynamic elements - yet, but still should be present). 
 				</p>
@@ -48,18 +48,13 @@ gwt.js
 				name="Launch the GWTShell directed at the external container instance">
 				<p>
 				Launch the GWTShell with the -noserver option, and the necessary port and path/host page.
-				<br /><br />
-				Typically this means using the gwt-maven plugin "gwt:noserver" goal. If you are using
-				gwt-maven then you only need to set the correct "google.webtoolkit.runtarget" and "google.webtoolkit.port" properties.
-				These should match the context name/host page and port you used when setting up the EXTERNAL container instance. 
-				<br /><br />
-				If you are not using gwt-maven then you need to edit whatever you are using for a shell startup script (such as the
-				ApplicationCreator provided ModuleName-shell script) to include the -noserver option, the -port option and 
-				the correct runtarget (contextpath/host page). (If you used the same name as your module for your context, when setting
-				up the external container, then you will not need to change the runtarget - this is the recommended setup).	
+				</p>
+				<p>If you are using GWT-Maven then you need to simply set google.webtoolkit.noserver=true in project.properties.  And then launch the shell via "maven gwt".
 				</p>
 				<p>
-				An example MODIFIED shell startup script, for those NOT using gwt-maven, including the -noserver and -port options is shown below:
+				If you are NOT using GWT-Maven then you will need to pass -noserver to the shell on your own. 
+				<br />
+				An example MODIFIED shell startup script, for those NOT using GWT-Maven, including the -noserver and -port options is shown below:
 				<source>
 #!/bin/sh
 
