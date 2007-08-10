@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="maven-googlewebtoolkit-plugin 1.x (gwt-maven)">
-  <title>maven-googlewebtoolkit-plugin 1.x (gwt-maven)</title>
+<project name="GWT-Maven 1.x">
+  <title>GWT-Maven 1.x (maven-googlewebtoolkit-plugin)</title>
   <body>
     <breadcrumbs>
       <item name="Apache" href="http://www.apache.org"/>
