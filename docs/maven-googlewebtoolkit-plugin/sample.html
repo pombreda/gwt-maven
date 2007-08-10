@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) - 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>GWT-Maven 1.x (maven-googlewebtoolkit-plugin) - 
 			GWT RPC Sample using the GWT-Maven 1.x 
 		</title><style type="text/css" media="all">
           @import url("./style/maven-base.css");
@@ -49,6 +49,87 @@
 					* in order to setup a container managed DataSource
 					and have that setup matter in the "Tomcat Lite" that
 					is used in GWT Hosted Mode. (Notes about using the -noserver option with an external container are also included below.)
+				</p></div><div class="subsection"><a name="Running_the_sample_project_using_the_GWT-Maven_plugin"></a><h3>Running the sample project using the GWT-Maven plugin</h3><p>
+					The point of the GWT-Maven (1.x) plugin is to let you easily
+					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
+					<br></br>
+					<br></br>
+					Dependencies and properties are defined in the Maven POM manner
+					and are therefore automatically available to all of your project
+					anytime you change them (you can re-use your setup easily, and do not
+					have to edit shell scripts with each change). In addition 
+					automated builds and continuous integration are of course possible.
+					<br></br>
+					<br></br>
+					The plugin supports several special features with regard to 
+					the "Hosted Mode." Primarily you can define project specifc context.xml and
+					web.xml resources, which will matter BOTH in
+					Hosted Mode and when deployed as a WAR. The plugin
+					allows you to invoke the GWTShell and run against
+					your project (DataSources, other Servlets, etc, all
+					available even in Hosted Mode) and also allows you
+					to create a deployable WAR resource in one *single
+					simple step* (maven gwt:war).
+					<br></br>
+					<br></br>
+					In addition the plugin also easily supports the -noserver option if you wish to use
+					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
+					<br></br>
+					<br></br>
+					In order to use the maven-googlewebtoolkit-sample
+					project you first need to have the
+					maven-googlwebtoolkit-plugin
+					<a href="install.html">installed</a>
+					(along with of course Maven itself, Java, so on).
+					<br></br>
+					<br></br>
+					Then you also will need to setup a project that
+					mirrors the
+					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
+						sample code
+					</a>
+					.
+					Basically you need the structure shown in the sample, and a <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.xml" class="externalLink" title="External Link">
+						project.xml file</a> (POM) and a <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties" class="externalLink" title="External Link">
+						project.properties file</a>.
+					<br></br>
+					<br></br>
+					Next you will need to set your project properties
+					accordingly.
+					<br></br>
+					<br></br>
+					You need to edit the "google.webtoolkit.home"
+					value, and the maven.jar.gwt-dev-platform location at a minimum.
+					These denote where where you
+					have GWT installed, and what platform the GWT "dev" jar is for respectively. 
+					These values can also be set (actually
+					more appropriately) in Maven wide build.properties
+					on a per machine basis - either way they must be
+					addressed. 
+					<br></br>
+					<br></br>
+					Once you have a project with said structure and configuration, the plugin itself,
+					and have set the appropriate platform properties you
+					then can invoke the following:
+					
+    <div class="source"><pre>maven gwt</pre></div>
+  
+					(This will invoke the GWTShell with the sample so
+					that you are running in Hosted Mode and doing RPC
+					with a DataSource.)
+					<br></br>
+					<br></br>
+					or
+					
+    <div class="source"><pre>maven gwt:war</pre></div>
+  
+					(This will create a deployable Tomcat WAR file with
+					the sample.)
+					<br></br>
+					<br></br>
+					or any of the other
+					<a href="goals.html">goals</a>
+					.
 				</p></div><div class="subsection"><a name="Step_by_Step_GWT_RPC_in_the_sample"></a><h3>Step by Step GWT RPC in the sample</h3><p>
 					STEP 1:
 					<br></br>
@@ -134,84 +215,6 @@
 					Note that this sample class retrieves a DataSource
 					via JNDI and then uses a small self created HSQL
 					database to store and retrieve data.
-				</p></div><div class="subsection"><a name="Running_the_sample_project_using_the_GWT-Maven_plugin"></a><h3>Running the sample project using the GWT-Maven plugin</h3><p>
-					The point of the GWT-Maven (1.x) plugin is to let you easily
-					control the GWTShell, GWTCompiler, create WAR files, and work with your GWT projects.
-					<br></br>
-					Dependencies and properties are defined in the Maven POM manner
-					and are therefore automatically available to all of your project
-					anytime you change them (you can re-use your setup easily, and do not
-					have to edit shell scripts with each change). In addition 
-					automated builds and continuous integration are of course possible.
-					<br></br>
-					<br></br>
-					The plugin supports several special features with regard to 
-					the "Hosted Mode." Primarily you can define project specifc context.xml and
-					web.xml resources, which will matter BOTH in
-					Hosted Mode and when deployed as a WAR. The plugin
-					allows you to invoke the GWTShell and run against
-					your project (DataSources, other Servlets, etc, all
-					available even in Hosted Mode) and also allows you
-					to create a deployable WAR resource in one *single
-					simple step* (maven gwt:war).
-					<br></br>
-					<br></br>
-					In addition the plugin also easily supports the -noserver option if you wish to use
-					an external container instance (<a href="configure_noserver.html">See the -noserver configuration page</a>). 
-					<br></br>
-					<br></br>
-					In order to use the maven-googlewebtoolkit-sample
-					project you first need to have the
-					maven-googlwebtoolkit-plugin
-					<a href="install.html">installed</a>
-					(along with of course Maven itself, Java, so on).
-					<br></br>
-					<br></br>
-					Then you also will need to setup a project that
-					mirrors the
-					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/" class="externalLink" title="External Link">
-						sample code
-					</a>
-					.
-					<br></br>
-					<br></br>
-					Next you will need to set your project properties
-					accordingly. in the
-					<a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/project.properties" class="externalLink" title="External Link">
-						project.properties
-					</a>
-					file.
-					<br></br>
-					You need to edit the "google.webtoolkit.home"
-					value at a minimum, this should denote where you
-					have GWT installed. This can also be set (actually
-					more appropriately) in Maven wide build.properties
-					on a per machine basis - either way it must be
-					addressed.
-					<br></br>
-					<br></br>
-					Once you have the sample code, the plugin itself,
-					and have set the appropriate platform properties you
-					then can invoke the following:
-					
-    <div class="source"><pre>maven gwt</pre></div>
-  
-					(This will invoke the GWTShell with the sample so
-					that you are running in Hosted Mode and doing RPC
-					with a DataSource.)
-					<br></br>
-					<br></br>
-					or
-					
-    <div class="source"><pre>maven gwt:war</pre></div>
-  
-					(This will create a deployable Tomcat WAR file with
-					the sample.)
-					<br></br>
-					<br></br>
-					or any of the other
-					<a href="goals.html">goals</a>
-					.
 				</p></div><div class="subsection"><a name="How_to_use_-noserver__with_or_without_the_plugin_"></a><h3>How to use -noserver (with or without the plugin)</h3><p>
 				<a href="configure_noserver.html">See the -noserver configuration page</a>.
 				</p></div><div class="subsection"><a name="How_to_configure_Hosted_Mode_Tomcat_Lite__if_you_are_not_using_the_plugin_"></a><h3>How to configure Hosted Mode Tomcat Lite (if you are not using the plugin)</h3><p>
