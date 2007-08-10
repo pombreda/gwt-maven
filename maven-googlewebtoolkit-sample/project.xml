@@ -37,15 +37,7 @@
 				<includes>
 					<include>**/*gwt.xml</include>
 				</includes>
-			</resource>
-			<!-- 
-			<resource>
-				<directory>${basedir}/src/main/webapp</directory>				
-			</resource>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>				
-			</resource>
-			-->
+			</resource>			
 		</resources>
 		<unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
 		<unitTest>
