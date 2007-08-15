@@ -69,6 +69,7 @@ public class GWTMojo extends AbstractGWTMojo {
         }
         cl.addEnvironment( "CLASSPATH", classpath);
         String[] args = {
+            "-cp", classpath, //I DON'T KNOW WHY, But Windows is barfing w/o this.
             "-Dcatalina.base="+this.getTomcat().getAbsolutePath(),
             "com.google.gwt.dev.GWTShell", 
             "-logLevel", this.getLogLevel(),
