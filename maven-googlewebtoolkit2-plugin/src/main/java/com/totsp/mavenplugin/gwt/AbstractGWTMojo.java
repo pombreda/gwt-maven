@@ -347,7 +347,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         items.add( GWTHome );
 
         items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
-        items.add( new File(GWTHome, "gwt-user.jar"));
+        
         for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
             Resource r = (Resource) it.next();
             items.add( new File( r.getDirectory()) );
@@ -366,7 +366,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         ClassRealm realm = root.createChildRealm( "gwt-project");
         
         for( Iterator it = buildClasspathList().iterator(); it.hasNext(); ){
-            realm.addConstituent( ((File)it.next()).toURL() );
+            realm.addConstituent( ((File)it.next()).toURI().toURL() );
         }
         Thread.currentThread().setContextClassLoader(realm.getClassLoader());
         return realm.getClassLoader();
