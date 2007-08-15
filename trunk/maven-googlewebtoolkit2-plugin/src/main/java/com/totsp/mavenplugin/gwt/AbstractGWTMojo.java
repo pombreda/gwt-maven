@@ -344,7 +344,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         if (GWTHome == null) {
           GWTHome = new File(GWT_PATH);
         }
-
+        items.add( GWTHome );
 
         items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
         items.add( new File(GWTHome, "gwt-user.jar"));
