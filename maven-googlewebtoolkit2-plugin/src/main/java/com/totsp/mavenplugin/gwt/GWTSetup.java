@@ -44,9 +44,8 @@ public class GWTSetup extends AbstractGWTMojo {
     } catch (IOException e) {
       throw new MojoExecutionException(e.getMessage()); 
     }
-    if (OS_NAME.startsWith("mac")) {
+    if (OS_NAME.startsWith("mac") && this.getExtraJvmArgs() == null) {
       //Dunno why, but maven seems to lose this property for the gwt:gwt task
-      getProject().getModel().addProperty("google.webtoolkit.extrajvmargs", "-XstartOnFirstThread");
       EXTA_ARG = "-XstartOnFirstThread";
     }
 

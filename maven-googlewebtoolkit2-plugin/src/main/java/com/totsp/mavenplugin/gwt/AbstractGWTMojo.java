@@ -201,6 +201,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
     /** Creates a new instance of AbstractGWTMojo */
     public AbstractGWTMojo() {
+        
     }
     
     public void setBuildDir(File buildDir) {
@@ -326,6 +327,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     
     public Collection buildClasspathList() throws DependencyResolutionRequiredException {
         Set items = new LinkedHashSet();
+        for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
+            items.add( new File( it.next().toString() ) );
+        }
+        items.add( new File( getProject().getBasedir(), "classes") );
         for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
@@ -347,9 +352,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
             Resource r = (Resource) it.next();
             items.add( new File( r.getDirectory()) );
         }
-        for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
-            items.add( new File( it.next().toString() ) );
-        }
+        
 
         return items;
     }

@@ -60,21 +60,19 @@ public class GWTMojo extends AbstractGWTMojo {
         System.out.println( "Using classpath: "+ classpath );
         Commandline cl = new Commandline();
         cl.setExecutable( JAVA_COMMAND );
+        if( this.getExtraJvmArgs() == null ){
+                this.setExtraJvmArgs( EXTA_ARG );
+            }
         if( this.getExtraJvmArgs() != null ){
-            String[] extraJvmArgs = { this.getExtraJvmArgs() };
+            String[] extraJvmArgs = this.getExtraJvmArgs().split(" ");
             cl.addArguments( extraJvmArgs );
         }
-
-        if (EXTA_ARG != null) {
-          String[] extraJvmArgs = { EXTA_ARG };
-          cl.addArguments( extraJvmArgs );
-        }
-
+        cl.addEnvironment( "CLASSPATH", classpath);
         String[] args = {
             "-Dcatalina.base="+this.getTomcat().getAbsolutePath(),
-            "-classpath", classpath,
             "com.google.gwt.dev.GWTShell", 
             "-logLevel", this.getLogLevel(),
+            "-gen", ".generated",
             "-style", this.getStyle(),
             "-port", Integer.toString( this.getPort() ),
             "-out", this.getOutput().getAbsolutePath()
@@ -93,6 +91,8 @@ public class GWTMojo extends AbstractGWTMojo {
             CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
             CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
                 this.getLog().info( "Exited with code "+CommandLineUtils.executeCommandLine( cl, stdout, stderr ) );
+                this.getLog().info( stdout.getOutput() );
+                this.getLog().error( stderr.getOutput() );
         } catch(Exception pe){
             pe.printStackTrace();
         }

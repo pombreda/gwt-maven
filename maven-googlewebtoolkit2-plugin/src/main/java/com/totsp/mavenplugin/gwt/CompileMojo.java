@@ -89,13 +89,17 @@ public class CompileMojo extends AbstractGWTMojo{
             System.out.println( "Using classpath: "+ classpath );
             Commandline cl = new Commandline();
             cl.setExecutable( JAVA_COMMAND );
+            if( this.getExtraJvmArgs() == null ){
+                this.setExtraJvmArgs( EXTA_ARG );
+            }
             if( this.getExtraJvmArgs() != null ){
-                String[] extraJvmArgs = { this.getExtraJvmArgs() };
+                String[] extraJvmArgs = this.getExtraJvmArgs().split(" ");
                 cl.addArguments( extraJvmArgs );
             }
+            cl.addEnvironment( "CLASSPATH", classpath);
             String[] args = {
-                "-classpath", classpath,
                 "com.google.gwt.dev.GWTCompiler",
+                "-gen", ".generated",
                 "-logLevel", this.getLogLevel(),
                 "-style", this.getStyle(),
                 "-out", this.getOutput().getAbsolutePath(),
