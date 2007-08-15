@@ -3,14 +3,15 @@
   <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
   <version>1.0.0</version>
   <versioning>
-    <latest>1.5.3-SNAPSHOT</latest>
+    <latest>2.0-SNAPSHOT</latest>
     <versions>
       <version>1.0.0</version>
       <version>1.5.0</version>
       <version>1.5.1</version>
       <version>1.5.2</version>
       <version>1.5.3-SNAPSHOT</version>
+      <version>2.0-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20070405194657</lastUpdated>
+    <lastUpdated>20070815131516</lastUpdated>
   </versioning>
 </metadata>
