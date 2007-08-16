@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="maven-googlewebtoolkit-plugin 1.x (gwt-maven)">
+  <title>maven-googlewebtoolkit-plugin 1.x (gwt-maven)</title>
+  <body>
+    <breadcrumbs>
+      <item name="Apache" href="http://www.apache.org"/>
+      <item name="Maven" href="http://maven.apache.org/"/>      
+    </breadcrumbs>
+    <links>
+      <item name="gwt-maven" href="http://code.google.com/p/gwt-maven/"/>
+    </links>
+    <sitemap/>
+    <menu name="Overview">
+      <item name="Goals" href="/goals.html"/>
+      <item name="Properties" href="/properties.html"/>
+      <item name="Install" href="/install.html"/>
+      <item name="Sample Example" href="/sample.html"/>  
+      <item name="Using -noserver" href="/configure_noserver.html"/>
+      <item name="Configuring GWT Tomcat" href="/configure_tomcatlite.html"/>          
+    </menu>
+  </body>
+</project>
