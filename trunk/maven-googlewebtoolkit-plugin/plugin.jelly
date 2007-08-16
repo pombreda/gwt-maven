@@ -193,8 +193,7 @@
           <ant:arg value="-startBean"/>
           <ant:arg value="${startBean}" />
           <ant:arg value="-destinationDirectory"/>
-		  <!--<ant:pathelement path="${maven.compile.src.set}" />-->
-          <ant:pathelement path="${pom.build.sourceDirectory}" />
+          <ant:arg value="${pom.build.sourceDirectory}" />
           <ant:arg value="-destinationPackage" />
           <ant:arg value="${google.webtoolkit.generatorDestinationPackage}" />
           <j:if test="${google.webtoolkit.generateGettersAndSetters}" >
@@ -203,6 +202,33 @@
           <j:if test="${google.webtoolkit.generatePropertyChangeSupport}" >
               <ant:arg value="-withPropertyChangeSupport" /> 
           </j:if>
+          <ant:classpath>
+                <ant:pathelement location="${maven.build.dest}" />
+                <ant:path refid="maven.dependency.classpath" />
+                <ant:path refid="maven.compile.src.set" />                                
+                <ant:pathelement location="${plugin.getDependencyPath('com.totsp.gwt:maven-googlewebtoolkit-support')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('jdom:jdom')}"/>
+                <ant:pathelement location="${plugin.getDependencyPath('commons-cli:commons-cli')}"/>
+          </ant:classpath>
+      </ant:java>
+      </j:forEach>
+  </goal>
+  
+  <goal 
+    name="gwt:generateForms"    
+    description="Creates Edit forms for client DTOs into your source directory.">
+      <echo>generateForms - still experimental</echo>     
+      <j:forEach var="startBean" items="${google.webtoolkit.generatorRootClasses}">
+      <echo>Generating ${startBean}</echo>
+      <ant:java classname="com.totsp.mavenplugin.gwt.support.beans.FormGenerator" fork="true" dir="${basedir}">
+          <!-- System.getProperty("basedir")+"/target/test/gen", 
+                          "test.client.view",
+                          "test.client",
+                          "test.server.ABean,test.server.BBean"}; -->
+          <ant:arg value="${pom.build.sourceDirectory}" />
+          <ant:arg value="${google.webtoolkit.generatorFormPackage}"/>
+	  <ant:arg value="${google.webtoolkit.generatorDestinationPackage}" />
+          <ant:arg value="${google.webtoolkit.generatorFormBeans}" />
           <ant:classpath>
                 <ant:pathelement location="${maven.build.dest}" />
                 <ant:path refid="maven.dependency.classpath" />
