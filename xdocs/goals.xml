@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+  <properties>
+    <title>maven-googlewebtoolkit-plugin 1.x (gwt-maven) goals</title>
+  </properties>
+
+  <body>
+    <goals>
+      <goal>
+        <name>gwt</name>
+        <description>
+           The default goal. This goal does several main things, including creating a Catalina structure with an application specific context.xml file and an application specific web.xml file, and then launching the GWTShell. 
+           <br /><br />
+           1. Calls war:webapp as a prerequisite so that a local webapp directory, with nothing specific to GWT, all standard Maven setup, is created. 
+           <br /><br />
+           Calling war:webapp is important *before* the GWTShell is invoked for two reasons.
+           <br /><br />
+           A. web.xml handling - it places an application defined deployment descriptor (web.xml) in 
+           the target ${maven.war.webapp.dir}/WEB-INF/ directory.  
+           (This should be a standard deployment descriptor with no special GWT additions. 
+           This can include any "normal" web.xml elements such as servlets other than GWT related, servlet filters, init parameters, session properties, and so on. 
+           This standard web.xml file will be used in a subsequent step to create the GWT Hosted Mode server structure before GWTShell is invoked - your web.xml will matter and work in Hosted Mode.) 
+           <br /><br />
+           B. context.xml handling - it places an application defined context XML descriptor (context.xml) in the target ${maven.war.webapp.dir}/META-INF/ directory.
+           (This should be a standard Tomcat context descriptor.  This can include any "normal" context elements such as JNDI DataSources.  
+           This standard context.xml file will be used in a subsequent step to create the GWT Hosted Mode server structure before GWTShell is invoked - your context.xml will matter and work in Hosted Mode.)
+  		   <br /><br />
+           2.  Launches the GWTShell and Hosted Mode Browser against the hosted mode Tomcat instance using project specific properties from project.properties.
+           <br /><br />
+           Before the shell is launched the tomcat structure is inspected/updated/created by the plugin so that the context.xml and web.xml from the application (if present) are used
+           in the GWT development Tomcat instance (the GWTShellServlet is automatically added to web.xml, as are service servlets based on the GWT module file, and the context.xml is added).
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:compile</name>
+        <description>
+           Launches the GWTCompiler in order to compile the GWT project.
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:noserver</name>
+        <description>
+           Launches the GWTShell with the -noserver option. Uses the properties google.webtoolkit.port/google.webtoolkit.runtarget to launch the Hosted Mode Browser.
+           <br />
+           Requires an external server pre-configured with a context matching the specified google.webtoolkit.runtarget. At a MINIMUM this context must have Module.html (host page), Module.nocache.html (obtained by compiling your project), and gwt.js. 
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:debug</name>
+        <description>
+           Launches the GWTShell in debug mode so that a debugger can easily be attached (also performs all the same prerequisite steps as does the plain gwt goal).
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:mergewebxml</name>
+        <description>
+           Used primarily by the gwt:war goal as a prerequisite in order to merge the application specific web.xml file (created by war:webapp in the target directory) with the 
+           GWT module file.  This "merge" step will create service servlet entries in the web.xml file for each such entry present in the GWT module file.  Note that this happens
+           on the deployable artifact from the target directory (not the source), so it can safely be done at each deployment and enables you to not have to maintain service servlet
+           entries in multiple places (yet still have them available in a deployable artifact).
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:war</name>
+        <description>
+           In one shot creates a deployable WAR file from a GWT application.  Includes invoking mergewebxml as a prerequisite so that an application specific
+           web.xml file is merged with the GWT module file to create the correct service servlet entries in web.xml automatically. 
+        </description>
+      </goal>
+      <goal>
+        <name>gwt:generateClientBeans</name>
+        <description>
+           Creates client-side DTOs into your source directory. 
+        </description>
+      </goal>
+      
+    </goals>      
+  </body>
+</document>
