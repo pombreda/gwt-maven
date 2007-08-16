@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <pomVersion>3</pomVersion>
+    <groupId>com.totsp.gwt</groupId>
+    <artifactId>maven-googlewebtoolkit-support</artifactId>
+    <currentVersion>1.5.5</currentVersion>
+    <organization>
+        <name>TotSP</name>
+    </organization>
+    <shortDescription>Support for TotSP Maven GWT Plugin(s)</shortDescription>
+    <name>Maven-GoogleWebToolkit-Support</name>
+    <package>com.totsp.mavenplugin.gwt</package>
+    <inceptionYear>2006</inceptionYear>
+    <!--  <licenses>
+    <license>
+    <name>Apache Public License 2.0 - for the plugin itself</name>
+    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license> 
+    </licenses>-->
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/conf</directory>
+            </resource>
+        </resources>
+        <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+        <unitTest>
+            <includes>
+                <include>**/*Test.java</include>
+            </includes>
+            <excludes>
+                <exclude>**/NaughtyTest.java</exclude>
+            </excludes>
+        </unitTest>
+        <resources>
+            <resource>
+                <directory>src/test</directory>
+                <includes>**/*</includes>
+            </resource>
+        </resources>
+    </build>
+    <developers>
+        <developer>
+            <name>Charlie Collins</name>
+            <email>charlie . collins@gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+        <developer>
+            <name>Robert Cooper</name>
+            <email>kebernet @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+    </developers>
+    <dependencies>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.2.22</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+          <groupId>jalopy</groupId>
+          <artifactId>jalopy</artifactId>
+          <version>1.5rc3</version>
+        </dependency>
+        <!--dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.4.2</version>
+         </dependency-->
+    </dependencies>
+</project>
+
