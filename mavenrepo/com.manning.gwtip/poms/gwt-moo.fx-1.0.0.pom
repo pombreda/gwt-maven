@@ -6,12 +6,6 @@
   <name>Moo.fx for GWT</name>
   <currentVersion>1.0.0</currentVersion>
   <inceptionYear>2006</inceptionYear>
-  <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
-  <repository>
-    <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
-    <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
-    <url>http://gwt-maven.googlecode.com/svn</url>
-  </repository>
   <package>com.manning.gwtip.javascript.moofx</package>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
