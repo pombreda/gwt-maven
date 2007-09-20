@@ -23,8 +23,15 @@ package com.totsp.mavenplugin.gwt;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
+import java.io.IOException;
+
 /**
  *
  * @author cooper
@@ -45,7 +52,7 @@ public class GWTMojo extends AbstractGWTMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         String classpath = null;
         try{
-            classpath = this.buildClasspath();
+            classpath = this.buildClasspath(true);
         } catch(Exception e){
             throw new MojoExecutionException( "Unable to build classpath", e );
         }
@@ -58,46 +65,63 @@ public class GWTMojo extends AbstractGWTMojo {
             this.getOutput().mkdirs();
         }
         System.out.println( "Using classpath: "+ classpath );
-        Commandline cl = new Commandline();
-        cl.setExecutable( JAVA_COMMAND );
+
+        ArrayList<String> argList = new ArrayList<String>();
+        argList.add(JAVA_COMMAND);
+
+        argList.addAll(Arrays.asList(baseArgs));
+
         if( this.getExtraJvmArgs() == null ){
-                this.setExtraJvmArgs( EXTA_ARG );
-            }
+            this.setExtraJvmArgs( EXTA_ARG );
+        }
         if( this.getExtraJvmArgs() != null ){
-            String[] extraJvmArgs = this.getExtraJvmArgs().split(" ");
-            cl.addArguments( extraJvmArgs );
+          try {
+            String[] extraJvmArgs = CommandLineUtils.translateCommandline(this.getExtraJvmArgs());
+            argList.addAll(Arrays.asList(extraJvmArgs));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
-        cl.addEnvironment( "CLASSPATH", classpath);
-        String[] args = {
-            "-cp", classpath, //I DON'T KNOW WHY, But Windows is barfing w/o this.
-            "-Dcatalina.base="+this.getTomcat().getAbsolutePath(),
-            "com.google.gwt.dev.GWTShell", 
-            "-logLevel", this.getLogLevel(),
-            "-gen", ".generated",
-            "-style", this.getStyle(),
-            "-port", Integer.toString( this.getPort() ),
-            "-out", this.getOutput().getAbsolutePath()
-        };
-        cl.addArguments( baseArgs );
-        cl.addArguments( args );
+
+      if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")) {
+        argList.add("-XstartOnFirstThread");
+      }
+
+
+
+        argList.add("-cp");
+        argList.add(classpath);
+        argList.add("-Dcatalina.base="+this.getTomcat().getAbsolutePath());
+        argList.add("com.google.gwt.dev.GWTShell");
+        argList.add("-gen");
+        argList.add(".generated");
+        argList.add("-logLevel");
+        argList.add(this.getLogLevel());
+        argList.add("-style");
+        argList.add(this.getStyle());
+        argList.add("-out");
+        argList.add(this.getOutput().getAbsolutePath());
+        argList.add("-port");
+        argList.add(Integer.toString( this.getPort() ));
+
         if( this.isNoServer() ){
-            String[] ns = { "-noserver" };
-            cl.addArguments(ns);
+          argList.add("-noserver");
         }
-        String[] runTarget = { this.getRunTarget() };
-        cl.addArguments( runTarget );
-        cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
-        try{
-            this.getLog().info( "Running GWT with command: "+cl.toString());
-            CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
-            CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
-                this.getLog().info( "Exited with code "+CommandLineUtils.executeCommandLine( cl, stdout, stderr ) );
-                this.getLog().info( stdout.getOutput() );
-                this.getLog().error( stderr.getOutput() );
-        } catch(Exception pe){
-            pe.printStackTrace();
-        }
+
+        argList.add(this.getRunTarget());
+
+        this.getLog().info(StringUtils.join(argList, ' '));
         
+        try {
+          ProcessWatcher    pw = new ProcessWatcher(argList.toArray(new String[0]), null, this.getBuildDir().getCanonicalFile());
+          pw.startProcess(System.out, System.err);
+          int retVal = pw.waitFor();
+        } catch (IOException ioe) {
+          ioe.printStackTrace();
+        } catch (InterruptedException ie) {
+          Thread.currentThread().interrupt();
+        }
+
     }
     
     

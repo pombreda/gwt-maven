@@ -17,40 +17,41 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  * To change this template, choose Tools | Template Manager
- * and open the template in the editor. 
+ * and open the template in the editor.
  */
 
 package com.totsp.mavenplugin.gwt;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
-import org.codehaus.plexus.util.cli.Commandline;
+import org.codehaus.plexus.util.cli.CommandLineException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
-//import com.google.gwt.dev.GWTCompiler;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.io.IOException;
 
 /**
  * @goal compile
  * @phase compile
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution compile
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{
-    
+
     /** Creates a new instance of CompileMojo */
     public CompileMojo() {
         super();
     }
-    
+
     public void execute() throws MojoExecutionException, MojoFailureException {
         for( int i=0; i < this.getCompileTarget().length; i++){
             String compileTarget = this.getCompileTarget()[i];
             String classpath = null;
             try{
-                classpath = this.buildClasspath();
+                classpath = this.buildClasspath(false);
             } catch(Exception e){
                 throw new MojoExecutionException( "Unable to build classpath", e );
             }
@@ -83,49 +84,48 @@ public class CompileMojo extends AbstractGWTMojo{
               System.out.println("ERROR:  Problem calling the main method on GWTCompiler.  Send this error to the gwt-maven group, and get is fixed.");
             } catch (InvocationTargetException e) {
               System.out.println("ERROR:  Problem calling the main method on GWTCompiler.  Send this error to the gwt-maven group, and get is fixed.");
-            } 
+            }
             //GWTCompiler.main(args);
           } else {
-            System.out.println( "Using classpath: "+ classpath );
-            Commandline cl = new Commandline();
-            cl.setExecutable( JAVA_COMMAND );
+
+            ArrayList<String> argList = new ArrayList<String>();
+            argList.add(JAVA_COMMAND);
             if( this.getExtraJvmArgs() == null ){
                 this.setExtraJvmArgs( EXTA_ARG );
             }
             if( this.getExtraJvmArgs() != null ){
-                String[] extraJvmArgs = this.getExtraJvmArgs().split(" ");
-                cl.addArguments( extraJvmArgs );
+              try {
+                String[] extraJvmArgs = CommandLineUtils.translateCommandline(this.getExtraJvmArgs());
+                argList.addAll(Arrays.asList(extraJvmArgs));
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
             }
-            cl.addEnvironment( "CLASSPATH", classpath);
-            String[] args = {
-                "com.google.gwt.dev.GWTCompiler",
-                "-gen", ".generated",
-                "-logLevel", this.getLogLevel(),
-                "-style", this.getStyle(),
-                "-out", this.getOutput().getAbsolutePath(),
-                compileTarget
-            };
-            cl.addArguments( args );
-            cl.setWorkingDirectory( this.getBuildDir().getAbsolutePath() );
-            CommandLineUtils.StringStreamConsumer stdout = new CommandLineUtils.StringStreamConsumer();
-            CommandLineUtils.StringStreamConsumer stderr = new CommandLineUtils.StringStreamConsumer();
 
-            try{
-                this.getLog().info( "Running GWTCompile with command: "+cl.toString());
-                int code = CommandLineUtils.executeCommandLine( cl, stdout, stderr );
+            argList.add("-cp");
+            argList.add(classpath);
 
-                System.out.println( stdout.getOutput() );
-                System.err.println( stderr.getOutput() );
-                if( code != 0 ){
-                    throw new MojoExecutionException( stderr.getOutput() );
-                }
-            }  catch (CommandLineException cle) {
-                logErrorLines(stdout.getOutput());
-                throw new MojoExecutionException("Error running GWT compiler", cle);
-            } finally {
-                getLog().debug(stdout.getOutput());
-                getLog().debug(stderr.getOutput());
-            }
+            argList.add("com.google.gwt.dev.GWTCompiler");
+            argList.add("-gen");
+            argList.add(".generated");
+            argList.add("-logLevel");
+            argList.add(this.getLogLevel());
+            argList.add("-style");
+            argList.add(this.getStyle());
+            argList.add("-out");
+            argList.add(this.getOutput().getAbsolutePath());
+            argList.add(compileTarget);
+
+
+            try {
+              ProcessWatcher    pw = new ProcessWatcher(argList.toArray(new String[0]), null, this.getBuildDir().getCanonicalFile());
+              pw.startProcess(System.out, System.err);
+              int retVal = pw.waitFor();
+            } catch (IOException ioe) {
+              ioe.printStackTrace();
+            } catch (InterruptedException ie) {
+              Thread.currentThread().interrupt();
+            }            
           }
         }
     }
@@ -142,5 +142,5 @@ public class CompileMojo extends AbstractGWTMojo{
             }
         }
     }
-    
+
 }
