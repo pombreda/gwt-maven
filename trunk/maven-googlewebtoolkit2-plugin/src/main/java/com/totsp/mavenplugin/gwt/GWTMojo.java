@@ -110,7 +110,6 @@ public class GWTMojo extends AbstractGWTMojo {
 
         argList.add(this.getRunTarget());
 
-        this.getLog().info(StringUtils.join(argList, ' '));
         
         try {
           ProcessWatcher    pw = new ProcessWatcher(argList.toArray(new String[0]), null, this.getBuildDir().getCanonicalFile());
