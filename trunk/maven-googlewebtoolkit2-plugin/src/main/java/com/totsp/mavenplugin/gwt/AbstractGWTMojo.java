@@ -141,7 +141,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private File tomcat;
   
     /**
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
     private boolean fork;
 
