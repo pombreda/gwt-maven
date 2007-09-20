@@ -56,9 +56,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     static public String EXTA_ARG = null;
 
     /**
-     * @parameter
+     * @parameter property="generatorRootClasses"
      */
     private String[] generatorRootClasses;
+  
     /**
      * @parameter
      */
@@ -155,11 +156,11 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private MavenProject project;
     
     /**
-     * @parameter
+     * @parameter property="compileTargets"
      * @required
      */
     private String[] compileTarget;
-    
+
     /**
      * @parameter expression="${google.webtoolkit.extrajvmargs}"
      *
@@ -581,4 +582,9 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
   public void setFork(boolean fork) {
     this.fork = fork;
   }
+
+  public void setCompileTargets(String[] targets) {
+    compileTarget = targets;
+  }
+
 }
