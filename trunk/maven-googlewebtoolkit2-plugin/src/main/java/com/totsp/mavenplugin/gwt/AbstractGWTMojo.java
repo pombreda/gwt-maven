@@ -28,6 +28,8 @@ import org.apache.maven.project.MavenProject;
 
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.cli.CommandLineUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,7 +79,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter
      */
     private boolean generateGettersAndSetters;
-    
+
     /**
      * @parameter
      */
@@ -106,44 +108,44 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter expression="${project.build.directory}"
      */
     private File buildDir;
-    
+
     /**
      * @parameter
      */
     private File contextXml;
-    
+
     /**
      * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
-     * 
+     *
      */
     private File webXml;
-    
+
     /**
      * @parameter expression="${project.build.directory}/${project.build.finalName}"
      */
     private File gen;
-    
+
     /**
      * @parameter expression="${google.webtoolkit.home}"
      */
     private File gwtHome;
-    
+
     /**
      * @parameter expression="${project.build.directory}/${project.build.finalName}"
      */
     private File output;
-    
+
     /**
      * @parameter expression="${project.build.directory}/tomcat"
      */
     private File tomcat;
-
+  
     /**
-     * @parameter
+     * @parameter default-value="false"
      */
     private boolean fork;
 
-    
+
     /**
      * Project instance, used to add new source directory to the build.
      * @parameter default-value="${project}"
@@ -181,7 +183,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private String style;
     
     /**
-     * @parameter default-value="false
+     * @parameter default-value="false"
      */
     private boolean noServer;
     
@@ -195,144 +197,151 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private int debugPort;
 
 
-    protected static final String JAVA_COMMAND = System.getProperty("java.home") != null ? 
+    protected static final String JAVA_COMMAND = System.getProperty("java.home") != null ?
       FileUtils.normalize(System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java") :
         "java";
 
     /** Creates a new instance of AbstractGWTMojo */
     public AbstractGWTMojo() {
-        
+
     }
-    
+
     public void setBuildDir(File buildDir) {
         this.buildDir = buildDir;
     }
-    
+
     public File getBuildDir() {
         return buildDir;
     }
-    
+
     public void setCompileTarget(String[] compileTarget) {
         this.compileTarget = compileTarget;
     }
-    
+
     public String[] getCompileTarget() {
         return compileTarget;
     }
-    
+
     public void setContextXml(File contextXml) {
         this.contextXml = contextXml;
     }
-    
+
     public File getContextXml() {
         return contextXml;
     }
-    
-    
+
+
     public void setExtraJvmArgs(String extraJvmArgs) {
         this.extraJvmArgs = extraJvmArgs;
     }
-    
+
     public String getExtraJvmArgs() {
         return extraJvmArgs;
     }
-    
+
     public void setGen(File gen) {
         this.gen = gen;
     }
-    
+
     public File getGen() {
         return gen;
     }
-    
+
     public void setGwtHome(File gwtHome) {
         this.gwtHome = gwtHome;
     }
-    
+
     public File getGwtHome() {
         return gwtHome;
     }
-    
+
     public void setLogLevel(String logLevel) {
         this.logLevel = logLevel;
     }
-    
+
     public String getLogLevel() {
         return logLevel;
     }
-    
+
     public void setNoServer(boolean noServer) {
         this.noServer = noServer;
     }
-    
+
     public boolean isNoServer() {
         return noServer;
     }
-    
+
     public void setOutput(File output) {
         this.output = output;
     }
-    
+
     public File getOutput() {
         return output;
     }
-    
+
     public void setPort(int port) {
         this.port = port;
     }
-    
+
     public int getPort() {
         return port;
     }
-    
+
     public void setProject(MavenProject project) {
         this.project = project;
     }
-    
+
     public MavenProject getProject() {
         return project;
     }
-    
+
     public void setRunTarget(String runTarget) {
         this.runTarget = runTarget;
     }
-    
+
     public String getRunTarget() {
         return runTarget;
     }
-    
+
     public void setStyle(String style) {
         this.style = style;
     }
-    
+
     public String getStyle() {
         return style;
     }
-    
+
     public void setTomcat(File tomcat) {
         this.tomcat = tomcat;
     }
-    
+
     public File getTomcat() {
         return tomcat;
     }
-    
+
     public void setWebXml(File webXml) {
         this.webXml = webXml;
     }
-    
+
     public File getWebXml() {
         return webXml;
     }
-    
-    public Collection buildClasspathList() throws DependencyResolutionRequiredException {
-        Set items = new LinkedHashSet();
+
+    public Collection<File> buildClasspathList(boolean fRuntime) throws DependencyResolutionRequiredException {
+        Set<File> items = new LinkedHashSet<File>();
         for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
         items.add( new File( getProject().getBasedir(), "classes") );
-        for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
-            items.add( new File( it.next().toString() ) );
+
+        if (fRuntime) {
+          for( Iterator it = getProject().getRuntimeClasspathElements().iterator(); it.hasNext() ;){
+              items.add( new File( it.next().toString() ) );
+          }
+        } else {
+          for( Iterator it = getProject().getCompileClasspathElements().iterator(); it.hasNext() ;){
+              items.add( new File( it.next().toString() ) );
+          }
         }
 
         for( Iterator it = getProject().getSystemClasspathElements().iterator(); it.hasNext() ;){
@@ -347,16 +356,39 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         items.add( GWTHome );
 
         items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
-        
+
         for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
             Resource r = (Resource) it.next();
             items.add( new File( r.getDirectory()) );
         }
-        
+
 
         return items;
     }
-    
+
+    public Collection<File> buildRuntimeClasspathList() throws DependencyResolutionRequiredException {
+        Collection<File> items = buildClasspathList(true);
+
+
+        //Because Maven loses our properties for some odd reason, we need to double check
+        File GWTHome = getGwtHome();
+        if (GWTHome == null) {
+          GWTHome = new File(GWT_PATH);
+        }
+        items.add( GWTHome );
+
+        items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
+
+        for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
+            Resource r = (Resource) it.next();
+            items.add( new File( r.getDirectory()) );
+        }
+
+
+        return items;
+    }
+
+
     public ClassLoader fixThreadClasspath(){
         try{
         ClassWorld world = new ClassWorld();
@@ -364,8 +396,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         //use the existing ContextClassLoader in a realm of the classloading space
         ClassRealm root = world.newRealm("gwt-plugin", Thread.currentThread().getContextClassLoader());
         ClassRealm realm = root.createChildRealm( "gwt-project");
-        
-        for( Iterator it = buildClasspathList().iterator(); it.hasNext(); ){
+
+        for( Iterator it = buildClasspathList(false).iterator(); it.hasNext(); ){
             realm.addConstituent( ((File)it.next()).toURI().toURL() );
         }
         Thread.currentThread().setContextClassLoader(realm.getClassLoader());
@@ -375,16 +407,28 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
             throw new RuntimeException(e);
         }
     }
-    
-    public String buildClasspath() throws DependencyResolutionRequiredException {
+
+    public String buildClasspath(boolean fRuntime) throws DependencyResolutionRequiredException {
         StringBuffer sb = new StringBuffer();
-        sb.append(
-                StringUtils.join(
-                buildClasspathList().iterator(),
-                File.pathSeparator));
+        Iterator<File>  iter = buildClasspathList(fRuntime).iterator();
+
+        while (iter.hasNext()) {
+          File path = iter.next();
+
+          if (sb.length() > 0)
+            sb.append(File.pathSeparatorChar);
+
+
+          try {
+            sb.append(path.getCanonicalPath());
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+
         return sb.toString();
     }
-    
+
     public void makeCatalinaBase() throws Exception {
         File webXml = this.getWebXml();
         String[] args = {
@@ -446,7 +490,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     public void setDebugPort(int debugPort) {
         this.debugPort = debugPort;
     }
-    
+
     protected void copyFile(File source, File destination) throws IOException {
         FileOutputStream fos = new FileOutputStream( destination );
         FileInputStream fis = new FileInputStream( source );
@@ -455,7 +499,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         fos.close();
         fis.close();
     }
-    
+
      /**
      * default read size for stream copy
      */
