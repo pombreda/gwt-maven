@@ -180,7 +180,7 @@ public class ProcessWatcher {
 
       } finally {
         try {
-          out.close();
+          out.flush();
         } catch (IOException e) {
           e.printStackTrace();
         }
