@@ -3,6 +3,7 @@ package com.totsp.mavenplugin.gwt;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.project.MavenProjectBuilder;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.util.Iterator;
@@ -21,6 +22,52 @@ import java.io.FileOutputStream;
  */
 public class GWTExtractor extends AbstractGWTMojo{
 
+  /**
+   * Location of the local repository.
+   *
+   * @parameter expression="${localRepository}"
+   * @readonly
+   * @required
+   */
+  protected org.apache.maven.artifact.repository.ArtifactRepository local;
+
+  /**
+   * List of Remote Repositories used by the resolver
+   *
+   * @parameter expression="${project.remoteArtifactRepositories}"
+   * @readonly
+   * @required
+   */
+  protected java.util.List remoteRepos;
+  /**
+   * Artifact factory, needed to download source jars.
+   *
+   * @component role="org.apache.maven.project.MavenProjectBuilder"
+   * @required
+   * @readonly
+   */
+  protected MavenProjectBuilder mavenProjectBuilder;
+
+  /**
+   * Used to look up Artifacts in the remote repository.
+   *
+   * @parameter expression="${component.org.apache.maven.artifact.factory.ArtifactFactory}"
+   * @required
+   * @readonly
+   */
+  protected org.apache.maven.artifact.factory.ArtifactFactory factory;
+
+  /**
+   * Used to look up Artifacts in the remote repository.
+   *
+   * @parameter expression="${component.org.apache.maven.artifact.resolver.ArtifactResolver}"
+   * @required
+   * @readonly
+   */
+  protected org.apache.maven.artifact.resolver.ArtifactResolver resolver;
+
+
+
   public void execute() throws MojoExecutionException, MojoFailureException {
 
     Iterator<Artifact>  iter = getProject().getDependencyArtifacts().iterator();
@@ -35,7 +82,27 @@ public class GWTExtractor extends AbstractGWTMojo{
 
           fFoundDependency = true;
 
-          ZipFile   zipFile = new ZipFile(a.getFile());
+          /*
+          It is possible that we were not able to add dependencies before some other component causes the dependencies to
+          get resolved.  In this case we need to resolve the file by hand.
+          */
+          File  artifactFile = a.getFile();
+
+          if (artifactFile == null) {
+
+            Artifact gwtDevArtifact = this.factory.createArtifact(getGroupId(), GWTSetup.guessArtifactId(), getGwtVersion(), "", "zip");
+
+            try {
+              resolver.resolve(gwtDevArtifact, this.remoteRepos, this.local);
+            } catch(Exception e) {
+              String  error = "Error:  Could not resolve GWT artifact.  If you set \"setup\" goal for this plugin, this may be a bug." +
+                "  Check that you do not have any dependencies that conflict with " + this.getGroupId() + ":" + GWTSetup.guessArtifactId() + "\n" +
+                "If not, please report this error to the gwt-maven project.";
+              throw new MojoExecutionException(error, e);
+            }
+            artifactFile = gwtDevArtifact.getFile();
+          }
+          ZipFile   zipFile = new ZipFile(artifactFile);
           File      extractionDir = getGwtBinDirectory();
 
           File  timestampFile = new File(extractionDir, ".timestamp-" + a.getFile().lastModified());
