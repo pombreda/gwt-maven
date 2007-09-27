@@ -3,7 +3,7 @@
     <pomVersion>3</pomVersion>
     <groupId>com.totsp.gwt</groupId>
     <artifactId>maven-googlewebtoolkit-plugin</artifactId>
-    <currentVersion>1.5.5-SNAPSHOT</currentVersion>
+    <currentVersion>1.5.6</currentVersion>
     <organization>
         <name>TotSP</name>
     </organization>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.totsp.gwt</groupId>
             <artifactId>maven-googlewebtoolkit-support</artifactId>
-            <version>1.5.4</version>
+            <version>1.5.6</version>
             <type>jar</type>
         </dependency>
         <dependency>
