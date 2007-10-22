@@ -59,7 +59,7 @@
 				<b>Context.xml</b>
 				<br />
 					1. Put <a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/webapp/META-INF/context.xml">
 						context.xml
 					</a> where it needs to be:
 					<code>[PROJECT]/tomcat/conf/gwt/localhost/ROOT.xml</code>.
@@ -80,7 +80,7 @@
 				<b>web.xml</b>
 				<br />
 					2. Put <a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/webapp/WEB-INF/web.xml">
 						web.xml
 					</a> where it needs to be:
 					<code>[PROJECT]/tomcat/webapps/ROOT/WEB-INF/web.xml</code>.

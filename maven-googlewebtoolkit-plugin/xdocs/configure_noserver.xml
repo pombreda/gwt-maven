@@ -24,6 +24,7 @@
 [ModuleName].nocache.js 
 [ModuleName].html 
 gwt.js 
+hosted.html
 				</source>
 				</p>
 			</subsection>
@@ -38,7 +39,7 @@ gwt.js
 				a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor
 				a $CATALINA_HOME/webapps/ModuleName directory
 				</code>
-				Then place the files from the previous GWT compile step (nocache.js, Module.html, gwt.js) in the webapps/ModuleName directory.
+				Then place the files from the previous GWT compile step (nocache.js, Module.html, gwt.js, hosted.html) in the webapps/ModuleName directory.
 				<br />
 				Then, before proceeding, BROWSE to that location in a regular browser and ensure you can load the host page (it will not show dynamic elements - yet, but still should be present). 
 				</p>

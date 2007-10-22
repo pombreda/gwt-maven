@@ -59,12 +59,12 @@
 					This demonstrates configuring the GWT-Maven plugin
 					along with *
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/META-INF/context.xml">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/webapp/META-INF/context.xml">
 						context.xml
 					</a>
 					* and *
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/web/WEB-INF/web.xml">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/webapp/WEB-INF/web.xml">
 						web.xml
 					</a>
 					* in order to setup a container managed DataSource
@@ -166,7 +166,7 @@
 					GWT RemoteService. This is demonstrated in the
 					sample
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyService.java">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/java/com/totsp/sample/client/MyService.java">
 						MyService.java
 					</a>
 					class.
@@ -183,7 +183,7 @@
 					AsyncCallBack object should be the last parameter of
 					each method. This is demonstrated in the sample
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyServiceAsync.java">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/java/com/totsp/sample/client/MyServiceAsync.java">
 						MyServiceAsync.java
 					</a>
 					class.
@@ -195,7 +195,7 @@
 					object with a defined endpoint (path) and invoke the
 					methods. This is demonstrated in the sample
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/client/MyProjectEntryPoint.java">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/java/com/totsp/sample/client/MyProjectEntryPoint.java">
 						MyProjectEntryPoint.java
 					</a>
 					class.
@@ -239,7 +239,7 @@
 					RemoteServiceServlet. This is demonstrated in the
 					sample
 					<a
-						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/java/com/totsp/sample/server/MyServiceImpl.java">
+						href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit-sample/src/main/java/com/totsp/sample/server/MyServiceImpl.java">
 						MyServiceImpl.java
 					</a>
 					class.
