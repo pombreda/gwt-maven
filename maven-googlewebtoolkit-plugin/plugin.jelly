@@ -94,7 +94,7 @@
           
       <ant:java classname="com.google.gwt.dev.GWTShell" fork="true" dir="${basedir}">
           <ant:sysproperty key="catalina.base" value="${google.webtoolkit.tomcat}" />
-          <ant:jvmarg line="${google.webtoolkit.extrajvmargs} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=${google.webtoolkit.debugport},suspend=y"/>
+          <ant:jvmarg line="${google.webtoolkit.extrajvmargs} -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=${google.webtoolkit.debugport},suspend=n"/>
           <ant:arg value="-out"/>
           <ant:arg value="${google.webtoolkit.output}" />
           <ant:arg value="-style" />
