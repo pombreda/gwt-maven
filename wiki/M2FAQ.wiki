@@ -1,4 +1,4 @@
-#summary GWT-Maven FAQ.
+#summary M2 version FAQ.
 
 = Introduction =
 
