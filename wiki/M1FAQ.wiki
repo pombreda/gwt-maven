@@ -1,0 +1,39 @@
+#summary GWT-Maven M1 version FAQ.
+
+= Introduction =
+
+These are commonly encountered questions regarding the M1 version of GWT-Maven. 
+
+
+= Details =
+
+*Q) How should I setup machine/platform specific properties for M1? 
+
+Use a "build.properties" file which specifies the location of "maven.googlewebtoolkit-home" and the value of "platform".  Then use "platform" in your POM to define gwt-dev-platform, if needed for your project.  
+
+Also IF you are using a Mac you must pass -XstartOnFirstThread to the JVM for GWT usage. 
+To do this edit your build.properties file and add "-XstartOnFirstThread" 
+with the "google.webtoolkit.extrajvmargs" AND "maven.junit.jvmargs" properties.
+
+*build.properties example*
+{{{
+# maven build properties (goes in ~/.maven)
+platform=[mac|windows|linux]
+maven.googlewebtoolkit.home=[PATH]/gwt-[mac|windows|linux]-1.4.60
+# uncomment the next two properties for GWT-Maven usage on the Mac
+#google.webtoolkit.extrajvmargs=-XstartOnFirstThread
+#maven.junit.jvmargs=-XstartOnFirstThread -Dgwt.coverage.enable=true
+
+}}}
+
+*gwt-dev-platform dependency example*
+{{{
+<!-- ~/build.properties must have maven.googlewebtoolkit.home and platform defined  -->
+<dependency>
+  <groupId>com.google.gwt</groupId>
+  <artifactId>gwt-dev-platform</artifactId>
+</dependency>
+}}}
+
+
+
