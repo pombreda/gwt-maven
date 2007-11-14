@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary GWT-Maven FAQ.
 
 = Introduction =
 
-There are some gaps between the current checked-in docuemtation and what is deployed.  Here are a few FAQs for until we deploy then next release.
+There are some gaps between the current M2 checked-in docuemtation and what is deployed.  Here are a few FAQs for until we deploy then next release.
 
 = Details =
 
@@ -10,7 +10,7 @@ There are some gaps between the current checked-in docuemtation and what is depl
 [Ljava.lang.String;' from '[com.shd.gwt.client.FormEditor]', which is of
 type class java.lang.String*
 
-In the latest plugin release.  compileTarget was changed to take an array.  This means you POM should have a section that looks like:
+In the latest plugin release, compileTarget was changed to take an array.  This means your POM should have a section that looks like:
 
 {{{
 <compileTarget>
