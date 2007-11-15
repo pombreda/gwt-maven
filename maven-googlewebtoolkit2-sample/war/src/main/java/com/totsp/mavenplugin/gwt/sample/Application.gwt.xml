@@ -1,0 +1,13 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User' />
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='com.totsp.mavenplugin.gwt.sample.client.Application' />
+
+	<!-- Server Servlet Mapping -->
+	<servlet path='/exampleRemoteService'
+		class='com.totsp.mavenplugin.gwt.sample.server.ExampleRemoteServiceImpl' />
+
+</module>

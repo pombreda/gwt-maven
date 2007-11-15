@@ -1,0 +1,64 @@
+<html>
+	<head>
+	
+		<!--                                           -->
+		<!-- Any title is fine                         -->
+		<!--                                           -->
+		<title>gwt-maven-example-client</title>
+
+		<!--                                           -->
+		<!-- Use normal html, such as style            -->
+		<!--                                           -->
+		<style>
+			body,td,a,div,.p{font-family:arial,sans-serif}
+			div,td{color:#000000}
+			a:link,.w,.w a:link{color:#0000cc}
+			a:visited{color:#551a8b}
+			a:active{color:#ff0000}
+		</style>
+
+		<!--                                           -->
+		<!-- This script loads your compiled module.   -->
+		<!-- If you add any GWT meta tags, they must   -->
+		<!-- be added before this line.                -->
+		<!--                                           -->
+		<script language='javascript' src='com.totsp.mavenplugin.gwt.sample.Application.nocache.js'></script>
+	</head>
+
+	<!--                                           -->
+	<!-- The body can have arbitrary html, or      -->
+	<!-- you can leave the body empty if you want  -->
+	<!-- to create a completely dynamic ui         -->
+	<!--                                           -->
+	<body>
+
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe src="javascript:''" id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+		<h1>TODO Complete This Page</h1>
+		<h1>TODO Complete This Page</h1>
+		<h1>TODO Complete This Page</h1>
+		<h1>TODO Complete This Page</h1>
+		<h1>Welcome to the gwt-maven-example</h1>
+		This is an <i>simple</i> example for GWT RPC applications within a Maven Multi-Module project.
+		Specifically, this is a very simple GWT (1.4.60) Client (you are looking at it) that makes a RPC/AJAX server call to a backend Java 1.5 GWT server.
+		<br/>
+		Maven Modules Explained:
+		<ul>
+		<li>war: this is the client GWT code</li>
+		<li>rpc: this is an interface to a GWT server (not an implementation)</li>
+		<li>server: is the implementation of the rpc interface (in Java1.5+)</li>
+		<li>ejb: TODO</li>
+		<li>ear: TODO</li>
+		<li>Look inside the pom's for more comments and doco</li>
+		</ul>
+		<hr>
+		<table align=center>
+			<tr align="center">
+				<td id="rpcButton"></td>
+			</tr>
+			<tr align="center">
+				<td id="rpcResponse"></td>
+			</tr>
+		</table>
+	</body>
+</html>
