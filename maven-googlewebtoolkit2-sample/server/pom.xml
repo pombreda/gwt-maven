@@ -23,6 +23,9 @@
 		</plugins>
 		<finalName>maven-googlewebtoolkit2-sample-server</finalName>
 	</build>
+	<!-- This is used to run a Hosted Server for the GWT shell to run against 
+	TODO: consider this as optional in the sample???? - Andrew
+	-->
 	<properties>
 		<glassfish.home>/data/bin/glassfish-v2-b58g</glassfish.home>
 	</properties>
