@@ -9,8 +9,8 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.totsp.mavenplugin.gwt.sample.client.ExampleRemoteService;
-import com.totsp.mavenplugin.gwt.sample.client.ExampleRemoteServiceAsync;
+import com.totsp.mavenplugin.gwt.sample.client.SampleRemoteService;
+import com.totsp.mavenplugin.gwt.sample.client.SampleRemoteServiceAsync;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -39,18 +39,18 @@ public class Application implements EntryPoint {
 				// the interface. The cast is always safe because the generated
 				// proxy
 				// implements the asynchronous interface automatically.
-				ExampleRemoteServiceAsync exampleRemoteService = (ExampleRemoteServiceAsync) GWT
-						.create(ExampleRemoteService.class);
+				SampleRemoteServiceAsync sampleRemoteService = (SampleRemoteServiceAsync) GWT
+						.create(SampleRemoteService.class);
 
 				// (2) Specify the URL at which our service implementation is
 				// running.
 				// Note that the target URL must reside on the same domain and
 				// port from
 				// which the host page was served.
-				ServiceDefTarget endpoint = (ServiceDefTarget) exampleRemoteService;
+				ServiceDefTarget endpoint = (ServiceDefTarget) sampleRemoteService;
 
 				String moduleRelativeURL = GWT.getModuleBaseURL()
-						+ "exampleRemoteService";
+						+ "sampleRemoteService";
 				endpoint.setServiceEntryPoint(moduleRelativeURL);
 
 				// (3) Create an asynchronous callback to handle the result.
@@ -69,7 +69,7 @@ public class Application implements EntryPoint {
 				// (4) Make the call. Control flow will continue immediately and
 				// later
 				// 'callback' will be invoked when the RPC completes.
-				exampleRemoteService.doComplimentMe(callback);
+				sampleRemoteService.doComplimentMe(callback);
 
 			}
 		});

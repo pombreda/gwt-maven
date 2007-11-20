@@ -87,11 +87,13 @@
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>../ejb</module>
+		<!-- EJB's removed as it over complicated the GWT sample -->
+		<!-- module>../ejb</module -->
 		<module>../rpc</module>
 		<module>../server</module>
 		<module>../war</module>
-		<module>../ear</module>
+		<!--  EAR Removed as it over complicated the GWT sample -->
+		<!--  >module>../ear</module -->
 	</modules>
 	<build>
 		<finalName>maven-googlewebtoolkit2-sample</finalName>

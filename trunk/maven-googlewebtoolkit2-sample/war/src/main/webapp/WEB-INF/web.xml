@@ -6,7 +6,7 @@
 	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
 		<servlet-name>HttpServlet</servlet-name>
-		<servlet-class>com.gwt.maven.example.server.HttpServlet</servlet-class>
+		<servlet-class>com.totsp.mavenplugin.gwt.sample.server.HttpServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>HttpServlet</servlet-name>

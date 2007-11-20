@@ -7,7 +7,6 @@
 	<entry-point class='com.totsp.mavenplugin.gwt.sample.client.Application' />
 
 	<!-- Server Servlet Mapping -->
-	<servlet path='/exampleRemoteService'
-		class='com.totsp.mavenplugin.gwt.sample.server.ExampleRemoteServiceImpl' />
+	<servlet path='/sampleRemoteService' class='com.totsp.mavenplugin.gwt.sample.server.SampleRemoteServiceImpl' />
 
 </module>
