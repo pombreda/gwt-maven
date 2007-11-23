@@ -118,8 +118,9 @@ public class GWTTest extends AbstractGWTMojo {
       cmd.append(classpath).append(' ');
       cmd.append("junit.textui.TestRunner ");
 
-      File  OutputDir = new File(new File(getProject().getBuild().getOutputDirectory() ), "gwtTest");
-      OutputDir.mkdirs();
+      File  outputDir = new File( this.getBuildDir(), "gwtTest");
+      outputDir.mkdirs();
+      outputDir.mkdir();
 
       List testCompileRoots = getProject().getTestCompileSourceRoots();
 
@@ -130,7 +131,7 @@ public class GWTTest extends AbstractGWTMojo {
       for (String currRoot : (List<String>) testCompileRoots) {
 
         //UNDONE(willpugh) -- Need to be able to change the File filter here.
-        Collection<File> coll = FileUtils.listFiles(new File(currRoot), new WildcardFileFilter("GwtTest*"), HiddenFileFilter.VISIBLE);
+        Collection<File> coll = FileUtils.listFiles(new File(currRoot), new WildcardFileFilter(this.getTestFilter() ), HiddenFileFilter.VISIBLE);
         for (File currFile : coll) {
           List<String> specificArgs = new ArrayList<String>(arguments);
 
@@ -163,8 +164,8 @@ public class GWTTest extends AbstractGWTMojo {
             StreamSucker suckOut = null;
             StreamSucker suckErr = null;
             try {
-            suckOut = new StreamSucker(process.getInputStream(), new FileOutputStream(new File(OutputDir, packageName + ".txt")));
-            suckErr = new StreamSucker(process.getErrorStream(), new FileOutputStream(new File(OutputDir, packageName + ".err")));
+            suckOut = new StreamSucker(process.getInputStream(), new FileOutputStream(new File(outputDir, packageName + ".txt")));
+            suckErr = new StreamSucker(process.getErrorStream(), new FileOutputStream(new File(outputDir, packageName + ".err")));
 
             suckOut.start();
             suckErr.start();
@@ -177,13 +178,13 @@ public class GWTTest extends AbstractGWTMojo {
             suckOut.join();
             suckErr.join();
 
-            FileInputStream   fis = new FileInputStream(new File(OutputDir, packageName + ".txt"));
+            FileInputStream   fis = new FileInputStream(new File(outputDir, packageName + ".txt"));
             String            output = IOUtils.toString(fis);
 
             String            err = "";
 
             if (suckErr.byteswritten > 0) {
-              FileInputStream   ois = new FileInputStream(new File(OutputDir, packageName + ".err"));
+              FileInputStream   ois = new FileInputStream(new File(outputDir, packageName + ".err"));
               err = IOUtils.toString(ois).trim();
             }
 
@@ -221,7 +222,7 @@ public class GWTTest extends AbstractGWTMojo {
               if (m2.matches()) {
                 run += Integer.parseInt(m2.group(1));   
               } else {
-                System.out.println("Could not get JUnit results.  Look at " + new File(OutputDir, packageName + ".txt").getAbsolutePath());
+                System.out.println("Could not get JUnit results.  Look at " + new File(outputDir, packageName + ".txt").getAbsolutePath());
               }
             } else {
               error++;
