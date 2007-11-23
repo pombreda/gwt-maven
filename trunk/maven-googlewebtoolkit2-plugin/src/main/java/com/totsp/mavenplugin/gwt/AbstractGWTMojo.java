@@ -141,12 +141,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private File tomcat;
   
-    /**
-     * @parameter default-value="true"
-     */
-    private boolean fork;
-
-
+    
     /**
      * Project instance, used to add new source directory to the build.
      * @parameter default-value="${project}"
@@ -198,7 +193,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private int debugPort;
 
 
-    protected static final String JAVA_COMMAND = System.getProperty("java.home") != null ?
+    public static final String JAVA_COMMAND = System.getProperty("java.home") != null ?
       FileUtils.normalize(System.getProperty( "java.home") + File.separator + "bin" + File.separator + "java") :
         "java";
 
@@ -333,6 +328,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         for( Iterator it =  getProject().getCompileSourceRoots().iterator(); it.hasNext() ;){
             items.add( new File( it.next().toString() ) );
         }
+        for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
+            Resource r = (Resource) it.next();
+            items.add( new File( r.getDirectory()) );
+        }
         items.add( new File( getProject().getBasedir(), "classes") );
 
         if (fRuntime) {
@@ -358,34 +357,24 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
         items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
 
-        for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
-            Resource r = (Resource) it.next();
-            items.add( new File( r.getDirectory()) );
-        }
+        
 
 
         return items;
     }
 
     public Collection<File> buildRuntimeClasspathList() throws DependencyResolutionRequiredException {
-        Collection<File> items = buildClasspathList(true);
-
+        Collection<File> classpathItems = buildClasspathList(true);
+        Collection<File> items = new LinkedHashSet<File>();
 
         //Because Maven loses our properties for some odd reason, we need to double check
-        File GWTHome = getGwtHome();
-        if (GWTHome == null) {
-          GWTHome = new File(GWT_PATH);
-        }
-        items.add( GWTHome );
-
-        items.add( new File(GWTHome, GWTSetup.guessDevJarName()));
+        
 
         for(Iterator it = project.getResources().iterator(); it.hasNext();  ){
             Resource r = (Resource) it.next();
             items.add( new File( r.getDirectory()) );
         }
-
-
+        items.addAll( classpathItems );
         return items;
     }
 
@@ -573,14 +562,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public boolean isFork() {
-    return fork;
-  }
-
-  public void setFork(boolean fork) {
-    this.fork = fork;
   }
 
   public void setCompileTargets(String[] targets) {

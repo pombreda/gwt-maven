@@ -21,9 +21,9 @@
 
 package com.totsp.mavenplugin.gwt;
 
+import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.commons.lang.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 
@@ -64,63 +64,31 @@ public class GWTMojo extends AbstractGWTMojo {
         if( !this.getOutput().exists() ){
             this.getOutput().mkdirs();
         }
-        System.out.println( "Using classpath: "+ classpath );
-
-        ArrayList<String> argList = new ArrayList<String>();
-        argList.add(JAVA_COMMAND);
-
-        argList.addAll(Arrays.asList(baseArgs));
-
-        if( this.getExtraJvmArgs() == null ){
-            this.setExtraJvmArgs( EXTA_ARG );
-        }
-        if( this.getExtraJvmArgs() != null ){
-          try {
-            String[] extraJvmArgs = CommandLineUtils.translateCommandline(this.getExtraJvmArgs());
-            argList.addAll(Arrays.asList(extraJvmArgs));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }
-
-      if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")) {
-        argList.add("-XstartOnFirstThread");
-      }
-
-
-
-        argList.add("-cp");
-        argList.add(classpath);
-        argList.add("-Dcatalina.base="+this.getTomcat().getAbsolutePath());
-        argList.add("com.google.gwt.dev.GWTShell");
-        argList.add("-gen");
-        argList.add(".generated");
-        argList.add("-logLevel");
-        argList.add(this.getLogLevel());
-        argList.add("-style");
-        argList.add(this.getStyle());
-        argList.add("-out");
-        argList.add(this.getOutput().getAbsolutePath());
-        argList.add("-port");
-        argList.add(Integer.toString( this.getPort() ));
-
-        if( this.isNoServer() ){
-          argList.add("-noserver");
-        }
-
-        argList.add(this.getRunTarget());
-
         
-        try {
-          ProcessWatcher    pw = new ProcessWatcher(argList.toArray(new String[0]), null, this.getBuildDir().getCanonicalFile());
-          pw.startProcess(System.out, System.err);
-          int retVal = pw.waitFor();
-        } catch (IOException ioe) {
-          ioe.printStackTrace();
-        } catch (InterruptedException ie) {
-          Thread.currentThread().interrupt();
+        if( System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
+            ScriptWriterWindows writer = new ScriptWriterWindows();
+            try{
+                File exec = writer.writeRunScript( this );
+                ProcessWatcher pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+            } catch(Exception e){
+                throw new MojoExecutionException("Unable to write start script.", e);
+            }
+            
+            
+        } else {
+            ScriptWriterUnix writer = new ScriptWriterUnix();
+            try{
+                File exec = writer.writeRunScript( this );
+                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ ") );
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+            } catch(Exception e){
+                throw new MojoExecutionException("Unable to write start script.", e);
+            }
+            
         }
-
     }
     
     
