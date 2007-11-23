@@ -203,7 +203,7 @@ public class GWTTest extends AbstractGWTMojo {
                             if (m2.matches()) {
                                 run += Integer.parseInt(m2.group(1));
                             } else {
-                                System.out.println("Could not get JUnit results.  Look at " + new File(outputDir, packageName + ".txt").getAbsolutePath());
+                                System.out.println(out.toString());
                             }
                         } else {
                             error++;
