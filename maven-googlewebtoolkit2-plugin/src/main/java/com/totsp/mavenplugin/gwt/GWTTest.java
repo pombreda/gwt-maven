@@ -118,7 +118,7 @@ public class GWTTest extends AbstractGWTMojo {
       cmd.append(classpath).append(' ');
       cmd.append("junit.textui.TestRunner ");
 
-      File  OutputDir = new File(new File(getProject().getBasedir(), "target"), "gwtTest");
+      File  OutputDir = new File(new File(getProject().getBuild().getOutputDirectory() ), "gwtTest");
       OutputDir.mkdirs();
 
       List testCompileRoots = getProject().getTestCompileSourceRoots();
