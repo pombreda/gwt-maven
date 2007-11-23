@@ -41,11 +41,27 @@ public class CompileMojo extends AbstractGWTMojo{
     }
     
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if( !this.getOutput().exists() ){
+            this.getOutput().mkdirs();
+        }
         if( System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
             ScriptWriterWindows writer = new ScriptWriterWindows();
             try{
                 File exec = writer.writeCompileScript(this);
                 ProcessWatcher    pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+                if( retVal != 0 ){
+                    throw new MojoFailureException("Compilation failed.");
+                }
+            } catch(Exception e){
+                throw new MojoExecutionException("Exception attempting compile.", e);
+            }
+        } else {
+            ScriptWriterUnix writer = new ScriptWriterUnix();
+            try{
+                File exec = writer.writeCompileScript(this);
+                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
                 pw.startProcess(System.out, System.err);
                 int retVal = pw.waitFor();
                 if( retVal != 0 ){

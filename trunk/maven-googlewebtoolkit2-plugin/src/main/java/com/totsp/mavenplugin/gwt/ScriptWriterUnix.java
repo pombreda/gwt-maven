@@ -45,11 +45,12 @@ public class ScriptWriterUnix {
         for(File f : classpath ){
             writer.print("\""+f.getAbsolutePath()+"\":");
         }
-        writer.println("export CLASSPATH");
         writer.println();
+        writer.println("export CLASSPATH");
         String extra = mojo.getExtraJvmArgs() != null ? mojo.getExtraJvmArgs() : "";
-        if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")) {
-               extra ="-XstartOnFirstThread "+extra;
+        if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")&&
+                    extra.indexOf("-XstartOnFirstThread") == -1 ) {
+            extra ="-XstartOnFirstThread "+extra;
         }
         writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
@@ -64,15 +65,21 @@ public class ScriptWriterUnix {
         writer.print("\""+mojo.getOutput().getAbsolutePath()+"\"");
         writer.print(" -port ");
         writer.print(Integer.toString( mojo.getPort() ));
-
+        
         if( mojo.isNoServer() ){
-          writer.print(" -noserver ");
+            writer.print(" -noserver ");
         }
         writer.print( " "+mojo.getRunTarget() );
         writer.println();
         writer.flush();
         writer.close();
-        file.setExecutable(true);
+        try{
+            ProcessWatcher pw = new ProcessWatcher("chmod +x "+file.getAbsolutePath() );
+            pw.startProcess(System.out, System.err );
+            pw.waitFor();
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
         return file;
     }
     
@@ -93,12 +100,13 @@ public class ScriptWriterUnix {
         for(File f : classpath ){
             writer.print("\""+f.getAbsolutePath()+"\":");
         }
-        writer.println("export CLASSPATH");
         writer.println();
+        writer.println("export CLASSPATH");
         for( String target : mojo.getCompileTarget() ){
             String extra = mojo.getExtraJvmArgs() != null ? mojo.getExtraJvmArgs() : "";
-            if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")) {
-               extra ="-XstartOnFirstThread "+extra;
+            if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac") &&
+                    extra.indexOf("-XstartOnFirstThread") == -1 ) {
+                extra ="-XstartOnFirstThread "+extra;
             }
             writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
@@ -116,7 +124,13 @@ public class ScriptWriterUnix {
         }
         writer.flush();
         writer.close();
-        file.setExecutable(true);
+        try{
+            ProcessWatcher pw = new ProcessWatcher("chmod +x "+file.getAbsolutePath() );
+            pw.startProcess(System.out, System.err );
+            pw.waitFor();
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
         return file;
     }
     
