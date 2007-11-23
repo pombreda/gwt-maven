@@ -191,6 +191,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter default-value="8888"
      */
     private int debugPort;
+    
+    /**
+     * @parameter default-value="GwtTest*"
+     */
+    private String testFilter;
+    
 
 
     public static final String JAVA_COMMAND = System.getProperty("java.home") != null ?
@@ -567,5 +573,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
   public void setCompileTargets(String[] targets) {
     compileTarget = targets;
   }
+
+    public String getTestFilter() {
+        return testFilter;
+    }
+
+    public void setTestFilter(String testFilter) {
+        this.testFilter = testFilter;
+    }
 
 }
