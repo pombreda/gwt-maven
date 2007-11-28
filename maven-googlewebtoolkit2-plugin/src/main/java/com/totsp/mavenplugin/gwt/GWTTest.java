@@ -178,8 +178,11 @@ public class GWTTest extends AbstractGWTMojo {
                         if (err.length() > 0) {
                             System.err.println(err);
                         }
-                        
-                        
+                        FileWriter writer = new FileWriter( new File( outputDir, "TEST-"+packageName+".txt") );
+                        writer.write( err.toString() );
+                        writer.write("\n"+ out.toString() );
+                        writer.flush();
+                        writer.close();
                         Pattern p = Pattern.compile("\\s*Tests run:\\s*(\\d+)\\s*,\\s*Failures:\\s*(\\d+),\\s*Errors:\\s*(\\d+)\\s*");
                         Pattern p2 = Pattern.compile("OK\\s\\((\\d+) tests\\)\\s*");
                         Matcher m = null;

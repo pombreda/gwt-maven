@@ -22,12 +22,7 @@ public class DebugMojo extends GWTMojo {
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        String[] baseArgs = { "-Xdebug",
-                          "-Xnoagent",
-                          "-Djava.compiler=NONE",
-                          "-Xrunjdwp:transport=dt_socket,server=y,address="+
-                            this.getPort() +",suspend=y" };
-        this.baseArgs = baseArgs;
+        System.out.println( "Starting debugger on port "+this.getPort() );
         super.execute();
     }
     

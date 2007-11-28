@@ -29,8 +29,8 @@ public class ScriptWriterUnix {
     
     public File writeRunScript(AbstractGWTMojo mojo) throws IOException,
             DependencyResolutionRequiredException {
-        
-        File file = new File(mojo.getBuildDir(), "run.sh" );
+        String filename = mojo instanceof DebugMojo ? "debug.sh": "run.sh";
+        File file = new File(mojo.getBuildDir(), filename );
         PrintWriter writer = new PrintWriter( new FileWriter( file ) );
         Collection<File> classpath = mojo.buildRuntimeClasspathList();
         File sh = new File("/bin/bash");
@@ -51,6 +51,11 @@ public class ScriptWriterUnix {
         if (System.getProperty( "os.name" ).toLowerCase( Locale.US ).startsWith("mac")&&
                     extra.indexOf("-XstartOnFirstThread") == -1 ) {
             extra ="-XstartOnFirstThread "+extra;
+        }
+        if( mojo instanceof DebugMojo ){
+            writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
+            writer.print( mojo.getPort() );
+            writer.print(",suspend=y " );
         }
         writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
