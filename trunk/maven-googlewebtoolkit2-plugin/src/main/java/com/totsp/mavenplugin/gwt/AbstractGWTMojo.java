@@ -122,7 +122,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     private File webXml;
 
     /**
-     * @parameter expression="${project.build.directory}/${project.build.finalName}"
+     * @parameter expression="${project.build.directory}/.generated"
      */
     private File gen;
 

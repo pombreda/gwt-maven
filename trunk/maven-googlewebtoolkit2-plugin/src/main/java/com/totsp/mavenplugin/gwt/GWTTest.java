@@ -22,9 +22,15 @@ import java.util.regex.Matcher;
  * @requiresDependencyResolution test
  */
 public class GWTTest extends AbstractGWTMojo {
-    
+    /**
+     * @parameter expression="${maven.test.skip}"
+     */
+    private boolean skip;
     
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if( isSkip() ){
+            return;
+        }
         try {
             
             ArrayList<String> classPathList = new ArrayList<String>(this.getProject().getTestClasspathElements());
@@ -278,6 +284,14 @@ public class GWTTest extends AbstractGWTMojo {
             }
         }
         
+    }
+
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
     }
 }
 
