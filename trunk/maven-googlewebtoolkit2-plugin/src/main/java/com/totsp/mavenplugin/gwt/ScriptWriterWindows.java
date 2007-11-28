@@ -28,8 +28,8 @@ public class ScriptWriterWindows {
     
     public File writeRunScript(AbstractGWTMojo mojo) throws IOException,
             DependencyResolutionRequiredException {
-        
-        File file = new File(mojo.getBuildDir(), "run.cmd" );
+        String filename = mojo instanceof DebugMojo ? "debug.cmd": "run.cmd";
+        File file = new File(mojo.getBuildDir(), filename );
         PrintWriter writer = new PrintWriter( new FileWriter( file ) );
         Collection<File> classpath = mojo.buildRuntimeClasspathList();
         writer.print( "set CLASSPATH=");
@@ -39,6 +39,11 @@ public class ScriptWriterWindows {
         writer.println();
         String extra = mojo.getExtraJvmArgs() != null ? mojo.getExtraJvmArgs() : "";
         writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp %CLASSPATH% ");
+        if( mojo instanceof DebugMojo ){
+            writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
+            writer.print( mojo.getPort() );
+            writer.print(",suspend=y " );
+        }
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
         writer.print(" com.google.gwt.dev.GWTShell");
         writer.print(" -gen");
