@@ -42,7 +42,7 @@ public class ScriptWriterWindows {
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
         writer.print(" com.google.gwt.dev.GWTShell");
         writer.print(" -gen");
-        writer.print(" .generated ");
+        writer.print( mojo.getGen().getAbsolutePath() );
         writer.print(" -logLevel ");
         writer.print(mojo.getLogLevel());
         writer.print(" -style ");
@@ -77,7 +77,7 @@ public class ScriptWriterWindows {
             writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp %CLASSPATH% ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
             writer.print(" -gen ");
-            writer.print(" .generated ");
+            writer.print( mojo.getGen().getAbsolutePath() );
             writer.print(" -logLevel ");
             writer.print(mojo.getLogLevel());
             writer.print(" -style ");
