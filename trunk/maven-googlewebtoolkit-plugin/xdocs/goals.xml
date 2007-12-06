@@ -35,11 +35,17 @@
         </description>
       </goal>
       <goal>
+        <name>gwt:debug</name>
+        <description>
+           Launches the GWTShell using the "Java Platform Debugger Architecture" so that you can connect a debugger. 
+        </description>
+      </goal>
+      <goal>
         <name>gwt:compile</name>
         <description>
            Launches the GWTCompiler in order to compile the GWT project.
         </description>
-      </goal>
+      </goal>      
       <goal>
         <name>gwt:mergewebxml</name>
         <description>
