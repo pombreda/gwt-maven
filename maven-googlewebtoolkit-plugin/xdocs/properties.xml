@@ -96,6 +96,14 @@
 					</td>
 				</tr>
 				<tr>
+					<td>google.webtoolkit.debugport</td>
+					<td>Yes</td>
+					<td>8887</td>
+					<td>
+						Specifies the port the external JVM debugger will listen, if using gwt:debug.
+					</td>
+				</tr>
+				<tr>
 					<td>google.webtoolkit.gen</td>
 					<td>Yes</td>
 					<td>${maven.war.webapp.dir}</td>
