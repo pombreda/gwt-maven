@@ -37,7 +37,8 @@
       <goal>
         <name>gwt:debug</name>
         <description>
-           Launches the GWTShell using the "Java Platform Debugger Architecture" so that you can connect a debugger. 
+           Launches the GWTShell using the "Java Platform Debugger Architecture" so that you can connect a debugger.
+           Use the ${google.webtoolkit.debugport} property to specify a port (default is 8887). 
         </description>
       </goal>
       <goal>
