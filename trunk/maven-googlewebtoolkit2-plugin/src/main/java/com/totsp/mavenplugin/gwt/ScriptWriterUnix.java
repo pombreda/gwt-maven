@@ -27,6 +27,7 @@ public class ScriptWriterUnix {
     public ScriptWriterUnix() {
     }
     
+    @SuppressWarnings("static-access")
     public File writeRunScript(AbstractGWTMojo mojo) throws IOException,
             DependencyResolutionRequiredException {
         String filename = mojo instanceof DebugMojo ? "debug.sh": "run.sh";
@@ -88,6 +89,7 @@ public class ScriptWriterUnix {
         return file;
     }
     
+    @SuppressWarnings("static-access")
     public File writeCompileScript(AbstractGWTMojo mojo) throws IOException,
             DependencyResolutionRequiredException {
         File file = new File(mojo.getBuildDir(), "compile.sh" );
