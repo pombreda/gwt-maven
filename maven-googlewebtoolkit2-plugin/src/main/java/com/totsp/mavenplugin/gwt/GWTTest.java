@@ -169,7 +169,8 @@ public class GWTTest extends AbstractGWTMojo {
                         String  fullCmd = cmd.toString() + packageName;
                         
                         System.out.println(fullCmd);
-                        ProcessWatcher pw = new ProcessWatcher( fullCmd );
+                        ProcessWatcher pw = new ProcessWatcher( fullCmd, null, this.getBuildDir() );
+                        
                         StringBuffer out = new StringBuffer();
                         StringBuffer err = new StringBuffer();
                         pw.startProcess( out, err );

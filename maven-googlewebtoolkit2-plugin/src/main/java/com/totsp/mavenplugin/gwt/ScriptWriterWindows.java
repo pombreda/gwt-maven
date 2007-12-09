@@ -46,7 +46,7 @@ public class ScriptWriterWindows {
         }
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
         writer.print(" com.google.gwt.dev.GWTShell");
-        writer.print(" -gen");
+        writer.print(" -gen ");
         writer.print( mojo.getGen().getAbsolutePath() );
         writer.print(" -logLevel ");
         writer.print(mojo.getLogLevel());
