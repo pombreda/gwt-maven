@@ -1,4 +1,4 @@
-GWT-Maven setup
+GWT-Maven Setup
 
 
   In order to use the maven plugin, you will need to have your POM pointing to the right plugin
