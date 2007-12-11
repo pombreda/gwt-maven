@@ -1,8 +1,7 @@
-examples
+*Examples
 
-+--
 
-  *  Manual Configuration
+ * Manual Configuration
 
   Here is an example that uses manual configuration
 
@@ -115,7 +114,7 @@ examples
 +--
 
 
- *  Auto Configuration Example
+ *  Auto Configuration 
 
   Here is an example that uses the auto-configuration, and some simple bean generation
 
@@ -207,3 +206,5 @@ examples
     </plugins>
   </build>
 </project>
+
++--
