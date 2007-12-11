@@ -26,7 +26,7 @@ gwt-maven
    spawn seperate processes to run the tests, and report the results to target/gwtTest.  This task will be depricated
    when the JUnit issues get a bit more sorted.
 
-* gwt:setup this task will automatically get run during the validation stage of your maven build.
+ * gwt:setup this task will automatically get run during the validation stage of your maven build.
    It will use the gwtVersion property of the plugin to automatically download the GWT zip file,
    unzip it in target/gwtBin and setup the internal GWT path variables, and dependencies.
 
