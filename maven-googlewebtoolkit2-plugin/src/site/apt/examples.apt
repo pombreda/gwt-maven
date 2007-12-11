@@ -1,4 +1,4 @@
-Examples
+GWT-Maven Examples
 
 
  * Manual Configuration
@@ -90,12 +90,12 @@ Examples
                 <executions>
                     <execution>
                         <goals>
-              				<goal>generateClientBeans</goal>
-              				<goal>mergewebxml</goal>
-              				<goal>compile</goal>
-              				<goal>testGwt</goal>
-              				<goal>gwt</goal>
-            			</goals>
+              	          <goal>generateClientBeans</goal>
+              	          <goal>mergewebxml</goal>
+              	          <goal>compile</goal>
+                          <goal>testGwt</goal>
+                          <goal>gwt</goal>
+            	       </goals>
                     </execution>
                 </executions>
             </plugin>
