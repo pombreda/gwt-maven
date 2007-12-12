@@ -2,40 +2,9 @@
 
 = Introduction =
 
-There are some gaps between the current M2 checked-in docuemtation and what is deployed.  Here are a few FAQs for until we deploy then next release.
+FAQ
 
 = Details =
-
-*Q)  Cannot assign configuration entry 'compileTarget' to 'class
-[Ljava.lang.String;' from '[com.shd.gwt.client.FormEditor]', which is of
-type class java.lang.String*
-
-In the latest plugin release, compileTarget was changed to take an array.  This means your POM should have a section that looks like:
-
-{{{
-<compileTarget>
-    <value>my.compile.target</value>
-</compileTarget>
-}}}
-
-rather than 
-{{{
-<compileTarget>my.compile.target</compileTarget>
-}}}
-
-
-*Q)  Using the POM in the documentation, I cannot download the plugin.*
-
-You need to add a plugin repository:
-
-{{{
-<pluginRepositories>
-  <pluginRepository>
-    <id>gwt-maven</id>
-    <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
-  </pluginRepository>
-</pluginRepositories>
-}}}
 
 *Q)  I'm having problems compiling multi-module GWT applications.  How do I make it work?
 
