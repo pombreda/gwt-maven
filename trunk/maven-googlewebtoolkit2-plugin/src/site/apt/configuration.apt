@@ -48,7 +48,7 @@ GWT-Maven Configuration
  * generatePropertyChangeSupport : toggles generation of PropertyChangeListener support.
    This requires GWTx as a dependency for your project, and implies generateGettersAndSetters.   
     
- * gen : the location to generate compiled files to. Default = $\{project.build.directory}/$\{project.build.finalName\}
+ * gen : the location to generate intermediate files to. Default = ${project.build.directory}/.generated.
     
 
 

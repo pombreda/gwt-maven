@@ -94,7 +94,6 @@ GWT-Maven Examples
               	          <goal>mergewebxml</goal>
               	          <goal>compile</goal>
                           <goal>testGwt</goal>
-                          <goal>gwt</goal>
             	       </goals>
                     </execution>
                 </executions>
@@ -190,7 +189,6 @@ GWT-Maven Examples
               <goal>setup</goal>
               <goal>extractGwt</goal>
               <goal>testGwt</goal>
-              <goal>gwt</goal>
             </goals>
           </execution>
         </executions>
