@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Maven 2 Plugin for Google Web Toolkit - </title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            Maven 2 Plugin for Google Web Toolkit
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+            <div class="xleft">
+        Last Published: 2007-12-11
+                      </div>
+            <div class="xright">      
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="configuration.html">Configuration</a>
+          </li>
+              
+    <li class="none">
+                    <a href="setup.html">Setup</a>
+          </li>
+              
+    <li class="none">
+              <strong>Examples</strong>
+        </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>GWT-Maven Examples</h2>
+<ul><li>Manual Configuration<p>Here is an example that uses manual configuration</p>
+<div class="source"><pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+ xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+ xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+ http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.me&lt;/groupId&gt;
+    &lt;artifactId&gt;user-sample&lt;/artifactId&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;GWT User example&lt;/name&gt;
+    &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;gwt-maven&lt;/id&gt;
+            &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/&lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+    &lt;pluginRepositories&gt;
+      &lt;pluginRepository&gt;
+        &lt;id&gt;gwt-maven&lt;/id&gt;
+          &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/&lt;/url&gt;
+      &lt;/pluginRepository&gt; 
+      &lt;pluginRepository&gt;
+        &lt;id&gt;internal&lt;/id&gt;
+        &lt;url&gt;http://build-1.rack.sourcelabs.com/repos/internal/&lt;/url&gt;
+      &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;3.8.1&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
+            &lt;version&gt;1.4.60&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-servlet&lt;/artifactId&gt;
+            &lt;version&gt;1.4.60&lt;/version&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.googlecode.gwtx&lt;/groupId&gt;
+            &lt;artifactId&gt;GWTx&lt;/artifactId&gt;
+            &lt;version&gt;20070605&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;finalName&gt;user-sample&lt;/finalName&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.5&lt;/source&gt;
+                    &lt;target&gt;1.5&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;logLevel&gt;ALL&lt;/logLevel&gt;
+                    &lt;runTarget&gt;com.me.MyModule/MyHostPage.jsp&lt;/runTarget&gt;
+                    &lt;compileTarges&gt;
+                      &lt;param&gt;com.me.MyModule&lt;/param&gt;
+                    &lt;/compileTargets&gt;
+                    &lt;generatorRootClasses&gt;
+                        &lt;value&gt;com.me.server.MyBean&lt;/value&gt;
+                    &lt;/generatorRootClasses&gt;
+                    &lt;generatorDestinationPackage&gt;com.me.client&lt;/generatorDestinationPackage&gt;
+                    &lt;generateGettersAndSetters&gt;true&lt;/generateGettersAndSetters&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                          &lt;goal&gt;generateClientBeans&lt;/goal&gt;
+                          &lt;goal&gt;mergewebxml&lt;/goal&gt;
+                          &lt;goal&gt;compile&lt;/goal&gt;
+                          &lt;goal&gt;testGwt&lt;/goal&gt;
+                       &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</pre>
+</div>
+</li>
+<li>Auto Configuration <p>Here is an example that uses the auto-configuration, and some simple bean generation</p>
+<div class="source"><pre>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;org.example.SomeClass&lt;/groupId&gt;
+  &lt;artifactId&gt;example-app&lt;/artifactId&gt;
+  &lt;packaging&gt;war&lt;/packaging&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;name&gt;Example Web App&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+  &lt;repositories&gt;
+    &lt;!-- This is the repo for Google Code --&gt;
+    &lt;repository&gt;
+      &lt;id&gt;gwt-maven&lt;/id&gt;
+      &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+  &lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+      &lt;id&gt;gwt-maven&lt;/id&gt;
+        &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/&lt;/url&gt;
+    &lt;/pluginRepository&gt; 
+    &lt;pluginRepository&gt;
+      &lt;id&gt;internal&lt;/id&gt;
+      &lt;url&gt;http://build-1.rack.sourcelabs.com/repos/internal/&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+  &lt;/pluginRepositories&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;3.8.1&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+  &lt;build&gt;
+    &lt;finalName&gt;user-sample&lt;/finalName&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.0&lt;/version&gt;
+          &lt;configuration&gt;
+              &lt;source&gt;1.5&lt;/source&gt;
+              &lt;target&gt;1.5&lt;/target&gt;
+          &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;gwtVersion&gt;1.4.60&lt;/gwtVersion&gt;
+          &lt;runTarget&gt;org.example.SomeClass.Module/Page.html&lt;/runTarget&gt;
+          &lt;compileTargets&gt;
+              &lt;param&gt;org.example.SomeClass.Module&lt;/param&gt;
+          &lt;/compileTargets&gt;
+          &lt;generatorRootClasses&gt;
+            &lt;value&gt;org.example.SomeClass&lt;/value&gt;
+          &lt;/generatorRootClasses&gt;
+          &lt;overwriteGeneratedClasses&gt;true&lt;/overwriteGeneratedClasses&gt;
+          &lt;generatorDestinationPackage&gt;org.example.SomeClass.client.beans&lt;/generatorDestinationPackage&gt;
+        &lt;/configuration&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;generateClientBeans&lt;/goal&gt;
+              &lt;goal&gt;mergewebxml&lt;/goal&gt;
+              &lt;goal&gt;compile&lt;/goal&gt;
+              &lt;goal&gt;setup&lt;/goal&gt;
+              &lt;goal&gt;extractGwt&lt;/goal&gt;
+              &lt;goal&gt;testGwt&lt;/goal&gt;
+            &lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.0&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+</pre>
+</div>
+</li>
+</ul>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2007
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
