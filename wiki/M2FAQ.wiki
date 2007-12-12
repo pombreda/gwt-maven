@@ -1,8 +1,5 @@
 #summary M2 version FAQ.
 
-= Introduction =
-
-FAQ
 
 = Details =
 
