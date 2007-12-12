@@ -1,5 +1,8 @@
 #summary M2 version FAQ.
 
+= Introduction =
+
+These are commonly encountered questions regarding the M2 version of GWT-Maven. 
 
 = Details =
 
