@@ -17,8 +17,11 @@ GWT-Maven Configuration
      
  * port : the port to run the GWTShell listeners on. Default = 8888
     
- * debugPort : the port to run the debugger listeners on. Default = 8888
+ * debugPort : the port to run the debugger listeners on. Default = 8000
+
+ * debugSuspend : wait for debugger until connection is established. Default = true.
     
+ * sourcesOnPath : Toggles whether src/main/* will be in the classpath for runtime. Default = true
  * contextXml : specifies a context.xml file to use for GWTShell. This can be useful if the
    default (src/main/webapp/META-INF/context.xml) is not suitable for Tomcat 5.0.x.
     
@@ -31,7 +34,7 @@ GWT-Maven Configuration
  
  * generatorRootClasses : A list of root classes to traverse creating
    IsSerializable beans.  These are listed as a maven multi-value parameter, e.g.
-   
+ 
 +-----------------------------------------
      <generatorRootClasses>
        <value>foo.pkg.MyBean</value>
