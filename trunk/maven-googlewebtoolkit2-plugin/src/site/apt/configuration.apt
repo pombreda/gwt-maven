@@ -1,6 +1,6 @@
 GWT-Maven Configuration
 
-* Cofiguration Parameters
+* Configuration Parameters
 
  * compileTarget : the module name to compile.
  
@@ -22,6 +22,7 @@ GWT-Maven Configuration
  * debugSuspend : wait for debugger until connection is established. Default = true.
     
  * sourcesOnPath : Toggles whether src/main/* will be in the classpath for runtime. Default = true
+ 
  * contextXml : specifies a context.xml file to use for GWTShell. This can be useful if the
    default (src/main/webapp/META-INF/context.xml) is not suitable for Tomcat 5.0.x.
     
