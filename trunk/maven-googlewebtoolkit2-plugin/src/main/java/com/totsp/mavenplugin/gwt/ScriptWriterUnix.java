@@ -53,12 +53,12 @@ public class ScriptWriterUnix {
                     extra.indexOf("-XstartOnFirstThread") == -1 ) {
             extra ="-XstartOnFirstThread "+extra;
         }
+        writer.print("\""+AbstractGWTMojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
         if( mojo instanceof DebugMojo ){
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
-            writer.print( mojo.getPort() );
-            writer.print(",suspend=y " );
+            writer.print( mojo.getDebugPort() );
+            writer.print( mojo.isDebugSuspend() ? ",suspend=y "  : ",suspend=n " );
         }
-        writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
         writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
         writer.print(" com.google.gwt.dev.GWTShell");
         writer.print(" -gen ");
@@ -115,7 +115,7 @@ public class ScriptWriterUnix {
                     extra.indexOf("-XstartOnFirstThread") == -1 ) {
                 extra ="-XstartOnFirstThread "+extra;
             }
-            writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
+            writer.print("\""+AbstractGWTMojo.JAVA_COMMAND+"\" "+extra+" -cp $CLASSPATH ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
             writer.print(" -gen ");
             writer.print( mojo.getGen().getAbsolutePath() );
