@@ -3,10 +3,10 @@ GWT-Maven Configuration
 * Configuration Parameters
 
  * compileTarget : the module name to compile.
- 
- * logLevel : the log level to set for GWTShell/Compile. Default = INFO
    
  * runTarget : the URL to open as GWTShell starts up.
+    
+ * logLevel : the log level to set for GWTShell/Compile. Default = INFO    
     
  * style : The JavaScript compile style. Default = OBF[uscated].
    
@@ -16,6 +16,8 @@ GWT-Maven Configuration
    and context must at a minimum have files: hosted.html, Module.html, Module.nocache.html, gwt.js
      
  * port : the port to run the GWTShell listeners on. Default = 8888
+ 
+ * testFilter : filter used to identify GwtTestCase derived tests to be run during the testGwt goal. Default = GwtTest*.
     
  * debugPort : the port to run the debugger listeners on. Default = 8000
 
