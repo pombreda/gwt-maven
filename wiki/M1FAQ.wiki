@@ -25,7 +25,7 @@ maven.googlewebtoolkit.home=[PATH]/gwt-${platform}-1.4.60
 
 Then you use "platform" in your POM to define "gwt-dev-platform," so that your project includes gwt-dev, if needed (remember, it's only needed if you need to run the shell, which usually means for GwtTestCase based tests):
 
-*POM dependency for gwt-dev-platform*
+*POM*
 {{{
 <!-- ~/build.properties must have maven.googlewebtoolkit.home and platform defined  -->
 <dependency>
@@ -36,7 +36,7 @@ Then you use "platform" in your POM to define "gwt-dev-platform," so that your p
 
 And lastly, in project.properties you need a JAR override for gwt-dev-platform that uses the build.properties values for "maven.googlewebtoolkit.home," and "platform":
 
-*project.properties JAR override for gwt-dev-platform*
+*project.properties*
 {{{
 # ~/build.properties must define maven.googlewebtoolkit.home and platform
 maven.jar.override=on
