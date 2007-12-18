@@ -12,6 +12,7 @@ These are commonly encountered questions regarding the M1 version of GWT-Maven.
 Use a "build.properties" file which specifies the location of "maven.googlewebtoolkit-home" and the value of "platform".  The idea is to isolate any machine differences in build.properties (and not have such differences in project.properties, or in the POM). 
 
 To do this you need "build.properties" in your home directory (or with the project, home directory supersedes):
+
 *build.properties*
 {{{
 # maven build properties (goes in ~/.maven)
