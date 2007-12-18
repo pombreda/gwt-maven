@@ -9,7 +9,7 @@ These are commonly encountered questions regarding the M1 version of GWT-Maven.
 
 *Q) How should I setup machine/platform specific properties for M1? 
 
-Use a "build.properties" file which specifies the location of "maven.googlewebtoolkit-home" and the value of "platform".  Then use "platform" in your POM to define gwt-dev-platform, if needed for your project.  
+Use a "build.properties" file which specifies the location of "maven.googlewebtoolkit-home" and the value of "platform".  Then use "platform" in your POM to define gwt-dev-platform, and use project.properties to override the JAR location, if needed for your project.  
 
 Also IF you are using a Mac you must pass -XstartOnFirstThread to the JVM for GWT usage. 
 To do this edit your build.properties file and add "-XstartOnFirstThread" 
@@ -19,14 +19,14 @@ with the "google.webtoolkit.extrajvmargs" AND "maven.junit.jvmargs" properties.
 {{{
 # maven build properties (goes in ~/.maven)
 platform=[mac|windows|linux]
-maven.googlewebtoolkit.home=[PATH]/gwt-[mac|windows|linux]-1.4.60
+maven.googlewebtoolkit.home=[PATH]/gwt-${platform}-1.4.60
 # uncomment the next two properties for GWT-Maven usage on the Mac
 #google.webtoolkit.extrajvmargs=-XstartOnFirstThread
 #maven.junit.jvmargs=-XstartOnFirstThread -Dgwt.coverage.enable=true
 
 }}}
 
-*gwt-dev-platform dependency example*
+*POM dependency for gwt-dev-platform example*
 {{{
 <!-- ~/build.properties must have maven.googlewebtoolkit.home and platform defined  -->
 <dependency>
@@ -35,3 +35,7 @@ maven.googlewebtoolkit.home=[PATH]/gwt-[mac|windows|linux]-1.4.60
 </dependency>
 }}}
 
+*project.properties JAR override for gwt-dev-platform example
+# ~/build.properties must define maven.googlewebtoolkit.home and platform
+maven.jar.override=on
+maven.jar.gwt-dev-platform=${maven.googlewebtoolkit.home}/gwt-dev-${platform}.jar
