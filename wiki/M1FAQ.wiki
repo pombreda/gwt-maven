@@ -35,7 +35,9 @@ maven.googlewebtoolkit.home=[PATH]/gwt-${platform}-1.4.60
 </dependency>
 }}}
 
-*project.properties JAR override for gwt-dev-platform example
+*project.properties JAR override for gwt-dev-platform example*
+{{{
 # ~/build.properties must define maven.googlewebtoolkit.home and platform
 maven.jar.override=on
 maven.jar.gwt-dev-platform=${maven.googlewebtoolkit.home}/gwt-dev-${platform}.jar
+}}}
