@@ -27,7 +27,7 @@ Then you use "platform" in your POM to define "gwt-dev-platform," so that your p
 
 *POM*
 {{{
-<!-- ~/build.properties must have maven.googlewebtoolkit.home and platform defined  -->
+<!-- ~/project.properties must override this JAR, see project.properties and build.properties  -->
 <dependency>
   <groupId>com.google.gwt</groupId>
   <artifactId>gwt-dev-platform</artifactId>
