@@ -35,6 +35,8 @@ GWT-Maven Configuration
    
  * extraJvmArgs : extra Jvm system properties and arguments that are passed to the JVM when it forks and runs the GWT processes.   
  
+ * getExtraTestArgs : extra JVM arguments for running test cases.
+
  * generatorRootClasses : A list of root classes to traverse creating
    IsSerializable beans.  These are listed as a maven multi-value parameter, e.g.
  
