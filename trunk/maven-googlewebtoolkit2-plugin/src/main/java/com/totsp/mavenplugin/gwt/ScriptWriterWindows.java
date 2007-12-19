@@ -44,11 +44,11 @@ public class ScriptWriterWindows {
             writer.print( mojo.getPort() );
             writer.print(",suspend=y " );
         }
-        writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
+        writer.print("-Dcatalina.base=\""+mojo.getTomcat().getAbsolutePath()+"\" ");
         writer.print(" com.google.gwt.dev.GWTShell");
-        writer.print(" -gen ");
+        writer.print(" -gen \"");
         writer.print( mojo.getGen().getAbsolutePath() );
-        writer.print(" -logLevel ");
+        writer.print("\" -logLevel ");
         writer.print(mojo.getLogLevel());
         writer.print(" -style ");
         writer.print(mojo.getStyle());
@@ -81,9 +81,9 @@ public class ScriptWriterWindows {
             String extra = mojo.getExtraJvmArgs() != null ? mojo.getExtraJvmArgs() : "";
             writer.print("\""+mojo.JAVA_COMMAND+"\" "+extra+" -cp %CLASSPATH% ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
-            writer.print(" -gen ");
+            writer.print(" -gen \"");
             writer.print( mojo.getGen().getAbsolutePath() );
-            writer.print(" -logLevel ");
+            writer.print("\" -logLevel ");
             writer.print(mojo.getLogLevel());
             writer.print(" -style ");
             writer.print(mojo.getStyle());
