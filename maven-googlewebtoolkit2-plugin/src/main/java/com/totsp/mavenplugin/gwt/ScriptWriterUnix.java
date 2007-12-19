@@ -59,11 +59,11 @@ public class ScriptWriterUnix {
             writer.print( mojo.getDebugPort() );
             writer.print( mojo.isDebugSuspend() ? ",suspend=y "  : ",suspend=n " );
         }
-        writer.print("-Dcatalina.base="+mojo.getTomcat().getAbsolutePath()+" ");
+        writer.print("-Dcatalina.base=\""+mojo.getTomcat().getAbsolutePath()+"\" ");
         writer.print(" com.google.gwt.dev.GWTShell");
-        writer.print(" -gen ");
+        writer.print(" -gen \"");
         writer.print( mojo.getGen().getAbsolutePath() );
-        writer.print(" -logLevel ");
+        writer.print("\" -logLevel ");
         writer.print(mojo.getLogLevel());
         writer.print(" -style ");
         writer.print(mojo.getStyle());
