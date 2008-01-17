@@ -5,11 +5,11 @@
     <artifactId>googlewebtoolkit-beanmapping</artifactId>
     <packaging>jar</packaging>
     <version>1.0.3</version>
-    <parent>
+    <!--parent>
         <groupId>com.totsp.gwt</groupId>
         <artifactId>maven-googlewebtoolkit</artifactId>
         <version>1.0.2</version>
-    </parent>
+    </parent-->
     <name>Maven-GoogleWebToolkit-BeanMapping</name>
     <url>http://code.google.com/p/gwt-maven/</url>
     <distributionManagement>
