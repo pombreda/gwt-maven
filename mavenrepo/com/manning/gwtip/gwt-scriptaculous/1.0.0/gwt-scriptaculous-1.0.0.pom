@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+ http://maven.apache.org/maven-v4_0_0.xsd">
+ 
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.manning.gwtip</groupId>
+	<artifactId>gwt-scriptaculous</artifactId>
+	<version>1.0.0</version>
+	<name>Script.aculo.us for GWT</name>
+	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+	<repositories>
+		<repository>
+			<id>gwt-maven</id>
+			<url>
+				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+			</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gwt-maven</id>
+			<url>
+				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+			</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>local.repo</id>
+			<name>file repository for local build/copy</name>
+			<url>file://${basedir}/localrepo</url>
+		</repository>
+	</distributionManagement>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.4.60</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>gwt-scriptaculous</finalName>
+		<plugins>
+			<!--  Configure the compiler to use a specific source and target Java version, if needed -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>			
+		</plugins>
+		<!--  This is a library module, include the SOURCE -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+			</resource>
+		</resources>
+	</build>
+</project>
