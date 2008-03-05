@@ -33,8 +33,15 @@ public class ScriptWriterWindows {
         PrintWriter writer = new PrintWriter( new FileWriter( file ) );
         Collection<File> classpath = mojo.buildRuntimeClasspathList();
         writer.print( "set CLASSPATH=");
+        StringBuffer cpString = new StringBuffer();
         for(File f : classpath ){
-            writer.print("\""+f.getAbsolutePath()+"\";");
+            cpString.append("\""+f.getAbsolutePath()+"\";");
+            //break the line at 4000 characters to avout max size.
+            if( cpString.length() > 4000 ){ 
+                writer.println(cpString);
+                cpString = new StringBuffer();
+                writer.print( "set CLASSPATH=%CLASSPATH%;");
+            }
         }
         writer.println();
         String extra = mojo.getExtraJvmArgs() != null ? mojo.getExtraJvmArgs() : "";
@@ -73,8 +80,15 @@ public class ScriptWriterWindows {
         PrintWriter writer = new PrintWriter( new FileWriter( file ) );
         Collection<File> classpath = mojo.buildClasspathList(false);
         writer.print( "set CLASSPATH=");
+        StringBuffer cpString = new StringBuffer();
         for(File f : classpath ){
-            writer.print("\""+f.getAbsolutePath()+"\";");
+            cpString.append("\""+f.getAbsolutePath()+"\";");
+            //break the line at 4000 characters to avout max size.
+            if( cpString.length() > 4000 ){ 
+                writer.println(cpString);
+                cpString = new StringBuffer();
+                writer.print( "set CLASSPATH=%CLASSPATH%;");
+            }
         }
         writer.println();
         for( String target : mojo.getCompileTarget() ){
