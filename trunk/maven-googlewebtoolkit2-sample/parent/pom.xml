@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-googlewebtoolkit2-sample</name>
+
 	<repositories>
 		<repository>
 			<id>java.net</id>
@@ -15,11 +16,10 @@
 		</repository>
 		<repository>
 			<id>gwt-maven</id>
-			<url>
-				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
-			</url>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
 		</repository>
 	</repositories>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -39,9 +39,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.totsp.gwt</groupId>
-				<artifactId>
-					maven-googlewebtoolkit2-sample-server
-				</artifactId>
+				<artifactId>maven-googlewebtoolkit2-sample-server</artifactId>
 				<version>${pom.version}</version>
 			</dependency>
 			<dependency>
@@ -49,12 +47,10 @@
 				<artifactId>gwt-servlet</artifactId>
 				<version>1.4.60</version>
 			</dependency>
-			<!-- this links in the gwt user libraries -->
 			<dependency>
 				<groupId>com.google.gwt</groupId>
 				<artifactId>gwt-user</artifactId>
 				<version>1.4.60</version>
-				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -73,5 +69,31 @@
 	</modules>
 	<build>
 		<finalName>maven-googlewebtoolkit2-sample</finalName>
+		<plugins>
+			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-dependency-plugin</artifactId>
+        		<executions>
+          			<execution>
+	            		<id>unpack-gwt-dev</id>
+	            		<phase>generate-sources</phase>
+	            		<goals>
+	              			<goal>unpack</goal>
+	            		</goals>
+	            		<configuration>
+	              			<artifactItems>
+	                			<artifactItem>
+	                  				<groupId>com.google.gwt</groupId>
+	                  				<artifactId>gwt-windows</artifactId>
+	                  				<version>1.4.61</version>
+	                  				<type>zip</type>
+	                			</artifactItem>
+	              			</artifactItems>
+	              			<outputDirectory>${google.webtoolkit.home}</outputDirectory>
+	            		</configuration>
+					</execution>
+        		</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
