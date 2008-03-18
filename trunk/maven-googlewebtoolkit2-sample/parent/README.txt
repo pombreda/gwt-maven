@@ -28,11 +28,14 @@ Prerequisites:
 
 Running the war example:
 ========================
-1. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/war directory.
-2. Execute "mvn package".
-3. Your sample war will be created in the war/target directory.
+1. If you have a linux or a mac machine, edit the <properties> at the top of parent/pom.xml to replace every occurrence of "windows" with "mac" or "linux"
+2. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/war directory.
+3. Execute "mvn package".
+4. Your sample war will be created in the war/target directory.
+   OR You can view the resulting GWT application in target/maven-googlewebtoolkit2-sample/com.totsp.mavenplugin.gwt.sample.Application by opening Application.html with a browser.
 
 //@todo: instructions for running multi-module project
+//@todo: add instructions for settings.xml for mac users
 
 More help:
 ==========
@@ -44,5 +47,13 @@ Refer to the the gwt-maven message board at http://groups.google.com/group/gwt-m
 
 Project tasks:
 ==============
+ + get profiles.xml working with poms so that ${gwt.dist} and ${gwt.version} get properly populated to eliminate instruction #1 above.
  + add sample tests that will run when "mvn test" is executed
+ + get sample webapp in war running
+ + replace various hard coded strings in poms using <properties> tag
+ + make sure latest version of all libs are being used (e.g. gwt-user)
+ + rename <gwt.dist> and <gwt.dev>
+ + clean up generated classpath (lots of extraneous stuff currently in there)
+ + gwt-dev dependency seems to be duplicated in parent pom (under artifact items) and war pom as a dependency.
+ + use version 2 of gwt-maven plugin
 
