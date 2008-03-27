@@ -9,22 +9,6 @@
 	<artifactId>maven-googlewebtoolkit2-sample-war</artifactId>
 	<packaging>war</packaging>
 	<name>maven-googlewebtoolkit2-sample-war</name>
-
-
-
-    <repositories>
-        <repository>
-            <id>gwt-maven</id>
-            <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>gwt-maven</id>
-            <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.totsp.gwt</groupId>
@@ -35,22 +19,23 @@
 		</dependency>
 		<dependency>
 			<groupId>com.totsp.gwt</groupId>
-			<artifactId>maven-googlewebtoolkit2-sample-server</artifactId>
+			<artifactId>
+				maven-googlewebtoolkit2-sample-server
+			</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwtVersion}</version>
 		</dependency>
-    		<dependency>
+		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-		    	<version>${gwtVersion}</version>
 		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
+			<!--  currently gwt supports java 1.4 (client) source -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -59,95 +44,56 @@
 					<target>1.4</target>
 				</configuration>
 			</plugin>
-
-
-
-
-
-
-            <!-- All the fantastical settings that GWT needs -->
-            <plugin>
-                <groupId>com.totsp.gwt</groupId>
-
-                <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-                <version>2.0-beta7</version>
-                <configuration>
-                    <gwtVersion>${gwtVersion}</gwtVersion>
-                    <logLevel>INFO</logLevel>
-
+			<!-- All the fantastical settings that GWT needs -->
+			<plugin>
+				<groupId>com.totsp.gwt</groupId>
+				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+				<version>2.0-beta7</version>
+				<configuration>
+					<gwtVersion>${gwtVersion}</gwtVersion>
+					<logLevel>INFO</logLevel>
 					<compileTargets>
-						<value>com.totsp.mavenplugin.gwt.sample.Application</value>
+						<value>
+							com.totsp.mavenplugin.gwt.sample.Application
+						</value>
 					</compileTargets>
 					<runTarget>
 						com.totsp.mavenplugin.gwt.sample.Application/Application.html
 					</runTarget>
-          				<generatorRootClasses>
-            					<value>com.totsp.mavenplugin.gwt.sample.Application</value>
-          				</generatorRootClasses>
-                    <overwriteGeneratedClasses>true</overwriteGeneratedClasses>
-                    <style>DETAILED</style> <!-- use OBF for prod -->
-                    <generateGettersAndSetters>true</generateGettersAndSetters>
-		    <noServer>true</noServer>
+					<generatorRootClasses>
+						<value>
+							com.totsp.mavenplugin.gwt.sample.Application
+						</value>
+					</generatorRootClasses>
+					<overwriteGeneratedClasses>
+						true
+					</overwriteGeneratedClasses>
+					<style>DETAILED</style><!-- use OBF for prod -->
+					<generateGettersAndSetters>
+						true
+					</generateGettersAndSetters>
+					<noServer>true</noServer>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<!-- autoconfig gwt -->
+							<goal>setup</goal>
+							<goal>extractGwt</goal>
+							<!-- actual work goals -->
+							<goal>mergewebxml</goal>
+							<goal>compile</goal>
+							<goal>gwt</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration></configuration>
+			</plugin>
 
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-			  <!-- autoconfig gwt -->
-                            <goal>setup</goal>
-                            <goal>extractGwt</goal>
-			    <!-- actual work goals -->
-
-                            <goal>mergewebxml</goal>
-                            <goal>compile</goal>
-                            <goal>gwt</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-
-                        <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-war-plugin</artifactId>
-                                <configuration>
-                                </configuration>
-                        </plugin>
-
-
-
-
-<!--
-            <plugin>
-                <groupId>com.totsp.gwt</groupId>
-                <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-                <configuration>
-                    <logLevel>ALL</logLevel>
-					<compileTargets>
-						<value>com.totsp.mavenplugin.gwt.sample.Application</value>
-					</compileTargets>
-					<runTarget>
-						com.totsp.mavenplugin.gwt.sample.Application/Application.html
-					</runTarget>
-          				<generatorRootClasses>
-            					<value>com.totsp.mavenplugin.gwt.sample.Application</value>
-          				</generatorRootClasses>
-                    <generatorDestinationPackage>com.me.client</generatorDestinationPackage>
-                    <generateGettersAndSetters>true</generateGettersAndSetters>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                          <goal>generateClientBeans</goal>
-                          <goal>mergewebxml</goal>
-                          <goal>compile</goal>
-                          <goal>testGwt</goal>
-                       </goals>
-                    </execution>
-                </executions>
-            </plugin>
--->
 		</plugins>
 	</build>
 </project>

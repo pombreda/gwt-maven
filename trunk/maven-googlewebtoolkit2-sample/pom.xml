@@ -7,16 +7,14 @@
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-googlewebtoolkit2-sample</name>
-                        <pluginRepositories>
-                                <pluginRepository>
-                                        <id>gwt-maven-plugins</id>
-					<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
-                </pluginRepository>
-    <pluginRepository>
-      <id>internal</id>
-      <url>http://build-1.rack.sourcelabs.com/repos/internal/</url>
-    </pluginRepository>
-        </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gwt-maven-plugins</id>
+			<url>
+				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+			</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<repositories>
 		<repository>
 			<id>java.net</id>
@@ -25,10 +23,12 @@
 		</repository>
 		<repository>
 			<id>gwt-maven</id>
-			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+			<url>
+				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+			</url>
 		</repository>
 	</repositories>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -48,7 +48,9 @@
 			</dependency>
 			<dependency>
 				<groupId>com.totsp.gwt</groupId>
-				<artifactId>maven-googlewebtoolkit2-sample-server</artifactId>
+				<artifactId>
+					maven-googlewebtoolkit2-sample-server
+				</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -76,50 +78,9 @@
 		<module>server</module>
 		<module>war</module>
 	</modules>
-
 	<properties>
-	        <gwt.version>1.4.61</gwt.version>
-	        <gwtVersion>1.4.61</gwtVersion>
+		<gwt.version>1.4.61</gwt.version>
+		<gwtVersion>1.4.61</gwtVersion>
 	</properties>
-<!--
-	<profiles>
-		<profile>
-			<id>maven-googlewebtoolkit2-sample-windows</id>
-			<activation>
-				<os>
-					<family>windows</family>
-					<arch>x86</arch>
-				</os>
-			</activation>
-			<properties>
-        			<gwt.dist>gwt-windows</gwt.dist>
-			        <gwt.dev>gwt-dev-windows</gwt.dev>
-			</properties>
-		</profile>
-		<profile>
-			<id>maven-googlewebtoolkit2-sample-linux</id>
-			<activation>
-				<os>
-					<family>unix</family>
-				</os>
-			</activation>
-			<properties>
-        			<gwt.dist>gwt-linux</gwt.dist>
-			        <gwt.dev>gwt-dev-linux</gwt.dev>
-			</properties>
-		</profile>
-		<profile>
-			<id>maven-googlewebtoolkit2-sample-mac</id>
-			<activation>
-				<os>
-					<family>mac</family>
-				</os>
-			</activation>
-			<properties>
-        			<gwt.dist>gwt-mac</gwt.dist>
-			        <gwt.dev>gwt-dev-mac</gwt.dev>
-			</properties>
-		</profile>
-	</profiles>
--->
+	
 </project>
