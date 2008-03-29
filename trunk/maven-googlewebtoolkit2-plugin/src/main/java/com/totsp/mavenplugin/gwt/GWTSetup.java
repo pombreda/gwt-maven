@@ -82,16 +82,7 @@ public class GWTSetup extends AbstractGWTMojo {
   }
 
 
-  static public String guessArtifactId() {
-
-    if (OS_NAME.startsWith("windows")) {
-      return "gwt-windows";
-    } else if (OS_NAME.startsWith("mac")) {
-      return "gwt-mac";
-    } else {
-      return "gwt-linux";
-    }
-  }
+   
 
   static public String  guessDevJarName() {
     if (OS_NAME.startsWith("windows")) {

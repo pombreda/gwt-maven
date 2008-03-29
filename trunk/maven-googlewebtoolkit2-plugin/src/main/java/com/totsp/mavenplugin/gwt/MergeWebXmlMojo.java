@@ -51,7 +51,7 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
 
           File  targetDir = null;
           try {
-            targetDir = new File(getGwtBinDirectory(), GWTSetup.guessArtifactId() + "-" + getGwtVersion()).getCanonicalFile();
+            targetDir = new File(getGwtBinDirectory(), this.guessArtifactId() + "-" + getGwtVersion()).getCanonicalFile();
             getProject().getProperties().setProperty("google.webtoolkit.home", targetDir.getCanonicalPath());
             GWT_PATH = targetDir.getCanonicalPath();
           } catch (IOException e) {

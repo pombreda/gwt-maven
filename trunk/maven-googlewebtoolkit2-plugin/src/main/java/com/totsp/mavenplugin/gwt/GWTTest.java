@@ -74,7 +74,7 @@ public class GWTTest extends AbstractGWTMojo {
                         try {
                             targetDir = new File(
                                     getGwtBinDirectory(),
-                                    GWTSetup.guessArtifactId() + "-"
+                                    this.guessArtifactId() + "-"
                                     + getGwtVersion()).getCanonicalFile();
                             getProject().getProperties()
                                 .setProperty(
