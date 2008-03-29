@@ -44,7 +44,9 @@ public class CompileMojo extends AbstractGWTMojo{
         if( !this.getOutput().exists() ){
             this.getOutput().mkdirs();
         }
-        if( System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
+        System.out.println("Override: "+System.getProperty("gwt.os", ""));
+        if( System.getProperty("gwt.os", "").startsWith("windows") ||
+                System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
             ScriptWriterWindows writer = new ScriptWriterWindows();
             try{
                 File exec = writer.writeCompileScript(this);
@@ -85,5 +87,6 @@ public class CompileMojo extends AbstractGWTMojo{
             }
         }
     }
+    
     
 }

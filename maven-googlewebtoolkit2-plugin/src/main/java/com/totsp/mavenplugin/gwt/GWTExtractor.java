@@ -77,7 +77,7 @@ public class GWTExtractor extends AbstractGWTMojo{
       Artifact a = iter.next();
 
       if (a.getGroupId().equals(getGroupId()) &&
-          a.getArtifactId().equals(GWTSetup.guessArtifactId())) {
+          a.getArtifactId().equals(this.guessArtifactId())) {
         try {
 
           fFoundDependency = true;
@@ -90,13 +90,13 @@ public class GWTExtractor extends AbstractGWTMojo{
 
           if (artifactFile == null) {
 
-            Artifact gwtDevArtifact = this.factory.createArtifact(getGroupId(), GWTSetup.guessArtifactId(), getGwtVersion(), "", "zip");
+            Artifact gwtDevArtifact = this.factory.createArtifact(getGroupId(), this.guessArtifactId(), getGwtVersion(), "", "zip");
 
             try {
               resolver.resolve(gwtDevArtifact, this.remoteRepos, this.local);
             } catch(Exception e) {
               String  error = "Error:  Could not resolve GWT artifact.  If you set \"setup\" goal for this plugin, this may be a bug." +
-                "  Check that you do not have any dependencies that conflict with " + this.getGroupId() + ":" + GWTSetup.guessArtifactId() + "\n" +
+                "  Check that you do not have any dependencies that conflict with " + this.getGroupId() + ":" + this.guessArtifactId() + "\n" +
                 "If not, please report this error to the gwt-maven project.";
               throw new MojoExecutionException(error, e);
             }
@@ -135,7 +135,7 @@ public class GWTExtractor extends AbstractGWTMojo{
 
         } catch (IOException e) {
           String  error = "Error:  Could not load GWT artifact.  If you set \"setup\" goal for this plugin, this may be a bug." +
-              "  Check that you do not have any dependencies that conflict with " + this.getGroupId() + ":" + GWTSetup.guessArtifactId() + "\n" +
+              "  Check that you do not have any dependencies that conflict with " + this.getGroupId() + ":" + this.guessArtifactId() + "\n" +
               "If not, please report this error to the gwt-maven project.";
           throw new MojoExecutionException(error, e);
         }
@@ -148,7 +148,7 @@ public class GWTExtractor extends AbstractGWTMojo{
 
     if (!fFoundDependency) {
       String  error = "Error:  Could not load GWT artifact.  Make sure you have the setup goal enabled for this plugin" +
-          " or that you have setup a dependency on " + this.getGroupId() + ":" + GWTSetup.guessArtifactId() + "\n";
+          " or that you have setup a dependency on " + this.getGroupId() + ":" + this.guessArtifactId() + "\n";
       throw new MojoExecutionException(error);
     }
 

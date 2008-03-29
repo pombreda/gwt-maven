@@ -182,6 +182,15 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter default-value="true"
      */
     private boolean sourcesOnPath;
+    
+    
+    /**
+     * @parameter default-value="false"
+     */
+    private boolean enableAssertions;
+    
+    
+    
 
     /** Creates a new instance of AbstractGWTMojo */
     public AbstractGWTMojo() {
@@ -310,6 +319,17 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     public Collection<File> buildClasspathList(boolean fRuntime)
             throws DependencyResolutionRequiredException {
         Set<File> items = new LinkedHashSet<File>();
+        //Because Maven loses our properties for some odd reason, we need to double check
+        File GWTHome = getGwtHome();
+
+        if (GWTHome == null) {
+            GWTHome = new File(GWT_PATH);
+        }
+
+        items.add(GWTHome);
+        items.add(new File(GWTHome, "gwt-user.jar"));
+        items.add(new File(GWTHome, GWTSetup.guessDevJarName()));
+        
         if (this.getSourcesOnPath()) {
             for (Iterator it = getProject().getCompileSourceRoots().iterator();
                     it.hasNext();) {
@@ -338,20 +358,28 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
             items.add(new File(it.next().toString()));
         }
 
-        //Because Maven loses our properties for some odd reason, we need to double check
-        File GWTHome = getGwtHome();
-
-        if (GWTHome == null) {
-            GWTHome = new File(GWT_PATH);
-        }
-
-        items.add(GWTHome);
-        items.add(new File(GWTHome, "gwt-user.jar"));
-        items.add(new File(GWTHome, GWTSetup.guessDevJarName()));
+        
 
         return items;
     }
 
+    public String guessArtifactId() {
+
+    if (OS_NAME.startsWith("windows")) {
+      return "gwt-windows";
+    } else if (OS_NAME.startsWith("mac")) {
+        if( this.getGwtVersion().startsWith("1.4.") || this.getGwtVersion().startsWith("1.3.") ){
+            return "gwt-mac";
+        } else if(System.getProperty("os.version").startsWith("10.5.") ){
+            return "gwt-mac_10.5";
+        } else {
+            return "gwt-mac_10.4";
+        }
+    } else {
+      return "gwt-linux";
+    }
+  }
+    
     public Collection<File> buildRuntimeClasspathList()
             throws DependencyResolutionRequiredException {
         Collection<File> classpathItems = buildClasspathList(true);
@@ -585,5 +613,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
     public void setSourcesOnPath(boolean value) {
         this.sourcesOnPath = value;
+    }
+
+
+    public boolean isEnableAssertions() {
+        return enableAssertions;
+    }
+
+    public void setEnableAssertions(boolean enableAssertions) {
+        this.enableAssertions = enableAssertions;
     }
 }
