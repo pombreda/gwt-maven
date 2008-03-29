@@ -1,0 +1,64 @@
+GWT-Maven Configuration
+
+* Configuration Parameters
+
+ * compileTarget : the module name to compile.
+   
+ * runTarget : the URL to open as GWTShell starts up.
+    
+ * logLevel : the log level to set for GWTShell/Compile. Default = INFO    
+    
+ * style : The JavaScript compile style. Default = OBF[uscated].
+   
+ * noServer : supresses the default Tomcat instance. Default = false
+   requires external container, with pre-configured context:
+      http://localhost:{port}/{runTarget} 
+   and context must at a minimum have files: hosted.html, Module.html, Module.nocache.html, gwt.js
+     
+ * port : the port to run the GWTShell listeners on. Default = 8888
+ 
+ * testFilter : filter used to identify GwtTestCase derived tests to be run during the testGwt goal. Default = GwtTest*.
+    
+ * debugPort : the port to run the debugger listeners on. Default = 8000
+
+ * debugSuspend : wait for debugger until connection is established. Default = true.
+    
+ * sourcesOnPath : Toggles whether src/main/* will be in the classpath for runtime. Default = true
+ 
+ * contextXml : specifies a context.xml file to use for GWTShell. This can be useful if the
+   default (src/main/webapp/META-INF/context.xml) is not suitable for Tomcat 5.0.x.
+    
+ * webXml : the location of your base web.xml. Default=/src/main/webapp/WEB-INF/web.xml
+ 
+ * tomcat : the location to build the catalina.base to for GWTShell. 
+   Default = $\{project.build.directory\}/tomcat
+   
+ * extraJvmArgs : extra Jvm system properties and arguments that are passed to the JVM when it forks and runs the GWT processes.   
+ 
+ * getExtraTestArgs : extra JVM arguments for running test cases.
+
+ * generatorRootClasses : A list of root classes to traverse creating
+   IsSerializable beans.  These are listed as a maven multi-value parameter, e.g.
+ 
++-----------------------------------------
+     <generatorRootClasses>
+       <value>foo.pkg.MyBean</value>
+       <value>foo.pkg.MyBean2</value>
+     </generatorRootClasses>
++-----------------------------------------   
+    
+ * generatorDestinationPackage:  The package generated beans should go into.
+   
+ * generateGettersAndSetters : toggles generation of get/set methods. Default = false
+
+ * overwriteGeneratedClasses : has the class generation overwrite existing generated classes
+    
+ * generatePropertyChangeSupport : toggles generation of PropertyChangeListener support.
+   This requires GWTx as a dependency for your project, and implies generateGettersAndSetters.   
+    
+ * gen : the location to generate intermediate files to. Default = ${project.build.directory}/.generated.
+    
+
+
+ 
+
