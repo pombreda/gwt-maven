@@ -22,15 +22,10 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+import java.util.Locale;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.cli.CommandLineUtils;
-import org.codehaus.plexus.util.cli.Commandline;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.io.IOException;
 
 /**
  *

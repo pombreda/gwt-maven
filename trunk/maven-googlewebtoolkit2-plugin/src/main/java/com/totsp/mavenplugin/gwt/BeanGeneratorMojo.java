@@ -21,13 +21,18 @@
 
 package com.totsp.mavenplugin.gwt;
 
-import com.totsp.mavenplugin.gwt.support.beans.*;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.StringTokenizer;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+
+import com.totsp.mavenplugin.gwt.support.beans.Bean;
+import com.totsp.mavenplugin.gwt.support.beans.BeanGeneratorBase;
+import com.totsp.mavenplugin.gwt.support.beans.BeanGeneratorContext;
+import com.totsp.mavenplugin.gwt.support.beans.Generator;
+import com.totsp.mavenplugin.gwt.support.beans.GlobalGeneratorContext;
+import com.totsp.mavenplugin.gwt.support.beans.TranslatorGenerator;
 
 /**
  * @requiresDependencyResolution compile

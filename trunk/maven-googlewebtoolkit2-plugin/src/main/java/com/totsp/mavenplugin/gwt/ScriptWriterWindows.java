@@ -50,7 +50,7 @@ public class ScriptWriterWindows {
         writer.println();
 
         String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
-        writer.print("\"" + mojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
+        writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -107,19 +107,19 @@ public class ScriptWriterWindows {
 
         for (String target : mojo.getCompileTarget()) {
             String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
-            writer.print("\"" + mojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
             writer.print(" -gen \"");
             writer.print(mojo.getGen().getAbsolutePath());
             writer.print("\" -logLevel ");
             writer.print(mojo.getLogLevel());
             writer.print(" -style ");
-
-            writer.print(" -out ");
-            writer.print(mojo.getOutput().getAbsolutePath());
-            writer.print(" ");
             writer.print(mojo.getStyle());
 
+            writer.print(" -out ");
+            writer.print(mojo.getOutput().getAbsolutePath());           
+            writer.print(" ");
+            
             if (mojo.isEnableAssertions()) {
                 writer.print(" -ea ");
             }
@@ -127,7 +127,8 @@ public class ScriptWriterWindows {
             writer.print(target);
             writer.println();
 
-            if( !(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
+            // TODO is this the std fix?  if so what's up with version, shouldn't it move automatic or not?
+            if( mojo.getGwtVersion() != null && !(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
                 //TODO change this to inspect linker output
                 String std = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\std";
                 writer.println("move " + std + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target);
