@@ -37,7 +37,7 @@
 					maven-googlewebtoolkit2-sample-war
 				</artifactId>
 				<version>${project.version}</version>
-			</dependency>
+			</dependency>			
 			<dependency>
 				<groupId>com.totsp.gwt</groupId>
 				<artifactId>
@@ -56,12 +56,12 @@
 			<dependency>
 				<groupId>com.google.gwt</groupId>
 				<artifactId>gwt-servlet</artifactId>
-				<version>${gwtVersion}</version>
+				<version>1.4.61</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.gwt</groupId>
 				<artifactId>gwt-user</artifactId>
-				<version>${gwtVersion}</version>
+				<version>1.4.61</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -78,9 +78,7 @@
 		<module>server</module>
 		<module>war</module>
 	</modules>
-	<properties>
-		<gwt.version>1.4.61</gwt.version>
-		<gwtVersion>1.4.61</gwtVersion>
-	</properties>
+
+	
 	
 </project>

@@ -48,7 +48,7 @@
 			<plugin>
 				<groupId>com.totsp.gwt</groupId>
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-				<version>2.0-beta7</version>
+				<version>2.0-beta8</version>
 				<configuration>
 					<gwtVersion>${gwtVersion}</gwtVersion>
 					<logLevel>INFO</logLevel>
@@ -72,14 +72,15 @@
 					<generateGettersAndSetters>
 						true
 					</generateGettersAndSetters>
-					<noServer>true</noServer>
+					<noServer>false</noServer>
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
-							<!-- autoconfig gwt -->
-							<goal>setup</goal>
-							<goal>extractGwt</goal>
+							<!-- autoconfig gwt (note you can also use manual config, if you already have GWT installed) -->
+							<!-- <goal>setup</goal>-->
+							<!-- <goal>extractGwt</goal>-->
+							
 							<!-- actual work goals -->
 							<goal>mergewebxml</goal>
 							<goal>compile</goal>
