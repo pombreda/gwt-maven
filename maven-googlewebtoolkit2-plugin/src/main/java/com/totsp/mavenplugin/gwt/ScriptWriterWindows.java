@@ -54,7 +54,7 @@ public class ScriptWriterWindows {
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
-            writer.print(mojo.getPort());
+            writer.print(mojo.getDebugPort());
             writer.print(",suspend=y ");
         }
 
