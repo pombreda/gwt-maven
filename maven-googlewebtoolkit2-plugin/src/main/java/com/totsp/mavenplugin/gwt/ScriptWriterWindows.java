@@ -127,16 +127,16 @@ public class ScriptWriterWindows {
             writer.print(target);
             writer.println();
 
-            // TODO is this the std fix?  if so what's up with version, shouldn't it move automatic or not?
-            if( mojo.getGwtVersion() != null && !(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
+            // TODO is this the std fix?  if so what's up with version, shouldn't it move automatic or not (non automatic doesn't have a version)?
+            if(mojo.getGwtVersion() != null && !(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
                 //TODO change this to inspect linker output
                 String std = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\std";
                 writer.println("move " + std + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target);
-                writer.println("deltree " + std);
+                writer.println("del " + std + " /S /Q");
 
                 String xs = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\xs";
                 writer.println("move " + xs + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target);
-                writer.println("deltree " + xs);
+                writer.println("del " + xs + " /S /Q");
             }
         }
 
