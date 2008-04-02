@@ -21,15 +21,16 @@
 
 package com.totsp.mavenplugin.gwt;
 
-import com.totsp.mavenplugin.gwt.support.ExitException;
-import com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+
+import com.totsp.mavenplugin.gwt.support.ExitException;
+import com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor;
 
 /**
  * @goal mergewebxml
