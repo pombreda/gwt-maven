@@ -16,6 +16,10 @@ should be used with your project. If you intend to use multiple modules, you wil
 more than one of the examples. If you wish to set up a simpler single module (with just one pom.xml), 
 then choose the example that is closest to the function of your project (likely the war project).
 
+This sample uses GWT-Maven with the "automatic" GWT setup mode enabled. This means
+that you do *not* have to download and install GWT yourself, the plugin will setup and extract
+GWT for you (when using this method). 
+
 Which project to build:
 =======================
  + parent (this is the root parent module of the project)
