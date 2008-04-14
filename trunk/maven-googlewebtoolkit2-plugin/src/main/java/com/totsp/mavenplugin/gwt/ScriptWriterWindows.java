@@ -127,8 +127,8 @@ public class ScriptWriterWindows {
             writer.print(target);
             writer.println();
 
-            // TODO is this the std fix?  if so what's up with version, shouldn't it move automatic or not (non automatic doesn't have a version)?
-            if(mojo.getGwtVersion() != null && !(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
+            // if gwtVersion is NOT 1.3 or 1.4, then assume it is 1.5 or higher, and move "std" and "xs" linker directories to target
+            if(!(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))){
                 //TODO change this to inspect linker output
                 String std = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\std";
                 writer.println("move " + std + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target);
