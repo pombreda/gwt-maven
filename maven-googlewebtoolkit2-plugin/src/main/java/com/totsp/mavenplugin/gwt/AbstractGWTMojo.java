@@ -91,7 +91,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private String groupId = "com.google.gwt";
     /**
-     * @parameter
+     * @parameter default-value="1.4.61"
      */
     private String gwtVersion;
     /**
