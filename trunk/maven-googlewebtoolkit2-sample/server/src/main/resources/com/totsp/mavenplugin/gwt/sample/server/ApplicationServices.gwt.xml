@@ -1,0 +1,8 @@
+<module>
+
+	<inherits name='com.google.gwt.user.User' />
+
+	<!-- Service Servlet Mapping -->
+	<servlet path='/sampleRemoteService' class='com.totsp.mavenplugin.gwt.sample.server.SampleRemoteServiceImpl' />
+
+</module>

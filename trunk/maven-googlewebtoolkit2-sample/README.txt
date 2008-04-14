@@ -6,7 +6,7 @@ About:
 This sample project has some specific goals:
  + GWT-Maven 'Best Practice' & Usage
  + Java5+ integration on the GWT server side & Java1.4 on the GWT client side using a multi-module maven project.
- + GWT RPC structure via multi-module maven project
+ + GWT RPC structure via multi-module maven project - and inheriting a GWT module
  + The features offered by GWT-Maven (like building a WAR, running the GWTShell, and mergewebxml)
  
 Overview:
@@ -23,8 +23,8 @@ GWT for you (when using this method).
 Which project to build:
 =======================
  + parent (this is the root parent module of the project)
- + rpc (this is the GWT RPC *INTERFACE) Java 1.4
- + server (this is the GWT RPC *IMPLEMENTATION) Java 1.5+
+ + rpc (this is the GWT RPC *INTERFACE* definition) Java 1.4
+ + server (this is the GWT RPC *IMPLEMENTATION*, it builds a GWT module that war inherits) Java 1.5+
  + war (this is the GWT client code) Java 1.4 
 
 Prerequisites:
@@ -74,12 +74,13 @@ GWT projects (the WAR example here uses it). This project does not need GWT-Mave
  
 Running the SERVER sample
 =========================
-The Server example demonstrates implementing GWT-RPC interfaces (the one from the RPC example), 
-and including a standard HttpServlet example, in the same project. This project creates
+The Server example demonstrates implementing GWT-RPC interfaces (the one from the RPC example),
+creating a GWT library module (that other projects can inherit), and including a standard 
+HttpServlet example in the same project. This project creates
 a JAR archive that is built for the server side of a GWT project. This JAR can then
-be used in a WAR to expose a GWT-RPC endpoint. (This demonstrates that it can make sense
-to break up your GWT projects into client and server portions, sometimes that helps with
-re-use [more than one client can import and use the RPC] and with team divisions.)
+be inherited using GWT inheritance to expose a GWT-RPC endpoint. 
+(This demonstrates that it can make sense to break up your GWT projects into client and server portions, 
+sometimes that helps with re-use [more than one client can import and use the RPC] and with team divisions.)
 
 1. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/server directory.
 2. Execute "mvn install".
