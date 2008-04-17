@@ -1,0 +1,56 @@
+GWT-Maven
+
+ This is a plugin to provide support for Google Web Toolkit projects, including
+ running the GWT developer tools and performing support operations to help
+ developers make GWT fit more closely in with their standard JEE web application
+ development.
+
+* Goals Overview
+
+ * gwt:gwt runs the project in the GWTShell
+
+ * gwt:debug runs the project in GWTShell, starting a blocking debugger on 
+   the shell's host port (from there you can connect a debugger).
+
+ * gwt:compile compiles the GWT application into the destination WAR root.
+
+ * gwt:mergewebxml inspects the module descriptor and adds servlet references to
+   the web web.xml file in the webapp directory (if they are not already present). 
+   The output of this process is written to target/web.xml.
+
+ * gwt:generateClientBeans this will generate client side beans based on introspection
+   of beans in your project. The generated source will be written into your
+   Java source directory.
+
+ * gwt:testGwt this is a workaround for the difficulties in getting our tests to run in JUnit.  This task will
+   spawn seperate processes to run the tests, and report the results to target/gwtTest.  
+
+ * gwt:setup this task will automatically get run during the validation stage of your maven build.
+   It will use the gwtVersion property of the plugin to automatically download the GWT zip file,
+   unzip it in target/gwtBin and setup the internal GWT path variables, and dependencies.
+
+ * gwt:extractGwt this needs to be enabled if and only if setup is enabled.  This task gets
+   run before compilation, and is reponsible for the actual unzipping of the GWT file downloaded in
+   gwt:setup
+
+* Bean Generation
+
+  The GWT-Maven plugin allows you to generate IsSerializable beans from other beans in you application.  You can do
+  this by setting the generatorRootClasses, and generatorDestinationPackage.
+
+  See the {{{configuration.html} configuration documentation}}
+
+* POM files
+
+ To see a few sample POMs check out the {{{examples.html}examples page}}
+ 
+ * Setup
+
+  Youe can either manually setup GWT and GWT-Maven, or you can use the simpler gwt:setup and gwt:extractGwt tasks (which are presently expirimental).  
+  There are now, only two things you need to do to setup gwt-maven if you wish to use the automated setup:
+ 
+    [[1]] add the right plugin repository to your POM
+    
+    [[2]] make sure the setup and extractGwt tasks are enabled for the plugin.
+
+ If you want more detail on setting up GWT or alternate ways of doing it, see the {{{setup.html}setup documentation}}
