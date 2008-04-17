@@ -156,7 +156,7 @@ public class GWTTest extends AbstractGWTMojo {
                 ? this.getExtraJvmArgs() : "";
 
             if(
-                System.getProperty("os.name").toLowerCase(Locale.US)
+                    AbstractGWTMojo.OS_NAME.toLowerCase(Locale.US)
                           .startsWith("mac")
                     && (extra.indexOf("-XstartOnFirstThread") == -1)) {
                 extra = "-XstartOnFirstThread " + extra;
@@ -169,8 +169,14 @@ public class GWTTest extends AbstractGWTMojo {
 
             //cmd.append("-Dgwt.args=\"-out www-test\" ");
             cmd.append("-cp ");
-            cmd.append(classpath)
-               .append(' ');
+            if (AbstractGWTMojo.OS_NAME.toLowerCase(Locale.US)
+                    .startsWith("windows")) {
+                // TODO, we need to handle this more robustly, but for now quote the path if it's windows to fix spaces in path issues
+                cmd.append("\"" + classpath + "\"");                
+            } else {
+                cmd.append(classpath);
+            }
+            cmd.append(' ');
             cmd.append("junit.textui.TestRunner ");
 
             File outputDir = new File(this.getBuildDir(), "gwtTest");
