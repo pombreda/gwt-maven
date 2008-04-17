@@ -314,8 +314,9 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return webXml;
     }
 
-    public Collection<File> buildClasspathList(boolean fRuntime)
+    public Collection<File> buildClasspathList(boolean fRuntime)   
             throws DependencyResolutionRequiredException {
+        
         Set<File> items = new LinkedHashSet<File>();
         //Because Maven loses our properties for some odd reason, we need to double check
         File GWTHome = getGwtHome();
@@ -338,7 +339,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
                 Resource r = (Resource) it.next();
                 items.add(new File(r.getDirectory()));
             }
-        }
+        } 
+        
         items.add(new File(getProject().getBasedir(), "classes"));
 
         if (fRuntime) {
@@ -356,7 +358,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
             items.add(new File(it.next().toString()));
         }
 
-        
+        /*
+        System.out.println("DEBUG CLASSPATH LIST");
+        for (File f : items) {
+            System.out.println("   " + f.getAbsolutePath());
+        } 
+        */       
 
         return items;
     }
@@ -394,12 +401,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     }
 
     public ClassLoader fixThreadClasspath() {
+        
         try {
             ClassWorld world = new ClassWorld();
 
             //use the existing ContextClassLoader in a realm of the classloading space
-            ClassRealm root = world.newRealm(
-                    "gwt-plugin", Thread.currentThread().getContextClassLoader());
+            ClassRealm root = world.newRealm("gwt-plugin", Thread.currentThread().getContextClassLoader());
             ClassRealm realm = root.createChildRealm("gwt-project");
 
             for (Iterator it = buildClasspathList(false).iterator();
@@ -409,6 +416,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
             Thread.currentThread().setContextClassLoader(
                     realm.getClassLoader());
+            ///System.out.println("AbstractGwtMojo realm classloader = " + realm.getClassLoader().toString());
 
             return realm.getClassLoader();
         } catch (Exception e) {

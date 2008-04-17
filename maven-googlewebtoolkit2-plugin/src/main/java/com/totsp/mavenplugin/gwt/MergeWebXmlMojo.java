@@ -60,8 +60,7 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
           }          
         }
         try{
-            File destination = new File(this.getBuildDir(),
-                    "web.xml");
+            File destination = new File(this.getBuildDir(), "web.xml");
             
             super.copyFile( this.getWebXml(), destination);
             for( int i=0; i < this.getCompileTarget().length; i++){
@@ -80,7 +79,9 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
                     System.out.println( "Looking for file: "+check.getAbsolutePath() );
                     moduleFile = check.exists() ? check : moduleFile;
                 }
+                
                 this.fixThreadClasspath();
+                
                 GwtWebInfProcessor processor = null;
                 System.out.println("Module file: "+moduleFile);
                 try{
@@ -91,16 +92,16 @@ public class MergeWebXmlMojo extends AbstractGWTMojo{
                                 destination.getAbsolutePath(),
                                 destination.getAbsolutePath());
                     } else {
-                        System.out.println( "WebXML: "+ this.getWebXml().getAbsolutePath() );
                         processor = new GwtWebInfProcessor(
                                 this.getCompileTarget()[i],
                                 destination.getAbsolutePath(),
-                                destination.getAbsolutePath() );
+                                destination.getAbsolutePath());
                     }
                 } catch(ExitException ee){
                     this.getLog().warn( ee.getMessage() );
                     return;
-                }
+                }              
+                
                 processor.process();
             }
         } catch(Exception e){
