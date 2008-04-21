@@ -81,9 +81,10 @@
                 </configuration>
 			</plugin>
 			<plugin>
-				<!--  use AntRun to do the Emma report (GWT emits coverage data files on it's own) -->
+				<!--  use AntRun to do the Emma report (GWT emits coverage data files on it's own) -->				 
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
+					<!-- 
 					<execution>
 						<id>emma-coverage-report</id>
 						<phase>pre-site</phase>
@@ -111,6 +112,7 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
+					-->
 				</executions>
 				<dependencies>
 					<dependency>
