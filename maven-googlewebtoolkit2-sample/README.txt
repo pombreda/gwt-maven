@@ -72,9 +72,10 @@ out by default to keep things faster and simpler.)
 a special testGwt goal is included with GWT-Maven for GwtTestCase based tests, thus TWO test phases
 will happen during "mvn test", one for Surefire standard tests, and one for testGwt GWT tests.)
 
-1. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/war directory.
-2. Execute "mvn package".
-3. Your sample war will be created in the war/target directory.
+1. Build the server sub-project, using the instructions in "Running the parent example" above.
+2. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/war directory.
+3. Execute "mvn package".
+4. Your sample war will be created in the war/target directory.
    
    OR you can run the GWTShell locally by executing "mvn gwt:gwt".
    
