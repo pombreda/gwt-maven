@@ -1,0 +1,11 @@
+/**
+* Sample showing how to include a css in your gwt-maven project
+*/
+.gwtMavenButton {
+	border-color: rgb(255, 0, 0);
+	font-weight: normal;
+	font-style: normal;
+	text-align: center;
+	background-color: rgb(255, 0, 0);
+	color: rgb(255, 255, 255);
+}

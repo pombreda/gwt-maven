@@ -9,5 +9,7 @@
 	<!-- Specify the app entry point class.                   -->
 	<entry-point class='com.totsp.mavenplugin.gwt.sample.client.Application' />
 
+	<!-- Specify a css to load into your gwt application -->
+	<stylesheet src='styles/sample.css'/>
 	
 </module>

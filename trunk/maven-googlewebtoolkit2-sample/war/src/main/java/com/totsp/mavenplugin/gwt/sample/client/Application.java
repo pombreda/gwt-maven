@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,7 +22,16 @@ public class Application implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		 
+		//example of image bundle
+		final SampleImageBundle sampleImageBundle = (SampleImageBundle) GWT.create(SampleImageBundle.class);
+		final Image gwtLogoImage = sampleImageBundle.getGWTLogo().createImage();
+		
+			
 		final Button button = new Button("Run GWT Async RPC!");
+		//example of css inclusion and use
+		button.setStyleName("gwtMavenButton");
+		
 		final Label label = new Label();
 
 		button.setTitle("Go for it... I dare you!");
@@ -80,6 +90,7 @@ public class Application implements EntryPoint {
 		// to hard-code IDs. Instead, you could, for example, search for all
 		// elements with a particular CSS class and replace them with widgets.
 		//
+		RootPanel.get("gwtLogo").add(gwtLogoImage);
 		RootPanel.get("rpcButton").add(button);
 		RootPanel.get("rpcResponse").add(label);
 	}
