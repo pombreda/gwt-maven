@@ -26,6 +26,7 @@ public class Application implements EntryPoint {
 		//example of image bundle
 		final SampleImageBundle sampleImageBundle = (SampleImageBundle) GWT.create(SampleImageBundle.class);
 		final Image gwtLogoImage = sampleImageBundle.getGWTLogo().createImage();
+		gwtLogoImage.setTitle("This image was delivered via automatic resource inclusion and the ImageBundle feature");
 		
 			
 		final Button button = new Button("Run GWT Async RPC!");
@@ -34,9 +35,7 @@ public class Application implements EntryPoint {
 		
 		final Label label = new Label();
 
-		button.setTitle("Go for it... I dare you!");
-		
-		label.setTitle("this text came from the RPC Server.");
+		button.setTitle("This will execute the RPC call to the Java v1.5 GWT server");
 		
 		button.addClickListener(new ClickListener() {
 			public void onClick(Widget sender) {
