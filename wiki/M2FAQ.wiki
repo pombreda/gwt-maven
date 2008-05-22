@@ -61,4 +61,4 @@ If you have GwtTestCase based tests, the testGwt goal can run them independently
 
 To use this support run "mvn test" and make sure you have some GwtTestCase derived tests that are named with the "GwtTest" PREFIX.  If you want to change the test name prefix you can set the "testFilter" configuration parameter.  
 
-When you run "mvn test" the Surefire plugin will be invoked to run your *Test named standard tests, and then gwt:testGwt will be run to handle your GwtTest* named tests. 
+When you run "mvn test" the Surefire plugin will be invoked to run your {{{*Test}}} named standard tests, and then gwt:testGwt will be run to handle your {{{GwtTest*}}} named tests. 
