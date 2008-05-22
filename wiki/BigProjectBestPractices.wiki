@@ -1,0 +1,95 @@
+#summary A place to compile ideas about best practices
+
+From Mark in the group (http://groups.google.com/group/gwt-maven/browse_thread/thread/2511676e7afe0151):  
+
+. . .
+
+First I figured out how to filter what ends up in the war file. By
+default you get things like .gwt-tmp, the ModuleName.gwt.xml, contents
+of public and client folders from the classpath.
+
+part of our configuration for maven-war-plugin:
+
+    gwt:compile is set to output to target/gwt, then we include it,
+while excluded temp files:
+{{{
+          <webResources>
+            <resource>
+              <directory>target/gwt</directory>
+              <excludes>
+                <!-- Filter out unwanted build artifacts -->
+                <exclude>**/.gwt-tmp/**</exclude>
+              </excludes>
+            </resource>
+          </webResources>
+}}}
+     Now keep out items from the classpath that aren't needed on the
+server:
+{{{
+          <warSourceExcludes>
+            **/*.gwt.xml,
+            WEB-INF/classes/**/client/**,
+            WEB-INF/classes/**/common/**/*Async.class,
+            WEB-INF/classes/**/public/**
+          </warSourceExcludes>
+        </configuration>
+}}}
+Cool... One optimally tiny .war file... Check!
+
+Next was the issue of running in hosted mode. First off, you
+definitely do not need anything more that compiled java code to run
+hosted mode. The gwt:gwt goal is hard-wired to run the package phase.
+IMO It should only depend on compile phase. (Is there really no way to
+override this?)
+
+Finally I attached the gwt:compile goal to the "process-classes" phase
+instead of "compile":
+{{{
+      <plugin>
+        <groupId>com.totsp.gwt</groupId>
+        <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+        <version>2.0-beta18</version>
+        ...
+        <executions>
+          <execution>
+            <id>compile</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        ...
+        </executions>
+      </plugin>
+}}}
+
+This means it will only run when something like 'mvn package' is run,
+but not compile (ie: mvn compile). This is great because the only time
+you need to invoke gwt:compile is if you are planning to run in web
+mode.
+
+And the last thing about jetty, webapp source paths, auto reloading,
+etc... I backed off on a fancier setup that would've required hosted
+mode use a separate jetty instance for server code. My advice... make
+your stuff work in hosted mode (the GWTShell) if you can possibly do
+so. It makes so many things simpler, only one target to run. The only
+drawback is, after changing server code, it takes slightly longer
+reload... (the whole shell, vs. jetty instance) but here the benefits
+far outweigh that cost.
+
+Cycle times:
+  From 'clean' to GWTShell, for hosted mode: 30 seconds (around 10s if
+I patch maven-gwt to run 'compile' instead of 'package')
+  From 'clean' to web mode (packaged war, deployed in Jetty): 30
+seconds
+
+. . .
+
+One last tip: give GWT more heap! It beats the hell out of the GC, so
+make it's life easier:
+ In the maven-gwt plugin config:
+{{{
+     <extraJvmArgs>-Xmx256M -Xms64M</extraJvmArgs>
+}}}
+
+I hope this helps someone out there! 
