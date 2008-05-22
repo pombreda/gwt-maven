@@ -53,3 +53,12 @@ another way to do this is to use the antrun plugin
 </build>
 
 }}}
+
+
+*Q)  How does testGwt work?
+
+If you have GwtTestCase based tests, the testGwt goal can run them independently from the standard Maven Surefire plugin. This separate test run is required to get the classpath for the JUnitShell properly configured. 
+
+To use this support run "mvn test" and make sure you have some GwtTestCase derived tests that are named with the "GwtTest" PREFIX.  If you want to change the test name prefix you can set the "testFilter" configuration parameter.  
+
+When you run "mvn test" the Surefire plugin will be invoked to run your *Test named standard tests, and then gwt:testGwt will be run to handle your GwtTest* named tests. 
