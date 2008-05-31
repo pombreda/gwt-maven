@@ -373,7 +373,9 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     if (OS_NAME.startsWith("windows")) {
       return "gwt-windows";
     } else if (OS_NAME.startsWith("mac")) {
-        if( this.getGwtVersion().startsWith("1.4.") || this.getGwtVersion().startsWith("1.3.") ){
+        if( this.getGwtVersion().startsWith("1.4.") 
+                || this.getGwtVersion().startsWith("1.3.") 
+                || this.getGwtVersion().startsWith("1.5.") ){
             return "gwt-mac";
         } else if(System.getProperty("os.version").startsWith("10.5.") ){
             return "gwt-mac_10.5";
