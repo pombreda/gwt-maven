@@ -319,15 +319,18 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         
         Set<File> items = new LinkedHashSet<File>();
         //Because Maven loses our properties for some odd reason, we need to double check
-        File GWTHome = getGwtHome();
+        File gwtHome = getGwtHome();
 
-        if (GWTHome == null) {
-            GWTHome = new File(GWT_PATH);
+        if (gwtHome == null && GWT_PATH != null) {
+            gwtHome = new File(GWT_PATH);
         }
 
-        items.add(GWTHome);
-        items.add(new File(GWTHome, "gwt-user.jar"));
-        items.add(new File(GWTHome, GWTSetup.guessDevJarName()));
+        if (gwtHome != null) {
+          items.add(gwtHome);
+          items.add(new File(gwtHome, "gwt-user.jar"));
+          items.add(new File(gwtHome, GWTSetup.guessDevJarName()));
+        }
+        // else we assume all required gwt jars have been added as regular maven dependencies
         
         if (this.getSourcesOnPath()) {
             for (Iterator it = getProject().getCompileSourceRoots().iterator();
