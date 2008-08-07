@@ -113,14 +113,14 @@ public class GWTTest extends AbstractGWTMojo {
                         String[] devJars = toolkitHome.list(
                                 new WildcardFileFilter("gwt-dev-*.jar"));
 
-                        if(devJars.length == 1) {
-                            devJar = new File(toolkitHome, devJars[0]);
-                        } else if(devJars.length == 1) {
+                        if (devJars == null || devJars.length == 0) {
                             String Error = "Could not find a gwt-dev jar.  Looked in "
                                 + toolkitHome + ".  If you think you "
                                 + "already gwt-dev-*.jar in your path, you can set the property google.webtoolkit.doNotFileGwtDev to "
                                 + "\"true\" in your POM.";
                             throw new MojoFailureException(Error);
+                        } else if (devJars.length == 1) {
+                            devJar = new File(toolkitHome, devJars[0]);
                         } else {
                             String Error = "Could not find a gwt-dev jar.  \n"
                                 + "Looked in " + toolkitHome
