@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : DTOExample.xml
+    Created on : May 17, 2007, 3:40 PM
+    Author     : rcooper
+    Description:
+        Purpose of the document follows.
+-->
+
+<class>
+    <package>com.totsp.example</package>
+    <shortName>ABean</shortName>
+    <extends>
+        <package>com.totsp.example</package>
+        <shortName>CBean</shortName>
+    </extends>
+    <property>
+        <name>integerProperty</name>
+        <package>java.lang</package>
+        <shortName>Integer</shortName>
+        <arrayDepth>1</arrayDepth>
+    </property>
+    <property>
+        <name>booleanProperty</name>
+        <package>java.lang</package>
+        <shortName>boolean</shortName>
+    </property>
+    <property>
+        <name>bBeanProperty</name>
+        <package>com.totsp.example</package>
+        <shortName>BBean</shortName>
+    </property>
+    <property>
+        <name>listProperty</name>
+        <package>java.util</package>
+        <shortName>List</shortName>
+        <parameterType>
+            <package>com.totps.example</package>
+            <shortName>BBean</shortName>
+        </parameterType>    
+    </property>
+</class>
