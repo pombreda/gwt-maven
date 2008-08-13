@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<entry-point class='gwtip.sotu.client.EntryPoint' />
+	<servlet path="/cometStream2" class="gwtip.sotu.server.StreamServlet" />
+	<servlet path="/conversationService2" class="gwtip.sotu.server.ConversationServiceServlet" />
+</module>
