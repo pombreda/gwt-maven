@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<inherits name='testModule2.Test2' />
+	<entry-point class='gwtip.sotu.client.EntryPoint' />
+	<servlet path="/cometStream" class="gwtip.sotu.server.StreamServlet" />
+	<servlet path="/conversationService" class="gwtip.sotu.server.ConversationServiceServlet" />
+</module>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	<context-param>
+		<param-name>name_of_context_initialization_parameter</param-name>
+		<param-value>value_of_context_initializtion_parameter</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>guess_what_name_of_servlet</servlet-name>
+		<servlet-class>com.foo-bar.somepackage.TheServlet</servlet-class>
+		<init-param>
+			<param-name>foo</param-name>
+			<param-value>bar</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>name_of_a_servlet</servlet-name>
+		<url-pattern>*.some_pattern</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>image</servlet-name>
+		<url-pattern>/image</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+
+<!-- here I set up a constraint on the administrator folder -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Administration Area</web-resource-name>
+			<url-pattern>/administrator/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>administrator</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+<!-- here I tell it to use BASIC HTTP authentication -->
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	<!--
+		and here we are just telling the system that there is an administrator
+		role. You can have 1..n “security-role”s here.
+	-->
+	<security-role>
+		<role-name>administrator</role-name>
+	</security-role>
+</web-app>
