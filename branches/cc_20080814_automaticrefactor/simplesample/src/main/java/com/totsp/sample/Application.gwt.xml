@@ -18,5 +18,8 @@
     
       <!-- Specify the application specific style sheet.              -->
       <stylesheet src='Application.css' />
+      
+      <!-- Service Servlet Mapping -->
+      <servlet path='/sampleRemoteService' class='com.totsp.sample.server.SampleRemoteServiceImpl' />
 	
 </module>
