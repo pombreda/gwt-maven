@@ -73,7 +73,7 @@
 				<executions>
 					<execution>
 						<goals>
-							<!-- <goal>mergewebxml</goal>-->
+							<goal>mergewebxml</goal>
 							<goal>compile</goal>
 							<goal>gwt</goal>                            
                             <!-- <goal>testGwt</goal>-->
