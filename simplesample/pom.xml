@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.totsp.gwt</groupId>
 	<artifactId>maven-gwt-sample</artifactId>
-	<packaging>pom</packaging>
+	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-gwt-sample</name>
 	
@@ -49,6 +49,7 @@
             <artifactId>gwt-dev</artifactId>
             <version>1.5.1</version>
             <classifier>${platform}</classifier>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 	
