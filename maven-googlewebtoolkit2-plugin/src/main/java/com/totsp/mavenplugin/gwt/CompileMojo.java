@@ -23,9 +23,13 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import java.util.Locale;
+
+import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 
 /**
  * @goal compile
@@ -44,9 +48,9 @@ public class CompileMojo extends AbstractGWTMojo{
         if( !this.getOutput().exists() ){
             this.getOutput().mkdirs();
         }
-        System.out.println("Override: "+System.getProperty("gwt.os", ""));
-        if( System.getProperty("gwt.os", "").startsWith("windows") ||
-                System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
+
+        if(System.getProperty("gwt.os", "").startsWith(WINDOWS) ||
+                 AbstractGWTMojo.OS_NAME.startsWith(WINDOWS) ){
             ScriptWriterWindows writer = new ScriptWriterWindows();
             try{
                 File exec = writer.writeCompileScript(this);
@@ -74,19 +78,4 @@ public class CompileMojo extends AbstractGWTMojo{
             }
         }
     }
-    /**
-     *
-     * @param alloutput output to pick out error lines to be printed from
-     */
-    private void logErrorLines(String alloutput) {
-        final String errorTag = "[ERROR]";
-        String[] lines = alloutput.split("\n");
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].contains(errorTag)) {
-                getLog().error(lines[i].replace(errorTag, ""));
-            }
-        }
-    }
-    
-    
 }

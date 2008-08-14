@@ -1,24 +1,27 @@
 package com.totsp.mavenplugin.gwt;
 
-import java.io.*;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.HiddenFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-
 import org.codehaus.plexus.util.StringUtils;
+
+import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
+import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
 
 
 /**
@@ -61,24 +64,27 @@ public class GWTTest extends AbstractGWTMojo {
                         "google.webtoolkit.doNotFileGwtDev");
 
                 if(!Boolean.valueOf(doNotFindGwtDev)) {
+                   
                     String toolkitHomeStr = this.getProject().getProperties()
                                                 .getProperty(
-                            "google.webtoolkit.home");
+                                                         GOOGLE_WEBTOOLKIT_HOME);
 
+                    // TODO
                     //Setup the GWT Home using our auto-setup one, if one is not set
+                    /*
                     if(
                         getProject().getProperties()
-                                .getProperty("google.webtoolkit.home") == null) {
+                                .getProperty(GOOGLE_WEBTOOLKIT_HOME) == null) {
                         File targetDir = null;
 
                         try {
                             targetDir = new File(
-                                    getGwtBinDirectory(),
-                                    this.guessArtifactId() + "-"
+                                    getGwtBinOutputDirectory(),
+                                    ArtifactNameUtil.guessArtifactId(this.getGwtVersion()) + "-"
                                     + getGwtVersion()).getCanonicalFile();
                             getProject().getProperties()
                                 .setProperty(
-                                "google.webtoolkit.home",
+                                         GOOGLE_WEBTOOLKIT_HOME,
                                 targetDir.getCanonicalPath());
                             GWT_PATH = targetDir.getCanonicalPath();
                             toolkitHomeStr = GWT_PATH;
@@ -86,6 +92,7 @@ public class GWTTest extends AbstractGWTMojo {
                             throw new MojoExecutionException(e.getMessage());
                         }
                     }
+                    */
 
                     if(toolkitHomeStr == null) {
                         try {
@@ -105,7 +112,7 @@ public class GWTTest extends AbstractGWTMojo {
 
                     File toolkitHome = new File(toolkitHomeStr);
                     File devJar = new File(
-                            toolkitHome, GWTSetup.guessDevJarName());
+                            toolkitHome, ArtifactNameUtil.guessDevJarName());
 
                     if(!devJar.exists()) {
                         //If there is not a file that seems to correspond with what we expect,
@@ -183,13 +190,13 @@ public class GWTTest extends AbstractGWTMojo {
             outputDir.mkdirs();
             outputDir.mkdir();
 
-            List testCompileRoots = getProject().getTestCompileSourceRoots();
+            List<String> testCompileRoots = getProject().getTestCompileSourceRoots();
 
             int run = 0;
             int fail = 0;
             int error = 0;
 
-            for(String currRoot : (List<String>) testCompileRoots) {
+            for(String currRoot : testCompileRoots) {
                 //UNDONE(willpugh) -- Need to be able to change the File filter here.
                 Collection<File> coll = FileUtils.listFiles(
                         new File(currRoot),

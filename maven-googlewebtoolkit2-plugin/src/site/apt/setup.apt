@@ -1,8 +1,9 @@
 GWT-Maven Setup
 
+  In order to use GWT-Maven, you will need to have your POM pointing to the right plugin
+repository (so the plugin can be downloaded by Maven), and you will need to decide how you want to handle
+GWT being present. 
 
-  In order to use the maven plugin, you will need to have your POM pointing to the right plugin
-repository (so the plugin can be downloaded by Maven), and you will need to have GWT installed.
 
 *  Getting the Plugin
 
@@ -19,119 +20,119 @@ repository from the gwt-maven project (a good one to start with ):
 +--
 
 
+
 *  Getting GWT Installed
 
   you need to have GWT installed.  There are two ways you can do this.
 
-    [[1]]  Setup GWT yourself and set the GWT path
+    [[1]]  Download and unpack GWT yourself and set the google.webtoolkit.home property to the location where it is installed (manual mode)
     
-    [[1]]  Use the automatic goals in the gwt-maven plugin
+    [[1]]  Use the setup and extract goals from the plugin to automatically have GWT downloaded and google.webtoolkit.home established (automatic mode)
 
 
 
 * Manual Setup
 
-  If you are going to setup GWT manually, you will need to first download GWT, and unpackage it.
+  If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html).
 
-  Then, you will need to set-up profiles in order to set google.webtoolkit.home.
+  Then, you will need to set-up profiles in order to establish google.webtoolkit.home as the location where you unpacked GWT.
 
-  Finally, you will need to add the proper jar files in your dependencies.
+  Finally, you will need to add the proper GWT jar files as your dependencies.
 
-  There are two ways you can do this.  You can set up a profile in your user directory (~/.m2/settings.xml).
-    For example:
+  First you need to setup a profile (this can be in your POM for a particular project, or across a machine for all projects
+  on a per user basis in your user settings.xml - ~/.m2/settings.xml).
+   
+  For example:
 
 +--
  <?xml version="1.0" encoding="UTF-8"?>
  <settings>
    <profiles>
      <profile>
-       <id>gwt-1.3.33</id>
+       <id>gwt-1.4.61-mac</id>
        <properties>
-         <google.webtoolkit.home>/Users/cooper/gwt-mac-1.3.33</google.webtoolkit.home>
-         <google.webtoolkit.extrajvmargs>-XstartOnFirstThread</google.webtoolkit.extrajvmargs>
-       </properties>
-     </profile>
-     <profile>
-       <id>gwt-1.4.60</id>
-       <properties>
-         <google.webtoolkit.home>/Users/cooper/gwt-mac-1.4.60</google.webtoolkit.home>
-         <!-- XstartOnFirstThread needed only on the mac -->
-         <google.webtoolkit.extrajvmargs>-XstartOnFirstThread</google.webtoolkit.extrajvmargs>
+         <google.webtoolkit.home>/opt/gwt-mac-1.4.61</google.webtoolkit.home>
+          <!-- XstartOnFirstThread needed only on the mac -->
+         <google.webtoolkit.extrajvmargs>-Xmx512m -XstartOnFirstThread</google.webtoolkit.extrajvmargs>
        </properties>
      </profile>
    </profiles>
    <activeProfiles>
-     <activeProfile>gwt-1.4.60</activeProfile>
+     <activeProfile>gwt-1.4.61-mac</activeProfile>
    </activeProfiles>
 </settings>
-
 +--
 
-  Above you see two GWT profiles, with the gwt-1.4.60 profile active. It is critical
- that you have google.webtoolkit.home configured. 
+  With the manual mode it is critical that you have google.webtoolkit.home configured properly (using the correct GWT version for your platform). 
 
-  Or, you can setup a standard place for GWT to be installed in you project, and add the profiles into your POM.
+  Alternatively, you can setup a standard place for GWT to be installed, and add platform specific profiles to your POM, 
+  which are activated based on the environment (the platform in use - this makes your setup work across different platforms, 
+  so long as they each have GWT installed at the specified location).
+  
+  For example:
+
+  TODO - remove the dev dep from each profile and instead just set "platform" property, reference that in regular dep 
 
 +--
 <profiles>
+    <!-- Note - env var GWT_HOME is set to where GWT is installed for the platform, for example /opt/gwt-mac-1.4.61 -->
     <profile>
-      <id>gwt-1.4.60-mac</id>
+      <id>gwt-1.4.61-mac</id>
       <activation>
         <os>
           <family>mac</family>
         </os>
       </activation>
-      <properties>
-        <google.webtoolkit.home>${env.GWT_HOME}/gwt-mac-1.4.60</google.webtoolkit.home>
+      <properties>        
+        <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
         <!-- XstartOnFirstThread needed only on the mac -->
-        <google.webtoolkit.extrajvmargs>-XstartOnFirstThread</google.webtoolkit.extrajvmargs>
+        <google.webtoolkit.extrajvmargs>-Xmx512m -XstartOnFirstThread</google.webtoolkit.extrajvmargs>
       </properties>
       <dependencies>
             <dependency>
                 <groupId>com.google.gwt</groupId>
                 <artifactId>gwt-dev-mac</artifactId>
-                <version>1.4.60</version>
+                <version>1.4.61</version>
                 <scope>system</scope>
                 <systemPath>${google.webtoolkit.home}/gwt-dev-mac.jar</systemPath>
             </dependency>
         </dependencies>
     </profile>
     <profile>
-      <id>gwt-1.4.60-linux</id>
+      <id>gwt-1.4.61-linux</id>
       <activation>
         <os>
           <name>Linux</name>
         </os>
       </activation>
       <properties>
-        <google.webtoolkit.home>${env.GWT_HOME}/gwt-linux-1.4.60</google.webtoolkit.home>
+        <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
       </properties>
       <dependencies>
             <dependency>
                 <groupId>com.google.gwt</groupId>
                 <artifactId>gwt-dev-linux</artifactId>
-                <version>1.4.60</version>
+                <version>1.4.61</version>
                 <scope>system</scope>
                 <systemPath>${google.webtoolkit.home}/gwt-dev-linux.jar</systemPath>
             </dependency>
         </dependencies>
     </profile>
     <profile>
-      <id>gwt-1.4.60-windows</id>
+      <id>gwt-1.4.61-windows</id>
       <activation>
         <os>
           <family>windows</family>
         </os>
       </activation>
       <properties>
-        <google.webtoolkit.home>${env.GWT_HOME}/gwt-windows-1.4.60
-        </google.webtoolkit.home>
+        <google.webtoolkit.home>${env.GWT_HOME}</google.webtoolkit.home>
       </properties>
       <dependencies>
           <dependency>
               <groupId>com.google.gwt</groupId>
-              <artifactId>gwt-dev-linux</artifactId>
-              <version>1.4.60</version>
+              <artifactId>gwt-dev-windows</artifactId>
+              <version>1.4.61</version>
               <scope>system</scope>
               <systemPath>${google.webtoolkit.home}/gwt-dev-windows.jar</systemPath>
           </dependency>
@@ -142,7 +143,11 @@ repository from the gwt-maven project (a good one to start with ):
 
   Above, you see a three profiles that get activated depending on what platform they are running on.
 
-  ...add the gwt-maven repository, and GWT dependencies to your project.
+  You also need to add the gwt-maven repository, and other GWT dependencies to your project.
+
+  For example:
+
+  TODO update to using central repo, change names, etc
 
 +--
 
@@ -161,39 +166,42 @@ repository from the gwt-maven project (a good one to start with ):
      <dependency>
          <groupId>com.google.gwt</groupId>
          <artifactId>gwt-user</artifactId>
-         <version>1.4.60</version>
-         <scope>provided</scope>
+         <version>1.4.61</version>  
+         <scope>provided</scope>       
      </dependency>
      <dependency>
          <groupId>com.google.gwt</groupId>
          <artifactId>gwt-servlet</artifactId>
-         <version>1.4.60</version>
+         <version>1.4.61</version>
+         <scope>runtime</scope>
      </dependency>
-
 +--
 
-    ...the gwt-maven repository provides gwt-user and gwt-servlet. You should remember to mark
+    The gwt-maven repository provides gwt-user and gwt-servlet. You should remember to mark
     gwt-user as "provided" so it is not included in your WAR file.
 
+
+    If you wish to use the PropertyChangeSupport on classes from the bean generator
+    you should include GWTx in your project. This is also available in the gwt-maven
+    repository.
 +--
      <dependency>
          <groupId>com.googlecode.gwtx</groupId>
          <artifactId>GWTx</artifactId>
-         <version>20070605</version>
+         <version>20070110</version>
      </dependency>
- </dependencies>
+   </dependencies>
 
 +--
 
-    ...if you wish to use the PropertyChangeSupport on classes from the bean generator
-    you should include GWTx in your project! This is also available in the gwt-maven
-    repository.
     
 
 * Automatic Setup
 
-  If you are going to do automatic setup, which is presently expirimental, you just need to specify the gwtVersion property for the gwt-maven plugin.
-  In addition, you will need to enable the setup and extractGwt goals.  e.g.
+  If you are going to do automatic setup, you need to specify the gwtVersion property for the GWT-Maven plugin,
+  and you need to enable the setup and extractGwt goals. 
+  
+  For example:
 
 +--
     <plugins>
@@ -202,12 +210,12 @@ repository from the gwt-maven project (a good one to start with ):
         <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
         <version>2.0</version>
         <configuration>
-          <gwtVersion>1.4.60</gwtVersion>
+          <gwtVersion>1.4.61</gwtVersion>
         </configuration>
         <executions>
           <execution>
             <goals>
-              <!-- These two goals enable automatic GWT setup, but are expirimental -->
+              <!-- These two goals enable automatic GWT setup and extraction -->
               <goal>setup</goal>
               <goal>extractGwt</goal>
               

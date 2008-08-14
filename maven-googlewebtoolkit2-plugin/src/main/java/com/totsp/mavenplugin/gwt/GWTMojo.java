@@ -22,69 +22,84 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
-import java.util.Locale;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.codehaus.plexus.util.FileUtils;
+
+import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
+import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
 /**
- *
- * @author cooper
+ * GWT mojo handles the shell related goals.
+ *  
  * @goal gwt
  * @requiresDependencyResolution runtime
  * @description Runs the the project in the GWT Development Shell.
  * @execute phase=package
+ * 
+ * @author cooper
  */
 public class GWTMojo extends AbstractGWTMojo {
-    
-    String[] baseArgs = new String[0];
-    
-    /** Creates a new instance of GWTMojo */
-    public GWTMojo() {
-        super();
-    }
-    
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        String classpath = null;
-        try{
-            classpath = this.buildClasspath(true);
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build classpath", e );
-        }
-        try{
-            this.makeCatalinaBase();
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build catalina.base", e);
-        }
-        if( !this.getOutput().exists() ){
-            this.getOutput().mkdirs();
-        }
-        
-        if( System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
-            ScriptWriterWindows writer = new ScriptWriterWindows();
-            try{
-                File exec = writer.writeRunScript( this );
-                ProcessWatcher pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-            } catch(Exception e){
-                throw new MojoExecutionException("Unable to write start script.", e);
-            }
-            
-            
-        } else {
-            ScriptWriterUnix writer = new ScriptWriterUnix();
-            try{
-                File exec = writer.writeRunScript( this );
-                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ ") );
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-            } catch(Exception e){
-                throw new MojoExecutionException("Unable to write start script.", e);
-            }
-            
-        }
-    }
-    
-    
+
+   String[] baseArgs = new String[0];
+
+   /** Creates a new instance of GWTMojo */
+   public GWTMojo() {
+      super();
+   }
+
+   public void execute() throws MojoExecutionException, MojoFailureException {
+      
+      try {
+         this.makeCatalinaBase();
+      }
+      catch (Exception e) {
+         throw new MojoExecutionException("Unable to build catalina.base", e);
+      }
+      if (!this.getOutput().exists()) {
+         this.getOutput().mkdirs();
+      }
+
+      if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
+         ScriptWriterWindows writer = new ScriptWriterWindows();
+         try {
+            File exec = writer.writeRunScript(this);
+            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+            pw.startProcess(System.out, System.err);
+            pw.waitFor();
+         }
+         catch (Exception e) {
+            throw new MojoExecutionException("Unable to write start script.", e);
+         }
+      }
+      else {
+         ScriptWriterUnix writer = new ScriptWriterUnix();
+         try {
+            File exec = writer.writeRunScript(this);
+            ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+            pw.startProcess(System.out, System.err);
+            pw.waitFor();
+         }
+         catch (Exception e) {
+            throw new MojoExecutionException("Unable to write start script.", e);
+         }
+      }
+   }
+   
+   /**
+    * Create embedded GWT tomcat base dir based on properties. 
+    * 
+    * @throws Exception
+    */
+   public void makeCatalinaBase() throws Exception {
+      String[] args = {this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath()};
+      MakeCatalinaBase.main(args);
+
+      if ((this.getContextXml() != null) && this.getContextXml().exists()) {
+         FileUtils.copyFile(this.getContextXml(), new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
+      }
+   }
 }
