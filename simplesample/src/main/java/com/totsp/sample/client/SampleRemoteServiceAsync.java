@@ -1,4 +1,4 @@
-package com.totsp.mavenplugin.gwt.sample.client;
+package com.totsp.sample.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

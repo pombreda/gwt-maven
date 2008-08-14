@@ -2,12 +2,19 @@ package com.totsp.sample.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.totsp.sample.client.SampleRemoteService;
+import com.totsp.sample.client.SampleRemoteServiceAsync;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -56,5 +63,60 @@ public class Application implements EntryPoint {
         dialogBox.show();
       }
     });
-  }
+  
+  
+  final Label label = new Label();
+  final Button rpcButton = new Button("Run GWT Async RPC!");  
+  rpcButton.setTitle("This will execute the RPC call to the Java server");  
+  rpcButton.addClickListener(new ClickListener() {
+     public void onClick(Widget sender) {
+
+        // (1) Create the client proxy. Note that although you are
+        // creating the
+        // service interface proper, you cast the result to the
+        // asynchronous
+        // version of
+        // the interface. The cast is always safe because the generated
+        // proxy
+        // implements the asynchronous interface automatically.
+        SampleRemoteServiceAsync sampleRemoteService = (SampleRemoteServiceAsync) GWT
+              .create(SampleRemoteService.class);
+
+        // (2) Specify the URL at which our service implementation is
+        // running.
+        // Note that the target URL must reside on the same domain and
+        // port from
+        // which the host page was served.
+        ServiceDefTarget endpoint = (ServiceDefTarget) sampleRemoteService;
+
+        String moduleRelativeURL = GWT.getModuleBaseURL()
+              + "sampleRemoteService";
+        endpoint.setServiceEntryPoint(moduleRelativeURL);
+
+        // (3) Create an asynchronous callback to handle the result.
+        AsyncCallback callback = new AsyncCallback() {
+           public void onSuccess(Object result) {
+              // do some UI stuff to show success
+              label.setText((String) result);
+           }
+
+           public void onFailure(Throwable caught) {
+              // do some UI stuff to show failure
+              label.setText("DAMMIT! This didnt work.");
+           }
+        };
+
+        // (4) Make the call. Control flow will continue immediately and
+        // later
+        // 'callback' will be invoked when the RPC completes.
+        sampleRemoteService.doComplimentMe(callback);
+
+     }
+   });
+  
+  RootPanel.get().add(new HTML("<br /><br />"));
+  RootPanel.get().add(label);
+  RootPanel.get().add(rpcButton);
+  
+ }
 }
