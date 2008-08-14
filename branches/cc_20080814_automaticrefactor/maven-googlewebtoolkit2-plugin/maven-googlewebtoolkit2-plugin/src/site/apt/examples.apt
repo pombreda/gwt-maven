@@ -1,0 +1,208 @@
+GWT-Maven Examples
+
+
+ * Manual Configuration
+
+  Here is an example that uses manual configuration
+
++--
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+ http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.me</groupId>
+    <artifactId>user-sample</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>GWT User example</name>
+    <url>http://maven.apache.org</url>
+    <repositories>
+        <repository>
+            <id>gwt-maven</id>
+            <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+      <pluginRepository>
+        <id>gwt-maven</id>
+          <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+      </pluginRepository> 
+      <pluginRepository>
+        <id>internal</id>
+        <url>http://build-1.rack.sourcelabs.com/repos/internal/</url>
+      </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>1.4.60</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>1.4.60</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtx</groupId>
+            <artifactId>GWTx</artifactId>
+            <version>20070605</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>user-sample</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.totsp.gwt</groupId>
+                <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+                <configuration>
+                    <logLevel>ALL</logLevel>
+                    <runTarget>com.me.MyModule/MyHostPage.jsp</runTarget>
+                    <compileTarges>
+                      <param>com.me.MyModule</param>
+                    </compileTargets>
+                    <generatorRootClasses>
+                        <value>com.me.server.MyBean</value>
+                    </generatorRootClasses>
+                    <generatorDestinationPackage>com.me.client</generatorDestinationPackage>
+                    <generateGettersAndSetters>true</generateGettersAndSetters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+              	          <goal>generateClientBeans</goal>
+              	          <goal>mergewebxml</goal>
+              	          <goal>compile</goal>
+                          <goal>testGwt</goal>
+            	       </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <webXml>target/web.xml</webXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
++--
+
+
+ *  Auto Configuration 
+
+  Here is an example that uses the auto-configuration, and some simple bean generation
+
++--
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.example.SomeClass</groupId>
+  <artifactId>example-app</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Example Web App</name>
+  <url>http://maven.apache.org</url>
+
+  <repositories>
+    <!-- This is the repo for Google Code -->
+    <repository>
+      <id>gwt-maven</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>gwt-maven</id>
+        <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </pluginRepository> 
+    <pluginRepository>
+      <id>internal</id>
+      <url>http://build-1.rack.sourcelabs.com/repos/internal/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>user-sample</finalName>
+    <plugins>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.0</version>
+          <configuration>
+              <source>1.5</source>
+              <target>1.5</target>
+          </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.totsp.gwt</groupId>
+        <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+        <configuration>
+          <gwtVersion>1.4.60</gwtVersion>
+          <runTarget>org.example.SomeClass.Module/Page.html</runTarget>
+          <compileTargets>
+              <param>org.example.SomeClass.Module</param>
+          </compileTargets>
+          <generatorRootClasses>
+            <value>org.example.SomeClass</value>
+          </generatorRootClasses>
+          <overwriteGeneratedClasses>true</overwriteGeneratedClasses>
+          <generatorDestinationPackage>org.example.SomeClass.client.beans</generatorDestinationPackage>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generateClientBeans</goal>
+              <goal>mergewebxml</goal>
+              <goal>compile</goal>
+              <goal>setup</goal>
+              <goal>extractGwt</goal>
+              <goal>testGwt</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <webXml>target/web.xml</webXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
++--
