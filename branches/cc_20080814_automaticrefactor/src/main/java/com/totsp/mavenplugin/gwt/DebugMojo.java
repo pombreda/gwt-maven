@@ -14,6 +14,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @goal debug
+ * 
  * @author cooper
  */
 public class DebugMojo extends GWTMojo {

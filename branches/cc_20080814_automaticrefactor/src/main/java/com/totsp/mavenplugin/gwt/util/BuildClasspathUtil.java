@@ -4,15 +4,12 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
-import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Resource;
 import org.apache.maven.project.MavenProject;
 
@@ -24,8 +21,11 @@ public class BuildClasspathUtil {
     * Build classpath list using either gwtHome (if present) or using *project* dependencies.
     * Note that this is ONLY used for the script/cmd writers (so the scopes are not for the compiler, or war plugins, etc).
     * 
-    * @param fRuntime
-    * @return
+    * @author ccollins
+    * 
+    * @param mojo
+    * @param runtime
+    * @return file collection for classpath
     * @throws DependencyResolutionRequiredException
     */
    public static Collection<File> buildClasspathList(final AbstractGWTMojo mojo, final boolean runtime)
@@ -38,39 +38,15 @@ public class BuildClasspathUtil {
 
       Set<File> items = new LinkedHashSet<File>();
 
-      // add GWT jars and relative native libs
-      // (note that gwt-user should be scoped provided so it does not end up in WAR, etc  . . .
-      // however, we do need it for the shell, so it's a special scope and we inject it here even for runtime scope)
+      // inject GWT jars and relative native libs 
+      // (gwt-user and gwt-dev should be scoped provided to keep them out of other maven stuff - not end up in war, etc)     
       if (gwtHome != null) {
-         System.out.println("google.webtoolkit.home set, using directory for GWT dependencies, rather than POM - "
-                  + gwtHome.getAbsolutePath());
-         items.add(gwtHome);
-         items.add(new File(gwtHome, "gwt-user.jar"));
-         items.add(new File(gwtHome, ArtifactNameUtil.guessDevJarName()));
+         System.out.println("google.webtoolkit.home set, using it for GWT dependencies - " + gwtHome.getAbsolutePath());
+         items.addAll(BuildClasspathUtil.injectGwtDepsFromGwtHome(gwtHome, mojo));
       }
       else {
          System.out.println("google.webtoolkit.home *not* set, using project POM for GWT dependencies");
-         System.out.println("(injecting gwt-user and expecting native libs to be relative)");
-         // we ALSO need to get gwt-user
-         // we need it when building scripts - but it wont be present in any getClasspathElements call (scoped provided)
-         // (adding it here does NOT mean it will be added in to other plugins, like the war plugin, for example)
-         // (we get it from dependency list because it's scope [provided] excludes it from everything else at this point)          
-
-         ArtifactRepository repo = mojo.getLocalRepository();
-         Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-user",
-                  mojo.getGwtVersion(), "jar", null);
-         try {
-            mojo.getResolver().resolve(gwtUser, null, mojo.getLocalRepository());
-            items.add(gwtUser.getFile());
-         }
-         catch (ArtifactNotFoundException e) {
-            // TODO
-            e.printStackTrace();
-         }
-         catch (ArtifactResolutionException e) {
-            // TODO
-            e.printStackTrace();
-         }
+         items.addAll(BuildClasspathUtil.injectGwtDepsFromRepo(mojo));
       }
 
       // add sources and resources
@@ -105,7 +81,7 @@ public class BuildClasspathUtil {
          items.add(new File(it.next().toString()));
       }
 
-      System.out.println("DEBUG CLASSPATH LIST");
+      System.out.println("DEBUG SCRIPT CLASSPATH LIST");
       for (File f : items) {
          System.out.println("   " + f.getAbsolutePath());
       }
@@ -123,16 +99,55 @@ public class BuildClasspathUtil {
             throws DependencyResolutionRequiredException {
       Collection<File> classpathItems = BuildClasspathUtil.buildClasspathList(mojo, true);
       Collection<File> items = new LinkedHashSet<File>();
-
-      /* buildClasspathList already does this?
-      for (Iterator it = project.getResources().iterator(); this.getSourcesOnPath() && it.hasNext();) {
-         Resource r = (Resource) it.next();
-         items.add(new File(r.getDirectory()));
-      }
-      */
-
       items.addAll(classpathItems);
       return items;
    }
 
+   /**
+    * Helper to inject gwt-user and gwt-dev into classpath from gwtHome, ONLY for compile and run scripts. 
+    * 
+    * @param mojo
+    * @return
+    */
+   public static Collection<File> injectGwtDepsFromGwtHome(final File gwtHome, final AbstractGWTMojo mojo) {
+      System.out.println("injecting gwt-user and gwt-dev for script classpath from google.webtoolkit.home");
+      System.out.println("(and expecting native libs to be relative)");
+      Collection<File> items = new LinkedHashSet<File>();
+      items.add(gwtHome);
+      items.add(new File(gwtHome, "gwt-user.jar"));
+      items.add(new File(gwtHome, ArtifactNameUtil.guessDevJarName()));
+      return items;
+   }
+
+   /**
+    * Helper to inject gwt-user and gwt-dev into classpath from repo, ONLY for compile and run scripts. 
+    * 
+    * @param mojo
+    * @return
+    */
+   public static Collection<File> injectGwtDepsFromRepo(final AbstractGWTMojo mojo) {
+      System.out.println("injecting gwt-user and gwt-dev for script classpath from local repository");
+      System.out.println("(and expecting native libs to be relative)");
+      Collection<File> items = new LinkedHashSet<File>();
+
+      Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-user",
+               mojo.getGwtVersion(), "jar", null);
+      Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
+               mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
+      try {
+         mojo.getResolver().resolve(gwtUser, null, mojo.getLocalRepository());
+         mojo.getResolver().resolve(gwtDev, null, mojo.getLocalRepository());
+         items.add(gwtUser.getFile());
+         items.add(gwtDev.getFile());
+      }
+      catch (ArtifactNotFoundException e) {
+         // TODO
+         e.printStackTrace();
+      }
+      catch (ArtifactResolutionException e) {
+         // TODO
+         e.printStackTrace();
+      }
+      return items;
+   }
 }

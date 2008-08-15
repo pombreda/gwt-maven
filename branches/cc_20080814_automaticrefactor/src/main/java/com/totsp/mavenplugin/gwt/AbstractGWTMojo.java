@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.classworlds.ClassRealm;
@@ -33,6 +32,8 @@ import org.codehaus.classworlds.ClassWorld;
 import org.codehaus.plexus.util.FileUtils;
 
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
+
+// TODO replace all sys out with logging - this.getLog().warn(e.getMessage());
 
 /**
  * Abstract Mojo for GWT-Maven.
@@ -53,6 +54,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
             .getProperty("java.home")
             + File.separator + "bin" + File.separator + "java") : "java";
 
+   // Maven properties
+   
    /**
     * Project instance, used to add new source directory to the build.
     * @parameter default-value="${project}"
@@ -68,16 +71,23 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @readonly
     */
    private List pluginClasspathList;
-   /** @component */
+   /** @component 
+    */
    private org.apache.maven.artifact.factory.ArtifactFactory artifactFactory;
-   /** @component */
+   /** 
+    * @component 
+    */
    private org.apache.maven.artifact.resolver.ArtifactResolver resolver;
-   /**@parameter expression="${localRepository}" */
+   /**
+    * @parameter expression="${localRepository}" 
+    */
    private org.apache.maven.artifact.repository.ArtifactRepository localRepository;
-   /** @parameter expression="${project.remoteArtifactRepositories}" */
+   /** 
+    * @parameter expression="${project.remoteArtifactRepositories}" 
+    */
    private java.util.List remoteRepositories;
    
-
+   // GWT-Maven properties
    
    /**
     * @parameter property="generatorRootClasses"
@@ -124,7 +134,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    private File contextXml;
    /**
     * @parameter expression="${basedir}/src/main/webapp/WEB-INF/web.xml"
-    *
     */
    private File webXml;
    /**
@@ -150,7 +159,6 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    private String[] compileTarget;
    /**
     * @parameter expression="${google.webtoolkit.extrajvmargs}"
-    *
     */
    private String extraJvmArgs;
    /**
@@ -227,8 +235,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
          e.printStackTrace();
          throw new RuntimeException(e);
       }
-   }   
-   
+   }      
 
    //
    // accessors/mutators

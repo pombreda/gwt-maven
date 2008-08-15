@@ -11,7 +11,7 @@
 		<artifactId>maven-googlewebtoolkit</artifactId>
 		<version>1.0.1</version>
 	</parent>
-	<name>Maven 2 Plugin for Google Web Toolkit</name>
+	<name>Maven 2 Plugin for the Google Web Toolkit</name>
 	<url>http://code.google.com/p/gwt-maven</url>
 	<distributionManagement>
 		<repository>
