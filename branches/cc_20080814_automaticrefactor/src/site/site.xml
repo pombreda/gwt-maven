@@ -10,18 +10,11 @@
       <item name="Goals" href="plugin-info.html"/>
     </menu>
    
-    <menu name="Setup and Configuration">
+    <menu name="Setup and Examples">
       <item name="Setup" href="setup.html"/>
-      <item name="Configuration" href="configuration.html"/>
       <item name="Examples" href="examples.html"/>
     </menu>
     
-    <menu name="More Information">
-      <item name="Google Code Hosting Site" href="http://code.google.com/p/gwt-maven/"/>
-      <item name="Mailing List" href="http://groups.google.com/group/gwt-maven"/>
-      <item name="FAQ" href="http://code.google.com/p/gwt-maven/wiki/M2FAQ"/>
-    </menu>
-
     <menu ref="reports"/>
     
   </body>
