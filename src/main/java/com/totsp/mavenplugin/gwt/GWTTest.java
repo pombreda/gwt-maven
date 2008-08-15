@@ -28,6 +28,8 @@ import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
  * @phase test
  * @goal testGwt
  * @requiresDependencyResolution test
+ * 
+ * @author willpugh
  */
 public class GWTTest extends AbstractGWTMojo {
     /**

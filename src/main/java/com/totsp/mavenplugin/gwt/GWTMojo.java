@@ -36,15 +36,13 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  * GWT mojo handles the shell related goals.
  *  
  * @goal gwt
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution provided
  * @description Runs the the project in the GWT Development Shell.
  * @execute phase=package
  * 
  * @author cooper
  */
 public class GWTMojo extends AbstractGWTMojo {
-
-   String[] baseArgs = new String[0];
 
    /** Creates a new instance of GWTMojo */
    public GWTMojo() {
@@ -69,10 +67,13 @@ public class GWTMojo extends AbstractGWTMojo {
             File exec = writer.writeRunScript(this);
             ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
             pw.startProcess(System.out, System.err);
-            pw.waitFor();
-         }
+            int retVal = pw.waitFor();
+            if (retVal != 0) {
+               throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+            }
+         } 
          catch (Exception e) {
-            throw new MojoExecutionException("Unable to write start script.", e);
+            throw new MojoExecutionException("Exception attempting run.", e);
          }
       }
       else {
@@ -81,10 +82,13 @@ public class GWTMojo extends AbstractGWTMojo {
             File exec = writer.writeRunScript(this);
             ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
             pw.startProcess(System.out, System.err);
-            pw.waitFor();
+            int retVal = pw.waitFor();
+            if (retVal != 0) {
+               throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+            }
          }
          catch (Exception e) {
-            throw new MojoExecutionException("Unable to write start script.", e);
+            throw new MojoExecutionException("Exception attempting run.", e);
          }
       }
    }
@@ -95,6 +99,7 @@ public class GWTMojo extends AbstractGWTMojo {
     * @throws Exception
     */
    public void makeCatalinaBase() throws Exception {
+      System.out.println("make catalina base for embedded Tomcat");
       String[] args = {this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath()};
       MakeCatalinaBase.main(args);
 

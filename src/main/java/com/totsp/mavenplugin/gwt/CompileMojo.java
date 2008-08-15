@@ -35,6 +35,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * @goal compile
  * @phase compile
  * @requiresDependencyResolution compile
+ * 
  * @author cooper
  */
 public class CompileMojo extends AbstractGWTMojo{
@@ -57,8 +58,8 @@ public class CompileMojo extends AbstractGWTMojo{
                 ProcessWatcher    pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
                 pw.startProcess(System.out, System.err);
                 int retVal = pw.waitFor();
-                if( retVal != 0 ){
-                    throw new MojoFailureException("Compilation failed.");
+                if(retVal != 0){
+                   throw new MojoFailureException("compile script exited abormally with code - " + retVal);
                 }
             } catch(Exception e){
                 throw new MojoExecutionException("Exception attempting compile.", e);
@@ -71,7 +72,7 @@ public class CompileMojo extends AbstractGWTMojo{
                 pw.startProcess(System.out, System.err);
                 int retVal = pw.waitFor();
                 if( retVal != 0 ){
-                    throw new MojoFailureException("Compilation failed.");
+                   throw new MojoFailureException("compile script exited abormally with code - " + retVal);
                 }
             } catch(Exception e){
                 throw new MojoExecutionException("Exception attempting compile.", e);

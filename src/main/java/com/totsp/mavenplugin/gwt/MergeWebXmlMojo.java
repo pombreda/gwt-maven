@@ -36,6 +36,7 @@ import com.totsp.mavenplugin.gwt.util.FileIOUtils;
  * @goal mergewebxml
  * @requiresDependencyResolution compile
  * @phase compile
+ * 
  * @author cooper
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo {
@@ -63,46 +64,49 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
             throw new MojoExecutionException(e.getMessage());
          }
       }
-      */
+      */      
       
       try {
          File destination = new File(this.getBuildDir(), "web.xml");
 
          FileIOUtils.copyFile(this.getWebXml(), destination);
+         
          for (int i = 0; i < this.getCompileTarget().length; i++) {
             File moduleFile = null;
             for (Iterator it = this.getProject().getCompileSourceRoots().iterator(); it.hasNext() && moduleFile == null;) {
                File check = new File(it.next().toString() + "/" + this.getCompileTarget()[i].replace('.', '/')
                         + ".gwt.xml");
                System.out.println("Looking for file: " + check.getAbsolutePath());
-               moduleFile = check.exists() ? check : moduleFile;
+               if (check.exists()) {
+                  moduleFile = check;
+               }
             }
             for (Iterator it = this.getProject().getResources().iterator(); it.hasNext();) {
                Resource r = (Resource) it.next();
                File check = new File(r.getDirectory() + "/" + this.getCompileTarget()[i].replace('.', '/') + ".gwt.xml");
                System.out.println("Looking for file: " + check.getAbsolutePath());
-               moduleFile = check.exists() ? check : moduleFile;
+               if (check.exists()) {
+                  moduleFile = check;
+               }
             }
 
             this.fixThreadClasspath();
 
-            GwtWebInfProcessor processor = null;
-            System.out.println("Module file: " + moduleFile);
+            GwtWebInfProcessor processor = null;            
             try {
                if (moduleFile != null) {
+                  System.out.println("Module file: " + moduleFile.getAbsolutePath());
                   processor = new GwtWebInfProcessor(this.getCompileTarget()[i], moduleFile, destination
                            .getAbsolutePath(), destination.getAbsolutePath());
                }
                else {
-                  processor = new GwtWebInfProcessor(this.getCompileTarget()[i], destination.getAbsolutePath(),
-                           destination.getAbsolutePath());
+                  throw new MojoExecutionException("module file null");
                }
             }
-            catch (ExitException ee) {
-               this.getLog().warn(ee.getMessage());
+            catch (ExitException e) {
+               this.getLog().warn(e.getMessage());
                return;
             }
-
             processor.process();
          }
       }

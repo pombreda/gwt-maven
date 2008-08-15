@@ -21,6 +21,7 @@ import com.totsp.mavenplugin.gwt.DebugMojo;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 
 /**
+ * Handler for writing shell scripts for the mac and linux platforms.
  *
  * @author rcooper
  */

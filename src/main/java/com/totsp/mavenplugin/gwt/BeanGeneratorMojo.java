@@ -36,6 +36,7 @@ import com.totsp.mavenplugin.gwt.support.beans.TranslatorGenerator;
 /**
  * @requiresDependencyResolution compile
  * @goal generateClientBeans
+ * 
  * @author cooper
  */
 public class BeanGeneratorMojo extends AbstractGWTMojo {

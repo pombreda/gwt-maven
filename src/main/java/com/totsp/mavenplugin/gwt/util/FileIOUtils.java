@@ -8,9 +8,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * Consolidate file and IO related utils from other classes.
  * 
  * @author ccollins
- *
  */
 public class FileIOUtils {
 

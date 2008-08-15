@@ -22,18 +22,18 @@
 	
 	<dependencies>
 	    <!--  GWT deps -->
+	    <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>1.5.1</version>
+            <scope>runtime</scope>
+        </dependency>     
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <version>1.5.1</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>1.5.1</version>
-            <scope>runtime</scope>
-        </dependency>       
+        </dependency>          
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
@@ -109,6 +109,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <!--  If you want to use the target/web.xml file mergewebxml produces, tell the war plugin to use it-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>target/web.xml</webXml>
+                </configuration>
             </plugin>
 		</plugins>
 	</build>

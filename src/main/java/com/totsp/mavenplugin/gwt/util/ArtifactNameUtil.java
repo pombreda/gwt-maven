@@ -6,11 +6,14 @@ public class ArtifactNameUtil {
    
    public static final String GWT_DEV_JAR_PREFIX = "";
    
-   
+   /**
+    * Util for artifact and platform names stuff.
+    * 
+    * @author ccollins
+    * 
+    */
    private ArtifactNameUtil() {
    }
-   
-   // System.getProperty("os.version")
    
    /**
     * Convenience return platform name.
@@ -28,6 +31,11 @@ public class ArtifactNameUtil {
       return result;
    }
    
+   /**
+    * Guess dev jar name based on platform.
+    * 
+    * @return
+    */
    public static final String guessDevJarName() {
       if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
          return "gwt-dev-windows.jar";
@@ -38,6 +46,5 @@ public class ArtifactNameUtil {
       else {
          return "gwt-dev-linux.jar";
       }
-   }
-   
+   }   
 }
