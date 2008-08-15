@@ -220,7 +220,8 @@ public class GwtWebInfProcessor {
       if (this.webXml == null) {
          SAXBuilder builder = new SAXBuilder(false);
          builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-         return this.webXml = builder.build(this.webXmlPath);
+         //return this.webXml = builder.build(this.webXmlPath);
+         return this.webXml = builder.build(new File(this.webXmlPath).toURL());
       }
       else {
          return this.webXml;
