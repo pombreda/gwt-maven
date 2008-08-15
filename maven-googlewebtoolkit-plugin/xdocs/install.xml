@@ -15,7 +15,7 @@
 				<source>
  maven plugin:download -DgroupId=com.totsp.gwt
  -DartifactId=maven-googlewebtoolkit-plugin
- -Dversion=1.5.6
+ -Dversion=1.6.0
  -Dmaven.repo.remote=http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/,http://repo1.maven.org/maven
 				</source>
 			</subsection>
