@@ -10,8 +10,7 @@ GWT-Maven Setup
  
  For example:
  
- +-- 
- <!--  configure the GWT-Maven plugin -->
++-- 
             <plugin>
                 <groupId>com.totsp.gwt</groupId>
                 <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
@@ -25,7 +24,7 @@ GWT-Maven Setup
                     <style>DETAILED</style>
                     <noServer>false</noServer>
                     <gwtVersion>1.5.1</gwtVersion>
-                    <!-- <extraJvmArgs>-Dgwt.args=-web</extraJvmArgs>-->
+                    <extraJvmArgs>-Dgwt.args=-web</extraJvmArgs>
                 </configuration>
                 <executions>
                     <execution>
@@ -37,8 +36,7 @@ GWT-Maven Setup
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            
+            </plugin>          
 +--
 
 * Getting the Plugin
@@ -55,15 +53,13 @@ repository from the gwt-maven project (a good one to start with ):
   </pluginRepositories>
 +--
 
-
 * Handling GWT 
 
   The plugin needs to know where to find GWT (jars *and* native libraries).  There are two ways you can do this.
 
     [[1]]  Use the maven dependency plugin to automatically extract GWT native libraries from central repo (automatic mode)
 
-    [[1]]  Download and unpack GWT yourself and set the google.webtoolkit.home property to the location where it is installed (manual mode)
-    
+    [[1]]  Download and unpack GWT yourself and set the google.webtoolkit.home property to the location where it is installed (manual mode)  
     
 ** Automatic Mode Setup
 
@@ -73,10 +69,8 @@ repository from the gwt-maven project (a good one to start with ):
   For example:
 
 +--
-    <plugins>
-      <!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
-            <!--  (use this a replacement for the old "automatic" mode - if you don't have GWT installed already -->
-            <plugin>
+    <plugins>      
+             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -149,14 +143,14 @@ repository from the gwt-maven project (a good one to start with ):
             </activation>
         </profile>
     </profiles> 
- +--
++--
  
   And, you will need to define the GWT dependencies for automatic mode. 
-  (You should remember to mark gwt-user as "provided" so it is not included in your WAR file.) 
+  (You should remember to mark gwt-user, and gwt-dev as "provided" so they won't be included in your WAR file.) 
   
   For example:
   
- +--
++--
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
@@ -186,7 +180,7 @@ repository from the gwt-maven project (a good one to start with ):
             <classifier>${platform}</classifier>
             <scope>provided</scope>
         </dependency>
-  +-- 
++-- 
  
 ** Manual Setup
 
