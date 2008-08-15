@@ -16,7 +16,7 @@
       <item name="Examples" href="examples.html"/>
     </menu>
     
-    <menu name="Mailing List, Source, FAQ, and More">
+    <menu name="More Information">
       <item name="Google Code Hosting Site" href="http://code.google.com/p/gwt-maven/"/>
       <item name="Mailing List" href="http://groups.google.com/group/gwt-maven"/>
       <item name="FAQ" href="http://code.google.com/p/gwt-maven/wiki/M2FAQ"/>
