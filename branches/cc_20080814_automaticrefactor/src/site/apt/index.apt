@@ -1,54 +1,11 @@
-------
- Introduction
- ------
- Author
- ------
- DD MMMM YYYY
- ------
-
-
+-----
 GWT-Maven (maven-googlewebtoolit2-plugin)
+-----
 
-  This is a plugin to provide support for Google Web Toolkit projects, including
+ GWT-Maven is a plugin to provide support for Google Web Toolkit projects, including
  running the GWT developer tools (the compiler and shell) and performing support operations to help
  developers make GWT fit more closely in with their standard JEE web application
  development (managing the emebedded server, running noserver, merging web.xml, generating client beans, and more).
-
-* Goals Overview
-
- * gwt:gwt - runs the project in the GWTShell
-
- * gwt:debug - runs the project in GWTShell, starting a blocking debugger on 
-   the shell's host port (from there you can connect a debugger)
-
- * gwt:compile - compiles the GWT application into the destination
-
- * gwt:mergewebxml - inspects the module descriptor and adds servlet references to
-   the web web.xml file in the webapp directory (if they are not already present) - 
-   The output of this process is written to target/web.xml
-
- * gwt:generateClientBeans - this will generate client side beans based on introspection
-   of beans in your project into your Java source directory
-
- * gwt:testGwt - this is a workaround for the difficulties in getting our tests to run in JUnit which
-   spawns separate processes to run the tests, and reports the results to target/gwtTest 
-
- * gwt:setup - this will automatically get run during the validation stage of your maven build, and
-   using the gwtVersion property, automatically download a GWT zip file,
-   unzip it into the gwtBinOutputDirectory property location (default target/gwtBin) 
-   and setup the internal GWT path variables, and dependencies
-
- * gwt:extractGwt - this needs to be enabled if and only if setup is enabled, 
-   it runs before compilation, and is responsible for the actual unzipping of the GWT artifact
-
-* Bean Generation
-
-  The GWT-Maven plugin allows you to generate IsSerializable beans from other beans in you application.  You can do
-  this by setting the generatorRootClasses, and generatorDestinationPackage.
-
-* Usage
-
-  Instructions on how to use the Plugin Name can be found on the {{{usage.html}usage page}}.  TODO?
 
 * Setup, Configuration, and Examples
 
