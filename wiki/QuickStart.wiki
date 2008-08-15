@@ -1,0 +1,21 @@
+#Get the maven-googlewebtoolkit2-sample project running.
+
+= Setup =
+
+Install:
+ * JDK v1.5+
+ * Maven
+ * Some svn client of your choice
+
+= Steps (command line) =
+ * svn export http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample_ _Check out the sample source from svn_
+ * cd maven-googlewebtoolkit2-sample _Navigate to the maven-googlewebtoolkit2-sample directory_
+ * Ask maven to compile, execute.. run the project. Note it'll take a while downloading maven plugins & gwt libraries. You could get timeouts due to load on the servers!
+  * mvn clean install _this will build and pack the entire project_
+  * cd war
+  * mvn gwt:gwt _this will run the webapp in hosted mode_
+
+= Mess with it =
+Now, to learn how it works. You can import the maven project in pretty much all IDE's. Like Netbeans v6.4+, IntelliJ and Eclipse (needs m2eclipse plugin and File -> Import).
+
+I hope this gets you on your way!
