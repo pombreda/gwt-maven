@@ -51,6 +51,13 @@
 			<classifier>${platform}</classifier>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.1</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -81,9 +88,9 @@
 					<execution>
 						<goals>
 							<goal>mergewebxml</goal>
-							<goal>compile</goal>
-							<goal>gwt</goal> 
 							<goal>i18n</goal>                            
+							<goal>compile</goal>							
+							<goal>gwt</goal>							
                             <!-- <goal>testGwt</goal>-->
 						</goals>
 					</execution>
