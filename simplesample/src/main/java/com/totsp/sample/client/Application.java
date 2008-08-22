@@ -117,6 +117,11 @@ public class Application implements EntryPoint {
   RootPanel.get().add(new HTML("<br /><br />"));
   RootPanel.get().add(label);
   RootPanel.get().add(rpcButton);
+  RootPanel.get().add(new HTML("<br /><br />"));
+  
+  AppConstants appConstants = (AppConstants) GWT.create(AppConstants.class);
+  String compliment = appConstants.compliment1();
+  RootPanel.get().add(new Label ("i18n test compliment - " + compliment));
   
  }
 }
