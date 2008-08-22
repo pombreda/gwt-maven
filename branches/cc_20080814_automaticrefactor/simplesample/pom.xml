@@ -73,7 +73,9 @@
 					<i18nConstantsNames>
 					   <value>com.totsp.sample.client.AppConstants</value>
 					</i18nConstantsNames>
-					<!--  <i18nMessagesNames>TODO</i18nMessagesNames -->
+					<i18nMessagesNames>
+					   <value>com.totsp.sample.client.AppMessages</value>
+					</i18nMessagesNames>
 				</configuration>
 				<executions>
 					<execution>
