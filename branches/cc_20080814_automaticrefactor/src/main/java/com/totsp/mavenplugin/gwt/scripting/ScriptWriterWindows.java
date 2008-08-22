@@ -27,11 +27,12 @@ import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
  * @author rcooper
  */
 public class ScriptWriterWindows {
-   
+
    public ScriptWriterWindows() {
    }
 
-   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
+   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
       String filename = (mojo instanceof DebugMojo) ? "debug.cmd" : "run.cmd";
       File file = new File(mojo.getBuildDir(), filename);
       PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -87,7 +88,8 @@ public class ScriptWriterWindows {
       return file;
    }
 
-   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
+   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
       File file = new File(mojo.getBuildDir(), "compile.cmd");
       PrintWriter writer = new PrintWriter(new FileWriter(file));
       Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, false);
@@ -140,6 +142,65 @@ public class ScriptWriterWindows {
             String xs = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\xs";
             writer.println("xcopy " + xs + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target + " /s /i /Y");
             writer.println("del " + xs + " /S /Q");
+         }
+      }
+
+      writer.flush();
+      writer.close();
+
+      return file;
+   }
+
+   public File writeI18nScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
+      File file = new File(mojo.getBuildDir(), "i18n.cmd");
+      PrintWriter writer = new PrintWriter(new FileWriter(file));
+      Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, false);
+      writer.print("set CLASSPATH=");
+
+      StringBuffer cpString = new StringBuffer();
+
+      for (File f : classpath) {
+         cpString.append("\"" + f.getAbsolutePath() + "\";");
+
+         //break the line at 4000 characters to avout max size.
+         if (cpString.length() > 4000) {
+            writer.println(cpString);
+            cpString = new StringBuffer();
+            writer.print("set CLASSPATH=%CLASSPATH%;");
+         }
+      }
+      writer.println(cpString);
+      writer.println();
+
+      // constants
+      if (mojo.getI18nConstantsNames() != null) {
+         for (String target : mojo.getI18nConstantsNames()) {
+            String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
+
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print(" com.google.gwt.i18n.tools.I18NSync");
+            writer.print(" -out ");
+            writer.print(mojo.getI18nOutputDir());
+            writer.print(" ");
+            writer.print(target);
+            writer.println();
+         }
+      }
+
+      // messages
+      if (mojo.getI18nMessagesNames() != null) {
+         for (String target : mojo.getI18nMessagesNames()) {
+            String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
+
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print(" com.google.gwt.i18n.tools.I18NSync");
+            writer.print(" -createMessages ");
+            writer.print(" -out ");
+            writer.print(mojo.getI18nOutputDir());
+            writer.print(" ");
+            writer.print(target);
+            writer.println();
          }
       }
 

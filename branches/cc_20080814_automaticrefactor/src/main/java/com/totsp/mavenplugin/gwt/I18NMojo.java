@@ -20,46 +20,24 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
-import java.util.Collection;
 
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
-import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 
 /**
+ * Mojo that performs GWT i18n
+ * 
  * @goal i18n
  * @requiresDependencyResolution compile
  * @phase compile
+ * 
  * @author Sascha-Matthias Kulawik <sascha@kulawik.de>
  */
 public class I18NMojo extends AbstractGWTMojo {
-   /**
-    * @parameter expression="${basedir}/src/main/java/"
-    */
-   private File i18nOutputDir;
-   /**
-    * @parameter 
-    */
-   private String[] i18nConstantsNames;
-
-   public File getI18nOutputDir() {
-      return i18nOutputDir;
-   }
-
-   public void setI18nOutputDir(File outputDir) {
-      i18nOutputDir = outputDir;
-   }
-
-   public String[] getI18nConstantsNames() {
-      return i18nConstantsNames;
-   }
-
-   public void setI18nConstantsNames(String[] constantsName) {
-      i18nConstantsNames = constantsName;
-   }
 
    /** Creates a new instance of I18NMojo */
    public I18NMojo() {
@@ -67,47 +45,49 @@ public class I18NMojo extends AbstractGWTMojo {
    }
 
    public void execute() throws MojoExecutionException, MojoFailureException {
+
+      if (this.getI18nMessagesNames() == null && this.getI18nConstantsNames() == null) {
+         throw new MojoExecutionException(
+                  "neither i18nConstantsNames nor i18nMessagesNames present, cannot execute i18n goal");
+      }
+
       if (!this.getI18nOutputDir().exists()) {
          if (getLog().isInfoEnabled())
             getLog().info("I18NModule is creating target directory " + getI18nOutputDir().getAbsolutePath());
          this.getI18nOutputDir().mkdirs();
       }
 
-      String command = AbstractGWTMojo.JAVA_COMMAND + " -cp \"";
-      Collection<File> classpath;
-      try {
-         classpath = BuildClasspathUtil.buildClasspathList(this, false);
-      }
-      catch (DependencyResolutionRequiredException e1) {
-         e1.printStackTrace();
-         throw new MojoFailureException("Dependency Resolution failed");
-      }
-      boolean first = true;
-      for (File f : classpath) {
-         if (!first) {
-            command += File.pathSeparator;
-         }
-         first = false;
-         command += f.getAbsolutePath();
-      }
-      command += "\" com.google.gwt.i18n.tools.I18NSync -createMessages -out " + getI18nOutputDir().getAbsolutePath()
-               + " ";
-      for (String constantsName : getI18nConstantsNames()) {
-         String localCommand = command + constantsName;
-
-         if (getLog().isInfoEnabled())
-            getLog().info("I18N command to execute: " + localCommand);
+      if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
+         ScriptWriterWindows writer = new ScriptWriterWindows();
          try {
-            ProcessWatcher pw = new ProcessWatcher(localCommand);
+            File exec = writer.writeI18nScript(this);
+            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
             pw.startProcess(System.out, System.err);
             int retVal = pw.waitFor();
             if (retVal != 0) {
-               throw new MojoFailureException("Compilation failed.");
+               throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
             }
          }
          catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting compile.", e);
+            throw new MojoExecutionException("Exception attempting run.", e);
          }
       }
+      else {
+         ScriptWriterUnix writer = new ScriptWriterUnix();
+         try {
+            File exec = writer.writeI18nScript(this);
+            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+            pw.startProcess(System.out, System.err);
+            int retVal = pw.waitFor();
+            if (retVal != 0) {
+               throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
+            }
+         }
+         catch (Exception e) {
+            throw new MojoExecutionException("Exception attempting i18n (see target/i18n.sh/cmd).", e);
+         }
+      }
+
    }
+
 }
