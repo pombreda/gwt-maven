@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 import com.totsp.mavenplugin.gwt.DebugMojo;
@@ -30,7 +31,7 @@ public class ScriptWriterWindows {
    public ScriptWriterWindows() {
    }
 
-   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException {
+   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
       String filename = (mojo instanceof DebugMojo) ? "debug.cmd" : "run.cmd";
       File file = new File(mojo.getBuildDir(), filename);
       PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -86,7 +87,7 @@ public class ScriptWriterWindows {
       return file;
    }
 
-   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException {
+   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
       File file = new File(mojo.getBuildDir(), "compile.cmd");
       PrintWriter writer = new PrintWriter(new FileWriter(file));
       Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, false);
