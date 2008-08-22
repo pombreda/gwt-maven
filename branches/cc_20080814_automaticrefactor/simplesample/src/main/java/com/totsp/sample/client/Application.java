@@ -119,7 +119,7 @@ public class Application implements EntryPoint {
   RootPanel.get().add(rpcButton);  
   
   RootPanel.get().add(new HTML("<br /><br />"));
-  RootPanel.get().add(new Label("change URL to append \"?local=fr\" to see the fancy french text"));  
+  RootPanel.get().add(new Label("change URL to append \"?locale=fr\" to see the fancy french text"));  
   
   RootPanel.get().add(new HTML("<br /><br />"));
   AppConstants appConstants = (AppConstants) GWT.create(AppConstants.class);
