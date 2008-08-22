@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 import com.totsp.mavenplugin.gwt.DebugMojo;
@@ -30,7 +31,7 @@ public class ScriptWriterUnix {
    public ScriptWriterUnix() {
    }
 
-   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException {
+   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
       String filename = (mojo instanceof DebugMojo) ? "debug.sh" : "run.sh";
       File file = new File(mojo.getBuildDir(), filename);
       PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -104,7 +105,7 @@ public class ScriptWriterUnix {
       return file;
    }
 
-   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException {
+   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
       File file = new File(mojo.getBuildDir(), "compile.sh");
       PrintWriter writer = new PrintWriter(new FileWriter(file));
       File sh = new File("/bin/bash");
