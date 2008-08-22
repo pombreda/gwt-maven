@@ -202,6 +202,18 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter default-value="false"
     */
    private boolean enableAssertions;
+   /**
+    * @parameter expression="${basedir}/src/main/java/"
+    */
+   private File i18nOutputDir;
+   /**
+    * @parameter 
+    */
+   private String[] i18nMessagesNames;
+   /**
+    * @parameter 
+    */
+   private String[] i18nConstantsNames;
    
 
    /** Creates a new instance of AbstractGWTMojo */
@@ -515,5 +527,30 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
    public void setRemoteRepositories(java.util.List remoteRepositories) {
       this.remoteRepositories = remoteRepositories;
-   }   
+   }
+
+   public File getI18nOutputDir() {
+      return this.i18nOutputDir;
+   }
+
+   public void setI18nOutputDir(File outputDir) {
+      this.i18nOutputDir = outputDir;
+   }
+
+   public String[] getI18nMessagesNames() {
+      return this.i18nMessagesNames;
+   }
+
+   public void setI18nMessagesNames(String[] messagesNames) {
+      this.i18nMessagesNames = messagesNames;
+   }
+
+   public String[] getI18nConstantsNames() {
+      return this.i18nConstantsNames;
+   }
+
+   public void setI18nConstantsNames(String[] constantsNames) {
+      this.i18nConstantsNames = constantsNames;
+   }    
+   
 }

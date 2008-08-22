@@ -23,6 +23,8 @@ import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 
 /**
  * Handler for writing shell scripts for the mac and linux platforms.
+ * 
+ * TODO - make an abstract script writer so we can remove dupe code and handle calling for diff platforms better
  *
  * @author rcooper
  */
@@ -31,7 +33,8 @@ public class ScriptWriterUnix {
    public ScriptWriterUnix() {
    }
 
-   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
+   public File writeRunScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
       String filename = (mojo instanceof DebugMojo) ? "debug.sh" : "run.sh";
       File file = new File(mojo.getBuildDir(), filename);
       PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -57,8 +60,7 @@ public class ScriptWriterUnix {
 
       String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-      if (AbstractGWTMojo.OS_NAME.startsWith("mac")
-               && (extra.indexOf("-XstartOnFirstThread") == -1)) {
+      if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
          extra = "-XstartOnFirstThread " + extra;
       }
 
@@ -105,7 +107,8 @@ public class ScriptWriterUnix {
       return file;
    }
 
-   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException, MojoExecutionException {
+   public File writeCompileScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
       File file = new File(mojo.getBuildDir(), "compile.sh");
       PrintWriter writer = new PrintWriter(new FileWriter(file));
       File sh = new File("/bin/bash");
@@ -132,8 +135,7 @@ public class ScriptWriterUnix {
       for (String target : mojo.getCompileTarget()) {
          String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-         if (AbstractGWTMojo.OS_NAME.startsWith("mac")
-                  && (extra.indexOf("-XstartOnFirstThread") == -1)) {
+         if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
             extra = "-XstartOnFirstThread " + extra;
          }
 
@@ -183,4 +185,77 @@ public class ScriptWriterUnix {
 
       return file;
    }
+
+   // TODO extract all the command stuff per platform
+   public File writeI18nScript(AbstractGWTMojo mojo) throws IOException, DependencyResolutionRequiredException,
+            MojoExecutionException {
+      File file = new File(mojo.getBuildDir(), "i18n.sh");
+      PrintWriter writer = new PrintWriter(new FileWriter(file));
+      File sh = new File("/bin/bash");
+
+      if (!sh.exists()) {
+         sh = new File("/usr/bin/bash");
+      }
+
+      if (!sh.exists()) {
+         sh = new File("/bin/sh");
+      }
+
+      writer.println("#!" + sh.getAbsolutePath());
+
+      Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, false);
+      writer.print("export CLASSPATH=");
+
+      for (File f : classpath) {
+         writer.print("\"" + f.getAbsolutePath() + "\":");
+      }
+
+      writer.println();
+
+      // constants
+      if (mojo.getI18nConstantsNames() != null) {
+         for (String target : mojo.getI18nConstantsNames()) {
+            String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
+
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print(" com.google.gwt.i18n.tools.I18NSync");
+            writer.print(" -out ");
+            writer.print(mojo.getI18nOutputDir());
+            writer.print(" ");
+            writer.print(target);
+            writer.println();
+         }
+      }
+
+      // messages
+      if (mojo.getI18nMessagesNames() != null) {
+         for (String target : mojo.getI18nMessagesNames()) {
+            String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
+
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print(" com.google.gwt.i18n.tools.I18NSync");
+            writer.print(" -createMessages ");
+            writer.print(" -out ");
+            writer.print(mojo.getI18nOutputDir());
+            writer.print(" ");
+            writer.print(target);
+            writer.println();
+         }
+      }
+
+      writer.flush();
+      writer.close();
+
+      try {
+         ProcessWatcher pw = new ProcessWatcher("chmod +x " + file.getAbsolutePath());
+         pw.startProcess(System.out, System.err);
+         pw.waitFor();
+      }
+      catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+
+      return file;
+   }
+
 }
