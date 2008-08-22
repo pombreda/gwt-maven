@@ -18,24 +18,28 @@
 			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
 		</repository>
 	</repositories>
+	<!--  convenience to define GWT version in one place -->
+	<properties>
+	   <gwtVersion>1.5.1</gwtVersion>
+	</properties>
 	<dependencies>
 	    <!--  GWT deps -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>1.5.1</version>
+			<version>${gwtVersion}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>1.5.1</version>
+			<version>${gwtVersion}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
-			<version>1.5.1</version>
+			<version>${gwtVersion}</version>
 			<classifier>${platform}-libs</classifier>
 			<type>zip</type>
 			<scope>provided</scope>
@@ -43,7 +47,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
-			<version>1.5.1</version>
+			<version>${gwtVersion}</version>
 			<classifier>${platform}</classifier>
 			<scope>provided</scope>
 		</dependency>
@@ -65,14 +69,19 @@
 					<noServer>false</noServer>
 					<!-- <extraJvmArgs>-XstartOnFirstThread -Xmx512m</extraJvmArgs>-->
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
-					<gwtVersion>1.5.1</gwtVersion>
+					<gwtVersion>${gwtVersion}</gwtVersion>
+					<i18nConstantsNames>
+					   <value>com.totsp.sample.client.AppConstants</value>
+					</i18nConstantsNames>
+					<!--  <i18nMessagesNames>TODO</i18nMessagesNames -->
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>mergewebxml</goal>
 							<goal>compile</goal>
-							<goal>gwt</goal>                            
+							<goal>gwt</goal> 
+							<goal>i18n</goal>                            
                             <!-- <goal>testGwt</goal>-->
 						</goals>
 					</execution>
@@ -98,11 +107,11 @@
 								<artifactItem>
 									<groupId>com.google.gwt</groupId>
 									<artifactId>gwt-dev</artifactId>
-									<version>1.5.1</version>
+									<version>${gwtVersion}</version>
 									<classifier>${platform}-libs</classifier>
 									<type>zip</type>
 									<overWrite>true</overWrite>
-									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/1.5.1</outputDirectory>
+									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>

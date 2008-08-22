@@ -71,12 +71,11 @@ public class I18NMojo extends AbstractGWTMojo {
          catch (Exception e) {
             throw new MojoExecutionException("Exception attempting run.", e);
          }
-      }
-      else {
+      } else {
          ScriptWriterUnix writer = new ScriptWriterUnix();
          try {
             File exec = writer.writeI18nScript(this);
-            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+            ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
             pw.startProcess(System.out, System.err);
             int retVal = pw.waitFor();
             if (retVal != 0) {
@@ -84,9 +83,10 @@ public class I18NMojo extends AbstractGWTMojo {
             }
          }
          catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting i18n (see target/i18n.sh/cmd).", e);
+            throw new MojoExecutionException("Exception attempting run.", e);
          }
       }
+      
 
    }
 
