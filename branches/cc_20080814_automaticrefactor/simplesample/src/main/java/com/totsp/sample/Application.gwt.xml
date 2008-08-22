@@ -2,16 +2,15 @@
 
       <!-- Inherit the core Web Toolkit stuff.                        -->
       <inherits name='com.google.gwt.user.User'/>
-	
-      <!-- Inherit the default GWT style sheet.  You can change       -->
-      <!-- the theme of your GWT application by uncommenting          -->
-      <!-- any one of the following lines.                            -->
+
+      <!--  inherit i18n -->
+      <inherits name="com.google.gwt.i18n.I18N"/>
+      <extend-property name="locale" values="fr"/>      	
+    
+      <!--  inherit css based theme -->
       <inherits name='com.google.gwt.user.theme.standard.Standard'/>
       <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
       <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
-
-      <!-- Other module inherits                                      -->
-
 
       <!-- Specify the app entry point class.                         -->
       <entry-point class='com.totsp.sample.client.Application'/>
