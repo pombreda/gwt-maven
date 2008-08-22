@@ -118,7 +118,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private boolean overwriteGeneratedClasses;
    /**
-    * @parameter default-value="1.4.61"
+    * @parameter default-value="1.5.1"
     */
    private String gwtVersion;
    /**
