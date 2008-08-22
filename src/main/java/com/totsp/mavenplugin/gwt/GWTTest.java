@@ -25,7 +25,7 @@ import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
 
 
 // TODO make this write a test script, using the same MO as every other mojo in the project
-// TODO - hasn't been tested in a while, need to test on various platforms, etc
+// TODO - hasn't been tested in a while, need to test on various platforms, while gwt home is NOT set, etc
 
 /**
  * @phase test
