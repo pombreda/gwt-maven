@@ -33,9 +33,10 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * 
  * @goal i18n
  * @requiresDependencyResolution compile
- * @phase compile
+ * @phase generate-sources
  * 
  * @author Sascha-Matthias Kulawik <sascha@kulawik.de>
+ * @author ccollins
  */
 public class I18NMojo extends AbstractGWTMojo {
 
