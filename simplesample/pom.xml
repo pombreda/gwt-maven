@@ -7,7 +7,6 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-gwt-sample</name>
-	
 	<repositories>
 		<repository>
 			<id>java.net</id>
@@ -19,40 +18,36 @@
 			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
 		</repository>
 	</repositories>
-	
 	<dependencies>
 	    <!--  GWT deps -->
-	    <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>1.5.1</version>
-            <scope>runtime</scope>
-        </dependency>     
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>1.5.1</version>
-            <scope>provided</scope>
-        </dependency>          
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>1.5.1</version>
-            <classifier>${platform}-libs</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <!--  make sure gwt-dev-platform is last, not gwt-dev-platform-libs  -->
-        <!--  maven bug overwrites deps that only diff by classifier in artifact map -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>1.5.1</version>
-            <classifier>${platform}</classifier>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-	
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>1.5.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.5.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>1.5.1</version>
+			<classifier>${platform}-libs</classifier>
+			<type>zip</type>
+			<scope>provided</scope>
+		</dependency>       
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>1.5.1</version>
+			<classifier>${platform}</classifier>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 		    <!--  configure the GWT-Maven plugin -->
@@ -68,8 +63,9 @@
 					<runTarget>com.totsp.sample.Application/Application.html</runTarget>
 					<style>DETAILED</style>
 					<noServer>false</noServer>
+					<!-- <extraJvmArgs>-XstartOnFirstThread -Xmx512m</extraJvmArgs>-->
+					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<gwtVersion>1.5.1</gwtVersion>
-                    <!-- <extraJvmArgs>-Dgwt.args=-web</extraJvmArgs>-->
 				</configuration>
 				<executions>
 					<execution>
@@ -83,81 +79,87 @@
 				</executions>
 			</plugin>
 			<!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
-			<!--  (use this a replacement for the old "automatic" mode - if you don't have GWT installed already -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.google.gwt</groupId>
-                                    <artifactId>gwt-dev</artifactId>
-                                    <version>1.5.1</version>
-                                    <classifier>${platform}-libs</classifier>
-                                    <type>zip</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--  If you want to use the target/web.xml file mergewebxml produces, tell the war plugin to use it-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webXml>target/web.xml</webXml>
-                </configuration>
-            </plugin>
+			<!--
+				(use this a replacement for the old "automatic" mode - if you don't
+				have GWT installed already
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.google.gwt</groupId>
+									<artifactId>gwt-dev</artifactId>
+									<version>1.5.1</version>
+									<classifier>${platform}-libs</classifier>
+									<type>zip</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/1.5.1</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!--
+				If you want to use the target/web.xml file mergewebxml produces,
+				tell the war plugin to use it
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webXml>target/web.xml</webXml>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	
 	<!--  profiles (with activation per platform) -->
-    <profiles>
-        <profile>
-            <id>gwt-dev-windows</id>
-            <properties>
-                <platform>windows</platform>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-        </profile>
-        <profile>
-            <id>gwt-dev-mac</id>
-            <properties>
-                <platform>mac</platform>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-        </profile>        
-        <profile>
-            <id>gwt-dev-linux</id>
-            <properties>
-                <platform>linux</platform>
-            </properties>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <os>
-                    <name>Linux</name>
-                </os>
-            </activation>
-        </profile>
-    </profiles>	
+	<profiles>
+		<profile>
+			<id>gwt-dev-windows</id>
+			<properties>
+				<platform>windows</platform>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+		</profile>
+		<profile>
+			<id>gwt-dev-mac</id>
+			<properties>
+				<platform>mac</platform>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+		</profile>
+		<profile>
+			<id>gwt-dev-linux</id>
+			<properties>
+				<platform>linux</platform>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<os>
+					<name>Linux</name>
+				</os>
+			</activation>			
+		</profile>
+	</profiles>
 </project>
