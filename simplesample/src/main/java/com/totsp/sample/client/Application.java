@@ -116,12 +116,22 @@ public class Application implements EntryPoint {
   
   RootPanel.get().add(new HTML("<br /><br />"));
   RootPanel.get().add(label);
-  RootPanel.get().add(rpcButton);
-  RootPanel.get().add(new HTML("<br /><br />"));
+  RootPanel.get().add(rpcButton);  
   
+  RootPanel.get().add(new HTML("<br /><br />"));
+  RootPanel.get().add(new Label("change URL to append \"?local=fr\" to see the fancy french text"));  
+  
+  RootPanel.get().add(new HTML("<br /><br />"));
   AppConstants appConstants = (AppConstants) GWT.create(AppConstants.class);
-  String compliment = appConstants.compliment1();
-  RootPanel.get().add(new Label ("i18n test compliment - " + compliment));
+  String constantTest = appConstants.constant1();
+  RootPanel.get().add(new Label ("i18n constantTest - " + constantTest));
+  
+  RootPanel.get().add(new HTML("<br /><br />"));
+  AppMessages appMessages = (AppMessages) GWT.create(AppMessages.class);
+  String messageTest = appMessages.message1("zipededoodaaa");
+  RootPanel.get().add(new Label ("i18n messageTest - " + messageTest));
+  
+  
   
  }
 }
