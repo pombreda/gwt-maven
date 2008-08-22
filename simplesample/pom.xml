@@ -74,7 +74,6 @@
 					<runTarget>com.totsp.sample.Application/Application.html</runTarget>
 					<style>DETAILED</style>
 					<noServer>false</noServer>
-					<!-- <extraJvmArgs>-XstartOnFirstThread -Xmx512m</extraJvmArgs>-->
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
 					<gwtVersion>${gwtVersion}</gwtVersion>
 					<i18nConstantsNames>
