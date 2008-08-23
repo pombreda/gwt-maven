@@ -27,6 +27,7 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * @requiresDependencyResolution compile
  * @goal generateClientBeans
+ * @description Generates client beans for the project (currently unsupported).
  * 
  * @author cooper
  */

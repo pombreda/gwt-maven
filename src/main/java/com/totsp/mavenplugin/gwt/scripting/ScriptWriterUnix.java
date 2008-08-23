@@ -26,6 +26,7 @@ import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
  * 
  * TODO - make an abstract script writer so we can remove dupe code and handle calling for diff platforms better
  *
+ * @author ccollins
  * @author rcooper
  */
 public class ScriptWriterUnix {
