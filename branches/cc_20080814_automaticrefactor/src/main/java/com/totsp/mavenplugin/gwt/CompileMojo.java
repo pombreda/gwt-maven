@@ -32,6 +32,8 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 
 /**
+ * Invokes the GWTCompiler for the project source.
+ * 
  * @goal compile
  * @phase process-classes
  * @requiresDependencyResolution compile
