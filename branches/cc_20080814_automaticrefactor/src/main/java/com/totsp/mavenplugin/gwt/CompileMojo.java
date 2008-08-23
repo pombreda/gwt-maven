@@ -38,6 +38,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * @description Invokes the GWTCompiler for the project source.
  * 
  * @author cooper
+ * @author ccollins
  */
 public class CompileMojo extends AbstractGWTMojo {
 

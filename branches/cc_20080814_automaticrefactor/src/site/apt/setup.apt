@@ -66,7 +66,7 @@ GWT-Maven Setup
   
   For example:
   
-  +--
++--
   <!--  GWT deps (from central repo) -->
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -95,7 +95,7 @@ GWT-Maven Setup
             <classifier>${platform}</classifier>
             <scope>provided</scope>
         </dependency>
-  +--
++--
   
   You then also need to specify some properties to the dependency plugin
   so it knows what how and where to unpack the gwt native libs dependency (the one with the platform-libs classifier).  
