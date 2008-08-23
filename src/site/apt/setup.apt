@@ -179,7 +179,7 @@ GWT-Maven Setup
     </profiles> 
 +--
  
-  For a complete automatic mode PO< example see the examples page (menu at left). 
+  For a complete automatic mode POM example see the examples page (menu at left). 
  
 ** Manual Setup
 
@@ -237,11 +237,9 @@ GWT-Maven Setup
             <classifier>${platform}</classifier>
             <scope>system</scope>
             <systemPath>/opt/gwt-mac-1.5.1/gwt-dev-mac.jar</systemPath>
-        </dependency> 
-
+        </dependency>
 +--   
    
-
   For a complete manual mode POM example see the examples page (menu at left). 
 
  
