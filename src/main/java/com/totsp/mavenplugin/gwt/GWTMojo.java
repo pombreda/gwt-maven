@@ -34,7 +34,7 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
 /**
  * GWT mojo handles the shell related goals.
- *  
+ * 
  * @goal gwt
  * @requiresDependencyResolution provided
  * @description Runs the the project in the GWT Development Shell.
@@ -44,67 +44,63 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  */
 public class GWTMojo extends AbstractGWTMojo {
 
-   /** Creates a new instance of GWTMojo */
-   public GWTMojo() {
-      super();
-   }
+    /** Creates a new instance of GWTMojo */
+    public GWTMojo() {
+        super();
+    }
 
-   public void execute() throws MojoExecutionException, MojoFailureException {
-      
-      try {
-         this.makeCatalinaBase();
-      }
-      catch (Exception e) {
-         throw new MojoExecutionException("Unable to build catalina.base", e);
-      }
-      if (!this.getOutput().exists()) {
-         this.getOutput().mkdirs();
-      }
+    public void execute() throws MojoExecutionException, MojoFailureException {
 
-      if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
-         ScriptWriterWindows writer = new ScriptWriterWindows();
-         try {
-            File exec = writer.writeRunScript(this);
-            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
-            pw.startProcess(System.out, System.err);
-            int retVal = pw.waitFor();
-            if (retVal != 0) {
-               throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+        try {
+            this.makeCatalinaBase();
+        } catch (Exception e) {
+            throw new MojoExecutionException("Unable to build catalina.base", e);
+        }
+        if (!this.getOutput().exists()) {
+            this.getOutput().mkdirs();
+        }
+
+        if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
+            ScriptWriterWindows writer = new ScriptWriterWindows();
+            try {
+                File exec = writer.writeRunScript(this);
+                ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+                if (retVal != 0) {
+                    throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+                }
+            } catch (Exception e) {
+                throw new MojoExecutionException("Exception attempting run.", e);
             }
-         } 
-         catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting run.", e);
-         }
-      }
-      else {
-         ScriptWriterUnix writer = new ScriptWriterUnix();
-         try {
-            File exec = writer.writeRunScript(this);
-            ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
-            pw.startProcess(System.out, System.err);
-            int retVal = pw.waitFor();
-            if (retVal != 0) {
-               throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+        } else {
+            ScriptWriterUnix writer = new ScriptWriterUnix();
+            try {
+                File exec = writer.writeRunScript(this);
+                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+                if (retVal != 0) {
+                    throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
+                }
+            } catch (Exception e) {
+                throw new MojoExecutionException("Exception attempting run.", e);
             }
-         }
-         catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting run.", e);
-         }
-      }
-   }
-   
-   /**
-    * Create embedded GWT tomcat base dir based on properties. 
-    * 
-    * @throws Exception
-    */
-   public void makeCatalinaBase() throws Exception {
-      System.out.println("make catalina base for embedded Tomcat");
-      String[] args = {this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath()};
-      MakeCatalinaBase.main(args);
+        }
+    }
 
-      if ((this.getContextXml() != null) && this.getContextXml().exists()) {
-         FileUtils.copyFile(this.getContextXml(), new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
-      }
-   }
+    /**
+     * Create embedded GWT tomcat base dir based on properties.
+     * 
+     * @throws Exception
+     */
+    public void makeCatalinaBase() throws Exception {
+        getLog().debug("make catalina base for embedded Tomcat");
+        String[] args = { this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath() };
+        MakeCatalinaBase.main(args);
+
+        if ((this.getContextXml() != null) && this.getContextXml().exists()) {
+            FileUtils.copyFile(this.getContextXml(), new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
+        }
+    }
 }

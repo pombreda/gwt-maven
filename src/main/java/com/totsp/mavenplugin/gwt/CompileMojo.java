@@ -38,43 +38,42 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * 
  * @author cooper
  */
-public class CompileMojo extends AbstractGWTMojo{
-    
+public class CompileMojo extends AbstractGWTMojo {
+
     /** Creates a new instance of CompileMojo */
     public CompileMojo() {
         super();
     }
-    
+
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if( !this.getOutput().exists() ){
+        if (!this.getOutput().exists()) {
             this.getOutput().mkdirs();
         }
 
-        if(System.getProperty("gwt.os", "").startsWith(WINDOWS) ||
-                 AbstractGWTMojo.OS_NAME.startsWith(WINDOWS) ){
+        if (System.getProperty("gwt.os", "").startsWith(WINDOWS) || AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
             ScriptWriterWindows writer = new ScriptWriterWindows();
-            try{
+            try {
                 File exec = writer.writeCompileScript(this);
-                ProcessWatcher    pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
+                ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
                 pw.startProcess(System.out, System.err);
                 int retVal = pw.waitFor();
-                if(retVal != 0){
-                   throw new MojoFailureException("compile script exited abormally with code - " + retVal);
+                if (retVal != 0) {
+                    throw new MojoFailureException("compile script exited abormally with code - " + retVal);
                 }
-            } catch(Exception e){
+            } catch (Exception e) {
                 throw new MojoExecutionException("Exception attempting compile.", e);
             }
         } else {
             ScriptWriterUnix writer = new ScriptWriterUnix();
-            try{
+            try {
                 File exec = writer.writeCompileScript(this);
                 ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
                 pw.startProcess(System.out, System.err);
                 int retVal = pw.waitFor();
-                if( retVal != 0 ){
-                   throw new MojoFailureException("compile script exited abormally with code - " + retVal);
+                if (retVal != 0) {
+                    throw new MojoFailureException("compile script exited abormally with code - " + retVal);
                 }
-            } catch(Exception e){
+            } catch (Exception e) {
                 throw new MojoExecutionException("Exception attempting compile.", e);
             }
         }
