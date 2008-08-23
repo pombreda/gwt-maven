@@ -36,6 +36,7 @@ import com.totsp.mavenplugin.gwt.util.FileIOUtils;
  * @goal mergewebxml
  * @requiresDependencyResolution compile
  * @phase compile
+ * @description Merges GWT servlet elements into deployment descriptor (and non GWT servlets into shell).
  * 
  * @author cooper
  */

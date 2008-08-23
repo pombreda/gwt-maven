@@ -40,6 +40,7 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  * @description Runs the the project in the GWT Development Shell.
  * @execute phase=package
  * 
+ * @author ccollins
  * @author cooper
  */
 public class GWTMojo extends AbstractGWTMojo {

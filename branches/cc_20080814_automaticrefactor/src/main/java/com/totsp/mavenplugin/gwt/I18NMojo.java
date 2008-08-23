@@ -34,6 +34,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * @goal i18n
  * @requiresDependencyResolution compile
  * @phase process-resources
+ * @description Creates I18N interfaces for constants and messages files.
  * 
  * @author Sascha-Matthias Kulawik <sascha@kulawik.de>
  * @author ccollins

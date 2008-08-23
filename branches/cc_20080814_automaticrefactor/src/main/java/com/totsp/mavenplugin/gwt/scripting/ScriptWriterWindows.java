@@ -23,7 +23,10 @@ import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 
 /**
  * Handler for writing cmd scripts for the windows platform.
+ * 
+ * TODO - make an abstract script writer so we can remove dupe code and handle calling for diff platforms better
  *
+ * @author ccollins
  * @author rcooper
  */
 public class ScriptWriterWindows {

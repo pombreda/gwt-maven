@@ -4,8 +4,6 @@ import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 
 public class ArtifactNameUtil {
 
-    public static final String GWT_DEV_JAR_PREFIX = "";
-
     /**
      * Util for artifact and platform names stuff.
      * 

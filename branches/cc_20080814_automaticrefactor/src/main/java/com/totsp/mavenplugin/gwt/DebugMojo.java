@@ -14,6 +14,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * @goal debug
+ * @description Runs the project with a debugger port hook (optionally suspended). 
  * 
  * @author cooper
  */

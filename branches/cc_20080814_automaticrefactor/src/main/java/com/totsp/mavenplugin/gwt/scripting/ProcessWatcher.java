@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * This class executes a commandline and watches it's output
+ * This class executes a commandline and watches it's output.
  *
  * @author willpugh
  */
