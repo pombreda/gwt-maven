@@ -98,7 +98,7 @@
 			</plugin>
 			<!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
 			<!--
-				(use this a replacement for the old "automatic" mode - useful if you don't
+				(this is a replacement for the old "automatic" mode - useful if you don't
 				have GWT installed already, or you just want a maven way to handle gwt deps)
 			-->
 			<plugin>
