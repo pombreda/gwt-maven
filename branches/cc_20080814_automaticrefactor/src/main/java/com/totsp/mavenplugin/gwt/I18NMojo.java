@@ -33,62 +33,59 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
  * 
  * @goal i18n
  * @requiresDependencyResolution compile
- * @phase generate-sources
+ * @phase process-resources
  * 
  * @author Sascha-Matthias Kulawik <sascha@kulawik.de>
  * @author ccollins
  */
 public class I18NMojo extends AbstractGWTMojo {
 
-   /** Creates a new instance of I18NMojo */
-   public I18NMojo() {
-      super();
-   }
+    /** Creates a new instance of I18NMojo */
+    public I18NMojo() {
+        super();
+    }
 
-   public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
 
-      if (this.getI18nMessagesNames() == null && this.getI18nConstantsNames() == null) {
-         throw new MojoExecutionException(
-                  "neither i18nConstantsNames nor i18nMessagesNames present, cannot execute i18n goal");
-      }
+        if (this.getI18nMessagesNames() == null && this.getI18nConstantsNames() == null) {
+            throw new MojoExecutionException(
+                    "neither i18nConstantsNames nor i18nMessagesNames present, cannot execute i18n goal");
+        }
 
-      if (!this.getI18nOutputDir().exists()) {
-         if (getLog().isInfoEnabled())
-            getLog().info("I18NModule is creating target directory " + getI18nOutputDir().getAbsolutePath());
-         this.getI18nOutputDir().mkdirs();
-      }
+        if (!this.getI18nOutputDir().exists()) {
+            if (getLog().isInfoEnabled())
+                getLog().info("I18NModule is creating target directory " + getI18nOutputDir().getAbsolutePath());
+            this.getI18nOutputDir().mkdirs();
+        }
 
-      if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
-         ScriptWriterWindows writer = new ScriptWriterWindows();
-         try {
-            File exec = writer.writeI18nScript(this);
-            ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
-            pw.startProcess(System.out, System.err);
-            int retVal = pw.waitFor();
-            if (retVal != 0) {
-               throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
+        if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
+            ScriptWriterWindows writer = new ScriptWriterWindows();
+            try {
+                File exec = writer.writeI18nScript(this);
+                ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+                if (retVal != 0) {
+                    throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
+                }
+            } catch (Exception e) {
+                throw new MojoExecutionException("Exception attempting run.", e);
             }
-         }
-         catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting run.", e);
-         }
-      } else {
-         ScriptWriterUnix writer = new ScriptWriterUnix();
-         try {
-            File exec = writer.writeI18nScript(this);
-            ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
-            pw.startProcess(System.out, System.err);
-            int retVal = pw.waitFor();
-            if (retVal != 0) {
-               throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
+        } else {
+            ScriptWriterUnix writer = new ScriptWriterUnix();
+            try {
+                File exec = writer.writeI18nScript(this);
+                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+                pw.startProcess(System.out, System.err);
+                int retVal = pw.waitFor();
+                if (retVal != 0) {
+                    throw new MojoExecutionException("i18n script exited abnormally with code - " + retVal);
+                }
+            } catch (Exception e) {
+                throw new MojoExecutionException("Exception attempting run.", e);
             }
-         }
-         catch (Exception e) {
-            throw new MojoExecutionException("Exception attempting run.", e);
-         }
-      }
-      
+        }
 
-   }
+    }
 
 }

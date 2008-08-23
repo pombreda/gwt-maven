@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<!--  GWT-Maven example POM without google.webtoolkit.home SET (GWT as deps) -->
+	<!--  GWT-Maven example POM with google.webtoolkit.home SET (GWT already installed on machine) -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.totsp.gwt</groupId>
-	<artifactId>maven-gwt-sample-withouthome</artifactId>
+	<artifactId>maven-gwt-sample-withhome</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>maven-gwt-sample-withouthome</name>
+	<name>maven-gwt-sample-withhome</name>
 	<repositories>
 		<repository>
 			<id>java.net</id>
@@ -24,34 +24,14 @@
 	   <gwtVersion>1.5.1</gwtVersion>
 	</properties>
 	<dependencies>
-	    <!--  GWT deps (from central repo) -->
+	    <!--  GWT deps -->
+	    <!--  you still need servlet for wars and such (dev and user will come from google.webtoolkit.home) -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
 			<version>${gwtVersion}</version>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwtVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-			<version>${gwtVersion}</version>
-			<classifier>${platform}-libs</classifier>
-			<type>zip</type>
-			<scope>provided</scope>
-		</dependency>       
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-			<version>${gwtVersion}</version>
-			<classifier>${platform}</classifier>
-			<scope>provided</scope>
-		</dependency>
+		</dependency>		
 		
 		<dependency>
             <groupId>junit</groupId>
@@ -68,6 +48,7 @@
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
 				<version>2.0-beta22</version>
 				<configuration>
+				    <google.webtoolkit.home>/opt/gwt-${platform}-${gwtVersion}</google.webtoolkit.home>
 					<logLevel>INFO</logLevel>
 					<compileTargets>
 						<value>com.totsp.sample.Application</value>
@@ -82,7 +63,7 @@
 					</i18nConstantsNames>
 					<i18nMessagesNames>
 					   <value>com.totsp.sample.client.AppMessages</value>
-					</i18nMessagesNames>
+					</i18nMessagesNames>					
 				</configuration>
 				<executions>
 					<execution>
@@ -95,38 +76,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
-			<!--
-				(use this a replacement for the old "automatic" mode - useful if you don't
-				have GWT installed already, or you just want a maven way to handle gwt deps)
-			-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.google.gwt</groupId>
-									<artifactId>gwt-dev</artifactId>
-									<version>${gwtVersion}</version>
-									<classifier>${platform}-libs</classifier>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			</plugin>			
 			<!--
 				If you want to use the target/web.xml file mergewebxml produces,
 				tell the war plugin to use it

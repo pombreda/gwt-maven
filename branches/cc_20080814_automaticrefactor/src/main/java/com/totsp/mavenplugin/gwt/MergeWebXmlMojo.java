@@ -41,78 +41,59 @@ import com.totsp.mavenplugin.gwt.util.FileIOUtils;
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo {
 
-   /** Creates a new instance of MergeWebXmlMojo */
-   public MergeWebXmlMojo() {
-      super();
-   }
+    /** Creates a new instance of MergeWebXmlMojo */
+    public MergeWebXmlMojo() {
+        super();
+    }
 
-   public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
 
-      // TODO
-      //Setup the GWT Home using our auto-setup one, if one is not set
-      /*
-      if (getProject().getProperties().getProperty(GOOGLE_WEBTOOLKIT_HOME) == null) {
+        try {
+            File destination = new File(this.getBuildDir(), "web.xml");
 
-         File targetDir = null;
-         try {
-            targetDir = new File(getGwtBinOutputDirectory(), ArtifactNameUtil.guessArtifactId(this.getGwtVersion()) + "-" + getGwtVersion())
-                     .getCanonicalFile();
-            getProject().getProperties().setProperty(GOOGLE_WEBTOOLKIT_HOME, targetDir.getCanonicalPath());
-            GWT_PATH = targetDir.getCanonicalPath();
-         }
-         catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage());
-         }
-      }
-      */      
-      
-      try {
-         File destination = new File(this.getBuildDir(), "web.xml");
+            FileIOUtils.copyFile(this.getWebXml(), destination);
 
-         FileIOUtils.copyFile(this.getWebXml(), destination);
-         
-         for (int i = 0; i < this.getCompileTarget().length; i++) {
-            File moduleFile = null;
-            for (Iterator it = this.getProject().getCompileSourceRoots().iterator(); it.hasNext() && moduleFile == null;) {
-               File check = new File(it.next().toString() + "/" + this.getCompileTarget()[i].replace('.', '/')
-                        + ".gwt.xml");
-               System.out.println("Looking for file: " + check.getAbsolutePath());
-               if (check.exists()) {
-                  moduleFile = check;
-               }
+            for (int i = 0; i < this.getCompileTarget().length; i++) {
+                File moduleFile = null;
+                for (Iterator it = this.getProject().getCompileSourceRoots().iterator(); it.hasNext()
+                        && moduleFile == null;) {
+                    File check = new File(it.next().toString() + "/" + this.getCompileTarget()[i].replace('.', '/')
+                            + ".gwt.xml");
+                    getLog().debug("Looking for file: " + check.getAbsolutePath());
+                    if (check.exists()) {
+                        moduleFile = check;
+                    }
+                }
+                for (Iterator it = this.getProject().getResources().iterator(); it.hasNext();) {
+                    Resource r = (Resource) it.next();
+                    File check = new File(r.getDirectory() + "/" + this.getCompileTarget()[i].replace('.', '/')
+                            + ".gwt.xml");
+                    getLog().debug("Looking for file: " + check.getAbsolutePath());
+                    if (check.exists()) {
+                        moduleFile = check;
+                    }
+                }
+
+                this.fixThreadClasspath();
+
+                GwtWebInfProcessor processor = null;
+                try {
+                    if (moduleFile != null) {
+                        getLog().info("Module file: " + moduleFile.getAbsolutePath());
+                        processor = new GwtWebInfProcessor(this.getCompileTarget()[i], moduleFile, destination
+                                .getAbsolutePath(), destination.getAbsolutePath());
+                    } else {
+                        throw new MojoExecutionException("module file null");
+                    }
+                } catch (ExitException e) {
+                    this.getLog().warn(e.getMessage());
+                    return;
+                }
+                processor.process();
             }
-            for (Iterator it = this.getProject().getResources().iterator(); it.hasNext();) {
-               Resource r = (Resource) it.next();
-               File check = new File(r.getDirectory() + "/" + this.getCompileTarget()[i].replace('.', '/') + ".gwt.xml");
-               System.out.println("Looking for file: " + check.getAbsolutePath());
-               if (check.exists()) {
-                  moduleFile = check;
-               }
-            }
+        } catch (Exception e) {
+            throw new MojoExecutionException("Unable to merge web.xml", e);
+        }
+    }
 
-            this.fixThreadClasspath();
-
-            GwtWebInfProcessor processor = null;            
-            try {
-               if (moduleFile != null) {
-                  System.out.println("Module file: " + moduleFile.getAbsolutePath());
-                  processor = new GwtWebInfProcessor(this.getCompileTarget()[i], moduleFile, destination
-                           .getAbsolutePath(), destination.getAbsolutePath());
-               }
-               else {
-                  throw new MojoExecutionException("module file null");
-               }
-            }
-            catch (ExitException e) {
-               this.getLog().warn(e.getMessage());
-               return;
-            }
-            processor.process();
-         }
-      }
-      catch (Exception e) {
-         throw new MojoExecutionException("Unable to merge web.xml", e);
-      }
-   }   
-   
 }

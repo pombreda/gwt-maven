@@ -32,12 +32,13 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class BeanGeneratorMojo extends AbstractGWTMojo {
 
-   /** Creates a new instance of BeanGeneratorMojo */
-   public BeanGeneratorMojo() {
-   }
+    /** Creates a new instance of BeanGeneratorMojo */
+    public BeanGeneratorMojo() {
+    }
 
-   public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
 
-      throw new MojoExecutionException("currently no longer supported (may return in near future, but not included at present because of lack of project support/maintainers for this feature)");
-   }
+        throw new MojoExecutionException(
+                "currently no longer supported (may return in near future, but not included at present because of lack of project support/maintainers for this feature)");
+    }
 }
