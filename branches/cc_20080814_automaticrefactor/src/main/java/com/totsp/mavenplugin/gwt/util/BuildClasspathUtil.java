@@ -46,10 +46,10 @@ public class BuildClasspathUtil {
         // other maven stuff - not end up in war, etc)
         if (gwtHome != null) {
             mojo.getLog().info(
-                    "google.webtoolkit.home set, using it for GWT dependencies - " + gwtHome.getAbsolutePath());
+                    "google.webtoolkit.home (gwtHome) set, using it for GWT dependencies - " + gwtHome.getAbsolutePath());
             items.addAll(BuildClasspathUtil.injectGwtDepsFromGwtHome(gwtHome, mojo));
         } else {
-            mojo.getLog().info("google.webtoolkit.home *not* set, using project POM for GWT dependencies");
+            mojo.getLog().info("google.webtoolkit.home (gwtHome) *not* set, using project POM for GWT dependencies");
             items.addAll(BuildClasspathUtil.injectGwtDepsFromRepo(mojo));
         }
 
@@ -121,7 +121,6 @@ public class BuildClasspathUtil {
         Collection<File> items = new LinkedHashSet<File>();
         File userJar = new File(gwtHome, "gwt-user.jar");
         File devJar = new File(gwtHome, ArtifactNameUtil.guessDevJarName());
-        items.add(gwtHome);
         items.add(userJar);
         items.add(devJar);
         return items;
