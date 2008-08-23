@@ -148,39 +148,7 @@ repository from the gwt-maven project (a good one to start with ):
   And, you will need to define the GWT dependencies for automatic mode. 
   (You should remember to mark gwt-user, and gwt-dev as "provided" so they won't be included in your WAR file.) 
   
-  For example:
-  
-+--
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>1.5.1</version>
-            <scope>runtime</scope>
-        </dependency>     
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>1.5.1</version>
-            <scope>provided</scope>
-        </dependency>          
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>1.5.1</version>
-            <classifier>${platform}-libs</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-        <!--  make sure gwt-dev-platform is last, not gwt-dev-platform-libs  -->
-        <!--  maven bug overwrites deps that only diff by classifier in artifact map -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>1.5.1</version>
-            <classifier>${platform}</classifier>
-            <scope>provided</scope>
-        </dependency>
-+-- 
+  For a complete example see the examples page (menu at left). 
  
 ** Manual Setup
 
@@ -212,8 +180,11 @@ repository from the gwt-maven project (a good one to start with ):
 </settings>
 +--
 
-  With the manual mode it is critical that you have google.webtoolkit.home configured properly (using the correct GWT version for your platform). 
+  With the manual mode it is critical that you have google.webtoolkit.home configured properly (using the correct GWT version for your platform - 
+  note that you can define "gwtHome" as a plugin configuration parameter, or "google.webtoolkit.home" as a property, either will work). 
 
-  With manual mode you also need to add GWT dependencies (see above, same as automatic mode).   
+  For manual mode you also need the GWT dependencies defined.  
+
+  For a complete example see the examples page (menu at left). 
 
  
