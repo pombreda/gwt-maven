@@ -30,7 +30,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 
 /**
- * Mojo that performs GWT i18n
+ * Creates I18N interfaces for constants and messages files.
  * 
  * @goal i18n
  * @requiresDependencyResolution compile

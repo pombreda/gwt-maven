@@ -33,7 +33,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 
 /**
  * @goal compile
- * @phase compile
+ * @phase process-classes
  * @requiresDependencyResolution compile
  * @description Invokes the GWTCompiler for the project source.
  * 

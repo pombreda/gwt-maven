@@ -27,6 +27,8 @@ import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
 // TODO - hasn't been tested in a while, need to test on various platforms, while gwt home is NOT set, etc
 
 /**
+ * Runs special (non surefire) test phase for GWTTestCase derived tests.
+ * 
  * @phase test
  * @goal testGwt
  * @requiresDependencyResolution test

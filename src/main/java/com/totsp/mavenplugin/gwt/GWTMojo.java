@@ -32,7 +32,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
 /**
- * GWT mojo handles the shell related goals.
+ * Runs the the project in the GWTShell for development.
  * 
  * @goal gwt
  * @requiresDependencyResolution provided

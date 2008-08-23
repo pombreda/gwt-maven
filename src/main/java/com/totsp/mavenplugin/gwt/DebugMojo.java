@@ -24,6 +24,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
+ * Runs the project with a debugger port hook (optionally suspended).
+ * 
  * @goal debug
  * @description Runs the project with a debugger port hook (optionally suspended). 
  * 
