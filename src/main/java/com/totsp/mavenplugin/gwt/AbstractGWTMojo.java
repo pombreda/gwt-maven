@@ -33,12 +33,12 @@ import org.codehaus.plexus.util.FileUtils;
 
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 
-// TODO replace all sys out with logging - this.getLog().warn(e.getMessage());
-
 /**
  * Abstract Mojo for GWT-Maven.
  * 
  * @author ccollins
+ * @author cooper
+ * @author willpugh
  */
 public abstract class AbstractGWTMojo extends AbstractMojo {
 
