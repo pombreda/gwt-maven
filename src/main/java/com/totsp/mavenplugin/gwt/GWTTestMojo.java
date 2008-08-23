@@ -34,7 +34,7 @@ import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
  * 
  * @author willpugh
  */
-public class GWTTest extends AbstractGWTMojo {
+public class GWTTestMojo extends AbstractGWTMojo {
     /**
      * @parameter default-value=""
      */
