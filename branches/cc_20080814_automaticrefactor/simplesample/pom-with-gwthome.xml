@@ -48,7 +48,7 @@
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
 				<version>2.0-beta22</version>
 				<configuration>
-				    <google.webtoolkit.home>/opt/gwt-${platform}-${gwtVersion}</google.webtoolkit.home>
+				    <gwtHome>/opt/gwt-mac-1.5.1</gwtHome>
 					<logLevel>INFO</logLevel>
 					<compileTargets>
 						<value>com.totsp.sample.Application</value>
