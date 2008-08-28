@@ -216,7 +216,7 @@ public class GWTTestMojo extends AbstractGWTMojo {
                     try {
                         String fullCmd = cmd.toString() + packageName;
 
-                        System.out.println(fullCmd);
+                        this.getLog().debug(fullCmd);
 
                         ProcessWatcher pw = new ProcessWatcher(fullCmd, null, this.getBuildDir());
 
@@ -262,17 +262,17 @@ public class GWTTestMojo extends AbstractGWTMojo {
                             fail += Integer.parseInt(m.group(2));
                             error += Integer.parseInt(m.group(3));
 
-                            System.out.println("Testing " + packageName);
-                            System.out.println(m.group(0));
+                            this.getLog().info("Testing " + packageName);
+                            this.getLog().debug(m.group(0));
                         } else if (err.length() == 0) {
                             if (m2.matches()) {
                                 run += Integer.parseInt(m2.group(1));
                             } else {
-                                System.out.println(out.toString());
+                               this.getLog().info(out.toString());
                             }
                         } else {
                             error++;
-                            System.out.println("Unit tests failed.");
+                            this.getLog().error("Unit tests failed.");
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -287,7 +287,7 @@ public class GWTTestMojo extends AbstractGWTMojo {
                         + ", Errors: " + error + ", Skipped: 0");
             }
 
-            System.out.println("OK (" + run + " tests)");
+            this.getLog().info("OK (" + run + " tests)");
         } catch (DependencyResolutionRequiredException e) {
             e.printStackTrace();
         }
