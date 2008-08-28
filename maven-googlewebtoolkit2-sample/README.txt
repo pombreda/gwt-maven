@@ -8,7 +8,7 @@ About:
 ======
 This sample project has some specific goals:
  + GWT-Maven 'Best Practice' & Usage
- + Java5+ integration on the GWT server side & Java1.4 on the GWT client side using a multi-module maven project.
+ + Java5+ integration on the GWT server side & Java1.5 (as of GWT 1.5) on the GWT client side using a multi-module maven project.
  + GWT RPC structure via multi-module maven project - and inheriting a GWT module
  + The features offered by GWT-Maven (like building a WAR, running the GWTShell, mergewebxml, and GWT testing)
  
@@ -22,14 +22,14 @@ then choose the example that is closest to the function of your project (likely 
 This sample uses GWT-Maven with the "automatic" GWT setup mode enabled. This means
 that you do *not* have to download and install GWT yourself, the plugin will 
 setup and extract GWT for you (when using this method). 
-(You can optionally use manual method with a local GWT install, see documentation.)
+(You can optionally use manual method with a local GWT install, see plugin documentation.)
 
 Which project to build:
 =======================
  + parent (this is the root parent module of the project)
- + rpc (this is the GWT RPC *INTERFACE* definition) Java 1.4
+ + rpc (this is the GWT RPC *INTERFACE* definition) Java 1.5
  + server (this is the GWT RPC *IMPLEMENTATION*, it builds a GWT module that war inherits) Java 1.5+
- + war (this is the GWT client code) Java 1.4 
+ + war (this is the GWT client code) Java 1.5
 
 Prerequisites:
 ==============
@@ -67,7 +67,7 @@ Code coverage with GWT is a bit tricky, but using the coverage patch JAR (as thi
 and generating ONLY a report (not instrumentation data itself, which GWT does for you when patched)
 along with AntRun to move things around, creates an automated build with testing and reports. 
 (If you want to see the testing stuff, uncomment the "testGwt" goal in the POM, it is commented
-out by default to keep things faster and simpler.)
+out by default to keep things faster and simpler - *note* not tested with GWT 1.5, yet.)
 (Note* - when running tests the Surefire plugin is NOT used for GwtTestCase based tests, rather
 a special testGwt goal is included with GWT-Maven for GwtTestCase based tests, thus TWO test phases
 will happen during "mvn test", one for Surefire standard tests, and one for testGwt GWT tests.)
