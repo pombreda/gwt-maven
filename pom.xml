@@ -20,6 +20,15 @@
             <archive>http://groups.google.com/group/gwt-maven/</archive>
         </mailingList>
     </mailingLists>
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/gwt-maven/issues/list</url>
+    </issueManagement>  
+    <scm>
+        <connection>scm:svn:http://gwt-maven.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn/trunk</developerConnection>
+        <url>http://gwt-maven.googlecode.com/svn/trunk</url>
+    </scm>      
     <developers>
         <developer>
             <id>ccollins</id>
