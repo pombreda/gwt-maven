@@ -156,7 +156,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private boolean noServer;
    /**
-    * Runs the embedded GWT Tomcat server on the specified port (defaults to 8888).
+    * Runs the embedded GWT Tomcat server on the specified port.
     * 
     * @parameter default-value="8888"
     */
@@ -168,7 +168,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    */
    private File tomcat;
    /**
-    * Port to listen for debugger connection on (defaults to 8000).
+    * Port to listen for debugger connection on.
     * 
     * @parameter default-value="8000"
     */
