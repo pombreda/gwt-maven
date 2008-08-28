@@ -141,19 +141,7 @@ public class ScriptWriterWindows {
          }
 
          writer.print(target);
-         writer.println();
-
-         // if gwtVersion is NOT 1.3 or 1.4, then assume it is 1.5 or higher, and move "std" and "xs" linker directories to target
-         if (!(mojo.getGwtVersion().startsWith("1.3.") || mojo.getGwtVersion().startsWith("1.4."))) {
-            //TODO change this to inspect linker output
-            String std = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\std";
-            writer.println("xcopy " + std + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target + " /s /i /Y");
-            writer.println("del " + std + " /S /Q");
-
-            String xs = mojo.getOutput().getAbsolutePath() + "\\" + target + "\\xs";
-            writer.println("xcopy " + xs + "\\* " + mojo.getOutput().getAbsolutePath() + "\\" + target + " /s /i /Y");
-            writer.println("del " + xs + " /S /Q");
-         }
+         writer.println();        
       }
 
       writer.flush();
