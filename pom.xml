@@ -14,6 +14,28 @@
 	</parent>
 	<name>Maven 2 Plugin for the Google Web Toolkit</name>
 	<url>http://code.google.com/p/gwt-maven</url>
+	<mailingLists>
+        <mailingList>
+            <name>GWT-Maven Google Group</name>
+            <archive>http://groups.google.com/group/gwt-maven/</archive>
+        </mailingList>
+    </mailingLists>
+    <developers>
+        <developer>
+            <id>ccollins</id>
+            <name>Charlie Collins</name>
+            <url>http://www.screaming-penguin.com</url>
+            <organization>Temple of the Screaming Penguin (TotSP)</organization>
+        </developer>
+        <developer>
+            <id>cooper</id>
+            <name>Robert Cooper</name>
+        </developer>
+        <developer>
+            <id>willpugh</id>
+            <name>Will Pugh</name>
+        </developer>
+    </developers>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License 3.0</name>
@@ -124,4 +146,5 @@
 			-->
 		</plugins>
 	</reporting>
+	
 </project>
