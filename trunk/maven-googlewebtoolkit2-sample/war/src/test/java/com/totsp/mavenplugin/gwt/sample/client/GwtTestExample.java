@@ -11,14 +11,6 @@ public class GwtTestExample extends GWTTestCase
         return "com.totsp.mavenplugin.gwt.sample.Application";
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }     
-    
     public void testSomething()
     {
         // Not much to actually test in this sample app

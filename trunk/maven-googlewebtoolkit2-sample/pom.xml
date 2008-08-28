@@ -29,7 +29,16 @@
 				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
 			</url>
 		</repository>
+		<repository>
+            <!--  needed at the moment for jdom 1.1 (not in central) -->
+            <id>random-for-jdom</id>
+            <url>http://www4.rothamsted.bbsrc.ac.uk/ondex/maven2</url>
+        </repository>
 	</repositories>
+
+    <properties>
+       <gwtVersion>1.5.1</gwtVersion>
+    </properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -53,17 +62,7 @@
 					maven-googlewebtoolkit2-sample-server
 				</artifactId>
 				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.gwt</groupId>
-				<artifactId>gwt-servlet</artifactId>
-				<version>1.4.61</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.gwt</groupId>
-				<artifactId>gwt-user</artifactId>
-				<version>1.4.61</version>
-			</dependency>
+			</dependency>			
 		</dependencies>
 	</dependencyManagement>
 	
@@ -81,4 +80,44 @@
 		<module>server</module>
 		<module>war</module>
 	</modules>	
+	
+	<!--  profiles (with activation per platform) -->
+    <profiles>
+        <profile>
+            <id>gwt-dev-windows</id>
+            <properties>
+                <platform>false</platform>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+        </profile>
+        <profile>
+            <id>gwt-dev-mac</id>
+            <properties>
+                <platform>mac</platform>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+        </profile>
+        <profile>
+            <id>gwt-dev-linux</id>
+            <properties>
+                <platform>linux</platform>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <os>
+                    <name>Linux</name>
+                </os>
+            </activation>           
+        </profile>
+    </profiles>
 </project>

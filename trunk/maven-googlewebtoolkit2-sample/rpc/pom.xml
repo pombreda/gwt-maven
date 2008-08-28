@@ -10,6 +10,21 @@
 	<artifactId>maven-googlewebtoolkit2-sample-rpc</artifactId>
 	<name>maven-googlewebtoolkit2-sample-rpc</name>
 	
+	<dependencies>    
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>provided</scope>
+        </dependency>        
+    </dependencies> 
+	
 	<build>
 	    <!--  Include SOURCE in output artifact for GWT (GWT libraries must include source) -->
 		<resources>
@@ -26,17 +41,5 @@
 				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
 			</url>
 		</repository>
-	</repositories>
-	
-	<dependencies>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>	
+	</repositories>	
 </project>

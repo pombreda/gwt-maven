@@ -10,8 +10,26 @@
 	<artifactId>maven-googlewebtoolkit2-sample-server</artifactId>
 	<name>maven-googlewebtoolkit2-sample-server</name>
 	
-	<build>
-		
+	<dependencies>
+        <dependency>
+            <groupId>com.totsp.gwt</groupId>
+            <artifactId>maven-googlewebtoolkit2-sample-rpc</artifactId>
+        </dependency>        
+         <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+	
+	<build>		
 	    <!--  Include SOURCE in output artifact for GWT (GWT libraries must include source) -->
 		<resources>
 			<resource>
@@ -34,20 +52,4 @@
 		</plugins>
 		<finalName>maven-googlewebtoolkit2-sample-server</finalName>
 	</build>	
-	
-	<dependencies>
-		<dependency>
-			<groupId>com.totsp.gwt</groupId>
-			<artifactId>maven-googlewebtoolkit2-sample-rpc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
 </project>
