@@ -177,7 +177,7 @@ public class ScriptWriterWindows {
          for (String target : mojo.getI18nConstantsNames()) {
             String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH%");
             writer.print(" com.google.gwt.i18n.tools.I18NSync");
             writer.print(" -out ");
             writer.print(mojo.getI18nOutputDir());
@@ -192,7 +192,7 @@ public class ScriptWriterWindows {
          for (String target : mojo.getI18nMessagesNames()) {
             String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp $CLASSPATH");
+            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH%");
             writer.print(" com.google.gwt.i18n.tools.I18NSync");
             writer.print(" -createMessages ");
             writer.print(" -out ");
