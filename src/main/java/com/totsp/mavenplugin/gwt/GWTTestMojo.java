@@ -29,8 +29,8 @@ import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
 /**
  * Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
- * @phase test
  * @goal testGwt
+ * @phase test
  * @requiresDependencyResolution test
  * @description Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
