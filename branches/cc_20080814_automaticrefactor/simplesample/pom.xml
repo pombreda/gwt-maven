@@ -89,8 +89,8 @@
 						<goals>
 							<goal>mergewebxml</goal>
 							<goal>i18n</goal>                            
+							<goal>gwt</goal>                         
 							<goal>compile</goal>							
-							<goal>gwt</goal>							
                             <!-- <goal>testGwt</goal>-->
 						</goals>
 					</execution>
