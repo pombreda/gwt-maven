@@ -37,8 +37,7 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  * @goal gwt
  * @requiresDependencyResolution compile
  * @description Runs the the project in the GWTShell for development.
- * @phase compile
- * //@execute phase=package
+ * @execute phase=compile
  * 
  * @author ccollins
  * @author cooper
