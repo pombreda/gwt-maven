@@ -1,358 +1,93 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.PrintWriter;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.HiddenFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.util.StringUtils;
 
-import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
-import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
-
-// TODO make this write a test script, using the same MO as every other mojo in the project
-// TODO - hasn't been tested in a while, need to test on various platforms, while gwt home is NOT set, etc
+import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 
 /**
  * Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
- * @goal testGwt
+ * This is a giant hack because Surefire has some issues with GWTTestCase.  
+ * Surefire states that it offers multiple ways to load the classpath
+ * (http://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html),
+ * but it doesn't seem to work as advertised. Manifest class path works, and isolated
+ * classpath also works, but just getting to a normal java class path doesn't seem to work
+ * (surefire still refers to /tmp/surefireX). Without a normal java class path GWTTestCase
+ * won't work - because the GWT JUnitShell inspects the classpath and sets itself up, it 
+ * doesn't like surefire magic. Also, presuming surefire did work and just set a normal 
+ * classpath, it still would be susceptible to the line too long on Windows crap. 
+ * I get the same problem others do, no matter how I configure surefire (and yes, I did
+ * RTFM and try the useSystemClassLoader and useManifestOnlyJar settings, various ways)
+ * : http://www.mail-archive.com/users@maven.apache.org/msg87660.html - and 
+ * http://jira.codehaus.org/browse/SUREFIRE-508.
+ * 
+ * Hopefully we can kill this someday, it sucks, but for now, this is the ONLY way we know of
+ * to run GWTTestCase based tests. 
+ * 
+ * @goal test
  * @phase test
  * @requiresDependencyResolution test
  * @description Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
- * @author willpugh
+ * @author ccollins
  */
 public class GWTTestMojo extends AbstractGWTMojo {
-    /**
-     * @parameter default-value=""
-     */
-    private String extraTestArgs;
 
-    /**
-     * @parameter expression="${maven.test.skip}"
-     */
-    private boolean skip;
-
-    /**
-     * 
-     * @throws org.apache.maven.plugin.MojoExecutionException
-     * @throws org.apache.maven.plugin.MojoFailureException
-     */
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (isSkip()) {
             return;
         }
+        
+        this.getLog().info("running gwt:test GWTTestCase tests (using test name filter -  " + this.getTestFilter());
 
-        try {
-            ArrayList<String> classPathList = new ArrayList<String>(this.getProject().getTestClasspathElements());
+        FileWriter testResultsWriter = null;
 
+        // build scripts for each test case for the correct platform
+        ScriptWriter writer = ScriptWriterFactory.getInstance();
+        writer.writeTestScripts(this);
+
+        // run the scripts
+        boolean testFailure = false;
+        File testDir = new File(this.getBuildDir(), "gwtTest");
+        FileFilter fileFilter = new WildcardFileFilter("gwtTest-*");
+        File[] files = testDir.listFiles(fileFilter);
+        for (int i = 0; i < files.length; i++) {
+            File test = files[i];
+            this.getLog().info("running test - " + test.getName());
+
+            // create results writer
             try {
-                //First see if there is already an artifact that defines the dev jar
-                Thread.currentThread().getContextClassLoader().loadClass("com.google.gwt.dev.GWTCompiler");
-            } catch (ClassNotFoundException cnf) {
-                String doNotFindGwtDev = this.getProject().getProperties().getProperty(
-                        "google.webtoolkit.doNotFileGwtDev");
+                testResultsWriter = new FileWriter(new File(testDir, "TEST-" + test.getName() + ".txt"));
 
-                if (!Boolean.valueOf(doNotFindGwtDev)) {
-
-                    String toolkitHomeStr = this.getProject().getProperties().getProperty(GOOGLE_WEBTOOLKIT_HOME);
-
-                    // TODO
-                    //Setup the GWT Home using our auto-setup one, if one is not set
-                    /*
-                    if(
-                        getProject().getProperties()
-                                .getProperty(GOOGLE_WEBTOOLKIT_HOME) == null) {
-                        File targetDir = null;
-
-                        try {
-                            targetDir = new File(
-                                    getGwtBinOutputDirectory(),
-                                    ArtifactNameUtil.guessArtifactId(this.getGwtVersion()) + "-"
-                                    + getGwtVersion()).getCanonicalFile();
-                            getProject().getProperties()
-                                .setProperty(
-                                         GOOGLE_WEBTOOLKIT_HOME,
-                                targetDir.getCanonicalPath());
-                            GWT_PATH = targetDir.getCanonicalPath();
-                            toolkitHomeStr = GWT_PATH;
-                        } catch(IOException e) {
-                            throw new MojoExecutionException(e.getMessage());
-                        }
-                    }
-                    */
-
-                    if (toolkitHomeStr == null) {
-                        try {
-                            if (getGwtHome() != null) {
-                                toolkitHomeStr = getGwtHome().getCanonicalPath();
-                            }
-                        } catch (IOException e) {
-                            throw new MojoFailureException(
-                                    "Error:  google.webtoolkit.home is not set.  Please set this property an active profile in your POM or user settings.");
-                        }
-
-                        if (toolkitHomeStr == null) {
-                            throw new MojoFailureException(
-                                    "Error:  google.webtoolkit.home is not set.  Please set this property an active profile in your POM or user settings.");
-                        }
-                    }
-
-                    File toolkitHome = new File(toolkitHomeStr);
-                    File devJar = new File(toolkitHome, ArtifactNameUtil.guessDevJarName());
-
-                    if (!devJar.exists()) {
-                        //If there is not a file that seems to correspond with what we expect,
-                        //try something else.
-                        String[] devJars = toolkitHome.list(new WildcardFileFilter("gwt-dev-*.jar"));
-
-                        if (devJars == null || devJars.length == 0) {
-                            String Error = "Could not find a gwt-dev jar.  Looked in "
-                                    + toolkitHome
-                                    + ".  If you think you "
-                                    + "already gwt-dev-*.jar in your path, you can set the property google.webtoolkit.doNotFileGwtDev to "
-                                    + "\"true\" in your POM.";
-                            throw new MojoFailureException(Error);
-                        } else if (devJars.length == 1) {
-                            devJar = new File(toolkitHome, devJars[0]);
-                        } else {
-                            String Error = "Could not find a gwt-dev jar.  \n" + "Looked in " + toolkitHome
-                                    + ", but found more than one jar that fullfilled gwt-dev-*.jar"
-                                    + "If you think you already gwt-dev-*.jar in your path, you can set "
-                                    + "the property google.webtoolkit.doNotFileGwtDev to \"true\" in your POM.";
-                            throw new MojoFailureException(Error);
-                        }
-                    }
-
-                    try {
-                        classPathList.add(devJar.getCanonicalPath());
-                    } catch (IOException e) {
-                        classPathList.add(devJar.getAbsolutePath());
-                    }
+                // run test script
+                try {
+                    ScriptUtil.runScript(test);
+                    // write SUCCESS results to result file?
+                    testResultsWriter.write("OK");
+                } catch (MojoExecutionException e) {
+                    testFailure = true;
+                    testResultsWriter.write("FAILURE");
+                    e.printStackTrace(new PrintWriter(testResultsWriter));
                 }
-            }
-
-            classPathList.add(getProject().getBuild().getSourceDirectory());
-            classPathList.add(getProject().getBuild().getTestSourceDirectory());
-
-            String exe = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-            String classpath = StringUtils.join(classPathList.iterator(), File.pathSeparator);
-            ArrayList<String> arguments = new ArrayList<String>();
-
-            StringBuffer cmd = new StringBuffer();
-
-            cmd.append(exe).append(' ');
-
-            String extra = (this.getExtraJvmArgs() != null) ? this.getExtraJvmArgs() : "";
-
-            if (AbstractGWTMojo.OS_NAME.toLowerCase(Locale.US).startsWith("mac")
-                    && (extra.indexOf("-XstartOnFirstThread") == -1)) {
-                extra = "-XstartOnFirstThread " + extra;
-            }
-
-            cmd.append(extra).append(" ").append((this.extraTestArgs == null) ? "" : this.extraTestArgs).append(" ");
-
-            //cmd.append("-Dgwt.args=\"-out www-test\" ");
-            cmd.append("-cp ");
-            if (AbstractGWTMojo.OS_NAME.toLowerCase(Locale.US).startsWith("windows")) {
-                // TODO, we need to handle this more robustly, but for now quote the path if it's windows to fix spaces in path issues
-                cmd.append("\"" + classpath + "\"");
-            } else {
-                cmd.append(classpath);
-            }
-            cmd.append(' ');
-            cmd.append("junit.textui.TestRunner ");
-
-            File outputDir = new File(this.getBuildDir(), "gwtTest");
-            outputDir.mkdirs();
-            outputDir.mkdir();
-
-            List<String> testCompileRoots = getProject().getTestCompileSourceRoots();
-
-            int run = 0;
-            int fail = 0;
-            int error = 0;
-
-            for (String currRoot : testCompileRoots) {
-                //UNDONE(willpugh) -- Need to be able to change the File filter here.
-                Collection<File> coll = FileUtils.listFiles(new File(currRoot), new WildcardFileFilter(this
-                        .getTestFilter()), HiddenFileFilter.VISIBLE);
-
-                for (File currFile : coll) {
-                    List<String> specificArgs = new ArrayList<String>(arguments);
-
-                    String packageName = currFile.toString();
-
-                    //Pull off the extension
-                    if (packageName.lastIndexOf('.') > packageName.lastIndexOf(File.separatorChar)) {
-                        packageName = packageName.substring(0, packageName.lastIndexOf('.'));
-                    }
-
-                    if (packageName.startsWith(currRoot)) {
-                        packageName = packageName.substring(currRoot.length());
-                    }
-
-                    if (packageName.startsWith(File.separator)) {
-                        packageName = packageName.substring(1);
-                    }
-
-                    packageName = StringUtils.replace(packageName, File.separatorChar, '.');
-                    specificArgs.add(packageName);
-
-                    try {
-                        String fullCmd = cmd.toString() + packageName;
-
-                        this.getLog().debug(fullCmd);
-
-                        ProcessWatcher pw = new ProcessWatcher(fullCmd, null, this.getBuildDir());
-
-                        StringBuffer out = new StringBuffer();
-                        StringBuffer err = new StringBuffer();
-                        pw.startProcess(out, err);
-                        pw.waitFor();
-
-                        if (err.length() > 0) {
-                            System.err.println(err);
-                        }
-
-                        FileWriter writer = new FileWriter(new File(outputDir, "TEST-" + packageName + ".txt"));
-                        writer.write(err.toString());
-                        writer.write("\n" + out.toString());
-                        writer.flush();
-                        writer.close();
-
-                        Pattern p = Pattern
-                                .compile("\\s*Tests run:\\s*(\\d+)\\s*,\\s*Failures:\\s*(\\d+),\\s*Errors:\\s*(\\d+)\\s*");
-                        Pattern p2 = Pattern.compile("OK\\s\\((\\d+) tests\\)\\s*");
-                        Matcher m = null;
-                        Matcher m2 = null;
-
-                        String[] lines = out.toString().split("\n");
-
-                        for (String curr : lines) {
-                            m = p.matcher(curr);
-
-                            if (m.matches()) {
-                                break;
-                            }
-
-                            m2 = p2.matcher(curr);
-
-                            if (m2.matches()) {
-                                break;
-                            }
-                        }
-
-                        if (m.matches()) {
-                            run += Integer.parseInt(m.group(1));
-                            fail += Integer.parseInt(m.group(2));
-                            error += Integer.parseInt(m.group(3));
-
-                            this.getLog().info("Testing " + packageName);
-                            this.getLog().debug(m.group(0));
-                        } else if (err.length() == 0) {
-                            if (m2.matches()) {
-                                run += Integer.parseInt(m2.group(1));
-                            } else {
-                               this.getLog().info(out.toString());
-                            }
-                        } else {
-                            error++;
-                            this.getLog().error("Unit tests failed.");
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            if ((error + fail) > 0) {
-                throw new MojoExecutionException("GWT Unit Tests failed.\nTests run: " + run + ", Failures: " + fail
-                        + ", Errors: " + error + ", Skipped: 0");
-            }
-
-            this.getLog().info("OK (" + run + " tests)");
-        } catch (DependencyResolutionRequiredException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getExtraTestArgs() {
-        return extraTestArgs;
-    }
-
-    public boolean isSkip() {
-        return skip;
-    }
-
-    public void setExtraTestArgs(String extraTestArgs) {
-        this.extraTestArgs = extraTestArgs;
-    }
-
-    public void setSkip(boolean skip) {
-        this.skip = skip;
-    }
-
-    static class StreamSucker extends Thread {
-        InputStream steam;
-        OutputStream os;
-        volatile boolean timeToClose = false;
-        int byteswritten = 0;
-
-        public StreamSucker(InputStream steam, OutputStream os) {
-            this.steam = steam;
-            this.os = os;
-        }
-
-        public void run() {
-            byte[] buf = new byte[4096];
-
-            try {
-                while (true) {
-                    synchronized (this) {
-                        this.wait(80);
-                    }
-
-                    siphonAvailableBytes(buf);
-                }
-            } catch (InterruptedException e) {
-                //We got interupted, time to go. . .
+                
+                testResultsWriter.flush();
+                testResultsWriter.close();
             } catch (IOException e) {
-                ;
+                throw new MojoExecutionException("unable to create test results output file", e);
             }
         }
-
-        public void siphonAvailableBytes(byte[] buf) throws IOException {
-            boolean close = timeToClose;
-
-            int available = steam.available();
-
-            while (available > 0) {
-                available = steam.read(buf);
-                os.write(buf, 0, available);
-                byteswritten += available;
-                available = steam.available();
-            }
-
-            if (close) {
-                throw new IOException("Done");
-            }
-        }
+        if (testFailure) {
+            throw new MojoExecutionException("There were test failures - see test reports (target/gwtTest)");
+        }        
     }
 }

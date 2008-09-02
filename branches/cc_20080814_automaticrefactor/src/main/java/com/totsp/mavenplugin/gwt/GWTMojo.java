@@ -26,13 +26,17 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
 
-import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
+import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
 /**
  * Runs the the project in the GWTShell for development.
+ * 
+ * Note that this goal is intended to be explicitly run from the command line 
+ * (execute phase=), whereas other GWT-Maven goals are not (others happen as 
+ * part of the standard Maven life-cycle phases: "compile" "test" "install").
  * 
  * @goal gwt
  * @execute phase=compile
@@ -60,33 +64,12 @@ public class GWTMojo extends AbstractGWTMojo {
             this.getOutput().mkdirs();
         }
 
-        if (AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
-            ScriptWriterWindows writer = new ScriptWriterWindows();
-            try {
-                File exec = writer.writeRunScript(this);
-                ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-                if (retVal != 0) {
-                    throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
-                }
-            } catch (Exception e) {
-                throw new MojoExecutionException("Exception attempting run.", e);
-            }
-        } else {
-            ScriptWriterUnix writer = new ScriptWriterUnix();
-            try {
-                File exec = writer.writeRunScript(this);
-                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-                if (retVal != 0) {
-                    throw new MojoExecutionException("run script exited abnormally with code - " + retVal);
-                }
-            } catch (Exception e) {
-                throw new MojoExecutionException("Exception attempting run.", e);
-            }
-        }
+        // build it for the correct platform
+        ScriptWriter writer = ScriptWriterFactory.getInstance();
+        File exec = writer.writeRunScript(this);        
+        
+        // run it
+        ScriptUtil.runScript(exec);
     }
 
     /**

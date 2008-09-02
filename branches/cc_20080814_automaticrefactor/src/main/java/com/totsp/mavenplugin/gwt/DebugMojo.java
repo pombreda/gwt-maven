@@ -38,9 +38,9 @@ public class DebugMojo extends GWTMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (isDebugSuspend())
-            getLog().info("Starting debugger on port " + getDebugPort() + " in suspend mode.");
+            getLog().info("starting debugger on port " + getDebugPort() + " in suspend mode");
         else
-            getLog().info("Starting debugger on port " + getDebugPort());
+            getLog().info("starting debugger on port " + getDebugPort());
         super.execute();
     }
 }
