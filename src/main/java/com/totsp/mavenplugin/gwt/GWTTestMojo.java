@@ -75,8 +75,9 @@ public class GWTTestMojo extends AbstractGWTMojo {
                     // write SUCCESS results to result file?
                     testResultsWriter.write("OK");
                 } catch (MojoExecutionException e) {
+                    // TODO need to get the actual GWT output here, rather than the script runner failure
                     testFailure = true;
-                    testResultsWriter.write("FAILURE");
+                    testResultsWriter.write("FAILURE\n");
                     e.printStackTrace(new PrintWriter(testResultsWriter));
                 }
                 
