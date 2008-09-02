@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -13,6 +12,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
+import com.totsp.mavenplugin.gwt.scripting.TestResult.TestCode;
 
 /**
  * Runs special (non surefire) test phase for GWTTestCase derived tests.
@@ -48,53 +48,63 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
  */
 public class GWTTestMojo extends AbstractGWTMojo {
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        if (isSkip()) {
-            return;
-        }
-        
-        this.getLog().info("running gwt:test GWTTestCase tests (using test name filter -  " + this.getTestFilter());
+   public void execute() throws MojoExecutionException, MojoFailureException {
+      if (isSkip()) {
+         return;
+      }
 
-        FileWriter testResultsWriter = null;
+      this.getLog().info("running GWTTestCase tests (using test name filter -  " + this.getTestFilter() + ")");
 
-        // build scripts for each test case for the correct platform
-        // (note that scripts end up in outputDirectory/gwtTest)
-        ScriptWriter writer = ScriptWriterFactory.getInstance();
-        writer.writeTestScripts(this);
+      FileWriter testResultsWriter = null;
 
-        // run the scripts
-        boolean testFailure = false;
-        File testDir = new File(this.getBuildDir(), "gwtTest");
-        FileFilter fileFilter = new WildcardFileFilter("gwtTest-*");
-        File[] files = testDir.listFiles(fileFilter);
-        for (int i = 0; i < files.length; i++) {
-            File test = files[i];
-            this.getLog().info("running test - " + test.getName());
+      // build scripts for each test case for the correct platform
+      // (note that scripts end up in outputDirectory/gwtTest)
+      ScriptWriter writer = ScriptWriterFactory.getInstance();
+      writer.writeTestScripts(this);
 
-            // create results writer
-            try {
-                testResultsWriter = new FileWriter(new File(testDir, "TEST-" + test.getName() + ".txt"));
+      // run the scripts
+      boolean testFailure = false;
+      File testDir = new File(this.getBuildDir(), "gwtTest");
+      FileFilter fileFilter = new WildcardFileFilter("gwtTest-*");
+      File[] files = testDir.listFiles(fileFilter);
+      for (int i = 0; i < files.length; i++) {
+         File test = files[i];         
 
-                // run test script
-                try {
-                    ScriptUtil.runScript(test);
-                    // write SUCCESS results to result file?
-                    testResultsWriter.write("OK");
-                } catch (MojoExecutionException e) {
-                    // TODO need to get the actual GWT output here, rather than the script runner failure
-                    testFailure = true;
-                    testResultsWriter.write("FAILURE\n");
-                    e.printStackTrace(new PrintWriter(testResultsWriter));
-                }
-                
-                testResultsWriter.flush();
-                testResultsWriter.close();
-            } catch (IOException e) {
-                throw new MojoExecutionException("unable to create test results output file", e);
+         // create results writer
+         try {
+            String outTestName = test.getName();
+            outTestName = outTestName.substring(0, test.getName().lastIndexOf(".")); // strip end .sh/cmd
+            outTestName = outTestName.substring(8, outTestName.length()); // strip start gwtTest-
+            testResultsWriter = new FileWriter(new File(testDir, "TEST-" + outTestName + ".txt"));
+
+            // run test script and capture output
+            com.totsp.mavenplugin.gwt.scripting.TestResult testResult = ScriptUtil.runTestScript(test);
+
+            // if testCode not success, overall must fail build
+            if (testResult.code == TestCode.ERROR || testResult.code == TestCode.FAILURE) {
+               testFailure = true;
             }
-        }
-        if (testFailure) {
-            throw new MojoExecutionException("There were test failures - see test reports (target/gwtTest)");
-        }        
-    }
+
+            // write results to result file
+            testResultsWriter.write("Test Code - " + testResult.code + "\n");
+            testResultsWriter.write("Test Output: \n" + testResult.message + "\n");
+            testResultsWriter.flush();
+            testResultsWriter.close();
+            
+            this.getLog().info(outTestName + " completed, GWTTestCase result: " + testResult.lastLine);
+         }
+         catch (IOException e) {
+            throw new MojoExecutionException("unable to create test results output file", e);
+         }
+      }
+
+      // after the loop show output and or handle overall failure
+      // TODO add up results and show X runs - X successes, X failures, etc 
+
+      this.getLog().info("all tests completed - ran " + files.length + " tests - see results in target/gwtTest");
+
+      if (testFailure) {
+         throw new MojoExecutionException("There were GWTTestCase test failures - see results in target/gwtTest");
+      }
+   }
 }

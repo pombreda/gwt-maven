@@ -23,7 +23,7 @@
 	</repositories>
 	<!--  convenience to define GWT version in one place -->
 	<properties>
-		<gwtVersion>1.5.1</gwtVersion>
+		<gwtVersion>1.5.2</gwtVersion>
 	</properties>
 	<dependencies>
 	    <!--  GWT deps (from central repo) -->
@@ -109,7 +109,7 @@
 				<executions>
 					<execution>
 						<id>unpack</id>
-						<phase>package</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>unpack</goal>
 						</goals>
@@ -121,7 +121,7 @@
 									<version>${gwtVersion}</version>
 									<classifier>${platform}-libs</classifier>
 									<type>zip</type>
-									<overWrite>true</overWrite>
+									<overWrite>false</overWrite>
 									<outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
 								</artifactItem>
 							</artifactItems>
@@ -140,24 +140,15 @@
 					<webXml>target/web.xml</webXml>
 				</configuration>
 			</plugin>
-			
-			<!--  configure Surefire to run GWTTestCase tests (still won't work, can't get  plain classpath for JUnitShell to inspect) -->
-			<!-- 
+			<!--  tell the compiler we can use 1.5 -->	
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-				    <useSystemClassLoader>true</useSystemClassLoader>
-				    <useManifestOnlyJar>false</useManifestOnlyJar>				    
-				    <forkMode>always</forkMode>
-				    <argLine>-XstartOnFirstThread</argLine>
-					<additionalClasspathElements>
-						<additionalClasspathElement>${basedir}/src/main/java</additionalClasspathElement>
-						<additionalClasspathElement>${basedir}/src/test/java</additionalClasspathElement>
-					</additionalClasspathElements>
-				</configuration>
-			</plugin>
-			-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>		
 		</plugins>
 	</build>
 	
