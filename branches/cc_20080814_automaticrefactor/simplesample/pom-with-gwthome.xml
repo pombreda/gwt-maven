@@ -88,7 +88,7 @@
 							<goal>i18n</goal>                            
 							<goal>compile</goal>							
 							<goal>gwt</goal>							
-                            <!-- <goal>testGwt</goal>-->
+                            <!-- <goal>test</goal>-->
 						</goals>
 					</execution>
 				</executions>

@@ -230,7 +230,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private String extraTestArgs;
     /**
-     * Whether or not to skip GWT-Maven testGwt testing.
+     * Whether or not to skip testing (including gwt:test testing).
      * 
      * @parameter expression="${maven.test.skip}"
      */
