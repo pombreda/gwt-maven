@@ -17,7 +17,12 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 /**
  * Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
- * This is a giant hack because Surefire has some issues with GWTTestCase.  
+ * This is based on the clever work Will Pugh did in the original "gwtTest" stuff, 
+ * it was refactored here to make it a bit more robust, and to use the same write
+ * script approach all the other GWT-Maven mojos use (and those are used because
+ * they are easier to tweak and debug than the Maven classpath - unfortunately). 
+ * 
+ * Disclaimer: this is a giant hack because Surefire has some issues with GWTTestCase.  
  * Surefire states that it offers multiple ways to load the classpath
  * (http://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html),
  * but it doesn't seem to work as advertised. Manifest class path works, and isolated
