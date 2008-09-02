@@ -27,9 +27,9 @@ import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
+import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 
 /**
  * Invokes the GWTCompiler for the project source.
@@ -54,32 +54,11 @@ public class CompileMojo extends AbstractGWTMojo {
             this.getOutput().mkdirs();
         }
 
-        if (System.getProperty("gwt.os", "").startsWith(WINDOWS) || AbstractGWTMojo.OS_NAME.startsWith(WINDOWS)) {
-            ScriptWriterWindows writer = new ScriptWriterWindows();
-            try {
-                File exec = writer.writeCompileScript(this);
-                ProcessWatcher pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-                if (retVal != 0) {
-                    throw new MojoFailureException("compile script exited abormally with code - " + retVal);
-                }
-            } catch (Exception e) {
-                throw new MojoExecutionException("Exception attempting compile.", e);
-            }
-        } else {
-            ScriptWriterUnix writer = new ScriptWriterUnix();
-            try {
-                File exec = writer.writeCompileScript(this);
-                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-                if (retVal != 0) {
-                    throw new MojoFailureException("compile script exited abormally with code - " + retVal);
-                }
-            } catch (Exception e) {
-                throw new MojoExecutionException("Exception attempting compile.", e);
-            }
-        }
+        // build it for the correct platform
+        ScriptWriter writer = ScriptWriterFactory.getInstance();
+        File exec = writer.writeCompileScript(this);        
+        
+        // run it
+        ScriptUtil.runScript(exec);
     }
 }

@@ -1,10 +1,10 @@
-package com.totsp.mavenplugin.gwt.sample.client;
+package com.totsp.sample.client;
 
 import junit.framework.Assert;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class GwtTestExample extends GWTTestCase
+public class GwtTestExampleA extends GWTTestCase
 {
     
     public String getModuleName() {

@@ -42,6 +42,6 @@ public class BeanGeneratorMojo extends AbstractGWTMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         throw new MojoExecutionException(
-                "currently no longer supported (may return in near future, but not included at present because of lack of project support/maintainers for this feature)");
+                "not currently supported (may return in near future, but not included at present because of lack of project support/maintainers for this feature set)");
     }
 }
