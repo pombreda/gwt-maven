@@ -111,6 +111,16 @@ public class ProcessWatcher {
 
       startProcess();
    }
+   
+   public void startProcess(StringBuilder stdout, StringBuilder stderr) throws IOException {
+      if (stdout != null)
+         out = new StreamSucker(new StringBuilderStream(stdout));
+
+      if (stderr != null)
+         err = new StreamSucker(new StringBuilderStream(stderr));
+
+      startProcess();
+   }
 
    public OutputStream getStdIn() {
       return process.getOutputStream();
@@ -235,6 +245,18 @@ public class ProcessWatcher {
       final StringBuffer buf;
 
       public StringBufferStream(StringBuffer buf) {
+         this.buf = buf;
+      }
+
+      public void write(int i) throws IOException {
+         buf.append((char) i);
+      }
+   }
+   
+   static public class StringBuilderStream extends OutputStream {
+      final StringBuilder buf;
+
+      public StringBuilderStream(StringBuilder buf) {
          this.buf = buf;
       }
 
