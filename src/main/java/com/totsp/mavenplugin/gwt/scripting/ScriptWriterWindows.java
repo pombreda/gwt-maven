@@ -21,9 +21,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.HiddenFileFilter;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.codehaus.plexus.util.StringUtils;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 import com.totsp.mavenplugin.gwt.DebugMojo;
@@ -165,22 +170,64 @@ public class ScriptWriterWindows implements ScriptWriter {
     
     /**
      * Write test scripts.
-     * 
-     * @param mojo
-     * @return
-     * @throws MojoExecutionException
      */
     public void writeTestScripts(AbstractGWTMojo mojo) throws MojoExecutionException {
-        File file = new File(mojo.getBuildDir(), "gwtTest.cmd");
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
+        
+        // get extras
+        String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";        
+        String testExtra = mojo.getExtraTestArgs() != null ? mojo.getExtraTestArgs() : ""; 
+        
+        // make sure output dir is present
+        File outputDir = new File(mojo.getBuildDir(), "gwtTest");
+        outputDir.mkdirs();
+        outputDir.mkdir();
 
-        // TODO
-        throw new MojoExecutionException("gwtTest not yet implemented for Windows platform");
+        // for each test compile source root, build a test script
+        List<String> testCompileRoots = mojo.getProject().getTestCompileSourceRoots();
+        for (String currRoot : testCompileRoots) {
 
-        //writer.flush();
-        //writer.close();
+            Collection<File> coll = FileUtils.listFiles(new File(currRoot),
+                    new WildcardFileFilter(mojo.getTestFilter()), HiddenFileFilter.VISIBLE);
 
-        //return file;
+            for (File currFile : coll) {
+                
+                String testName = currFile.toString();                
+                mojo.getLog().debug(("gwtTest test match found (after filter applied) - " + testName));
+
+                // parse off the extension
+                if (testName.lastIndexOf('.') > testName.lastIndexOf(File.separatorChar)) {
+                    testName = testName.substring(0, testName.lastIndexOf('.'));
+                }
+                if (testName.startsWith(currRoot)) {
+                    testName = testName.substring(currRoot.length());
+                }
+                if (testName.startsWith(File.separator)) {
+                    testName = testName.substring(1);
+                }
+                testName = StringUtils.replace(testName, File.separatorChar, '.');
+                mojo.getLog().debug("testName after parsing - " + testName);
+
+                // start script inside gwtTest output dir, and name it with test class name
+                File file = new File(mojo.getBuildDir() + File.separator + "gwtTest", "gwtTest-" + testName + ".cmd");
+                PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
+
+                // build Java command
+                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" ");
+                if (extra.length() > 0) {
+                    writer.print(" " + extra + " ");
+                }
+                if (testExtra.length() > 0) {
+                    writer.print(" " + testExtra + " ");
+                }
+                writer.print(" -cp $CLASSPATH ");
+                writer.print("junit.textui.TestRunner ");
+                writer.print(testName);
+
+                // write script out                
+                writer.flush();
+                writer.close();
+            }
+        }      
     }
 
     /**
