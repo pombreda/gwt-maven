@@ -17,27 +17,8 @@ import com.totsp.mavenplugin.gwt.scripting.TestResult.TestCode;
 /**
  * Runs special (non surefire) test phase for GWTTestCase derived tests.
  * 
- * This is based on the clever work Will Pugh did in the original "gwtTest" stuff, 
- * it was refactored here to make it a bit more robust, and to use the same write
- * script approach all the other GWT-Maven mojos use (and those are used because
- * they are easier to tweak and debug than the Maven classpath - unfortunately). 
- * 
- * Disclaimer: this is a giant hack because Surefire has some issues with GWTTestCase.  
- * Surefire states that it offers multiple ways to load the classpath
- * (http://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html),
- * but it doesn't seem to work as advertised. Manifest class path works, and isolated
- * classpath also works, but just getting to a normal java class path doesn't seem to work
- * (surefire still refers to /tmp/surefireX). Without a normal java class path GWTTestCase
- * won't work - because the GWT JUnitShell inspects the classpath and sets itself up, it 
- * doesn't like surefire magic. Also, presuming surefire did work and just set a normal 
- * classpath, it still would be susceptible to the line too long on Windows crap. 
- * I get the same problem others do, no matter how I configure surefire (and yes, I did
- * RTFM and try the useSystemClassLoader and useManifestOnlyJar settings, various ways)
- * : http://www.mail-archive.com/users@maven.apache.org/msg87660.html - and 
- * http://jira.codehaus.org/browse/SUREFIRE-508.
- * 
- * Hopefully we can kill this someday, it sucks, but for now, this is the ONLY way we know of
- * to run GWTTestCase based tests. 
+ * This is necessary because of several complications with regard to surefire and the 
+ * classpath for GWTTestCase/JUnitShell. See further notes in source.
  * 
  * @goal test
  * @phase test
@@ -48,6 +29,34 @@ import com.totsp.mavenplugin.gwt.scripting.TestResult.TestCode;
  */
 public class GWTTestMojo extends AbstractGWTMojo {
 
+/*
+ * This is based on the clever work Will Pugh did in the original "gwtTest" stuff. 
+ * This has been refactored to make it a bit more robust, and to use the same write
+ * script approach all the other GWT-Maven mojos use (and those are used because
+ * they are easier to tweak and debug than the Maven classpath - unfortunately). 
+ * 
+ * Disclaimer: this is a giant hack because Surefire has some issues with GWTTestCase. 
+ *  
+ * Surefire states that it offers multiple ways to load the classpath
+ * (http://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html),
+ * but it doesn't seem to work for the plain java class path case. Manifest class path works, 
+ * and isolated classpath also works, but just getting to a plain java class path does not seem to work
+ * (surefire still refers to /tmp/surefireX). Without a plain java class path GWTTestCase
+ * won't work - because GWTTestCase inspects the classpath and sets itself up, and it 
+ * doesn't like anything other than a plain java classpath (doesn't like a manifest jar, or isolated). 
+ * Also, presuming surefire did work, in plain java class path mode, we would then still be 
+ * susceptible to the line too long on Windows issue surefire works around with the other modes.
+ * 
+ * A lot of research into just using surefire was done (we don't want to have to offer this special class for GWTTestCase) - after 
+ * RTFM and trying the useSystemClassLoader and useManifestOnlyJar settings, various ways, we still
+ * could never get it to work. These issues are similar to our experiences
+ *: http://www.mail-archive.com/users@maven.apache.org/msg87660.html - and 
+ * http://jira.codehaus.org/browse/SUREFIRE-508.
+ * 
+ * Hopefully we can kill this someday, it's a hack, but for now, this is the ONLY way 
+ * to run GWTTestCase based tests from an automated Maven build. 
+ */    
+    
    public void execute() throws MojoExecutionException, MojoFailureException {
       if (isSkip()) {
          return;

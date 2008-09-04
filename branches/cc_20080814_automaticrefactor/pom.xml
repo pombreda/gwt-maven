@@ -45,6 +45,12 @@
             <name>Will Pugh</name>
         </developer>
     </developers>
+    <contributors>
+        <contributor>
+            <id>mnasato</id>
+            <name>Mirko Nasato</name>
+        </contributor>
+    </contributors>
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License 3.0</name>
