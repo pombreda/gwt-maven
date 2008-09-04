@@ -13,7 +13,9 @@ GWT-Maven Examples
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <!--  GWT-Maven example POM without google.webtoolkit.home SET (GWT as deps) -->
+    <!--
+        GWT-Maven example POM without google.webtoolkit.home SET (GWT as deps)
+    -->
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.totsp.gwt</groupId>
     <artifactId>maven-gwt-sample-withouthome</artifactId>
@@ -33,7 +35,7 @@ GWT-Maven Examples
     </repositories>
     <!--  convenience to define GWT version in one place -->
     <properties>
-       <gwtVersion>1.5.1</gwtVersion>
+        <gwtVersion>1.5.2</gwtVersion>
     </properties>
     <dependencies>
         <!--  GWT deps (from central repo) -->
@@ -56,7 +58,7 @@ GWT-Maven Examples
             <classifier>${platform}-libs</classifier>
             <type>zip</type>
             <scope>provided</scope>
-        </dependency>       
+        </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
@@ -64,7 +66,6 @@ GWT-Maven Examples
             <classifier>${platform}</classifier>
             <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -90,28 +91,29 @@ GWT-Maven Examples
                     <extraJvmArgs>-Xmx512m</extraJvmArgs>
                     <gwtVersion>${gwtVersion}</gwtVersion>
                     <i18nConstantsNames>
-                       <value>com.totsp.sample.client.AppConstants</value>
+                        <value>com.totsp.sample.client.AppConstants</value>
                     </i18nConstantsNames>
                     <i18nMessagesNames>
-                       <value>com.totsp.sample.client.AppMessages</value>
+                        <value>com.totsp.sample.client.AppMessages</value>
                     </i18nMessagesNames>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>mergewebxml</goal>
-                            <goal>i18n</goal>                            
+                            <goal>i18n</goal>
+                            <goal>gwt</goal>
                             <goal>compile</goal>                            
-                            <goal>gwt</goal>                            
-                            <!--<goal>test</goal>-->
+                            <goal>test</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
             <!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip -->
             <!--
-                (this is a replacement for the old "automatic" mode - useful if you don't
-                have GWT installed already, or you just want a maven way to handle gwt deps)
+                (this is a replacement for the old "automatic" mode - useful if you
+                don't have GWT installed already, or you just want a maven way to
+                handle gwt deps)
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -119,7 +121,7 @@ GWT-Maven Examples
                 <executions>
                     <execution>
                         <id>unpack</id>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -131,7 +133,7 @@ GWT-Maven Examples
                                     <version>${gwtVersion}</version>
                                     <classifier>${platform}-libs</classifier>
                                     <type>zip</type>
-                                    <overWrite>true</overWrite>
+                                    <overWrite>false</overWrite>
                                     <outputDirectory>${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
@@ -150,6 +152,15 @@ GWT-Maven Examples
                     <webXml>target/web.xml</webXml>
                 </configuration>
             </plugin>
+            <!--  tell the compiler we can use 1.5 -->  
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>       
         </plugins>
     </build>
     
@@ -189,7 +200,7 @@ GWT-Maven Examples
                 <os>
                     <name>Linux</name>
                 </os>
-            </activation>           
+            </activation>
         </profile>
     </profiles>
 </project>
@@ -226,7 +237,7 @@ GWT-Maven Examples
     </repositories>
     <!--  convenience to define GWT version in one place -->
     <properties>
-       <gwtVersion>1.5.1</gwtVersion>
+       <gwtVersion>1.5.2</gwtVersion>
     </properties>
     <dependencies>
         <!--  GWT deps -->
@@ -243,7 +254,7 @@ GWT-Maven Examples
             <artifactId>gwt-user</artifactId>
             <version>${gwtVersion}</version>
             <scope>system</scope>
-            <systemPath>/opt/gwt-mac-1.5.1/gwt-user.jar</systemPath>
+            <systemPath>/opt/gwt-mac-1.5.2/gwt-user.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -251,7 +262,7 @@ GWT-Maven Examples
             <version>${gwtVersion}</version>
             <classifier>${platform}</classifier>
             <scope>system</scope>
-            <systemPath>/opt/gwt-mac-1.5.1/gwt-dev-mac.jar</systemPath>
+            <systemPath>/opt/gwt-mac-1.5.2/gwt-dev-mac.jar</systemPath>
         </dependency>       
         
         <dependency>
@@ -269,7 +280,7 @@ GWT-Maven Examples
                 <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
                 <version>2.0-beta22</version>
                 <configuration>
-                    <gwtHome>/opt/gwt-mac-1.5.1</gwtHome>
+                    <gwtHome>/opt/gwt-mac-1.5.2</gwtHome>
                     <logLevel>INFO</logLevel>
                     <compileTargets>
                         <value>com.totsp.sample.Application</value>
@@ -293,7 +304,7 @@ GWT-Maven Examples
                             <goal>i18n</goal>                            
                             <goal>compile</goal>                            
                             <goal>gwt</goal>                            
-                            <!-- <goal>testGwt</goal>-->
+                            <goal>test</goal>                        
                         </goals>
                     </execution>
                 </executions>
@@ -307,6 +318,15 @@ GWT-Maven Examples
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <webXml>target/web.xml</webXml>
+                </configuration>
+            </plugin>
+            <!--  tell the compiler we can use 1.5 -->  
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
                 </configuration>
             </plugin>
         </plugins>
