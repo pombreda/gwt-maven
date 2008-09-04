@@ -67,8 +67,13 @@ public final class ScriptUtil {
          // 
          // OK (1 test)
          
-         String[] lines = out.toString().split("\n");
-         String lastLine = lines[lines.length - 1];
+         String[] lines = null;
+         if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
+        	 lines = out.toString().split("\r\n");
+         } else {
+        	 lines = out.toString().split("\n");
+         }         
+         String lastLine = lines[lines.length - 1];         
          testResult.lastLine = lastLine;
          if (lastLine.indexOf("Tests run") != -1) {
             // TODO add parsing to differentiate FAILURE and ERROR, or BOTH?

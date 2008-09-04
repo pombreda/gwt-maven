@@ -52,8 +52,8 @@ public class ScriptWriterWindows implements ScriptWriter {
     public File writeRunScript(AbstractGWTMojo mojo) throws MojoExecutionException {
         String filename = (mojo instanceof DebugMojo) ? "debug.cmd" : "run.cmd";
         File file = new File(mojo.getBuildDir(), filename);
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
-
+        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);        
+        
         String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
         writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
 
@@ -219,7 +219,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                 if (testExtra.length() > 0) {
                     writer.print(" " + testExtra + " ");
                 }
-                writer.print(" -cp $CLASSPATH ");
+                writer.print(" -cp %CLASSPATH% ");
                 writer.print("junit.textui.TestRunner ");
                 writer.print(testName);
 
@@ -244,6 +244,7 @@ public class ScriptWriterWindows implements ScriptWriter {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(new FileWriter(file));
+            writer.println("@echo off");
         } catch (IOException e) {
             throw new MojoExecutionException("Error creating script - " + file, e);
         }
