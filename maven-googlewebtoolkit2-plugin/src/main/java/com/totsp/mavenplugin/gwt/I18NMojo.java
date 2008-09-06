@@ -1,7 +1,7 @@
 /*
- * CompileMojo.java
+ * I18NMojo.java
  *
- * Created on January 13, 2007, 11:42 AM
+ * Created on August 19th, 2008
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,8 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
  * 
  */
 package com.totsp.mavenplugin.gwt;
@@ -32,31 +30,39 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 
 /**
- * Invokes the GWTCompiler for the project source.
+ * Creates I18N interfaces for constants and messages files.
  * 
- * @goal compile
- * @phase process-classes
+ * @goal i18n
+ * @phase process-resources
  * @requiresDependencyResolution compile
- * @description Invokes the GWTCompiler for the project source.
+ * @description Creates I18N interfaces for constants and messages files.
  * 
- * @author cooper
+ * @author Sascha-Matthias Kulawik <sascha@kulawik.de>
  * @author ccollins
  */
-public class CompileMojo extends AbstractGWTMojo {
+public class I18NMojo extends AbstractGWTMojo {
 
-    /** Creates a new instance of CompileMojo */
-    public CompileMojo() {
+    /** Creates a new instance of I18NMojo */
+    public I18NMojo() {
         super();
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        if (!this.getOutput().exists()) {
-            this.getOutput().mkdirs();
+
+        if (this.getI18nMessagesNames() == null && this.getI18nConstantsNames() == null) {
+            throw new MojoExecutionException(
+                    "neither i18nConstantsNames nor i18nMessagesNames present, cannot execute i18n goal");
+        }
+
+        if (!this.getI18nOutputDir().exists()) {
+            if (getLog().isInfoEnabled())
+                getLog().info("I18NModule is creating target directory " + getI18nOutputDir().getAbsolutePath());
+            this.getI18nOutputDir().mkdirs();
         }
 
         // build it for the correct platform
         ScriptWriter writer = ScriptWriterFactory.getInstance();
-        File exec = writer.writeCompileScript(this);        
+        File exec = writer.writeI18nScript(this);        
         
         // run it
         ScriptUtil.runScript(exec);
