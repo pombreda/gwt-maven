@@ -27,15 +27,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
 import org.codehaus.plexus.util.FileUtils;
 
-import com.totsp.mavenplugin.gwt.scripting.ProcessWatcher;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterUnix;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriterWindows;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 import com.totsp.mavenplugin.gwt.util.DependencyScope;
 
