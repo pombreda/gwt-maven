@@ -18,73 +18,72 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
-import java.util.Locale;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.codehaus.plexus.util.FileUtils;
+
+import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
+import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
 /**
- *
- * @author cooper
+ * Runs the the project in the GWTShell for development.
+ * 
+ * Note that this goal is intended to be explicitly run from the command line 
+ * (execute phase=), whereas other GWT-Maven goals are not (others happen as 
+ * part of the standard Maven life-cycle phases: "compile" "test" "install").
+ * 
  * @goal gwt
- * @requiresDependencyResolution runtime
- * @description Runs the the project in the GWT Development Shell.
- * @execute phase=package
+ * @execute phase=compile
+ * @requiresDependencyResolution compile
+ * @description Runs the the project in the GWTShell for development.
+ * 
+ * @author ccollins
+ * @author cooper
  */
 public class GWTMojo extends AbstractGWTMojo {
-    
-    String[] baseArgs = new String[0];
-    
+
     /** Creates a new instance of GWTMojo */
     public GWTMojo() {
         super();
     }
-    
+
     public void execute() throws MojoExecutionException, MojoFailureException {
-        String classpath = null;
-        try{
-            classpath = this.buildClasspath(true);
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build classpath", e );
-        }
-        try{
+
+        try {
             this.makeCatalinaBase();
-        } catch(Exception e){
-            throw new MojoExecutionException( "Unable to build catalina.base", e);
+        } catch (Exception e) {
+            throw new MojoExecutionException("Unable to build catalina.base", e);
         }
-        if( !this.getOutput().exists() ){
+        if (!this.getOutput().exists()) {
             this.getOutput().mkdirs();
         }
+
+        // build it for the correct platform
+        ScriptWriter writer = ScriptWriterFactory.getInstance();
+        File exec = writer.writeRunScript(this);        
         
-        if( System.getProperty("os.name").toLowerCase(Locale.US).startsWith("windows") ){
-            ScriptWriterWindows writer = new ScriptWriterWindows();
-            try{
-                File exec = writer.writeRunScript( this );
-                ProcessWatcher pw = new ProcessWatcher("\""+exec.getAbsolutePath()+"\"");
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-            } catch(Exception e){
-                throw new MojoExecutionException("Unable to write start script.", e);
-            }
-            
-            
-        } else {
-            ScriptWriterUnix writer = new ScriptWriterUnix();
-            try{
-                File exec = writer.writeRunScript( this );
-                ProcessWatcher pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ ") );
-                pw.startProcess(System.out, System.err);
-                int retVal = pw.waitFor();
-            } catch(Exception e){
-                throw new MojoExecutionException("Unable to write start script.", e);
-            }
-            
+        // run it
+        ScriptUtil.runScript(exec);
+    }
+
+    /**
+     * Create embedded GWT tomcat base dir based on properties.
+     * 
+     * @throws Exception
+     */
+    public void makeCatalinaBase() throws Exception {
+        getLog().debug("make catalina base for embedded Tomcat");
+        String[] args = { this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath() };
+        MakeCatalinaBase.main(args);
+
+        if ((this.getContextXml() != null) && this.getContextXml().exists()) {
+            FileUtils.copyFile(this.getContextXml(), new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
         }
     }
-    
-    
 }
