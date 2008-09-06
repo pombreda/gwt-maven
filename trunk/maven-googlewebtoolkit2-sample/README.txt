@@ -61,16 +61,7 @@ a deployment time file that includes a standard servlet entry, as well as a GWT-
 files [context.xml, if you use Tomcat outside of the shell], and it configures the
 embedded Tomcat for you.)
 
-This project also includes a testing sample using the GWT-Maven testGwt goal, and 
-includes EMMA based code coverage and reports for GWTTestCase based tests. 
-Code coverage with GWT is a bit tricky, but using the coverage patch JAR (as this project does)
-and generating ONLY a report (not instrumentation data itself, which GWT does for you when patched)
-along with AntRun to move things around, creates an automated build with testing and reports. 
-(If you want to see the testing stuff, uncomment the "testGwt" goal in the POM, it is commented
-out by default to keep things faster and simpler - *note* not tested with GWT 1.5, yet.)
-(Note* - when running tests the Surefire plugin is NOT used for GwtTestCase based tests, rather
-a special testGwt goal is included with GWT-Maven for GwtTestCase based tests, thus TWO test phases
-will happen during "mvn test", one for Surefire standard tests, and one for testGwt GWT tests.)
+This project also includes a testing sample using the GWT-Maven test goal.
 
 1. Build the server sub-project, using the instructions in "Running the parent example" above.
 2. Use a command prompt to navigate into the maven-googlewebtoolkit2-sample/war directory.
@@ -79,8 +70,7 @@ will happen during "mvn test", one for Surefire standard tests, and one for test
    
    OR you can run the GWTShell locally by executing "mvn gwt:gwt".
    
-  Optionally: Execute "mvn test site" (with testGwt goal enabled) to run test and get coverage. 
-(See "target/site" directory for output.)
+  Optionally: Execute "mvn test" to run the tests (standard surefire and GWT-Maven for GWTTestCase).
 
 
 Running the RPC example

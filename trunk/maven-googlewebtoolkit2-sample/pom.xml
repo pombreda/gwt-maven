@@ -37,7 +37,7 @@
 	</repositories>
 
     <properties>
-       <gwtVersion>1.5.1</gwtVersion>
+       <gwtVersion>1.5.2</gwtVersion>
     </properties>
 
 	<dependencyManagement>
@@ -89,7 +89,7 @@
                 <platform>false</platform>
             </properties>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
                 <os>
                     <family>Windows</family>
                 </os>
@@ -101,7 +101,7 @@
                 <platform>mac</platform>
             </properties>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
                 <os>
                     <family>mac</family>
                 </os>
@@ -113,7 +113,7 @@
                 <platform>linux</platform>
             </properties>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
                 <os>
                     <name>Linux</name>
                 </os>
