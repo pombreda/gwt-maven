@@ -11,11 +11,13 @@ GWT-Maven (maven-googlewebtoolit2-plugin)
   To provide you with better understanding of some usages of GWT-Maven,
   you can take a look at the following goals, setup, and examples information:
 
-  ** {{{plugin-info.html}Goals and Parameters}}
+  ** {{{plugin-info.html}Goals and Parameters}} (*Note* goal prefix is "gwt" currently, not "googlewebtoolkit2" as this auto generated page reports)
 
   ** {{{setup.html}Setup}}
   
   ** {{{examples.html}Examples}}
+  
+  ** {{{testing.html}Testing Support}}
   
 * More Information
 

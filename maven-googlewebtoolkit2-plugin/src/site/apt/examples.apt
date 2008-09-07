@@ -373,3 +373,12 @@ GWT-Maven Examples
     </profiles>
 </project>
 +--
+
+* Sample Projects
+
+ For more information and examples, look at (or check out and run) some of the sample projects in source:
+
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample project}}
+ 
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample project with inheritance}} 
+   
