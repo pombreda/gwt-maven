@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <body>
+    <links>
+      <item name="Maven 2" href="http://maven.apache.org/"/>
+    </links>
+
+    <menu name="Overview">
+      <item name="Introduction" href="index.html"/>
+      <item name="Goals" href="plugin-info.html"/>
+    </menu>
+   
+    <menu name="Setup and Examples">
+      <item name="Setup" href="setup.html"/>
+      <item name="Examples" href="examples.html"/>
+    </menu>
+    
+    <menu name="Details on Specific Goals">
+      <item name="Testing" href="testing.html"/>
+    </menu>
+    
+    <menu ref="reports"/>
+    
+  </body>
+</project>
+
+<!--  
+<project>
+  <body>
+    <menu name="Overview">
+      <item name="Introduction" href="index.html"/>
+      <item name="Configuration" href="configuration.html"/>
+      <item name="Setup" href="setup.html"/>
+      <item name="Examples" href="examples.html"/>
+    </menu>
+  </body>
+</project>
+-->
