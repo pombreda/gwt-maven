@@ -1,0 +1,548 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Maven 2 Plugin for the Google Web Toolkit - </title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            Maven 2 Plugin for the Google Web Toolkit
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+            <div class="xleft">
+        Last Published: 2008-09-07
+                      </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
+            
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="plugin-info.html">Goals</a>
+          </li>
+          </ul>
+              <h5>Setup and Examples</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="setup.html">Setup</a>
+          </li>
+              
+    <li class="none">
+              <strong>Examples</strong>
+        </li>
+          </ul>
+              <h5>Details on Specific Goals</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="testing.html">Testing</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-info.html">Project Information</a>
+                </li>
+              
+                
+              
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-reports.html">Project Reports</a>
+                </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>GWT-Maven Examples</h2>
+<div class="section"><h3>Sample Projects</h3>
+<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
+</li>
+<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full sample project with inheritance</a>
+ </li>
+</ul>
+</div>
+<div class="section"><h3>Auto Configuration</h3>
+<p>Below is more detail abput the simple sample project, which uses the auto-configuration. Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, and activates correct platform dependent dependencies based the platform in use.</p>
+<p>This is the recommended way to use GWT-Maven (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+    &lt;!--
+        GWT-Maven example POM without google.webtoolkit.home SET (GWT as deps)
+    --&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-gwt-sample-withouthome&lt;/artifactId&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;maven-gwt-sample-withouthome&lt;/name&gt;
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;java.net&lt;/id&gt;
+            &lt;url&gt;http://download.java.net/maven/1&lt;/url&gt;
+            &lt;layout&gt;legacy&lt;/layout&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+            &lt;id&gt;gwt-maven&lt;/id&gt;
+            &lt;url&gt; http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ &lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+    &lt;!--  convenience to define GWT version in one place --&gt;
+    &lt;properties&gt;
+        &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;!--  GWT deps (from central repo) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-servlet&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}-libs&lt;/classifier&gt;
+            &lt;type&gt;zip&lt;/type&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}&lt;/classifier&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.1&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!--  configure the GWT-Maven plugin --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0-beta22&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;logLevel&gt;INFO&lt;/logLevel&gt;
+                    &lt;compileTargets&gt;
+                        &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
+                    &lt;/compileTargets&gt;
+                    &lt;runTarget&gt;com.totsp.sample.Application/Application.html&lt;/runTarget&gt;
+                    &lt;style&gt;DETAILED&lt;/style&gt;
+                    &lt;noServer&gt;false&lt;/noServer&gt;
+                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
+                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
+                    &lt;i18nConstantsNames&gt;
+                        &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
+                    &lt;/i18nConstantsNames&gt;
+                    &lt;i18nMessagesNames&gt;
+                        &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
+                    &lt;/i18nMessagesNames&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;mergewebxml&lt;/goal&gt;
+                            &lt;goal&gt;i18n&lt;/goal&gt;
+                            &lt;goal&gt;gwt&lt;/goal&gt;
+                            &lt;goal&gt;compile&lt;/goal&gt;                            
+                            &lt;goal&gt;test&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;!--  Use the dependency plugin to unpack gwt-dev-PLATFORM-libs.zip --&gt;
+            &lt;!--
+                (this is a replacement for the old &quot;automatic&quot; mode - useful if you
+                don't have GWT installed already, or you just want a maven way to
+                handle gwt deps)
+            --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;unpack&lt;/id&gt;
+                        &lt;phase&gt;compile&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;unpack&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;configuration&gt;
+                            &lt;artifactItems&gt;
+                                &lt;artifactItem&gt;
+                                    &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+                                    &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+                                    &lt;version&gt;${gwtVersion}&lt;/version&gt;
+                                    &lt;classifier&gt;${platform}-libs&lt;/classifier&gt;
+                                    &lt;type&gt;zip&lt;/type&gt;
+                                    &lt;overWrite&gt;false&lt;/overWrite&gt;
+                                    &lt;outputDirectory&gt;${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}&lt;/outputDirectory&gt;
+                                &lt;/artifactItem&gt;
+                            &lt;/artifactItems&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;!--
+                If you want to use the target/web.xml file mergewebxml produces,
+                tell the war plugin to use it
+            --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;!--  tell the compiler we can use 1.5 --&gt;  
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.5&lt;/source&gt;
+                    &lt;target&gt;1.5&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;       
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    
+    &lt;!--  profiles (with activation per platform) --&gt;
+    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-windows&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;windows&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;Windows&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-mac&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;mac&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;mac&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-linux&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;linux&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;name&gt;Linux&lt;/name&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt;
+&lt;/project&gt;</pre>
+</div>
+</div>
+<div class="section"><h3>Manual Configuration</h3>
+<p>Below is an another example from the simple sample project that uses manual configuration. Manual configuration assumes you already have downloaded and unpacked GWT to a location on the local file system (for manual you still need GWT dependencies, for the regular maven lifecycle goals - but these dependencies can be local and use system scope).</p>
+<div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+    &lt;!--  GWT-Maven example POM with google.webtoolkit.home SET (GWT already installed on machine) --&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-gwt-sample-withhome&lt;/artifactId&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;maven-gwt-sample-withhome&lt;/name&gt;
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;java.net&lt;/id&gt;
+            &lt;url&gt;http://download.java.net/maven/1&lt;/url&gt;
+            &lt;layout&gt;legacy&lt;/layout&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+            &lt;id&gt;gwt-maven&lt;/id&gt;
+            &lt;url&gt; http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ &lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+    &lt;!--  convenience to define GWT version in one place --&gt;
+    &lt;properties&gt;
+       &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;!--  GWT deps --&gt;
+        &lt;!--  you still need gwt as deps, so that standard maven goals will work (like compile)
+        NOTE that the dev and user jars can be system scope with &quot;systemPath&quot;, so that are the same as used via gwtHome by GWT-Maven) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-servlet&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-user.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}&lt;/classifier&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-dev-mac.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;       
+        
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.1&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!--  configure the GWT-Maven plugin --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0-beta22&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;gwtHome&gt;/opt/gwt-mac-1.5.2&lt;/gwtHome&gt;
+                    &lt;logLevel&gt;INFO&lt;/logLevel&gt;
+                    &lt;compileTargets&gt;
+                        &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
+                    &lt;/compileTargets&gt;
+                    &lt;runTarget&gt;com.totsp.sample.Application/Application.html&lt;/runTarget&gt;
+                    &lt;style&gt;DETAILED&lt;/style&gt;
+                    &lt;noServer&gt;false&lt;/noServer&gt;
+                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
+                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
+                    &lt;i18nConstantsNames&gt;
+                       &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
+                    &lt;/i18nConstantsNames&gt;
+                    &lt;i18nMessagesNames&gt;
+                       &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
+                    &lt;/i18nMessagesNames&gt;                    
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;mergewebxml&lt;/goal&gt;
+                            &lt;goal&gt;i18n&lt;/goal&gt;                            
+                            &lt;goal&gt;compile&lt;/goal&gt;                            
+                            &lt;goal&gt;gwt&lt;/goal&gt;                            
+                            &lt;goal&gt;test&lt;/goal&gt;                        
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;           
+            &lt;!--
+                If you want to use the target/web.xml file mergewebxml produces,
+                tell the war plugin to use it
+            --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;!--  tell the compiler we can use 1.5 --&gt;  
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.5&lt;/source&gt;
+                    &lt;target&gt;1.5&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    
+    &lt;!--  profiles (with activation per platform) --&gt;
+    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-windows&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;windows&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;Windows&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-mac&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;mac&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;mac&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-linux&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;linux&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;name&gt;Linux&lt;/name&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;           
+        &lt;/profile&gt;
+    &lt;/profiles&gt;
+&lt;/project&gt;</pre>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2008
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

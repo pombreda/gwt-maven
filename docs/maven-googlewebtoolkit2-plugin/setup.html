@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Maven 2 Plugin for the Google Web Toolkit - </title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            Maven 2 Plugin for the Google Web Toolkit
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+            <div class="xleft">
+        Last Published: 2008-09-07
+                      </div>
+            <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
+            
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                   <h5>Overview</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="index.html">Introduction</a>
+          </li>
+              
+    <li class="none">
+                    <a href="plugin-info.html">Goals</a>
+          </li>
+          </ul>
+              <h5>Setup and Examples</h5>
+            <ul>
+              
+    <li class="none">
+              <strong>Setup</strong>
+        </li>
+              
+    <li class="none">
+                    <a href="examples.html">Examples</a>
+          </li>
+          </ul>
+              <h5>Details on Specific Goals</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="testing.html">Testing</a>
+          </li>
+          </ul>
+              <h5>Project Documentation</h5>
+            <ul>
+              
+                
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-info.html">Project Information</a>
+                </li>
+              
+                
+              
+      
+            
+      
+            
+      
+              
+        <li class="collapsed">
+                    <a href="project-reports.html">Project Reports</a>
+                </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>GWT-Maven Setup</h2>
+<p>In order to use GWT-Maven, you will need to configure GWT-Maven using the plugin configuration in your POM, and you will need to decide how you want to handle GWT being present (automatic or manual mode - more below). </p>
+<div class="section"><h3>Configuring GWT-Maven itself</h3>
+<p>Regardless of which &quot;mode&quot; you use, automatic, or manual, you also need to configure GWT-Maven itself, of course. </p>
+<p>For example:</p>
+<div class="source"><pre>            &lt;plugin&gt;
+                &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0-beta22&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;logLevel&gt;INFO&lt;/logLevel&gt;
+                    &lt;compileTargets&gt;
+                        &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
+                    &lt;/compileTargets&gt;
+                    &lt;runTarget&gt;com.totsp.sample.Application/Application.html&lt;/runTarget&gt;
+                    &lt;style&gt;DETAILED&lt;/style&gt;
+                    &lt;noServer&gt;false&lt;/noServer&gt;
+                    &lt;gwtVersion&gt;1.5.1&lt;/gwtVersion&gt;
+                    &lt;extraJvmArgs&gt;-Dgwt.args=-web&lt;/extraJvmArgs&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;mergewebxml&lt;/goal&gt;
+                            &lt;!--&lt;goal&gt;i18n&lt;/goal&gt;--&gt;
+                            &lt;goal&gt;compile&lt;/goal&gt;                            
+                            &lt;goal&gt;gwt&lt;/goal&gt;                            
+                            &lt;!-- &lt;goal&gt;test&lt;/goal&gt;--&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;          </pre>
+</div>
+</div>
+<div class="section"><h3>Getting the Plugin</h3>
+<p>Getting the plugin is simple. You just need to add the GWT-Maven pluginRepository to your POM. </p>
+<div class="source"><pre>&lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+      &lt;id&gt;gwt-maven&lt;/id&gt;
+      &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+  &lt;/pluginRepositories&gt;</pre>
+</div>
+</div>
+<div class="section"><h3>Handling GWT </h3>
+<p>The plugin needs to know where to find GWT (jars *and* native libraries). There are two ways you can do this.</p>
+<ol type="1"><li>Use the maven dependency plugin to automatically extract GWT native libraries from central repo (automatic mode)</li>
+<li>Download and unpack GWT yourself and set the google.webtoolkit.home property to the location where it is installed (manual mode) </li>
+</ol>
+<div class="section"><h4>Automatic Mode Setup</h4>
+<p>If you are going to do automatic setup, you need to include the GWT dependencies in your POM. </p>
+<p>For example:</p>
+<div class="source"><pre>  &lt;!--  GWT deps (from central repo) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-servlet&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}-libs&lt;/classifier&gt;
+            &lt;type&gt;zip&lt;/type&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;       
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}&lt;/classifier&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;</pre>
+</div>
+<p>You then also need to specify some properties to the dependency plugin so it knows what how and where to unpack the gwt native libs dependency (the one with the platform-libs classifier). </p>
+<p>For example:</p>
+<div class="source"><pre>    &lt;plugins&gt;      
+             &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;unpack&lt;/id&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;unpack&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;configuration&gt;
+                            &lt;artifactItems&gt;
+                                &lt;artifactItem&gt;
+                                    &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+                                    &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+                                    &lt;version&gt;${gwtVersion}&lt;/version&gt;
+                                    &lt;classifier&gt;${platform}-libs&lt;/classifier&gt;
+                                    &lt;type&gt;zip&lt;/type&gt;
+                                    &lt;overWrite&gt;false&lt;/overWrite&gt;
+                                    &lt;outputDirectory&gt;${settings.localRepository}/com/google/gwt/gwt-dev/${gwtVersion}&lt;/outputDirectory&gt;
+                                &lt;/artifactItem&gt;
+                            &lt;/artifactItems&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+    &lt;/plugins&gt;</pre>
+</div>
+<p>Also, with automatic mode, you may want to configure profiles for each platform. </p>
+<p>For example:</p>
+<div class="source"><pre>&lt;!--  profiles (with activation per platform) --&gt;
+    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-windows&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;windows&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;Windows&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-mac&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;mac&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;family&gt;mac&lt;/family&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;        
+        &lt;profile&gt;
+            &lt;id&gt;gwt-dev-linux&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;platform&gt;linux&lt;/platform&gt;
+            &lt;/properties&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;false&lt;/activeByDefault&gt;
+                &lt;os&gt;
+                    &lt;name&gt;Linux&lt;/name&gt;
+                &lt;/os&gt;
+            &lt;/activation&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt; </pre>
+</div>
+<p>For a complete automatic mode POM example see the examples page (menu at left). </p>
+</div>
+<div class="section"><h4>Manual Setup</h4>
+<p>If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html).</p>
+<p>Then, you will need to tell GWT-Maven where GWT is. This can be done with the &quot;gwtHome&quot; configuration property to the plugin itself, or with the &quot;google.webtoolkit.home&quot; property.</p>
+<p>For example when using a settings.xml machine-wide profile:</p>
+<div class="source"><pre> &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;settings&gt;
+   &lt;profiles&gt;
+     &lt;profile&gt;
+       &lt;id&gt;gwt-1.5.2-mac&lt;/id&gt;
+       &lt;properties&gt;
+         &lt;google.webtoolkit.home&gt;/opt/gwt-mac-1.5.2&lt;/google.webtoolkit.home&gt;
+          &lt;!-- XstartOnFirstThread needed only on the mac --&gt;
+         &lt;google.webtoolkit.extrajvmargs&gt;-Xmx512m -XstartOnFirstThread&lt;/google.webtoolkit.extrajvmargs&gt;
+       &lt;/properties&gt;
+     &lt;/profile&gt;
+   &lt;/profiles&gt;
+   &lt;activeProfiles&gt;
+     &lt;activeProfile&gt;gwt-1.5.2-mac&lt;/activeProfile&gt;
+   &lt;/activeProfiles&gt;
+&lt;/settings&gt;</pre>
+</div>
+<p>For manual mode you also need the GWT dependencies defined (these are still required because plugins and goals other than GWT-Maven need them, like the standard compiler). </p>
+<p>Note that with manual mode even though the dependencies are still needed, the difference is that the source of the dependencies can be a locally installed GWT location - and there is no separate step to unpack the native libraries (they are already in google.webtoolkit.home).</p>
+<p>For example:</p>
+<div class="source"><pre>        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-servlet&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-user.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
+            &lt;artifactId&gt;gwt-dev&lt;/artifactId&gt;
+            &lt;version&gt;${gwtVersion}&lt;/version&gt;
+            &lt;classifier&gt;${platform}&lt;/classifier&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-dev-mac.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;</pre>
+</div>
+<p>For a complete manual mode POM example see the examples page (menu at left). </p>
+</div>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2008
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
