@@ -1,4 +1,7 @@
 #summary Bean Generation Specification
+
+Bean generation is currently unsupported and unavailable (until we get a maintainer). 
+
 = Introduction =
 
 Bean Generation can be a little tricky.  The purpose of this Wiki Page is to try to flesh out some of the details for Bean Generation.  This page will discuss the Bean Generation process, and the parameters.
