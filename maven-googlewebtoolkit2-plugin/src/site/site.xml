@@ -15,6 +15,10 @@
       <item name="Examples" href="examples.html"/>
     </menu>
     
+    <menu name="Details on Specific Goals">
+      <item name="Testing" href="testing.html"/>
+    </menu>
+    
     <menu ref="reports"/>
     
   </body>

@@ -1,4 +1,4 @@
-GWT-Maven (maven-googlewebtoolit2-plugin)
+GWT-Maven (maven-googlewebtoolkit2-plugin)
 
 
  GWT-Maven is a plugin to provide support for Google Web Toolkit projects, including
@@ -17,9 +17,11 @@ GWT-Maven (maven-googlewebtoolit2-plugin)
   
   ** {{{examples.html}Examples}}
   
-  ** {{{testing.html}Testing Support}}
+* More Details on Specific Goals
+
+  ** {{{testing.html}Testing Support}}  
   
-* More Information
+* More General Information
 
   ** {{{http://code.google.com/p/gwt-maven/}Google Code hosting page}}
   

@@ -1,8 +1,15 @@
 GWT-Maven Examples
 
-*  Auto Configuration 
+* Sample Projects
 
-  Below is an example that uses the auto-configuration. 
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample project}}
+ 
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample project with inheritance}} 
+   
+
+*  Auto Configuration
+
+  Below is more detail abput the simple sample project, which uses the auto-configuration. 
   Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, 
   and activates correct platform dependent dependencies based the platform in use.
   
@@ -209,7 +216,7 @@ GWT-Maven Examples
 
 * Manual Configuration
 
-  Below is an example that uses manual configuration. Manual configuration assumes you already have
+  Below is an another example from the simple sample project that uses manual configuration. Manual configuration assumes you already have
   downloaded and unpacked GWT to a location on the local file system (for manual you still need GWT dependencies, for
   the regular maven lifecycle goals - but these dependencies can be local and use system scope).
 
@@ -374,11 +381,4 @@ GWT-Maven Examples
 </project>
 +--
 
-* Sample Projects
 
- For more information and examples, look at (or check out and run) some of the sample projects in source:
-
-  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample project}}
- 
-  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample project with inheritance}} 
-   

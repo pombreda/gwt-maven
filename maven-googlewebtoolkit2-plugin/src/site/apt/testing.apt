@@ -1,4 +1,4 @@
-GWT-Maven Test Support
+GWT-Maven Testing Support
 
   One special aspect of GWT-Maven to be familiar with is that it runs its own special "test" goal
   during the "test" phase in order to support GWTTestCase derived GWT tests. 
@@ -23,15 +23,15 @@ GWT-Maven Test Support
  Look at the full source for the 
  {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample}}
  and the 
- {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample project}} 
+ {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample}} projects
  for reference. 
  
 * GwtTest scripts
 
-Each test that is named with the GwtTest prefix and picked up and run by GWT-Maven is turned into a 
-script in the target/gwtTest directory and run. This is handy to know because you can re-run
-just these scripts for troubleshooting purposes. (This is the same MO as the compile and shell usage
-with GWT-Maven.) 
+ Each test that is named with the GwtTest prefix and picked up and run by GWT-Maven is turned into a 
+ script in the target/gwtTest directory and run. This is handy to know because you can re-run
+ just these scripts for troubleshooting purposes. (This is the same MO as the compile and shell usage
+ with GWT-Maven.) 
 
  
 * Test results output
