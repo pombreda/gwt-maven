@@ -54,3 +54,47 @@ another way to do this is to use the antrun plugin
 
 }}}
 
+and yet another way is to use the maven-source-plugin
+
+
+{{{ 
+
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+}}}
+
+Depend on the sources this way:
+{{{
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>gotm-jar</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+===========
+<dependencies>
+
+...
+   <dependency>
+      <groupId>com.company</groupId>
+      <artifactId>myservice</artifactId>
+      <version>1.0</version>
+      <classifier>sources</classifier>
+   </dependency>
+===========
+}}}
