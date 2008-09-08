@@ -11,6 +11,10 @@ GWT-Maven Setup
  For example:
  
 +-- 
+          <properties>
+             <gwtVersion>1.5.2</gwtVersion>
+           </properties>
+
             <plugin>
                 <groupId>com.totsp.gwt</groupId>
                 <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
@@ -23,7 +27,7 @@ GWT-Maven Setup
                     <runTarget>com.totsp.sample.Application/Application.html</runTarget>
                     <style>DETAILED</style>
                     <noServer>false</noServer>
-                    <gwtVersion>1.5.1</gwtVersion>
+                    <gwtVersion>${gwtVersion}</gwtVersion>
                     <extraJvmArgs>-Dgwt.args=-web</extraJvmArgs>
                 </configuration>
                 <executions>
@@ -111,7 +115,7 @@ GWT-Maven Setup
                 <executions>
                     <execution>
                         <id>unpack</id>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -196,7 +200,7 @@ GWT-Maven Setup
  <settings>
    <profiles>
      <profile>
-       <id>gwt-1.5.2-mac</id>
+       <id>gwt-mac</id>
        <properties>
          <google.webtoolkit.home>/opt/gwt-mac-1.5.2</google.webtoolkit.home>
           <!-- XstartOnFirstThread needed only on the mac -->
@@ -205,7 +209,7 @@ GWT-Maven Setup
      </profile>
    </profiles>
    <activeProfiles>
-     <activeProfile>gwt-1.5.2-mac</activeProfile>
+     <activeProfile>gwt-mac</activeProfile>
    </activeProfiles>
 </settings>
 +--
