@@ -6,7 +6,7 @@
 	-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.totsp.gwt</groupId>
-	<artifactId>maven-gwt-sample-withouthome</artifactId>
+	<artifactId>maven-gwt-sample</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-gwt-sample</name>
