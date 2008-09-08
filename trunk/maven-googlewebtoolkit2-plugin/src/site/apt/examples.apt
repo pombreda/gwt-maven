@@ -104,13 +104,15 @@ GWT-Maven Examples
                     <style>DETAILED</style>
                     <noServer>false</noServer>
                     <extraJvmArgs>-Xmx512m</extraJvmArgs>
-                    <gwtVersion>${gwtVersion}</gwtVersion>
                     <i18nConstantsNames>
                         <value>com.totsp.sample.client.AppConstants</value>
                     </i18nConstantsNames>
                     <i18nMessagesNames>
                         <value>com.totsp.sample.client.AppMessages</value>
                     </i18nMessagesNames>
+                    <!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
+                    <!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
+                    <gwtVersion>${gwtVersion}</gwtVersion>
                 </configuration>
                 <executions>
                     <execution>
@@ -306,14 +308,14 @@ GWT-Maven Examples
                     <runTarget>com.totsp.sample.Application/Application.html</runTarget>
                     <style>DETAILED</style>
                     <noServer>false</noServer>
-                    <extraJvmArgs>-Xmx512m</extraJvmArgs>
-                    <gwtVersion>${gwtVersion}</gwtVersion>
+                    <extraJvmArgs>-Xmx512m</extraJvmArgs>                    
                     <i18nConstantsNames>
                        <value>com.totsp.sample.client.AppConstants</value>
                     </i18nConstantsNames>
                     <i18nMessagesNames>
                        <value>com.totsp.sample.client.AppMessages</value>
-                    </i18nMessagesNames>                    
+                    </i18nMessagesNames>   
+                    <gwtVersion>${gwtVersion}</gwtVersion>                 
                 </configuration>
                 <executions>
                     <execution>
