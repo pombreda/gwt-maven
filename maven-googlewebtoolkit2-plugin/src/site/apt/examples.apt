@@ -4,7 +4,7 @@ GWT-Maven Examples
 
   ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample project}}
  
-  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample project with inheritance}} 
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full multi project and composition sample}} 
    
 
 *  Auto Configuration
