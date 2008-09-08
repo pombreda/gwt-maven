@@ -140,7 +140,7 @@ GWT-Maven Setup
     </plugins>
 +--
 
-    Also, with automatic mode, you may want to configure profiles for each platform. 
+    Also, with automatic mode, you may want to configure profiles for each platform, so the same POM can be used in multiple environments. 
     
     For example:
     
@@ -192,8 +192,8 @@ GWT-Maven Setup
 
   If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html).
 
-  Then, you will need to tell GWT-Maven where GWT is.  This can be done with the "gwtHome" configuration property to the plugin itself, 
-  or with the "google.webtoolkit.home" property.
+  Then, you will need to tell GWT-Maven where GWT is. This can be done with the "gwtHome" configuration property to the plugin itself, 
+  or with the "google.webtoolkit.home" profile property.
   
   For example when using a settings.xml machine-wide profile:
 
