@@ -83,13 +83,13 @@
 					<style>DETAILED</style>
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
-					<gwtVersion>${gwtVersion}</gwtVersion>
 					<i18nConstantsNames>
 					   <value>com.totsp.sample.client.AppConstants</value>
 					</i18nConstantsNames>
 					<i18nMessagesNames>
 					   <value>com.totsp.sample.client.AppMessages</value>
-					</i18nMessagesNames>					
+					</i18nMessagesNames>
+					<gwtVersion>${gwtVersion}</gwtVersion>					
 				</configuration>
 				<executions>
 					<execution>
