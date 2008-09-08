@@ -17,23 +17,13 @@
 		</pluginRepository>
 	</pluginRepositories>
 	
-	<repositories>
-		<repository>
-			<id>java.net</id>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
+	<repositories>		
 		<repository>
 			<id>gwt-maven</id>
 			<url>
 				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
 			</url>
-		</repository>
-		<repository>
-            <!--  needed at the moment for jdom 1.1 (not in central) -->
-            <id>random-for-jdom</id>
-            <url>http://www4.rothamsted.bbsrc.ac.uk/ondex/maven2</url>
-        </repository>
+		</repository>		
 	</repositories>
 
     <properties>
