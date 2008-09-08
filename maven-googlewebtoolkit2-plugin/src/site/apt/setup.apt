@@ -48,7 +48,8 @@ GWT-Maven Setup
 
 * Getting the Plugin
 
-  Getting the plugin is simple.  You just need to add the GWT-Maven pluginRepository to your POM.  
+  Getting the plugin is simple.  You just need to add the GWT-Maven pluginRepository, 
+  and standard repository (used for support libraries) to your POM.  
   
 +--
 <pluginRepositories>
@@ -56,8 +57,18 @@ GWT-Maven Setup
       <id>gwt-maven</id>
       <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
     </pluginRepository>
-  </pluginRepositories>
-+--
+</pluginRepositories>
+    
+<repositories>
+    <repository>
+      <id>gwt-maven</id>
+      <url>
+         http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+       </url>
+    </repository>        
+</repositories>
+--+    
+
 
 * Handling GWT 
 

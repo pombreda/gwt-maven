@@ -29,21 +29,28 @@ GWT-Maven Examples
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>maven-gwt-sample-withouthome</name>
+    
+    <!-- include the GWT-Maven repo as plugin, and as standard -->
+    <pluginRepositories>
+       <pluginRepository>
+         <id>gwt-maven</id>
+         <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+       </pluginRepository>
+    </pluginRepositories>    
     <repositories>
-        <repository>
-            <id>java.net</id>
-            <url>http://download.java.net/maven/1</url>
-            <layout>legacy</layout>
-        </repository>
-        <repository>
-            <id>gwt-maven</id>
-            <url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
-        </repository>
+       <repository>
+         <id>gwt-maven</id>
+         <url>
+            http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+          </url>
+       </repository>        
     </repositories>
+    
     <!--  convenience to define GWT version in one place -->
     <properties>
         <gwtVersion>1.5.2</gwtVersion>
     </properties>
+    
     <dependencies>
         <!--  GWT deps (from central repo) -->
         <dependency>
@@ -80,6 +87,7 @@ GWT-Maven Examples
             <scope>test</scope>
         </dependency>
     </dependencies>
+    
     <build>
         <plugins>
             <!--  configure the GWT-Maven plugin -->
@@ -231,16 +239,19 @@ GWT-Maven Examples
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>maven-gwt-sample-withhome</name>
+    <pluginRepositories>
+      <pluginRepository>
+        <id>gwt-maven</id>
+        <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+      </pluginRepository>
+    </pluginRepositories>
     <repositories>
-        <repository>
-            <id>java.net</id>
-            <url>http://download.java.net/maven/1</url>
-            <layout>legacy</layout>
-        </repository>
-        <repository>
-            <id>gwt-maven</id>
-            <url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
-        </repository>
+       <repository>
+         <id>gwt-maven</id>
+         <url>
+           http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+        </url>
+      </repository>        
     </repositories>
     <!--  convenience to define GWT version in one place -->
     <properties>
