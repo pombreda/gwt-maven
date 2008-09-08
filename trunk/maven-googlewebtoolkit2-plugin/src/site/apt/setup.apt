@@ -8,6 +8,8 @@ GWT-Maven Setup
  
  Regardless of which "mode" you use, automatic, or manual, you also need to configure GWT-Maven itself, of course. 
  
+ Also, as a convenience it helps to define a property for the GWT version (so you can change it in one place later to upgrade).
+ 
  For example:
  
 +-- 
