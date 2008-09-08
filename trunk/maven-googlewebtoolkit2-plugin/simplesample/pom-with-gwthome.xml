@@ -8,21 +8,30 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-gwt-sample-withhome</name>
-	<repositories>
-		<repository>
-			<id>java.net</id>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-		<repository>
-			<id>gwt-maven</id>
-			<url> http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ </url>
-		</repository>
-	</repositories>
+	
+	<!--  include pluginRepository and repository for GWT-Maven -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>gwt-maven-plugins</id>
+            <url>
+                http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+            </url>
+        </pluginRepository>
+    </pluginRepositories>    
+    <repositories>        
+        <repository>
+            <id>gwt-maven</id>
+            <url>
+                http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+            </url>
+        </repository>
+    </repositories>
+    
 	<!--  convenience to define GWT version in one place -->
 	<properties>
 	   <gwtVersion>1.5.1</gwtVersion>
 	</properties>
+	
 	<dependencies>
 	    <!--  GWT deps -->
 	    <!--  you still need gwt as deps, so that standard maven goals will work (like compile)
@@ -56,6 +65,7 @@
             <scope>test</scope>
         </dependency>
 	</dependencies>
+	
 	<build>
 		<plugins>
 		    <!--  configure the GWT-Maven plugin -->
