@@ -138,3 +138,32 @@ The GWT dev jar itself includes JDT stuff, so you have to exclude it from other 
       </exclusions>
     </dependency>
 }}}
+
+
+*Q)  I need some special files to end up at a particular path in the embedded hosted mode Tomcat instance - for example persistence.xml, or applicationContext.xml. How do I get them there? 
+
+For now, GWT-Maven does not do this automatically, if you have a setup like this though, you can use the AntRun plugin to copy them across (in the future we may add a property for GWT-Maven to handle these automatically, for now, use AntRun). 
+
+{{{
+<plugin>				
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>applicationContextCopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+							    <!--  TODO, use the maven properties here, rather than hard coded paths -->
+								<copy
+									file="${basedir}/src/main/webapp/WEB-INF/applicationContext.xml"
+									toFile="${basedir}/target/tomcat/webapps/ROOT/WEB-INF/applicationContext.xml" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+}}}
