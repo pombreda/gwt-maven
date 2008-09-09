@@ -4,6 +4,10 @@ WELCOME to the maven-googlewebtoolkit2-sample Project
 Also see GWT-Maven documentation:
 http://gwt-maven.googlecode.com/svn/docs/maven-googlewebtoolkit2-plugin/index.html
 
+*Special Note* - if you get errors, try changing the default platform <activeByDefault> to true for the
+platform you are using (it's set to mac unless you change it), or use the -P profileId command line option 
+- the activation mechanism seems to have issues sometimes with multi-module projects.
+
 About:
 ======
 This sample project has some specific goals:
