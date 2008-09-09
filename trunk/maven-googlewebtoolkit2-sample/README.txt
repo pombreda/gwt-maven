@@ -8,6 +8,11 @@ http://gwt-maven.googlecode.com/svn/docs/maven-googlewebtoolkit2-plugin/index.ht
 platform you are using (it's set to mac unless you change it), or use the -P profileId command line option 
 - the activation mechanism seems to have issues sometimes with multi-module projects.
 
+*Special Note* - the WAR project, which does the GWT download and extract, may have to be built
+by itself once before the multi-module build will work - if you see errors try "/war/mvn install", then move
+back up a level and try "/mvn install" - we need to investigate this, not sure why download and unpack
+does not work in multi module (may have to move the dependency plugin usage to the PARENT pom?).
+
 About:
 ======
 This sample project has some specific goals:
