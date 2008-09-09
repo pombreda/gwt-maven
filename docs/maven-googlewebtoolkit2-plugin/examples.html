@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-07
+        Last Published: 2008-09-08
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -153,10 +153,8 @@
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Examples</h2>
 <div class="section"><h3>Sample Projects</h3>
-<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
-</li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full sample project with inheritance</a>
- </li>
+<ul><li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/">Simple sample project</a></li>
+<li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/">Full multi project and composition sample</a> </li>
 </ul>
 </div>
 <div class="section"><h3>Auto Configuration</h3>
@@ -174,21 +172,28 @@
     &lt;packaging&gt;war&lt;/packaging&gt;
     &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
     &lt;name&gt;maven-gwt-sample-withouthome&lt;/name&gt;
+    
+    &lt;!-- include the GWT-Maven repo as plugin, and as standard --&gt;
+    &lt;pluginRepositories&gt;
+       &lt;pluginRepository&gt;
+         &lt;id&gt;gwt-maven&lt;/id&gt;
+         &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo&lt;/url&gt;
+       &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;    
     &lt;repositories&gt;
-        &lt;repository&gt;
-            &lt;id&gt;java.net&lt;/id&gt;
-            &lt;url&gt;http://download.java.net/maven/1&lt;/url&gt;
-            &lt;layout&gt;legacy&lt;/layout&gt;
-        &lt;/repository&gt;
-        &lt;repository&gt;
-            &lt;id&gt;gwt-maven&lt;/id&gt;
-            &lt;url&gt; http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ &lt;/url&gt;
-        &lt;/repository&gt;
+       &lt;repository&gt;
+         &lt;id&gt;gwt-maven&lt;/id&gt;
+         &lt;url&gt;
+            http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+          &lt;/url&gt;
+       &lt;/repository&gt;        
     &lt;/repositories&gt;
+    
     &lt;!--  convenience to define GWT version in one place --&gt;
     &lt;properties&gt;
         &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
     &lt;/properties&gt;
+    
     &lt;dependencies&gt;
         &lt;!--  GWT deps (from central repo) --&gt;
         &lt;dependency&gt;
@@ -225,6 +230,7 @@
             &lt;scope&gt;test&lt;/scope&gt;
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
+    
     &lt;build&gt;
         &lt;plugins&gt;
             &lt;!--  configure the GWT-Maven plugin --&gt;
@@ -241,13 +247,15 @@
                     &lt;style&gt;DETAILED&lt;/style&gt;
                     &lt;noServer&gt;false&lt;/noServer&gt;
                     &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
-                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
                     &lt;i18nConstantsNames&gt;
                         &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
                     &lt;/i18nConstantsNames&gt;
                     &lt;i18nMessagesNames&gt;
                         &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
                     &lt;/i18nMessagesNames&gt;
+                    &lt;!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps --&gt;
+                    &lt;!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors --&gt;
+                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
                 &lt;/configuration&gt;
                 &lt;executions&gt;
                     &lt;execution&gt;
@@ -370,16 +378,19 @@
     &lt;packaging&gt;war&lt;/packaging&gt;
     &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
     &lt;name&gt;maven-gwt-sample-withhome&lt;/name&gt;
+    &lt;pluginRepositories&gt;
+      &lt;pluginRepository&gt;
+        &lt;id&gt;gwt-maven&lt;/id&gt;
+        &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo&lt;/url&gt;
+      &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;
     &lt;repositories&gt;
-        &lt;repository&gt;
-            &lt;id&gt;java.net&lt;/id&gt;
-            &lt;url&gt;http://download.java.net/maven/1&lt;/url&gt;
-            &lt;layout&gt;legacy&lt;/layout&gt;
-        &lt;/repository&gt;
-        &lt;repository&gt;
-            &lt;id&gt;gwt-maven&lt;/id&gt;
-            &lt;url&gt; http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/ &lt;/url&gt;
-        &lt;/repository&gt;
+       &lt;repository&gt;
+         &lt;id&gt;gwt-maven&lt;/id&gt;
+         &lt;url&gt;
+           http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+        &lt;/url&gt;
+      &lt;/repository&gt;        
     &lt;/repositories&gt;
     &lt;!--  convenience to define GWT version in one place --&gt;
     &lt;properties&gt;
@@ -434,14 +445,14 @@
                     &lt;runTarget&gt;com.totsp.sample.Application/Application.html&lt;/runTarget&gt;
                     &lt;style&gt;DETAILED&lt;/style&gt;
                     &lt;noServer&gt;false&lt;/noServer&gt;
-                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
-                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
+                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;                    
                     &lt;i18nConstantsNames&gt;
                        &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
                     &lt;/i18nConstantsNames&gt;
                     &lt;i18nMessagesNames&gt;
                        &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
-                    &lt;/i18nMessagesNames&gt;                    
+                    &lt;/i18nMessagesNames&gt;   
+                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;                 
                 &lt;/configuration&gt;
                 &lt;executions&gt;
                     &lt;execution&gt;
