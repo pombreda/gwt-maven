@@ -47,7 +47,7 @@ GWT-Maven Setup
                     </execution>
                 </executions>
             </plugin>          
---+
++--
 
 * Getting the Plugin
 
@@ -70,7 +70,7 @@ GWT-Maven Setup
        </url>
     </repository>        
 </repositories>
---+    
++--   
 
 
 * Handling GWT 
