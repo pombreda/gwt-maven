@@ -86,9 +86,6 @@ Depend on the sources this way:
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
-===========
-<dependencies>
-
 ...
    <dependency>
       <groupId>com.company</groupId>
@@ -96,7 +93,7 @@ Depend on the sources this way:
       <version>1.0</version>
       <classifier>sources</classifier>
    </dependency>
-===========
+
 }}}
 
 
