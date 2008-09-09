@@ -98,3 +98,34 @@ Depend on the sources this way:
    </dependency>
 ===========
 }}}
+
+
+
+*Q)  I have some dependency with JDT in it, and things are not working (for example Drools).  What do I do?
+
+The GWT dev jar itself includes JDT stuff, so you have to exclude it from other deps that have it to avoid conflicts.  For example:
+
+{{{
+<dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-core</artifactId>
+      <version>4.0.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-compiler</artifactId>
+      <version>4.0.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+}}}
