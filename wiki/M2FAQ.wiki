@@ -6,6 +6,18 @@ These are commonly encountered questions regarding the M2 version of GWT-Maven.
 
 = Details =
 
+*Q)  I seem to have a conflict with another plugin that has the same prefix "gwt". How do I use multiple repositories that hava different plugins with the same prefixes?
+
+If you get errors that indicate the plugin does not exist, such as: "The plugin
+'org.apache.maven.plugins:maven-gwt-plugin' does not exist or no valid
+version could be found", it may be because you have another repository enabled that has a different plugin with the gwt prefix.  
+
+To work around this (if you need both repos), try using the fully qualified name for the GWT-Maven plugin:  
+{{{
+mvn com.totsp.gwt:maven-googlewebtoolkit2-plugin:gwt
+}}}
+
+
 *Q)  I'm having problems compiling multi-module GWT applications.  How do I make it work?
 
 When building client code, the GWT compiler, not only needs bytecode for dependent classes, but also needs access to the source code.  This means any GWT modules your module depends on will need to have the source code packaged in it.  The easiest way to do this is to use the `resources` section of your POM's `build` stanza.  e.g.
