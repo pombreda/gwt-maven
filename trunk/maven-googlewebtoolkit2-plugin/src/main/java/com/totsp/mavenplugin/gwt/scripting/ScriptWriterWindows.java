@@ -107,7 +107,7 @@ public class ScriptWriterWindows implements ScriptWriter {
             writer.print(mojo.getStyle());
 
             writer.print(" -out ");
-            writer.print(mojo.getOutput().getAbsolutePath());
+            writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\"");
             writer.print(" ");
 
             if (mojo.isEnableAssertions()) {
@@ -139,7 +139,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                 writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH%");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
-                writer.print(mojo.getI18nOutputDir());
+                writer.print("\"" + mojo.getI18nOutputDir() + "\"");
                 writer.print(" ");
                 writer.print(target);
                 writer.println();
@@ -155,7 +155,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -createMessages ");
                 writer.print(" -out ");
-                writer.print(mojo.getI18nOutputDir());
+                writer.print("\"" + mojo.getI18nOutputDir() + "\"");
                 writer.print(" ");
                 writer.print(target);
                 writer.println();
