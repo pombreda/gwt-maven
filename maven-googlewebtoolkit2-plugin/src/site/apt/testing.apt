@@ -20,11 +20,30 @@ GWT-Maven Testing Support
  START WITH "GwtTest."  Surefire looks for tests that are named Something"Test".java by default - they
  END WITH "Test." 
  
+ If you need to, you can change the default "GwtTest" prefix by setting the "testFilter" property.  
+ 
  Look at the full source for the 
  {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample}}
  and the 
  {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full sample}} projects
  for reference. 
+ 
+* Invoking tests
+
+The GWT-Maven testing support is NOT intended to be run standalone, rather it is bound to the Maven "test" phase.
+To get gwt:test to run, you should include the "test" goal in your plugin configuration executions, and you should invoke <<mvn test>>.
+
++--
+   <executions>
+      <execution>
+        <goals>
+          <goal>gwt</goal>
+          <goal>compile</goal>
+          <goal>test</goal>
+          </goals>
+      </execution>
+   </executions> 
++--
  
 * GwtTest scripts
 
