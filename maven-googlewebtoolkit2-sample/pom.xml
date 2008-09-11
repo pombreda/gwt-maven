@@ -76,7 +76,7 @@
         <profile>
             <id>gwt-dev-windows</id>
             <properties>
-                <platform>false</platform>
+                <platform>windows</platform>
             </properties>
             <activation>
                 <activeByDefault>false</activeByDefault>
