@@ -166,3 +166,5 @@ For now, GWT-Maven does not do this automatically, if you have a setup like this
 			</plugin>
 
 }}}
+
+Also, you can put files in the resources directory, and that works sometimes, depending on how the component looking for the files tries to find them - for example, src/main/resources/WEB-INF/applicationContext.xml.  Be advised though, if you try that, and it works for hosted mode, you may also want to configure the WAR plugin to filter that OUT of the final WAR (those resources should go in src/main/webapp/WEB-INF for standard war usage also). 
