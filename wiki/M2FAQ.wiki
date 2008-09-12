@@ -6,7 +6,7 @@ These are commonly encountered questions regarding the M2 version of GWT-Maven.
 
 = Details =
 
-*Q)  I seem to have a conflict with another plugin that has the same prefix "gwt". How do I use multiple repositories that hava different plugins with the same prefixes?
+*Q)  I seem to have a conflict with another plugin that has the same prefix "gwt". How do I use multiple repositories that have different plugins with the same prefixes?
 
 If you get errors that indicate the plugin does not exist, such as: "The plugin
 'org.apache.maven.plugins:maven-gwt-plugin' does not exist or no valid
