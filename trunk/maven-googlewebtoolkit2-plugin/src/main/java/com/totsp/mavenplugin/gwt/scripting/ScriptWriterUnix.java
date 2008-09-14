@@ -53,7 +53,7 @@ public class ScriptWriterUnix implements ScriptWriter {
     public File writeRunScript(AbstractGWTMojo mojo) throws MojoExecutionException {
         String filename = (mojo instanceof DebugMojo) ? "debug.sh" : "run.sh";
         File file = new File(mojo.getBuildDir(), filename);
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
+        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
 
         String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
         if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
