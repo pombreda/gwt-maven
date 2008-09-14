@@ -185,7 +185,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     /**
      * Source Tomcat context.xml for GWT shell - copied to
      * /gwt/localhost/ROOT.xml (used as the context.xml for the SHELL - requires
-     * Tomcat 5.0.x format).
+     * Tomcat 5.0.x format - hence no default).
      * 
      * @parameter
      */

@@ -52,8 +52,13 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         try {
+            this.getLog().info("copy source web.xml - " + this.getWebXml() + " to build dir (source web.xml required if mergewebxml execution is enabled)");
             File destination = new File(this.getBuildDir(), "web.xml");
-
+            if (!destination.exists()) {
+                destination.getParentFile().mkdirs();
+                destination.createNewFile();
+            }
+            
             FileIOUtils.copyFile(this.getWebXml(), destination);
 
             for (int i = 0; i < this.getCompileTarget().length; i++) {
