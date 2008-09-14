@@ -20,9 +20,9 @@ import com.totsp.sample.client.model.MyProjectData;
 
 
 /**
- * EntryPoint example of a GWT RPC call,
+ * EntryPoint example of a sample app that contains a GWT RPC call,
  * in order to demonstrate using the TotSP Maven GWT plugin:
- * http://code.google.com/p/gwt-maven.
+ * http://code.google.com/p/gwt-maven (with context.xml and web.xml in the shell AND in deploy artifact).
  *
  * In the real world do not put all your crap in an EntryPoint like this
  * (this is an example which is meant to be quick and dirty).
@@ -42,7 +42,6 @@ public class MyProjectEntryPoint implements EntryPoint {
     
     /**
      * EntryPoint onModuleLoad.
-     *
      */
     public void onModuleLoad() {
         
@@ -79,6 +78,10 @@ public class MyProjectEntryPoint implements EntryPoint {
         // for the FIRST time the module is loaded, prime the data pump (outside the listener)
         // (would pull this from RPC call in real life, to get data already in DB)
         List<Entry> primeEntries = new ArrayList<Entry>();
+        Entry entry = new Entry();
+        entry.name="No entries yet";
+        entry.time="0";
+        primeEntries.add(entry);        
         this.updateTable(primeEntries);
 
         // add the widgets to the panel, and the panel to the RootPanel
