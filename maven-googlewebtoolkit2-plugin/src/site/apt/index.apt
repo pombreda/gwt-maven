@@ -4,7 +4,7 @@ GWT-Maven (maven-googlewebtoolkit2-plugin)
  GWT-Maven is a plugin to provide support for Google Web Toolkit projects, including
  running the GWT developer tools (the compiler and shell) and performing support operations to help
  developers make GWT fit more closely in with their standard JEE web application
- development (managing the emebedded server, running noserver, merging web.xml, generating client beans, and more).
+ development (managing the emebedded server, running noserver, merging web.xml, generating I18N interfaces, generating client beans, and more).
 
 * Goals, Setup, and Examples
 
