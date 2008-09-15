@@ -1,5 +1,7 @@
 #summary M1 version FAQ.
 
+bump
+
 = Introduction =
 
 These are commonly encountered questions regarding the M1 version of GWT-Maven. 
