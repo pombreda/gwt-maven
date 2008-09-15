@@ -25,7 +25,8 @@ import com.totsp.sample.client.model.MyProjectData;
  * http://code.google.com/p/gwt-maven (with context.xml and web.xml in the shell AND in deploy artifact).
  *
  * In the real world do not put all your crap in an EntryPoint like this
- * (this is an example which is meant to be quick and dirty).
+ * (this is an example which is meant to be quick and dirty - in reality you should make re-usable widgets in their own classes, 
+ * and then add a main widget to the entry point, if the entire app is GWT based, else just add the specific widget(s)).
  *
  * @author ccollins
  *
@@ -87,6 +88,7 @@ public class MyProjectEntryPoint implements EntryPoint {
         // add the widgets to the panel, and the panel to the RootPanel
         panel.add(name);
         panel.add(input);
+        panel.add(new HTML("<br />"));
         panel.add(button);
         panel.add(new HTML("<br />"));
         panel.add(label);
