@@ -1,11 +1,11 @@
-package com.totsp.sample.client;
+package com.totsp.sample.client.model;
 
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.totsp.sample.client.exception.DataException;
+import com.totsp.sample.client.model.DataException;
 import com.totsp.sample.client.model.Entry;
 
 

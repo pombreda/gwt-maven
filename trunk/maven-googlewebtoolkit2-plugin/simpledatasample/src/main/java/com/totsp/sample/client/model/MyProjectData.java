@@ -3,6 +3,15 @@ package com.totsp.sample.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main data for the model of an example GWT app. 
+ * 
+ * The other part of the model, the actions, are all
+ * captured in the service servlets. 
+ * 
+ * @author ccollins
+ *
+ */
 public class MyProjectData implements DataChangeNotifier {
     
     private List<DataChangeListener> listeners;

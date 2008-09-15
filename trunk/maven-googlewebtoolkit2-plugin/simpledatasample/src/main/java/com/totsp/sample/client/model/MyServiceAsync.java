@@ -1,4 +1,4 @@
-package com.totsp.sample.client;
+package com.totsp.sample.client.model;
 
 import java.util.List;
 

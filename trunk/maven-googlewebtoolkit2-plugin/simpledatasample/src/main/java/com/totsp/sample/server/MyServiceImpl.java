@@ -2,8 +2,8 @@ package com.totsp.sample.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import com.totsp.sample.client.MyService;
-import com.totsp.sample.client.exception.DataException;
+import com.totsp.sample.client.model.DataException;
+import com.totsp.sample.client.model.MyService;
 import com.totsp.sample.client.model.Entry;
 
 import java.sql.Connection;
