@@ -1,6 +1,6 @@
 #summary Bean Generation Specification
 
-Bean generation is currently unsupported and unavailable (until we get a maintainer). 
+Bean generation is currently unsupported and unavailable (until we get a maintainer - volunteers welcome). 
 
 = Introduction =
 
