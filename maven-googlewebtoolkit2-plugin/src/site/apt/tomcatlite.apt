@@ -7,7 +7,7 @@ GWT-Maven and configuring "Tomcat Lite"
   most developers are used to. It's also an older version of Tomcat, 5.0.28, and some of the
   configuration is different than 6.x or 5.5.x.
   
-  See the simpledatasample sample application for an reference of all of the features discussed here. 
+  See the {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample}simpledatasample sample application for an reference of all of the features discussed here. 
   
    
 * Embedded Tomcat structure   
@@ -20,7 +20,7 @@ GWT-Maven and configuring "Tomcat Lite"
   
   The structure of the generated Tomcat directory, regardless of where you place it, is as follows:
   
-  {{{
++--
      /conf
         web.xml
         /gwt
@@ -31,7 +31,7 @@ GWT-Maven and configuring "Tomcat Lite"
            /WEB-INF
               web.xml
      /work
-  }}}
++--
   
   You will notice 3 .xml files in that structure.  
   
@@ -54,7 +54,7 @@ GWT-Maven and configuring "Tomcat Lite"
  a source web.xml file, it will be picked up and used for the embedded webapps/ROOT/WEB-INF/web.xml by the "gwt" goal. 
  GWT-Maven will make one addition to that file before it is used - it will add the GWTShellServlet to it:
  
- {{{
++--
   <!--inserted by gwt-maven-->
   <servlet>
     <servlet-name>shell</servlet-name>
@@ -65,7 +65,7 @@ GWT-Maven and configuring "Tomcat Lite"
     <servlet-name>shell</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping> 
- }}}
++--
  
  This addition lets the shell function normally by proxying RPC requests to the correct classes (without needing specific entries 
  for each while in the shell). The advantage here with GWT-Maven is that the REST of your source web.xml will also be there, 
@@ -97,7 +97,7 @@ GWT-Maven and configuring "Tomcat Lite"
  The last thing you need to do in order to USE this file with your WAR, is to configure the war plugin to use it. 
  This can be done as follows:
 
-{{{
++--
    <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-war-plugin</artifactId>
@@ -105,7 +105,7 @@ GWT-Maven and configuring "Tomcat Lite"
          <webXml>target/web.xml</webXml>
       </configuration>
    </plugin>
-}}}
++--
 
  
 * Working with context.xml
@@ -125,8 +125,34 @@ GWT-Maven and configuring "Tomcat Lite"
  
 * Other files needed by the container - Spring, JPA, etc
 
- TODO
- Discuss the options for these files, source locations, AntRun, etc. 
+ Sometimes you have a special file you need to bring along into the embedded Tomcat at a special location (rather than just on the classpath).
+ It depends on how you are using a component, and how that component looks for its resources, but you may need a file like
+ WEB-INF/applicationContext.xml or WEB-INF/persistence.xml for the shell (Spring usually looks at the classpath too, rather than just a relative file location, 
+ but this is just a general example). 
+ 
+ If that is the case you can generally use the Ant Run plugin to manipulate the embedded Tomcat structure as needed, for example:
+
++-- 
+  <plugin>                                
+    <artifactId>maven-antrun-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>applicationContextCopy</id>
+          <phase>compile</phase>
+          <configuration>
+            <tasks>
+              <copy
+                file="${basedir}/src/main/webapp/WEB-INF/applicationContext.xml"
+                toFile="${basedir}/target/tomcat/webapps/ROOT/WEB-INF/applicationContext.xml" />
+            </tasks>
+          </configuration>
+        <goals>
+          <goal>run</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
++--
 
 * -noserver
 
