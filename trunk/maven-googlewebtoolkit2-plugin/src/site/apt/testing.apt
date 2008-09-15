@@ -30,8 +30,8 @@ GWT-Maven Testing Support
  
 * Invoking tests
 
-The GWT-Maven testing support is NOT intended to be run standalone, rather it is bound to the Maven "test" phase.
-To get gwt:test to run, you should include the "test" goal in your plugin configuration executions, and you should invoke <<mvn test>>.
+ The GWT-Maven testing support is <<NOT intended to be run standalone>>, rather it is bound to the Maven "test" phase.
+ To get gwt:test to run, you should include the "test" goal in your plugin configuration executions, and you should invoke <<mvn test>>.
 
 +--
    <executions>
