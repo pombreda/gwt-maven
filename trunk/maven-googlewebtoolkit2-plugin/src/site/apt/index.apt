@@ -19,7 +19,9 @@ GWT-Maven (maven-googlewebtoolkit2-plugin)
   
 * More Details on Specific Goals
 
-  ** {{{testing.html}Testing Support}}  
+  ** {{{testing.html}Testing Support}} 
+  
+  ** {{{tomcatlite.html}Hosted Mode Tomcat Configuration}}  
   
 * More General Information
 
