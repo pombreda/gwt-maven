@@ -1,4 +1,4 @@
-package com.totsp.sample.client.exception;
+package com.totsp.sample.client.model;
 
 
 
