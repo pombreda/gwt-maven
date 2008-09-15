@@ -94,7 +94,7 @@
 						<value>com.totsp.sample.client.AppMessages</value>
 					</i18nMessagesNames>
 					<!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-                    <!--  if this is set incorrect, or left out and default does not match (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
+                    <!--  if this is set incorrect, or left out and default does not match (default is 1.5.2 for 2.0-beta23) you will have mysterious errors -->
                     <gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
