@@ -62,54 +62,59 @@
 <a name="52" href="#52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
 <a name="53" href="#53">53</a>  
 <a name="54" href="#54">54</a>          <strong class="jxr_keyword">try</strong> {
-<a name="55" href="#55">55</a>              File destination = <strong class="jxr_keyword">new</strong> File(<strong class="jxr_keyword">this</strong>.getBuildDir(), <span class="jxr_string">"web.xml"</span>);
-<a name="56" href="#56">56</a>  
-<a name="57" href="#57">57</a>              FileIOUtils.copyFile(<strong class="jxr_keyword">this</strong>.getWebXml(), destination);
-<a name="58" href="#58">58</a>  
-<a name="59" href="#59">59</a>              <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; <strong class="jxr_keyword">this</strong>.getCompileTarget().length; i++) {
-<a name="60" href="#60">60</a>                  File moduleFile = <strong class="jxr_keyword">null</strong>;
-<a name="61" href="#61">61</a>                  <strong class="jxr_keyword">for</strong> (Iterator it = <strong class="jxr_keyword">this</strong>.getProject().getCompileSourceRoots().iterator(); it.hasNext()
-<a name="62" href="#62">62</a>                          &amp;&amp; moduleFile == <strong class="jxr_keyword">null</strong>;) {
-<a name="63" href="#63">63</a>                      File check = <strong class="jxr_keyword">new</strong> File(it.next().toString() + <span class="jxr_string">"/"</span> + <strong class="jxr_keyword">this</strong>.getCompileTarget()[i].replace('.', '/')
-<a name="64" href="#64">64</a>                              + <span class="jxr_string">".gwt.xml"</span>);
-<a name="65" href="#65">65</a>                      getLog().debug(<span class="jxr_string">"Looking for file: "</span> + check.getAbsolutePath());
-<a name="66" href="#66">66</a>                      <strong class="jxr_keyword">if</strong> (check.exists()) {
-<a name="67" href="#67">67</a>                          moduleFile = check;
-<a name="68" href="#68">68</a>                      }
-<a name="69" href="#69">69</a>                  }
-<a name="70" href="#70">70</a>                  <strong class="jxr_keyword">for</strong> (Iterator it = <strong class="jxr_keyword">this</strong>.getProject().getResources().iterator(); it.hasNext();) {
-<a name="71" href="#71">71</a>                      Resource r = (Resource) it.next();
-<a name="72" href="#72">72</a>                      File check = <strong class="jxr_keyword">new</strong> File(r.getDirectory() + <span class="jxr_string">"/"</span> + <strong class="jxr_keyword">this</strong>.getCompileTarget()[i].replace('.', '/')
-<a name="73" href="#73">73</a>                              + <span class="jxr_string">".gwt.xml"</span>);
-<a name="74" href="#74">74</a>                      getLog().debug(<span class="jxr_string">"Looking for file: "</span> + check.getAbsolutePath());
-<a name="75" href="#75">75</a>                      <strong class="jxr_keyword">if</strong> (check.exists()) {
-<a name="76" href="#76">76</a>                          moduleFile = check;
-<a name="77" href="#77">77</a>                      }
-<a name="78" href="#78">78</a>                  }
-<a name="79" href="#79">79</a>  
-<a name="80" href="#80">80</a>                  <strong class="jxr_keyword">this</strong>.fixThreadClasspath();
-<a name="81" href="#81">81</a>  
-<a name="82" href="#82">82</a>                  GwtWebInfProcessor processor = <strong class="jxr_keyword">null</strong>;
-<a name="83" href="#83">83</a>                  <strong class="jxr_keyword">try</strong> {
-<a name="84" href="#84">84</a>                      <strong class="jxr_keyword">if</strong> (moduleFile != <strong class="jxr_keyword">null</strong>) {
-<a name="85" href="#85">85</a>                          getLog().info(<span class="jxr_string">"Module file: "</span> + moduleFile.getAbsolutePath());
-<a name="86" href="#86">86</a>                          processor = <strong class="jxr_keyword">new</strong> GwtWebInfProcessor(<strong class="jxr_keyword">this</strong>.getCompileTarget()[i], moduleFile, destination
-<a name="87" href="#87">87</a>                                  .getAbsolutePath(), destination.getAbsolutePath());
-<a name="88" href="#88">88</a>                      } <strong class="jxr_keyword">else</strong> {
-<a name="89" href="#89">89</a>                          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"module file null"</span>);
-<a name="90" href="#90">90</a>                      }
-<a name="91" href="#91">91</a>                  } <strong class="jxr_keyword">catch</strong> (ExitException e) {
-<a name="92" href="#92">92</a>                      <strong class="jxr_keyword">this</strong>.getLog().warn(e.getMessage());
-<a name="93" href="#93">93</a>                      <strong class="jxr_keyword">return</strong>;
-<a name="94" href="#94">94</a>                  }
-<a name="95" href="#95">95</a>                  processor.process();
-<a name="96" href="#96">96</a>              }
-<a name="97" href="#97">97</a>          } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a name="98" href="#98">98</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Unable to merge web.xml"</span>, e);
-<a name="99" href="#99">99</a>          }
-<a name="100" href="#100">100</a>     }
-<a name="101" href="#101">101</a> 
-<a name="102" href="#102">102</a> }
+<a name="55" href="#55">55</a>              <strong class="jxr_keyword">this</strong>.getLog().info(<span class="jxr_string">"copy source web.xml - "</span> + <strong class="jxr_keyword">this</strong>.getWebXml() + <span class="jxr_string">" to build dir (source web.xml required if mergewebxml execution is enabled)"</span>);
+<a name="56" href="#56">56</a>              File destination = <strong class="jxr_keyword">new</strong> File(<strong class="jxr_keyword">this</strong>.getBuildDir(), <span class="jxr_string">"web.xml"</span>);
+<a name="57" href="#57">57</a>              <strong class="jxr_keyword">if</strong> (!destination.exists()) {
+<a name="58" href="#58">58</a>                  destination.getParentFile().mkdirs();
+<a name="59" href="#59">59</a>                  destination.createNewFile();
+<a name="60" href="#60">60</a>              }
+<a name="61" href="#61">61</a>              
+<a name="62" href="#62">62</a>              FileIOUtils.copyFile(<strong class="jxr_keyword">this</strong>.getWebXml(), destination);
+<a name="63" href="#63">63</a>  
+<a name="64" href="#64">64</a>              <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; <strong class="jxr_keyword">this</strong>.getCompileTarget().length; i++) {
+<a name="65" href="#65">65</a>                  File moduleFile = <strong class="jxr_keyword">null</strong>;
+<a name="66" href="#66">66</a>                  <strong class="jxr_keyword">for</strong> (Iterator it = <strong class="jxr_keyword">this</strong>.getProject().getCompileSourceRoots().iterator(); it.hasNext()
+<a name="67" href="#67">67</a>                          &amp;&amp; moduleFile == <strong class="jxr_keyword">null</strong>;) {
+<a name="68" href="#68">68</a>                      File check = <strong class="jxr_keyword">new</strong> File(it.next().toString() + <span class="jxr_string">"/"</span> + <strong class="jxr_keyword">this</strong>.getCompileTarget()[i].replace('.', '/')
+<a name="69" href="#69">69</a>                              + <span class="jxr_string">".gwt.xml"</span>);
+<a name="70" href="#70">70</a>                      getLog().debug(<span class="jxr_string">"Looking for file: "</span> + check.getAbsolutePath());
+<a name="71" href="#71">71</a>                      <strong class="jxr_keyword">if</strong> (check.exists()) {
+<a name="72" href="#72">72</a>                          moduleFile = check;
+<a name="73" href="#73">73</a>                      }
+<a name="74" href="#74">74</a>                  }
+<a name="75" href="#75">75</a>                  <strong class="jxr_keyword">for</strong> (Iterator it = <strong class="jxr_keyword">this</strong>.getProject().getResources().iterator(); it.hasNext();) {
+<a name="76" href="#76">76</a>                      Resource r = (Resource) it.next();
+<a name="77" href="#77">77</a>                      File check = <strong class="jxr_keyword">new</strong> File(r.getDirectory() + <span class="jxr_string">"/"</span> + <strong class="jxr_keyword">this</strong>.getCompileTarget()[i].replace('.', '/')
+<a name="78" href="#78">78</a>                              + <span class="jxr_string">".gwt.xml"</span>);
+<a name="79" href="#79">79</a>                      getLog().debug(<span class="jxr_string">"Looking for file: "</span> + check.getAbsolutePath());
+<a name="80" href="#80">80</a>                      <strong class="jxr_keyword">if</strong> (check.exists()) {
+<a name="81" href="#81">81</a>                          moduleFile = check;
+<a name="82" href="#82">82</a>                      }
+<a name="83" href="#83">83</a>                  }
+<a name="84" href="#84">84</a>  
+<a name="85" href="#85">85</a>                  <strong class="jxr_keyword">this</strong>.fixThreadClasspath();
+<a name="86" href="#86">86</a>  
+<a name="87" href="#87">87</a>                  GwtWebInfProcessor processor = <strong class="jxr_keyword">null</strong>;
+<a name="88" href="#88">88</a>                  <strong class="jxr_keyword">try</strong> {
+<a name="89" href="#89">89</a>                      <strong class="jxr_keyword">if</strong> (moduleFile != <strong class="jxr_keyword">null</strong>) {
+<a name="90" href="#90">90</a>                          getLog().info(<span class="jxr_string">"Module file: "</span> + moduleFile.getAbsolutePath());
+<a name="91" href="#91">91</a>                          processor = <strong class="jxr_keyword">new</strong> GwtWebInfProcessor(<strong class="jxr_keyword">this</strong>.getCompileTarget()[i], moduleFile, destination
+<a name="92" href="#92">92</a>                                  .getAbsolutePath(), destination.getAbsolutePath());
+<a name="93" href="#93">93</a>                      } <strong class="jxr_keyword">else</strong> {
+<a name="94" href="#94">94</a>                          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"module file null"</span>);
+<a name="95" href="#95">95</a>                      }
+<a name="96" href="#96">96</a>                  } <strong class="jxr_keyword">catch</strong> (ExitException e) {
+<a name="97" href="#97">97</a>                      <strong class="jxr_keyword">this</strong>.getLog().warn(e.getMessage());
+<a name="98" href="#98">98</a>                      <strong class="jxr_keyword">return</strong>;
+<a name="99" href="#99">99</a>                  }
+<a name="100" href="#100">100</a>                 processor.process();
+<a name="101" href="#101">101</a>             }
+<a name="102" href="#102">102</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="103" href="#103">103</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Unable to merge web.xml"</span>, e);
+<a name="104" href="#104">104</a>         }
+<a name="105" href="#105">105</a>     }
+<a name="106" href="#106">106</a> 
+<a name="107" href="#107">107</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

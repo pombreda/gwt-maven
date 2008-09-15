@@ -117,7 +117,7 @@
 <a name="107" href="#107">107</a>             writer.print(mojo.getStyle());
 <a name="108" href="#108">108</a> 
 <a name="109" href="#109">109</a>             writer.print(<span class="jxr_string">" -out "</span>);
-<a name="110" href="#110">110</a>             writer.print(mojo.getOutput().getAbsolutePath());
+<a name="110" href="#110">110</a>             writer.print(<span class="jxr_string">"\&quot;"</span> + mojo.getOutput().getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
 <a name="111" href="#111">111</a>             writer.print(<span class="jxr_string">" "</span>);
 <a name="112" href="#112">112</a> 
 <a name="113" href="#113">113</a>             <strong class="jxr_keyword">if</strong> (mojo.isEnableAssertions()) {
@@ -149,7 +149,7 @@
 <a name="139" href="#139">139</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp %CLASSPATH%"</span>);
 <a name="140" href="#140">140</a>                 writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
 <a name="141" href="#141">141</a>                 writer.print(<span class="jxr_string">" -out "</span>);
-<a name="142" href="#142">142</a>                 writer.print(mojo.getI18nOutputDir());
+<a name="142" href="#142">142</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + mojo.getI18nOutputDir() + <span class="jxr_string">"\&quot;"</span>);
 <a name="143" href="#143">143</a>                 writer.print(<span class="jxr_string">" "</span>);
 <a name="144" href="#144">144</a>                 writer.print(target);
 <a name="145" href="#145">145</a>                 writer.println();
@@ -165,7 +165,7 @@
 <a name="155" href="#155">155</a>                 writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
 <a name="156" href="#156">156</a>                 writer.print(<span class="jxr_string">" -createMessages "</span>);
 <a name="157" href="#157">157</a>                 writer.print(<span class="jxr_string">" -out "</span>);
-<a name="158" href="#158">158</a>                 writer.print(mojo.getI18nOutputDir());
+<a name="158" href="#158">158</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + mojo.getI18nOutputDir() + <span class="jxr_string">"\&quot;"</span>);
 <a name="159" href="#159">159</a>                 writer.print(<span class="jxr_string">" "</span>);
 <a name="160" href="#160">160</a>                 writer.print(target);
 <a name="161" href="#161">161</a>                 writer.println();

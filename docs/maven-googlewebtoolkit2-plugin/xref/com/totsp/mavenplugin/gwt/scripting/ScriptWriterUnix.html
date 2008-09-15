@@ -63,7 +63,7 @@
 <a name="53" href="#53">53</a>      <strong class="jxr_keyword">public</strong> File writeRunScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
 <a name="54" href="#54">54</a>          String filename = (mojo instanceof DebugMojo) ? <span class="jxr_string">"debug.sh"</span> : <span class="jxr_string">"run.sh"</span>;
 <a name="55" href="#55">55</a>          File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), filename);
-<a name="56" href="#56">56</a>          PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
+<a name="56" href="#56">56</a>          PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
 <a name="57" href="#57">57</a>  
 <a name="58" href="#58">58</a>          String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
 <a name="59" href="#59">59</a>          <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
