@@ -3,6 +3,8 @@ GWT-Maven Examples
 * Sample Projects
 
   ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/}Simple sample project}}
+  
+  ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/}Simple sample with database and GWT-RPC project}}
  
   ** {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/}Full multi project and composition sample}} 
    
@@ -94,7 +96,7 @@ GWT-Maven Examples
             <plugin>
                 <groupId>com.totsp.gwt</groupId>
                 <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-                <version>2.0-beta22</version>
+                <version>2.0-beta23</version>
                 <configuration>
                     <logLevel>INFO</logLevel>
                     <compileTargets>
@@ -111,7 +113,7 @@ GWT-Maven Examples
                         <value>com.totsp.sample.client.AppMessages</value>
                     </i18nMessagesNames>
                     <!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-                    <!--  if this is set incorrect (not a match), or left out (default is 1.5.1 for 2.0-beta22) you will have mysterious errors -->
+                    <!--  if this is set incorrect (not a match), or left out (default is 1.5.2 for 2.0-beta23) you will have mysterious errors -->
                     <gwtVersion>${gwtVersion}</gwtVersion>
                 </configuration>
                 <executions>
@@ -298,7 +300,7 @@ GWT-Maven Examples
             <plugin>
                 <groupId>com.totsp.gwt</groupId>
                 <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-                <version>2.0-beta22</version>
+                <version>2.0-beta23</version>
                 <configuration>
                     <gwtHome>/opt/gwt-mac-1.5.2</gwtHome>
                     <logLevel>INFO</logLevel>

@@ -7,7 +7,7 @@ GWT-Maven and configuring "Tomcat Lite"
   most developers are used to. It's also an older version of Tomcat, 5.0.28, and some of the
   configuration is different than 6.x or 5.5.x.
   
-  See the {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample}simpledatasample sample application for an reference of all of the features discussed here. 
+  See the {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample}simpledatasample}} sample application for an reference of all of the features discussed here. 
   
    
 * Embedded Tomcat structure   
