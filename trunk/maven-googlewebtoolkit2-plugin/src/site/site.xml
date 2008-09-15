@@ -17,6 +17,7 @@
     
     <menu name="Details on Specific Goals">
       <item name="Testing" href="testing.html"/>
+      <item name="Hosted Mode Tomcat Configuration" href="tomcatlite.html" />
     </menu>
     
     <menu ref="reports"/>

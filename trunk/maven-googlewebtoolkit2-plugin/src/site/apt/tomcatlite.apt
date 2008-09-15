@@ -15,8 +15,8 @@ GWT-Maven and configuring "Tomcat Lite"
   The first thing to be aware of is that GWT generates a "tomcat" directory (CATALINA_BASE)
   and then builds out related structure there for use with the embedded server.
   
-  With GWT-Maven the default CATALINA_BASE that is generated is ${project.build.dir}/tomcat,
-  but you can set the "tomcat" parameter to the plugin configuration to change this location if desired.
+  With GWT-Maven the default CATALINA_BASE that is generated is <<${project.build.dir}/tomcat>>,
+  (you can set the <<tomcat>> parameter to the plugin configuration to change this location if desired).
   
   The structure of the generated Tomcat directory, regardless of where you place it, is as follows:
   
@@ -35,13 +35,13 @@ GWT-Maven and configuring "Tomcat Lite"
   
   You will notice 3 .xml files in that structure.  
   
-  The first, conf/web.xml is a superset web.xml that has some mime types and such in it, you don't need to worry about
+  The first, <<conf/web.xml>> is a superset web.xml that has some mime types and such in it, you don't need to worry about
   that one 99% of the time.
   
-  The second one, conf/gwt/localhost/ROOT.xml is the GWT shell "context.xml" file. You <<can>> configure a Tomcat
+  The second, <<conf/gwt/localhost/ROOT.xml>> is the GWT shell "context.xml" file. You <<can>> configure a Tomcat
   specific context.xml for the shell, manually, or automatically with GWT-Maven (see the context.xml section below).
   
-  The third one, webapps/ROOT/WEB-INF/web.xml is the GWT shell "web.xml" deployment descriptor file. This is the one
+  The third, <<webapps/ROOT/WEB-INF/web.xml>> is the GWT shell "web.xml" deployment descriptor file. This is the one
   you want to configure for the shell, either manually, or automatically with GWT-Maven (see the web.xml section below). 
 
 * web.xml for the Shell
@@ -77,7 +77,7 @@ GWT-Maven and configuring "Tomcat Lite"
  
 * web.xml for your WAR artifact
 
- This is where the GWT-Maven "mergewebxml" comes in handy. The mergewebxml goal can inspect your module chain 
+ This is where the GWT-Maven <<mergewebxml>> goal comes in handy. This goal goal can inspect your module chain 
  (the GWT module you are currently using, and anything in the inherits hierarchy) and "merge" any GWT-RPC 
  servlet entries from your modules, with your DEPLOY time web.xml file.  
  
@@ -110,7 +110,7 @@ GWT-Maven and configuring "Tomcat Lite"
  
 * Working with context.xml
 
- There are a few things to know when dealing with the Tomcat specific <<context.xml>> file in a GWT shell setting. 
+ There are a few things to know when dealing with the Tomcat specific <<context.xml>> file in regards to GWT and GWT-Maven.
  
  First, GWT uses Tomcat 5.0.28, so you will need to have a context.xml configuration for THAT version - and there have
  been many changes in Tomcat 5.5.x and 6.x. Because of this, and because you will probably want to actually deploy to 
