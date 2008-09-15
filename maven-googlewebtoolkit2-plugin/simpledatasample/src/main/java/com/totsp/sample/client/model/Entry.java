@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * Super simple Entry object with two String members, just to demonstrate "IsSerializable."
+ * Super simple Entry object with two String members, just to demonstrate translatable model object.
  * 
  * Uses Serializable (not IsSerializable) so needs the rpc types definition file the compiler creates. 
  *
