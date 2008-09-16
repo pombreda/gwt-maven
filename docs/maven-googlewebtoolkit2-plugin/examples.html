@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-15
+        Last Published: 2008-09-16
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -98,7 +98,11 @@
           </li>
               
     <li class="none">
-                    <a href="tomcatlite.html">Hosted Mode Tomcat Configuration</a>
+                    <a href="tomcatlite.html">Tomcat Configuration</a>
+          </li>
+              
+    <li class="none">
+                    <a href="archetype.html">Using the Archetype</a>
           </li>
           </ul>
               <h5>Project Documentation</h5>
@@ -159,17 +163,18 @@
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Examples</h2>
 <div class="section"><h3>Sample Projects</h3>
-<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
+<ul><li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/">Simple sample project</a>
 </li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a>
+<li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/">Simple sample with database and GWT-RPC project</a>
 </li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a>
+<li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/">Full multi project and composition sample</a>
  </li>
 </ul>
 </div>
 <div class="section"><h3>Auto Configuration</h3>
-<p>Below is more detail abput the simple sample project, which uses the auto-configuration. Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, and activates correct platform dependent dependencies based the platform in use.</p>
-<p>This is the recommended way to use GWT-Maven (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
+<p>Below is more detail about the simple sample project, which uses the auto-configuration. Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, and activates correct platform dependent dependencies based the platform in use.</p>
+<p>This is the <b>recommended way to use GWT-Maven</b>
+ (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
