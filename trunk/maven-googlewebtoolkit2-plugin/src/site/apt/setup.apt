@@ -6,7 +6,7 @@ GWT-Maven Setup
 
 * Configuring GWT-Maven itself
  
- Regardless of which "mode" you use, automatic, or manual, you also need to configure GWT-Maven itself, of course. 
+ Regardless of which "mode" you use, <<automatic>>, or <<manual>>, you also need to configure GWT-Maven itself, of course. 
  
  Also, as a convenience it helps to define a property for the GWT version (so you can change it in one place later to upgrade).
  
@@ -50,8 +50,8 @@ GWT-Maven Setup
 
 * Getting the Plugin
 
-  Getting the plugin is simple.  You just need to add the GWT-Maven pluginRepository, 
-  and standard repository (used for support libraries) to your POM.  
+  Getting the plugin is simple.  You just need to add the GWT-Maven <<pluginRepository>>, 
+  and standard <<repository>> (used for support libraries) to your POM.  
   
 +--
 <pluginRepositories>
@@ -205,8 +205,8 @@ GWT-Maven Setup
 
   If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html).
 
-  Then, you will need to tell GWT-Maven where GWT is. This can be done with the "gwtHome" configuration property to the plugin itself, 
-  or with the "google.webtoolkit.home" profile property.
+  Then, you will need to tell GWT-Maven where GWT is. This can be done with the "gwtHome" plugin configuration property, 
+  or with the "google.webtoolkit.home" system/profile property.
   
   For example when using a settings.xml machine-wide profile:
 
