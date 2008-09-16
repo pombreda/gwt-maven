@@ -14,6 +14,6 @@ public class Application implements EntryPoint {
    * This is the entry point method.
    */
   public void onModuleLoad() { 
-     RootPanel.get().add(new Label ("GWT-Maven Archetype Project"));
+     RootPanel.get().add(new Label ("GWT-Maven Archetype Project - ${groupId}.${artifactId}"));
   }
 }
