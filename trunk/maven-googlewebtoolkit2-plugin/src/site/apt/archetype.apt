@@ -56,6 +56,9 @@ GWT-Maven Archetype Information
 
 * Using the archetype 
 
+ Once you have access to the archetype, you use it as you would any
+ other Maven archetype to create a template/stub project. 
+
 +--
  mvn archetype:create \
    -DarchetypeGroupId=com.totsp.gwt \
