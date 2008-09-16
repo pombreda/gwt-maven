@@ -17,11 +17,13 @@ GWT-Maven (maven-googlewebtoolkit2-plugin)
   
   ** {{{examples.html}Examples}}
   
-* More Details on Specific Goals
+* More Details on Specific Goals and Features
 
   ** {{{testing.html}Testing Support}} 
   
-  ** {{{tomcatlite.html}Hosted Mode Tomcat Configuration}}  
+  ** {{{tomcatlite.html}Tomcat Configuration}}  
+  
+  ** {{{archetype.html}Using the Archetype}}  
   
 * More General Information
 
