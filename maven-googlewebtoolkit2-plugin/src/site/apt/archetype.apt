@@ -42,8 +42,8 @@ GWT-Maven Archetype Information
 
 ** Example download the file and install it:
 
-Download the file from: 
-http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/VERSION/maven-googlewebtoolkit2-archetype-VERSION.jar
+ Download the file from: 
+ http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/VERSION/maven-googlewebtoolkit2-archetype-VERSION.jar
 
 +--
  mvn install:install-file \
