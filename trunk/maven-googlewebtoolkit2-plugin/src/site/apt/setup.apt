@@ -166,7 +166,7 @@ GWT-Maven Setup
             <activation>
                 <activeByDefault>true</activeByDefault>
                 <os>
-                    <family>Windows</family>
+                    <family>windows</family>
                 </os>
             </activation>
         </profile>
@@ -190,7 +190,7 @@ GWT-Maven Setup
             <activation>
                 <activeByDefault>false</activeByDefault>
                 <os>
-                    <name>Linux</name>
+                    <name>linux</name>
                 </os>
             </activation>
         </profile>
