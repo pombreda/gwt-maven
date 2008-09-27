@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-16
+        Last Published: 2008-09-27
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,8 +127,6 @@
       
             
       
-            
-      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -164,14 +162,10 @@
         <div class="section"><h2>GWT-Maven and configuring &quot;Tomcat Lite&quot;</h2>
 <p>Another aspect of GWT-Maven to be familiar with is that can help you configure the embedded Tomcat container GWT uses in the Hosted Mode shell - Tomcat Lite. </p>
 <p>This is stripped down version of Tomcat that works a bit differently than what most developers are used to. It's also an older version of Tomcat, 5.0.28, and some of the configuration is different than 6.x or 5.5.x.</p>
-<p>See the <a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample">simpledatasample</a>
- sample application for an reference of all of the features discussed here. </p>
+<p>See the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample" class="externalLink">simpledatasample</a> sample application for an reference of all of the features discussed here. </p>
 <div class="section"><h3>Embedded Tomcat structure </h3>
 <p>The first thing to be aware of is that GWT generates a &quot;tomcat&quot; directory (CATALINA_BASE) and then builds out related structure there for use with the embedded server.</p>
-<p>With GWT-Maven the default CATALINA_BASE that is generated is <b>$<a name="project.build.dir">project.build.dir</a>
-/tomcat</b>
-, (you can set the <b>tomcat</b>
- parameter to the plugin configuration to change this location if desired).</p>
+<p>With GWT-Maven the default CATALINA_BASE that is generated is <b>$<a name="project.build.dir">project.build.dir</a>/tomcat</b>, (you can set the <b>tomcat</b> parameter to the plugin configuration to change this location if desired).</p>
 <p>The structure of the generated Tomcat directory, regardless of where you place it, is as follows:</p>
 <div class="source"><pre>     /conf
         web.xml
@@ -185,19 +179,13 @@
      /work</pre>
 </div>
 <p>You will notice 3 .xml files in that structure. </p>
-<p>The first, <b>conf/web.xml</b>
- is a superset web.xml that has some mime types and such in it, you don't need to worry about that one 99% of the time.</p>
-<p>The second, <b>conf/gwt/localhost/ROOT.xml</b>
- is the GWT shell &quot;context.xml&quot; file. You <b>can</b>
- configure a Tomcat specific context.xml for the shell, manually, or automatically with GWT-Maven (see the context.xml section below).</p>
-<p>The third, <b>webapps/ROOT/WEB-INF/web.xml</b>
- is the GWT shell &quot;web.xml&quot; deployment descriptor file. This is the one you want to configure for the shell, either manually, or automatically with GWT-Maven (see the web.xml section below). </p>
+<p>The first, <b>conf/web.xml</b> is a superset web.xml that has some mime types and such in it, you don't need to worry about that one 99% of the time.</p>
+<p>The second, <b>conf/gwt/localhost/ROOT.xml</b> is the GWT shell &quot;context.xml&quot; file. You <b>can</b> configure a Tomcat specific context.xml for the shell, manually, or automatically with GWT-Maven (see the context.xml section below).</p>
+<p>The third, <b>webapps/ROOT/WEB-INF/web.xml</b> is the GWT shell &quot;web.xml&quot; deployment descriptor file. This is the one you want to configure for the shell, either manually, or automatically with GWT-Maven (see the web.xml section below). </p>
 </div>
 <div class="section"><h3>web.xml for the Shell</h3>
-<p>GWT-Maven can use a source web.xml file, the default location of which is <b>src/main/webapp/WEB-INF/web.xml</b>
-, with the embedded Tomcat for the GWT shell. If this file is present in your SOURCE tree, it is used to configure the shell. (Also note that you can change the default location by setting the webXml parameter to GWT-Maven, if needed.)</p>
-<p>It <b>does not matter</b>
- whether or not you use the GWT-Maven &quot;mergewebxml&quot; goal or not (more on that in a moment), if you have a source web.xml file, it will be picked up and used for the embedded webapps/ROOT/WEB-INF/web.xml by the &quot;gwt&quot; goal. GWT-Maven will make one addition to that file before it is used - it will add the GWTShellServlet to it:</p>
+<p>GWT-Maven can use a source web.xml file, the default location of which is <b>src/main/webapp/WEB-INF/web.xml</b>, with the embedded Tomcat for the GWT shell. If this file is present in your SOURCE tree, it is used to configure the shell. (Also note that you can change the default location by setting the webXml parameter to GWT-Maven, if needed.)</p>
+<p>It <b>does not matter</b> whether or not you use the GWT-Maven &quot;mergewebxml&quot; goal or not (more on that in a moment), if you have a source web.xml file, it will be picked up and used for the embedded webapps/ROOT/WEB-INF/web.xml by the &quot;gwt&quot; goal. GWT-Maven will make one addition to that file before it is used - it will add the GWTShellServlet to it:</p>
 <div class="source"><pre>  &lt;!--inserted by gwt-maven--&gt;
   &lt;servlet&gt;
     &lt;servlet-name&gt;shell&lt;/servlet-name&gt;
@@ -213,15 +201,12 @@
 <p>When you HAVE a source web.xml file, whether or not you use mergewebxml, it is used for the GWT shell. </p>
 </div>
 <div class="section"><h3>web.xml for your WAR artifact</h3>
-<p>This is where the GWT-Maven <b>mergewebxml</b>
- goal comes in handy. This goal goal can inspect your module chain (the GWT module you are currently using, and anything in the inherits hierarchy) and &quot;merge&quot; any GWT-RPC servlet entries from your modules, with your DEPLOY time web.xml file. </p>
+<p>This is where the GWT-Maven <b>mergewebxml</b> goal comes in handy. This goal goal can inspect your module chain (the GWT module you are currently using, and anything in the inherits hierarchy) and &quot;merge&quot; any GWT-RPC servlet entries from your modules, with your DEPLOY time web.xml file. </p>
 <p>This merging is a combination of your SOURCE web.xml file (which is never modified by GWT-Maven), your GWT module descriptor (also never modified by GWT-Maven), and an output DEPLOY ready build web.xml file. </p>
 <p>This goal allows you to NOT have to define all your GWT RPC servlets in your source web.xml file, but you can still have a source web.xml file for other stuff (see the previous section). Then at build time, the merge step makes individual servlet web.xml entries for every GWT-RPC servlet it encounters (from your GWT module). </p>
-<p>To enable this you need to have the <b>mergewebxml</b>
- goal present in the executions section of the plugin configuration. </p>
+<p>To enable this you need to have the <b>mergewebxml</b> goal present in the executions section of the plugin configuration. </p>
 <p>You can also not use this, if you do not prefer, by simply NOT including the mergewebxml goal. </p>
-<p>If you do you use mergewebxml the output file will be $<a name="project.build.dir">project.build.dir</a>
-/web.xml (usually that means &quot;target/web.xml&quot;). </p>
+<p>If you do you use mergewebxml the output file will be $<a name="project.build.dir">project.build.dir</a>/web.xml (usually that means &quot;target/web.xml&quot;). </p>
 <p>The last thing you need to do in order to USE this file with your WAR, is to configure the war plugin to use it. This can be done as follows:</p>
 <div class="source"><pre>   &lt;plugin&gt;
       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
@@ -233,12 +218,9 @@
 </div>
 </div>
 <div class="section"><h3>Working with context.xml</h3>
-<p>There are a few things to know when dealing with the Tomcat specific <b>context.xml</b>
- file in regards to GWT and GWT-Maven.</p>
+<p>There are a few things to know when dealing with the Tomcat specific <b>context.xml</b> file in regards to GWT and GWT-Maven.</p>
 <p>First, GWT uses Tomcat 5.0.28, so you will need to have a context.xml configuration for THAT version - and there have been many changes in Tomcat 5.5.x and 6.x. Because of this, and because you will probably want to actually deploy to a newer version of Tomcat (if you use Tomcat), you may need to have MULTIPLE context.xml files: one for use with the GWT shell, and one for production deployment Tomcat. </p>
-<p>Second, you have to use the GWT-Maven <b>contextXml</b>
- parameter to configure GWT-Maven to use your source context.xml file with the embedded Tomcat server. There is no default for this parameter (because there is no regular place for a Tomcat specific file like context.xml). If you set your contextXml parameter though, to a reasonable source location like <b>src/main/webapp/META-INF/contextGwt.xml</b>
-, then it will be used to replace the shell ROOT.xml file. (Again, you probably want a different src/main/webapp/META-INF/context.xml for regular Tomcat use).</p>
+<p>Second, you have to use the GWT-Maven <b>contextXml</b> parameter to configure GWT-Maven to use your source context.xml file with the embedded Tomcat server. There is no default for this parameter (because there is no regular place for a Tomcat specific file like context.xml). If you set your contextXml parameter though, to a reasonable source location like <b>src/main/webapp/META-INF/contextGwt.xml</b>, then it will be used to replace the shell ROOT.xml file. (Again, you probably want a different src/main/webapp/META-INF/context.xml for regular Tomcat use).</p>
 </div>
 <div class="section"><h3>Other files needed by the container - Spring, JPA, etc</h3>
 <p>Sometimes you have a special file you need to bring along into the embedded Tomcat at a special location (rather than just on the classpath). It depends on how you are using a component, and how that component looks for its resources, but you may need a file like WEB-INF/applicationContext.xml or WEB-INF/persistence.xml for the shell (Spring usually looks at the classpath too, rather than just a relative file location, but this is just a general example). </p>
@@ -265,8 +247,7 @@
 </div>
 </div>
 <div class="section"><h3>-noserver</h3>
-<p>Many people prefer not to try to configure the embedded GWT Tomcat instance, and instead prefer to use the GWT -noserver option. Keep in mind that with GWT-Maven this is still possible. Just use the <b>noserver</b>
- parameter in your plugin configuration, and GWT-Maven will pass -noserver to the shell, and not configure anything related to the embedded Tomcat. </p>
+<p>Many people prefer not to try to configure the embedded GWT Tomcat instance, and instead prefer to use the GWT -noserver option. Keep in mind that with GWT-Maven this is still possible. Just use the <b>noserver</b> parameter in your plugin configuration, and GWT-Maven will pass -noserver to the shell, and not configure anything related to the embedded Tomcat. </p>
 <p>(Keep in mind that though noserver is a necessity in some situations, it also has some drawbacks of it's own. Refreshing the shell when you are using noserver will not update the server side, of course. Also, GWTTestCase based tests will not work at all with a nosever setup - the JUnitShell does not have a noserver option.)</p>
 </div>
 </div>

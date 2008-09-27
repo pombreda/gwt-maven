@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-16
+        Last Published: 2008-09-27
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,8 +127,6 @@
       
             
       
-            
-      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -164,47 +162,15 @@
         <div class="section"><h2>GWT-Maven Archetype Information</h2>
 <p>The GWT-Maven Archetype - maven-googlewebtoolkit2-archetype, creates a bare bones GWT app with all the GWT-Maven setup and structure in place (a template).</p>
 <div class="section"><h3>Installing the Archetype</h3>
-<p>You have several choices on how to install the archetype, you can just add the GWT-Maven repository to an active profile and then use the archetype (it's in the GWT-Maven repo), or you can download the file and install it in your local repository. </p>
-<div class="section"><h4>Example add the GWT-Maven repository to a profile in your <b>~/.m2/settings.xml</b>
- file:</h4>
-<div class="source"><pre>
-&lt;settings&gt;
-  ...
-  &lt;profiles&gt;
-    ...
-    &lt;profile&gt;
-      &lt;id&gt;gwt-maven-repo-profile&lt;/id&gt;
-      &lt;repositories&gt; 
-        &lt;repository&gt;
-            &lt;id&gt;gwt-maven&lt;/id&gt;
-            &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/&lt;/url&gt;
-        &lt;/repository&gt;
-      &lt;/repositories&gt;
-    &lt;/profile&gt;
-    ...
-  &lt;/profiles&gt;
-  ...
-  &lt;activeProfiles&gt;
-    ...
-    &lt;activeProfile&gt;gwt-maven-repo-profile&lt;/activeProfile&gt;
-    ...
-  &lt;/activeProfiles&gt;
-  ...
-&lt;/settings&gt;
-</pre>
-</div>
-</div>
-<div class="section"><h4>Example download the file and install it:</h4>
-<p>Download the file from: </p>
-<p><b>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/VERSION/maven-googlewebtoolkit2-archetype-VERSION.jar</b>
-</p>
+<p>Download the <b>maven-googlewebtoolkit2-archetype-1.0.jar</b> file from:</p>
+<p><a href="http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0/" class="externalLink">http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0/</a></p>
+<p>Then install it into your local repository: </p>
 <div class="source"><pre> mvn install:install-file \
    -DgroupId=com.totsp.gwt \
    -DartifactId=maven-googlewebtoolkit2-archetype \
-   -Dversion=VERSION \
-   -Dpackaging=maven-archetype 
-   -Dfile=PATH_TO_JAR_YOU_DOWNLOADED/maven-googlewebtoolkit2-archetype-VERSION.jar</pre>
-</div>
+   -Dversion=1.0 \
+   -Dpackaging=jar 
+   -Dfile=PATH_TO_JAR_YOU_DOWNLOADED/maven-googlewebtoolkit2-archetype-1.0.jar</pre>
 </div>
 </div>
 <div class="section"><h3>Using the archetype </h3>

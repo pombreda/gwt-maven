@@ -12,7 +12,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Maven 2 Plugin for the Google Web Toolkit - Plugin documentation</title>
+    <title>Maven 2 Plugin for the Google Web Toolkit - Plugin Documentation</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-16
+        Last Published: 2008-09-27
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,8 +127,6 @@
       
             
       
-            
-      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -151,7 +149,7 @@
           </li>
                   
     <li class="none">
-              <strong>Plugin documentation</strong>
+              <strong>Plugin Documentation</strong>
         </li>
                   
     <li class="none">
@@ -175,47 +173,40 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Plugin documentation</h2>
+        <div class="section"><h2>Plugin Documentation</h2>
 <p>Goals available for this plugin:</p>
 <table class="bodyTable"><tr class="a"><th>Goal</th>
 <th>Description</th>
 </tr>
-<tr class="b"><td><a href="compile-mojo.html">googlewebtoolkit2:compile</a>
-</td>
+<tr class="b"><td><a href="compile-mojo.html">googlewebtoolkit2:compile</a></td>
 <td>Invokes the GWTCompiler for the project source.</td>
 </tr>
-<tr class="a"><td><a href="debug-mojo.html">googlewebtoolkit2:debug</a>
-</td>
+<tr class="a"><td><a href="debug-mojo.html">googlewebtoolkit2:debug</a></td>
 <td>Extends the gwt goal and runs the project in the GWTShell with a
 debugger port hook (optionally suspended).</td>
 </tr>
-<tr class="b"><td><a href="mergewebxml-mojo.html">googlewebtoolkit2:mergewebxml</a>
-</td>
-<td>Merges GWT servlet elements into deployment descriptor (and non GWT
-servlets into shell).</td>
+<tr class="b"><td><a href="generateClientBeans-mojo.html">googlewebtoolkit2:generateClientBeans</a></td>
+<td>Generates client beans for the project (currently unsupported).</td>
 </tr>
-<tr class="a"><td><a href="gwt-mojo.html">googlewebtoolkit2:gwt</a>
-</td>
+<tr class="a"><td><a href="gwt-mojo.html">googlewebtoolkit2:gwt</a></td>
 <td>Runs the the project in the GWTShell for development. Note that
 this goal is intended to be explicitly run from the command line
 (execute phase=), whereas other GWT-Maven goals are not (others
 happen as part of the standard Maven life-cycle phases: "compile"
 "test" "install").</td>
 </tr>
-<tr class="b"><td><a href="i18n-mojo.html">googlewebtoolkit2:i18n</a>
-</td>
+<tr class="b"><td><a href="i18n-mojo.html">googlewebtoolkit2:i18n</a></td>
 <td>Creates I18N interfaces for constants and messages files.</td>
 </tr>
-<tr class="a"><td><a href="test-mojo.html">googlewebtoolkit2:test</a>
-</td>
+<tr class="a"><td><a href="mergewebxml-mojo.html">googlewebtoolkit2:mergewebxml</a></td>
+<td>Merges GWT servlet elements into deployment descriptor (and non GWT
+servlets into shell).</td>
+</tr>
+<tr class="b"><td><a href="test-mojo.html">googlewebtoolkit2:test</a></td>
 <td>Runs special (non surefire) test phase for GWTTestCase derived
 tests. This is necessary because of several complications with
 regard to surefire and the classpath for GWTTestCase/JUnitShell.
 See further notes in source.</td>
-</tr>
-<tr class="b"><td><a href="generateClientBeans-mojo.html">googlewebtoolkit2:generateClientBeans</a>
-</td>
-<td>Generates client beans for the project (currently unsupported).</td>
 </tr>
 </table>
 </div>
@@ -236,16 +227,17 @@ See further notes in source.</td>
 </table>
 </div>
 <div class="section"><h2>Usage</h2>
-<p>You could run 'mvn -up' to get the latest version of this plugin, or specify the version in your project's plugin configuration:<div class="source"><pre>&lt;project&gt;
+<p>You should specify the version in your project's plugin configuration:</p>
+<div class="source"><pre>&lt;project&gt;
   ...
   &lt;build&gt;
     &lt;!-- To define the plugin version in your parent POM --&gt;
     &lt;pluginManagement&gt;
       &lt;plugins&gt;
         &lt;plugin&gt;
-          &lt;groupId&gt;com.totsp.gwt&lt;groupId&gt;
-          &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;artifactId&gt;
-          &lt;version&gt;2.0-beta23&lt;version&gt;
+          &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.0-beta23&lt;/version&gt;
         &lt;/plugin&gt;
         ...
       &lt;/plugins&gt;
@@ -253,9 +245,9 @@ See further notes in source.</td>
     &lt;!-- To use the plugin goals in your POM or parent POM --&gt;
     &lt;plugins&gt;
       &lt;plugin&gt;
-        &lt;groupId&gt;com.totsp.gwt&lt;groupId&gt;
-        &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;artifactId&gt;
-        &lt;version&gt;2.0-beta23&lt;version&gt;
+        &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.0-beta23&lt;/version&gt;
       &lt;/plugin&gt;
       ...
     &lt;/plugins&gt;
@@ -264,8 +256,7 @@ See further notes in source.</td>
 &lt;/project&gt;
 </pre>
 </div>
-For more information, see <a class="externalLink" href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">&quot;Guide to Configuring Plug-ins&quot;</a>
-</p>
+<p>For more information, see <a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html" class="externalLink">&quot;Guide to Configuring Plug-ins&quot;</a></p>
 </div>
 
       </div>

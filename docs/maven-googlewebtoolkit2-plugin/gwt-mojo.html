@@ -12,7 +12,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Maven 2 Plugin for the Google Web Toolkit - maven-googlewebtoolkit2-plugin - googlewebtoolkit2:gwt</title>
+    <title>Maven 2 Plugin for the Google Web Toolkit - googlewebtoolkit2:gwt</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-16
+        Last Published: 2008-09-27
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,8 +127,6 @@
       
             
       
-            
-      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -161,520 +159,451 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2><a name="googlewebtoolkit2:gwt"></a>
-googlewebtoolkit2:gwt</h2>
+        <div class="section"><h2><a name="googlewebtoolkit2:gwt"></a>googlewebtoolkit2:gwt</h2>
 <p><strong>Full name</strong>:</p>
 <p>com.totsp.gwt:maven-googlewebtoolkit2-plugin:2.0-beta23:gwt</p>
 <p><strong>Description</strong>:</p>
-<p>Runs the the project in the GWTShell for development. Note that
+<div>Runs the the project in the GWTShell for development. Note that
 this goal is intended to be explicitly run from the command line
 (execute phase=), whereas other GWT-Maven goals are not (others
 happen as part of the standard Maven life-cycle phases: &quot;compile&quot;
-&quot;test&quot; &quot;install&quot;).</p>
-<p><strong>Attributes</strong>:</p>
+&quot;test&quot; &quot;install&quot;).</div><p><strong>Attributes</strong>:</p>
 <ul><li>Requires a Maven 2.0 project to be executed.</li>
 <li>Requires dependency resolution of artifacts in scope: <code>runtime</code>.</li>
 <li>Invokes the execution of the lifecycle phase <code>compile</code> prior to executing itself.</li>
 </ul>
-<div class="section"><h3><a name="Required_Parameters"></a>
-Required Parameters</h3>
+<div class="section"><h3><a name="Required_Parameters"></a>Required Parameters</h3>
 <table class="bodyTable"><tr class="a"><th>Name</th>
 <th>Type</th>
 <th>Since</th>
 <th>Description</th>
 </tr>
-<tr class="b"><td><strong><a href="#compileTargets">compileTargets</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#compileTargets">compileTargets</a></strong></td>
 <td><code>String[]</code></td>
 <td><code>-</code></td>
 <td>List of GWT module names that should be compiled with the GWT
-compiler. </td>
+compiler.<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#runTarget">runTarget</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#runTarget">runTarget</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>URL that should be automatically opened by default in the GWT
-shell. </td>
+shell.<br />
+</td>
 </tr>
 </table>
 </div>
-<div class="section"><h3><a name="Optional_Parameters"></a>
-Optional Parameters</h3>
+<div class="section"><h3><a name="Optional_Parameters"></a>Optional Parameters</h3>
 <table class="bodyTable"><tr class="b"><th>Name</th>
 <th>Type</th>
 <th>Since</th>
 <th>Description</th>
 </tr>
-<tr class="a"><td><strong><a href="#buildDir">buildDir</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#buildDir">buildDir</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
-<td>Location on filesystem where project should be built. </td>
+<td>Location on filesystem where project should be built.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#contextXml">contextXml</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#contextXml">contextXml</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Source Tomcat context.xml for GWT shell - copied to
 /gwt/localhost/ROOT.xml (used as the context.xml for the SHELL -
-requires Tomcat 5.0.x format - hence no default). </td>
+requires Tomcat 5.0.x format - hence no default).<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#debugPort">debugPort</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#debugPort">debugPort</a></strong></td>
 <td><code>int</code></td>
 <td><code>-</code></td>
-<td>Port to listen for debugger connection on. Default value is: <code>8000</code>.</td>
+<td>Port to listen for debugger connection on.<br />
+<strong>Default value is</strong>: <code>8000</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#debugSuspend">debugSuspend</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#debugSuspend">debugSuspend</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
-<td>Whether or not to suspend execution until a debugger connects. Default value is: <code>true</code>.</td>
+<td>Whether or not to suspend execution until a debugger connects.<br />
+<strong>Default value is</strong>: <code>true</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#enableAssertions">enableAssertions</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#enableAssertions">enableAssertions</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
-<td>Whether or not to enable assertions in generated scripts (-ea). Default value is: <code>false</code>.</td>
+<td>Whether or not to enable assertions in generated scripts (-ea).<br />
+<strong>Default value is</strong>: <code>false</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#extraJvmArgs">extraJvmArgs</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#extraJvmArgs">extraJvmArgs</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Extra JVM arguments that are passed to the GWT-Maven generated
 scripts (for compiler, shell, etc - typically use -Xmx512m here, or
--XstartOnFirstThread, etc). </td>
+-XstartOnFirstThread, etc).<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#extraTestArgs">extraTestArgs</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#extraTestArgs">extraTestArgs</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Extra JVM arguments that are passed only to the GWT-Maven generated
-test scripts (in addition to std extraJvmArgs). </td>
+test scripts (in addition to std extraJvmArgs).<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#gen">gen</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#gen">gen</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Location on filesystem where GWT will write generated content for
-review (-gen option to GWTCompiler). </td>
+review (-gen option to GWTCompiler).<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#generateGettersAndSetters">generateGettersAndSetters</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#generateGettersAndSetters">generateGettersAndSetters</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
 <td>Whether or not to generate getter/setter methods for generated
-classes. </td>
+classes.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#generatePropertyChangeSupport">generatePropertyChangeSupport</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#generatePropertyChangeSupport">generatePropertyChangeSupport</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
 <td>Whether or not to generate PropertyChangeSupport handling for
-generated classes. </td>
+generated classes.<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#generatorDestinationPackage">generatorDestinationPackage</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#generatorDestinationPackage">generatorDestinationPackage</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
-<td>Destination package for generated classes. </td>
+<td>Destination package for generated classes.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#generatorRootClasses">generatorRootClasses</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#generatorRootClasses">generatorRootClasses</a></strong></td>
 <td><code>String[]</code></td>
 <td><code>-</code></td>
-<td>Top level (root) of classes to begin generation from. </td>
+<td>Top level (root) of classes to begin generation from.<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#gwtHome">gwtHome</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#gwtHome">gwtHome</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Location on filesystem where GWT is installed - for manual mode
-(existing GWT on machine - not needed for automatic mode). </td>
+(existing GWT on machine - not needed for automatic mode).<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#gwtVersion">gwtVersion</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#gwtVersion">gwtVersion</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Set the GWT version number - used to build dependency paths, should
-match the &quot;version&quot; in the Maven repo. Default value is: <code>1.5.2</code>.</td>
+match the &quot;version&quot; in the Maven repo.<br />
+<strong>Default value is</strong>: <code>1.5.2</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#i18nConstantsNames">i18nConstantsNames</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#i18nConstantsNames">i18nConstantsNames</a></strong></td>
 <td><code>String[]</code></td>
 <td><code>-</code></td>
 <td>List of names of properties files that should be used to generate
-i18n Constants interfaces. </td>
+i18n Constants interfaces.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#i18nMessagesNames">i18nMessagesNames</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#i18nMessagesNames">i18nMessagesNames</a></strong></td>
 <td><code>String[]</code></td>
 <td><code>-</code></td>
 <td>List of names of properties files that should be used to generate
-i18n Messages interfaces. </td>
+i18n Messages interfaces.<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#i18nOutputDir">i18nOutputDir</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#i18nOutputDir">i18nOutputDir</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Location on filesystem to output generated i18n Constants and
-Messages interfaces. </td>
+Messages interfaces.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#localRepository">localRepository</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#localRepository">localRepository</a></strong></td>
 <td><code>ArtifactRepository</code></td>
 <td><code>-</code></td>
-<td>(no description) </td>
+<td>(no description)<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#logLevel">logLevel</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#logLevel">logLevel</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>GWT logging level (-logLevel ERROR, WARN, INFO, TRACE, DEBUG, SPAM,
-or ALL). Default value is: <code>INFO</code>.</td>
+or ALL).<br />
+<strong>Default value is</strong>: <code>INFO</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#noServer">noServer</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#noServer">noServer</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
 <td>Prevents the embedded GWT Tomcat server from running (even if a
-port is specified). Default value is: <code>false</code>.</td>
+port is specified).<br />
+<strong>Default value is</strong>: <code>false</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#output">output</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#output">output</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Location on filesystem where GWT will write output files (-out
-option to GWTCompiler). </td>
+option to GWTCompiler).<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#overwriteGeneratedClasses">overwriteGeneratedClasses</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#overwriteGeneratedClasses">overwriteGeneratedClasses</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
-<td>Whether or not to overwrite generated classes if they exist. </td>
+<td>Whether or not to overwrite generated classes if they exist.<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#port">port</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#port">port</a></strong></td>
 <td><code>int</code></td>
 <td><code>-</code></td>
-<td>Runs the embedded GWT Tomcat server on the specified port. Default value is: <code>8888</code>.</td>
+<td>Runs the embedded GWT Tomcat server on the specified port.<br />
+<strong>Default value is</strong>: <code>8888</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#remoteRepositories">remoteRepositories</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#remoteRepositories">remoteRepositories</a></strong></td>
 <td><code>List</code></td>
 <td><code>-</code></td>
-<td>(no description) </td>
+<td>(no description)<br />
+</td>
 </tr>
-<tr class="a"><td><strong><a href="#skip">skip</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#skip">skip</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
-<td>Whether or not to skip testing (including gwt:test testing). </td>
+<td>Whether or not to skip testing (including gwt:test testing).<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#sourcesOnPath">sourcesOnPath</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#sourcesOnPath">sourcesOnPath</a></strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
 <td>Whether or not to add resources and compile source root to
-classpath. Default value is: <code>true</code>.</td>
+classpath.<br />
+<strong>Default value is</strong>: <code>true</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#style">style</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#style">style</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>GWT JavaScript compiler output style (-style OBF[USCATED], PRETTY,
-or DETAILED). Default value is: <code>OBF</code>.</td>
+or DETAILED).<br />
+<strong>Default value is</strong>: <code>OBF</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#testFilter">testFilter</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#testFilter">testFilter</a></strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Simple string filter for classes that should be treated as
-GWTTestCase type (and therefore invoked during gwtTest goal). Default value is: <code>GwtTest*</code>.</td>
+GWTTestCase type (and therefore invoked during gwtTest goal).<br />
+<strong>Default value is</strong>: <code>GwtTest*</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#tomcat">tomcat</a>
-</strong></td>
+<tr class="a"><td><strong><a href="#tomcat">tomcat</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Specify the location on the filesystem for the generated embedded
-Tomcat directory. </td>
+Tomcat directory.<br />
+</td>
 </tr>
-<tr class="b"><td><strong><a href="#webXml">webXml</a>
-</strong></td>
+<tr class="b"><td><strong><a href="#webXml">webXml</a></strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Source web.xml deployment descriptor that is used for GWT shell and
-for deployment WAR to &quot;merge&quot; servlet entries. </td>
+for deployment WAR to &quot;merge&quot; servlet entries.<br />
+</td>
 </tr>
 </table>
 </div>
-<div class="section"><h3><a name="Parameter_Details"></a>
-Parameter Details</h3>
-<p><strong><a name="buildDir">buildDir</a>
-:</strong></p>
-<p>Location on filesystem where project should be built.</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<div class="section"><h3><a name="Parameter_Details"></a>Parameter Details</h3>
+<p><strong><a name="buildDir">buildDir</a>:</strong></p>
+<div>Location on filesystem where project should be built.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${project.build.directory}</code></li>
 </ul>
 <hr />
-<p><strong><a name="compileTargets">compileTargets</a>
-:</strong></p>
-<p>List of GWT module names that should be compiled with the GWT
-compiler.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
+<p><strong><a name="compileTargets">compileTargets</a>:</strong></p>
+<div>List of GWT module names that should be compiled with the GWT
+compiler.</div><ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
 <li><strong>Required</strong>: <code>Yes</code></li>
 </ul>
 <hr />
-<p><strong><a name="contextXml">contextXml</a>
-:</strong></p>
-<p>Source Tomcat context.xml for GWT shell - copied to
+<p><strong><a name="contextXml">contextXml</a>:</strong></p>
+<div>Source Tomcat context.xml for GWT shell - copied to
 /gwt/localhost/ROOT.xml (used as the context.xml for the SHELL -
-requires Tomcat 5.0.x format - hence no default).</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+requires Tomcat 5.0.x format - hence no default).</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="debugPort">debugPort</a>
-:</strong></p>
-<p>Port to listen for debugger connection on.</p>
-<ul><li><strong>Type</strong>: <code>int</code></li>
+<p><strong><a name="debugPort">debugPort</a>:</strong></p>
+<div>Port to listen for debugger connection on.</div><ul><li><strong>Type</strong>: <code>int</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>8000</code></li>
 </ul>
 <hr />
-<p><strong><a name="debugSuspend">debugSuspend</a>
-:</strong></p>
-<p>Whether or not to suspend execution until a debugger connects.</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="debugSuspend">debugSuspend</a>:</strong></p>
+<div>Whether or not to suspend execution until a debugger connects.</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>true</code></li>
 </ul>
 <hr />
-<p><strong><a name="enableAssertions">enableAssertions</a>
-:</strong></p>
-<p>Whether or not to enable assertions in generated scripts (-ea).</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="enableAssertions">enableAssertions</a>:</strong></p>
+<div>Whether or not to enable assertions in generated scripts (-ea).</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>false</code></li>
 </ul>
 <hr />
-<p><strong><a name="extraJvmArgs">extraJvmArgs</a>
-:</strong></p>
-<p>Extra JVM arguments that are passed to the GWT-Maven generated
+<p><strong><a name="extraJvmArgs">extraJvmArgs</a>:</strong></p>
+<div>Extra JVM arguments that are passed to the GWT-Maven generated
 scripts (for compiler, shell, etc - typically use -Xmx512m here, or
--XstartOnFirstThread, etc).</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+-XstartOnFirstThread, etc).</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${google.webtoolkit.extrajvmargs}</code></li>
 </ul>
 <hr />
-<p><strong><a name="extraTestArgs">extraTestArgs</a>
-:</strong></p>
-<p>Extra JVM arguments that are passed only to the GWT-Maven generated
-test scripts (in addition to std extraJvmArgs).</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="extraTestArgs">extraTestArgs</a>:</strong></p>
+<div>Extra JVM arguments that are passed only to the GWT-Maven generated
+test scripts (in addition to std extraJvmArgs).</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="gen">gen</a>
-:</strong></p>
-<p>Location on filesystem where GWT will write generated content for
-review (-gen option to GWTCompiler).</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="gen">gen</a>:</strong></p>
+<div>Location on filesystem where GWT will write generated content for
+review (-gen option to GWTCompiler).</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${project.build.directory}/.generated</code></li>
 </ul>
 <hr />
-<p><strong><a name="generateGettersAndSetters">generateGettersAndSetters</a>
-:</strong></p>
-<p>Whether or not to generate getter/setter methods for generated
-classes.</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="generateGettersAndSetters">generateGettersAndSetters</a>:</strong></p>
+<div>Whether or not to generate getter/setter methods for generated
+classes.</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="generatePropertyChangeSupport">generatePropertyChangeSupport</a>
-:</strong></p>
-<p>Whether or not to generate PropertyChangeSupport handling for
-generated classes.</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="generatePropertyChangeSupport">generatePropertyChangeSupport</a>:</strong></p>
+<div>Whether or not to generate PropertyChangeSupport handling for
+generated classes.</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="generatorDestinationPackage">generatorDestinationPackage</a>
-:</strong></p>
-<p>Destination package for generated classes.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="generatorDestinationPackage">generatorDestinationPackage</a>:</strong></p>
+<div>Destination package for generated classes.</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="generatorRootClasses">generatorRootClasses</a>
-:</strong></p>
-<p>Top level (root) of classes to begin generation from.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
+<p><strong><a name="generatorRootClasses">generatorRootClasses</a>:</strong></p>
+<div>Top level (root) of classes to begin generation from.</div><ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="gwtHome">gwtHome</a>
-:</strong></p>
-<p>Location on filesystem where GWT is installed - for manual mode
-(existing GWT on machine - not needed for automatic mode).</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="gwtHome">gwtHome</a>:</strong></p>
+<div>Location on filesystem where GWT is installed - for manual mode
+(existing GWT on machine - not needed for automatic mode).</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${google.webtoolkit.home}</code></li>
 </ul>
 <hr />
-<p><strong><a name="gwtVersion">gwtVersion</a>
-:</strong></p>
-<p>Set the GWT version number - used to build dependency paths, should
-match the &quot;version&quot; in the Maven repo.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="gwtVersion">gwtVersion</a>:</strong></p>
+<div>Set the GWT version number - used to build dependency paths, should
+match the &quot;version&quot; in the Maven repo.</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>1.5.2</code></li>
 </ul>
 <hr />
-<p><strong><a name="i18nConstantsNames">i18nConstantsNames</a>
-:</strong></p>
-<p>List of names of properties files that should be used to generate
-i18n Constants interfaces.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
+<p><strong><a name="i18nConstantsNames">i18nConstantsNames</a>:</strong></p>
+<div>List of names of properties files that should be used to generate
+i18n Constants interfaces.</div><ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="i18nMessagesNames">i18nMessagesNames</a>
-:</strong></p>
-<p>List of names of properties files that should be used to generate
-i18n Messages interfaces.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
+<p><strong><a name="i18nMessagesNames">i18nMessagesNames</a>:</strong></p>
+<div>List of names of properties files that should be used to generate
+i18n Messages interfaces.</div><ul><li><strong>Type</strong>: <code>java.lang.String[]</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="i18nOutputDir">i18nOutputDir</a>
-:</strong></p>
-<p>Location on filesystem to output generated i18n Constants and
-Messages interfaces.</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="i18nOutputDir">i18nOutputDir</a>:</strong></p>
+<div>Location on filesystem to output generated i18n Constants and
+Messages interfaces.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${basedir}/src/main/java/</code></li>
 </ul>
 <hr />
-<p><strong><a name="localRepository">localRepository</a>
-:</strong></p>
-<p>(no description)</p>
-<ul><li><strong>Type</strong>: <code>org.apache.maven.artifact.repository.ArtifactRepository</code></li>
+<p><strong><a name="localRepository">localRepository</a>:</strong></p>
+<div>(no description)</div><ul><li><strong>Type</strong>: <code>org.apache.maven.artifact.repository.ArtifactRepository</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${localRepository}</code></li>
 </ul>
 <hr />
-<p><strong><a name="logLevel">logLevel</a>
-:</strong></p>
-<p>GWT logging level (-logLevel ERROR, WARN, INFO, TRACE, DEBUG, SPAM,
-or ALL).</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="logLevel">logLevel</a>:</strong></p>
+<div>GWT logging level (-logLevel ERROR, WARN, INFO, TRACE, DEBUG, SPAM,
+or ALL).</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>INFO</code></li>
 </ul>
 <hr />
-<p><strong><a name="noServer">noServer</a>
-:</strong></p>
-<p>Prevents the embedded GWT Tomcat server from running (even if a
-port is specified).</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="noServer">noServer</a>:</strong></p>
+<div>Prevents the embedded GWT Tomcat server from running (even if a
+port is specified).</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>false</code></li>
 </ul>
 <hr />
-<p><strong><a name="output">output</a>
-:</strong></p>
-<p>Location on filesystem where GWT will write output files (-out
-option to GWTCompiler).</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="output">output</a>:</strong></p>
+<div>Location on filesystem where GWT will write output files (-out
+option to GWTCompiler).</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${project.build.directory}/${project.build.finalName}</code></li>
 </ul>
 <hr />
-<p><strong><a name="overwriteGeneratedClasses">overwriteGeneratedClasses</a>
-:</strong></p>
-<p>Whether or not to overwrite generated classes if they exist.</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="overwriteGeneratedClasses">overwriteGeneratedClasses</a>:</strong></p>
+<div>Whether or not to overwrite generated classes if they exist.</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 </ul>
 <hr />
-<p><strong><a name="port">port</a>
-:</strong></p>
-<p>Runs the embedded GWT Tomcat server on the specified port.</p>
-<ul><li><strong>Type</strong>: <code>int</code></li>
+<p><strong><a name="port">port</a>:</strong></p>
+<div>Runs the embedded GWT Tomcat server on the specified port.</div><ul><li><strong>Type</strong>: <code>int</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>8888</code></li>
 </ul>
 <hr />
-<p><strong><a name="remoteRepositories">remoteRepositories</a>
-:</strong></p>
-<p>(no description)</p>
-<ul><li><strong>Type</strong>: <code>java.util.List</code></li>
+<p><strong><a name="remoteRepositories">remoteRepositories</a>:</strong></p>
+<div>(no description)</div><ul><li><strong>Type</strong>: <code>java.util.List</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${project.remoteArtifactRepositories}</code></li>
 </ul>
 <hr />
-<p><strong><a name="runTarget">runTarget</a>
-:</strong></p>
-<p>URL that should be automatically opened by default in the GWT
-shell.</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="runTarget">runTarget</a>:</strong></p>
+<div>URL that should be automatically opened by default in the GWT
+shell.</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>Yes</code></li>
 </ul>
 <hr />
-<p><strong><a name="skip">skip</a>
-:</strong></p>
-<p>Whether or not to skip testing (including gwt:test testing).</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="skip">skip</a>:</strong></p>
+<div>Whether or not to skip testing (including gwt:test testing).</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${maven.test.skip}</code></li>
 </ul>
 <hr />
-<p><strong><a name="sourcesOnPath">sourcesOnPath</a>
-:</strong></p>
-<p>Whether or not to add resources and compile source root to
-classpath.</p>
-<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<p><strong><a name="sourcesOnPath">sourcesOnPath</a>:</strong></p>
+<div>Whether or not to add resources and compile source root to
+classpath.</div><ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>true</code></li>
 </ul>
 <hr />
-<p><strong><a name="style">style</a>
-:</strong></p>
-<p>GWT JavaScript compiler output style (-style OBF[USCATED], PRETTY,
-or DETAILED).</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="style">style</a>:</strong></p>
+<div>GWT JavaScript compiler output style (-style OBF[USCATED], PRETTY,
+or DETAILED).</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>OBF</code></li>
 </ul>
 <hr />
-<p><strong><a name="testFilter">testFilter</a>
-:</strong></p>
-<p>Simple string filter for classes that should be treated as
-GWTTestCase type (and therefore invoked during gwtTest goal).</p>
-<ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
+<p><strong><a name="testFilter">testFilter</a>:</strong></p>
+<div>Simple string filter for classes that should be treated as
+GWTTestCase type (and therefore invoked during gwtTest goal).</div><ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>GwtTest*</code></li>
 </ul>
 <hr />
-<p><strong><a name="tomcat">tomcat</a>
-:</strong></p>
-<p>Specify the location on the filesystem for the generated embedded
-Tomcat directory.</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="tomcat">tomcat</a>:</strong></p>
+<div>Specify the location on the filesystem for the generated embedded
+Tomcat directory.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${project.build.directory}/tomcat</code></li>
 </ul>
 <hr />
-<p><strong><a name="webXml">webXml</a>
-:</strong></p>
-<p>Source web.xml deployment descriptor that is used for GWT shell and
-for deployment WAR to &quot;merge&quot; servlet entries.</p>
-<ul><li><strong>Type</strong>: <code>java.io.File</code></li>
+<p><strong><a name="webXml">webXml</a>:</strong></p>
+<div>Source web.xml deployment descriptor that is used for GWT shell and
+for deployment WAR to &quot;merge&quot; servlet entries.</div><ul><li><strong>Type</strong>: <code>java.io.File</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Expression</strong>: <code>${basedir}/src/main/webapp/WEB-INF/web.xml</code></li>
 </ul>
