@@ -19,13 +19,15 @@
 			<url>file://${basedir}/../mavenrepo</url>
 		</repository>
 	</distributionManagement>
+	<!--  needed at the moment for jdom 1.1 (not in central) -->
+	<!-- 
 	<repositories>
-		<repository>
-		    <!--  needed at the moment for jdom 1.1 (not in central) -->
+		<repository>		    
 			<id>random-for-jdom</id>
 			<url>http://www4.rothamsted.bbsrc.ac.uk/ondex/maven2</url>
 		</repository>
 	</repositories>
+	-->
 	<profiles>
 		<profile>
 			<id>default-tools.jar</id>
@@ -69,7 +71,7 @@
 			<version>2.4</version>
 		</dependency>
 		<dependency>
-			<groupId>jdom</groupId>
+			<groupId>org.jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
 		</dependency>
