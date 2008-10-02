@@ -73,6 +73,9 @@ GWT-Maven and configuring "Tomcat Lite"
  classpath for the shell, of course. For example connection pools, Spring, etc - but that's easy with GWT-Maven - just add those things 
  as dependencies to your POM and GWT-Maven will make sure they are on the classpath for the shell). 
  
+ Note that the default GWTSHellServlet mapping URL (or "url-pattern") is "/*", which is fine for most cases. Nevertheless, if you do wish to change 
+ this for special circumstances you can by using the "shellServletMappingURL" configuration parameter.
+ 
  When you HAVE a source web.xml file, whether or not you use mergewebxml, it is used for the GWT shell. 
  
 * web.xml for your WAR artifact
@@ -91,6 +94,11 @@ GWT-Maven and configuring "Tomcat Lite"
  To enable this you need to have the <<mergewebxml>> goal present in the executions section of the plugin configuration. 
  
  You can also not use this, if you do not prefer, by simply NOT including the mergewebxml goal. 
+ 
+ Note that the default mapping URL (or "url-pattern") for a merged servlet entry is "/modulename/servletpath", where the module name
+ is prepended to the servlet path from your GWT module - this is fine for most cases. 
+ Nevertheless, if you do wish to change this you can set the "webXmlPathAsIs" configuration parameter to true, and then the exact path
+ in your GWT module will be used (nothing will be prepended). 
  
  If you do you use mergewebxml the output file will be ${project.build.dir}/web.xml (usually that means "target/web.xml"). 
  
