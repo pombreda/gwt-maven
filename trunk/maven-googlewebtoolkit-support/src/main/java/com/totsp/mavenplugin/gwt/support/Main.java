@@ -46,6 +46,7 @@ public class Main {
                                                            .withDescription(
             "src web.xml file (maven.war.src/WEB-INF/web.xml)"
         ).create("webXmlPath");
+   
     private static Options options = new Options();
 
     static {
@@ -93,8 +94,8 @@ public class Main {
                         GwtWebInfProcessor processor = new GwtWebInfProcessor(
                             line.getOptionValue("moduleName"),
                             line.getOptionValue("targetWebXmlPath"),
-                            line.getOptionValue("webXmlPath")
-                        );
+                            line.getOptionValue("webXmlPath"),
+                            false);
                         processor.process();
                     } catch(ExitException ee ){
                         ee.printStackTrace();
