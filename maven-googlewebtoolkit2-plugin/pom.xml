@@ -5,7 +5,7 @@
 	<groupId>com.totsp.gwt</groupId>
 	<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>2.0-beta23</version>
+	<version>2.0-beta24-SNAPSHOT</version>
 	<description>Maven 2 Plugin for the Google Web Toolkit</description>
 	<name>Maven 2 Plugin for the Google Web Toolkit</name>
 	<url>http://code.google.com/p/gwt-maven</url>
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>com.totsp.gwt</groupId>
 			<artifactId>maven-googlewebtoolkit-support</artifactId>
-			<version>1.6.0</version>
+			<version>1.6.1</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>googlewebtoolkit-beanmapping</artifactId>
