@@ -109,6 +109,21 @@ Depend on the sources this way:
 }}}
 
 
+*Q)  I want to filter stuff out from the final WAR, like the .gwt-tmp files, how do I do that? 
+
+You can use the standard maven war plugin filtering mechanisms to do that.  It's ok if things you don't want end up in the target/webappLocation folder, just so long as they don't actually get put in the final artifact. 
+
+{{{
+   <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-war-plugin</artifactId>
+     <configuration>
+       <webXml>target/web.xml</webXml>
+       <warSourceExcludes>.gwt-tmp/**</warSourceExcludes>		
+     </configuration>				
+</plugin>
+}}}
+
 
 *Q)  I have some dependency with JDT in it, and things are not working (for example Drools).  What do I do?
 
