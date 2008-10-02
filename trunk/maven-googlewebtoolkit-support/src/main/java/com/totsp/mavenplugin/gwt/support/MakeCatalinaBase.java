@@ -56,6 +56,8 @@ public class MakeCatalinaBase {
     public static void main(String[] args) throws Exception {
         String baseDir = args[0];
         String sourceWebXml = args[1];
+        String shellServletMappingURL = args[2];
+        
         File catalinaBase = new File(baseDir);
         catalinaBase.mkdirs();
         
@@ -84,7 +86,7 @@ public class MakeCatalinaBase {
         File mergeWeb = new File( webinf, "web.xml");
         File sourceWeb = new File( sourceWebXml );
         if( sourceWeb.exists() ){
-            GwtShellWebProcessor p = new GwtShellWebProcessor( mergeWeb.getAbsolutePath(), sourceWebXml );
+            GwtShellWebProcessor p = new GwtShellWebProcessor( mergeWeb.getAbsolutePath(), sourceWebXml, shellServletMappingURL );
             p.process();
         } else {
             fos = new FileOutputStream( mergeWeb );
