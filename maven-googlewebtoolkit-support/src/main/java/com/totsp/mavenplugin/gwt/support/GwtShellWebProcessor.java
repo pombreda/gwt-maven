@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class GwtShellWebProcessor extends GwtWebInfProcessor {
     
     /** Creates a new instance of GwtShellWebProcessor */
-    public GwtShellWebProcessor(String targetWebXml, String sourceWebXml) throws Exception {
+    public GwtShellWebProcessor(String targetWebXml, String sourceWebXml, String shellServletMappingURL) throws Exception {
         // obtain web.xml
         this.webXmlPath = sourceWebXml;
         File webXmlFile = new File(sourceWebXml);
@@ -42,7 +42,7 @@ public class GwtShellWebProcessor extends GwtWebInfProcessor {
         this.destination = new File(targetWebXml);
         this.servletDescriptors = new ArrayList();
         ServletDescriptor d = new ServletDescriptor(
-                "/*",
+        		shellServletMappingURL,
                 "com.google.gwt.dev.shell.GWTShellServlet");
         d.setName("shell");
         this.servletDescriptors.add( d );
