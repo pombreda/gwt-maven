@@ -89,7 +89,7 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
                     if (moduleFile != null) {
                         getLog().info("Module file: " + moduleFile.getAbsolutePath());
                         processor = new GwtWebInfProcessor(this.getCompileTarget()[i], moduleFile, destination
-                                .getAbsolutePath(), destination.getAbsolutePath());
+                                .getAbsolutePath(), destination.getAbsolutePath(), this.isWebXmlServletPathAsIs());
                     } else {
                         throw new MojoExecutionException("module file null");
                     }
