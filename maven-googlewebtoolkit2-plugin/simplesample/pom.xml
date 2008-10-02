@@ -10,32 +10,32 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>maven-gwt-sample</name>
-	
+
 	<!--  include pluginRepository and repository for GWT-Maven -->
 	<pluginRepositories>
-        <pluginRepository>
-            <id>gwt-maven-plugins</id>
-            <url>
+		<pluginRepository>
+			<id>gwt-maven-plugins</id>
+			<url>
                 http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
             </url>
-        </pluginRepository>
-    </pluginRepositories>    
-    <repositories>        
-        <repository>
-            <id>gwt-maven</id>
-            <url>
+		</pluginRepository>
+	</pluginRepositories>
+	<repositories>
+		<repository>
+			<id>gwt-maven</id>
+			<url>
                 http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
             </url>
-        </repository>
-    </repositories>
-    
+		</repository>
+	</repositories>
+
 	<!--  convenience to define GWT version in one place -->
 	<properties>
 		<gwtVersion>1.5.2</gwtVersion>
 	</properties>
-	
+
 	<dependencies>
-	    <!--  GWT deps (from central repo) -->
+		<!--  GWT deps (from central repo) -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -70,14 +70,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
-		    <!--  configure the GWT-Maven plugin -->
+			<!--  configure the GWT-Maven plugin -->
 			<plugin>
 				<groupId>com.totsp.gwt</groupId>
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-				<version>2.0-beta23</version>
+				<version>2.0-beta24</version>
 				<configuration>
 					<logLevel>INFO</logLevel>
 					<compileTargets>
@@ -93,9 +93,15 @@
 					<i18nMessagesNames>
 						<value>com.totsp.sample.client.AppMessages</value>
 					</i18nMessagesNames>
-					<!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-                    <!--  if this is set incorrect, or left out and default does not match (default is 1.5.2 for 2.0-beta23) you will have mysterious errors -->
-                    <gwtVersion>${gwtVersion}</gwtVersion>
+					<!--
+						this parameter is VERY important with automatic mode - has to
+						match the version in your declared deps
+					-->
+					<!--
+						if this is set incorrect, or left out and default does not match
+						(default is 1.5.2 for 2.0-beta23) you will have mysterious errors
+					-->
+					<gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
@@ -103,8 +109,8 @@
 							<goal>mergewebxml</goal>
 							<goal>i18n</goal>
 							<goal>gwt</goal>
-							<goal>compile</goal>							
-                            <goal>test</goal>
+							<goal>compile</goal>
+							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -143,27 +149,29 @@
 			</plugin>
 			<!--
 				If you want to use the target/web.xml file mergewebxml produces,
-				tell the war plugin to use it
+				tell the war plugin to use it. 
+				Also, exclude what you want from the final artifact here. 
 			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<webXml>target/web.xml</webXml>
+                    <warSourceExcludes>.gwt-tmp/**</warSourceExcludes>					
+				</configuration>				
+			</plugin>
+			<!--  tell the compiler we can use 1.5 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<!--  tell the compiler we can use 1.5 -->	
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>		
 		</plugins>
 	</build>
-	
+
 	<!--  profiles (with activation per platform) -->
 	<profiles>
 		<profile>
