@@ -202,7 +202,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * servlet path when merging web.xml.  If you set this to false the exact
     * path from the GWT module will be used, nothing else will be prepended.
     * 
-    * @parameter default-value="true"
+    * @parameter default-value="false"
     */
    private boolean webXmlServletPathAsIs;
    /**
