@@ -87,7 +87,7 @@ public class GWTMojo extends AbstractGWTMojo {
         }
 
         // note that MakeCatalinaBase (support jar) will use emptyWeb.xml if webXml does not exist 
-        String[] args = { this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath() };
+        String[] args = { this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath(), this.getShellServletMappingURL() };
         MakeCatalinaBase.main(args);
 
         if ((this.getContextXml() != null) && this.getContextXml().exists()) {

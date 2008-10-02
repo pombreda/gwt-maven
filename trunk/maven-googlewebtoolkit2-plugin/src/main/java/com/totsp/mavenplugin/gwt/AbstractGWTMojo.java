@@ -244,6 +244,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     private boolean enableAssertions;
     /**
+     * @parameter default-value="/*"
+     */
+    private String shellServletMappingURL;
+    /**
      * Location on filesystem to output generated i18n Constants and Messages
      * interfaces.
      * 
@@ -456,6 +460,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         return webXml;
     }
 
+    public String getShellServletMappingURL() {
+		return shellServletMappingURL;
+	}
+
+	public void setShellServletMappingURL(String shellServletMappingURL) {
+		this.shellServletMappingURL = shellServletMappingURL;
+	}
+    
     public String[] getGeneratorRootClasses() {
         return generatorRootClasses;
     }
