@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-27
+        Last Published: 2008-10-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,6 +127,8 @@
       
             
       
+            
+      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -161,14 +163,18 @@
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Examples</h2>
 <div class="section"><h3>Sample Projects</h3>
-<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a></li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a></li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a> </li>
+<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
+</li>
+<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a>
+</li>
+<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a>
+ </li>
 </ul>
 </div>
 <div class="section"><h3>Auto Configuration</h3>
 <p>Below is more detail about the simple sample project, which uses the auto-configuration. Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, and activates correct platform dependent dependencies based the platform in use.</p>
-<p>This is the <b>recommended way to use GWT-Maven</b> (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
+<p>This is the <b>recommended way to use GWT-Maven</b>
+ (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
@@ -246,7 +252,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta23&lt;/version&gt;
+                &lt;version&gt;2.0-beta24&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
                     &lt;compileTargets&gt;
@@ -263,7 +269,7 @@
                         &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
                     &lt;/i18nMessagesNames&gt;
                     &lt;!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps --&gt;
-                    &lt;!--  if this is set incorrect (not a match), or left out (default is 1.5.2 for 2.0-beta23) you will have mysterious errors --&gt;
+                    &lt;!--  if this is set incorrect (not a match), or left out (default is currently 1.5.2) you will have mysterious errors --&gt;
                     &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
                 &lt;/configuration&gt;
                 &lt;executions&gt;
@@ -312,14 +318,16 @@
             &lt;/plugin&gt;
             &lt;!--
                 If you want to use the target/web.xml file mergewebxml produces,
-                tell the war plugin to use it
+                tell the war plugin to use it. 
+                Also, exclude what you want from the final artifact here. 
             --&gt;
             &lt;plugin&gt;
                 &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
                 &lt;configuration&gt;
                     &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
-                &lt;/configuration&gt;
+                    &lt;warSourceExcludes&gt;.gwt-tmp/**&lt;/warSourceExcludes&gt;                  
+                &lt;/configuration&gt;                
             &lt;/plugin&gt;
             &lt;!--  tell the compiler we can use 1.5 --&gt;  
             &lt;plugin&gt;
@@ -444,7 +452,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta23&lt;/version&gt;
+                &lt;version&gt;2.0-beta24&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;gwtHome&gt;/opt/gwt-mac-1.5.2&lt;/gwtHome&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
@@ -477,14 +485,16 @@
             &lt;/plugin&gt;           
             &lt;!--
                 If you want to use the target/web.xml file mergewebxml produces,
-                tell the war plugin to use it
+                tell the war plugin to use it. 
+                Also, exclude what you want from the final artifact here. 
             --&gt;
             &lt;plugin&gt;
                 &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
                 &lt;configuration&gt;
                     &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
-                &lt;/configuration&gt;
+                    &lt;warSourceExcludes&gt;.gwt-tmp/**&lt;/warSourceExcludes&gt;                  
+                &lt;/configuration&gt;                
             &lt;/plugin&gt;
             &lt;!--  tell the compiler we can use 1.5 --&gt;  
             &lt;plugin&gt;

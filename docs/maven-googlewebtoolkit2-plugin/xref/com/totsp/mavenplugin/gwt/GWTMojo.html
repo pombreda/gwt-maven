@@ -50,7 +50,7 @@
 <a name="40" href="#40">40</a>  <em class="jxr_javadoccomment"> * </em>
 <a name="41" href="#41">41</a>  <em class="jxr_javadoccomment"> * @goal gwt</em>
 <a name="42" href="#42">42</a>  <em class="jxr_javadoccomment"> * @execute phase=compile</em>
-<a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * @requiresDependencyResolution runtime</em>
+<a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * @requiresDependencyResolution compile</em>
 <a name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> * @description Runs the the project in the GWTShell for development.</em>
 <a name="45" href="#45">45</a>  <em class="jxr_javadoccomment"> * </em>
 <a name="46" href="#46">46</a>  <em class="jxr_javadoccomment"> * @author ccollins</em>
@@ -97,7 +97,7 @@
 <a name="87" href="#87">87</a>          }
 <a name="88" href="#88">88</a>  
 <a name="89" href="#89">89</a>          <em class="jxr_comment">// note that MakeCatalinaBase (support jar) will use emptyWeb.xml if webXml does not exist </em>
-<a name="90" href="#90">90</a>          String[] args = { <strong class="jxr_keyword">this</strong>.getTomcat().getAbsolutePath(), <strong class="jxr_keyword">this</strong>.getWebXml().getAbsolutePath() };
+<a name="90" href="#90">90</a>          String[] args = { <strong class="jxr_keyword">this</strong>.getTomcat().getAbsolutePath(), <strong class="jxr_keyword">this</strong>.getWebXml().getAbsolutePath(), <strong class="jxr_keyword">this</strong>.getShellServletMappingURL() };
 <a name="91" href="#91">91</a>          MakeCatalinaBase.main(args);
 <a name="92" href="#92">92</a>  
 <a name="93" href="#93">93</a>          <strong class="jxr_keyword">if</strong> ((<strong class="jxr_keyword">this</strong>.getContextXml() != <strong class="jxr_keyword">null</strong>) &amp;&amp; <strong class="jxr_keyword">this</strong>.getContextXml().exists()) {

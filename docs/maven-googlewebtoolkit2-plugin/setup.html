@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-09-27
+        Last Published: 2008-10-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -127,6 +127,8 @@
       
             
       
+            
+      
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -162,7 +164,9 @@
         <div class="section"><h2>GWT-Maven Setup</h2>
 <p>In order to use GWT-Maven, you will need to configure GWT-Maven using the plugin configuration in your POM, and you will need to decide how you want to handle GWT being present (automatic or manual mode - more below). </p>
 <div class="section"><h3>Configuring GWT-Maven itself</h3>
-<p>Regardless of which &quot;mode&quot; you use, <b>automatic</b>, or <b>manual</b>, you also need to configure GWT-Maven itself, of course. </p>
+<p>Regardless of which &quot;mode&quot; you use, <b>automatic</b>
+, or <b>manual</b>
+, you also need to configure GWT-Maven itself, of course. </p>
 <p>Also, as a convenience it helps to define a property for the GWT version (so you can change it in one place later to upgrade).</p>
 <p>For example:</p>
 <div class="source"><pre>          &lt;properties&gt;
@@ -172,7 +176,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta22&lt;/version&gt;
+                &lt;version&gt;2.0-beta24&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;compileTargets&gt;
                         &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
@@ -199,7 +203,9 @@
 </div>
 </div>
 <div class="section"><h3>Getting the Plugin</h3>
-<p>Getting the plugin is simple. You just need to add the GWT-Maven <b>pluginRepository</b>, and standard <b>repository</b> (used for support libraries) to your POM. </p>
+<p>Getting the plugin is simple. You just need to add the GWT-Maven <b>pluginRepository</b>
+, and standard <b>repository</b>
+ (used for support libraries) to your POM. </p>
 <div class="source"><pre>&lt;pluginRepositories&gt;
     &lt;pluginRepository&gt;
       &lt;id&gt;gwt-maven&lt;/id&gt;

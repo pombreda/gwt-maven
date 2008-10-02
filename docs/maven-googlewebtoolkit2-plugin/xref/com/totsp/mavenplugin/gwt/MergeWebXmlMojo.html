@@ -99,7 +99,7 @@
 <a name="89" href="#89">89</a>                      <strong class="jxr_keyword">if</strong> (moduleFile != <strong class="jxr_keyword">null</strong>) {
 <a name="90" href="#90">90</a>                          getLog().info(<span class="jxr_string">"Module file: "</span> + moduleFile.getAbsolutePath());
 <a name="91" href="#91">91</a>                          processor = <strong class="jxr_keyword">new</strong> GwtWebInfProcessor(<strong class="jxr_keyword">this</strong>.getCompileTarget()[i], moduleFile, destination
-<a name="92" href="#92">92</a>                                  .getAbsolutePath(), destination.getAbsolutePath());
+<a name="92" href="#92">92</a>                                  .getAbsolutePath(), destination.getAbsolutePath(), <strong class="jxr_keyword">this</strong>.isWebXmlServletPathAsIs());
 <a name="93" href="#93">93</a>                      } <strong class="jxr_keyword">else</strong> {
 <a name="94" href="#94">94</a>                          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"module file null"</span>);
 <a name="95" href="#95">95</a>                      }
