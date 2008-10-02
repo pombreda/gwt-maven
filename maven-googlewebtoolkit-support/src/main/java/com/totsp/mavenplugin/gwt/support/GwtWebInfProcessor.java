@@ -48,7 +48,15 @@ public class GwtWebInfProcessor {
       super();
    }
 
-   public GwtWebInfProcessor(String moduleName, String targetWebXml, String sourceWebXml) throws Exception {
+   /**
+    * 
+    * @param moduleName
+    * @param targetWebXml
+    * @param sourceWebXml
+    * @param webXmlServletPath
+    * @throws Exception
+    */
+   public GwtWebInfProcessor(String moduleName, String targetWebXml, String sourceWebXml, boolean webXmlServletPath) throws Exception {
 
       this.moduleName = moduleName;
       this.webXmlPath = sourceWebXml;
@@ -65,14 +73,23 @@ public class GwtWebInfProcessor {
          throw new Exception("Unable to locate module definition file: " + moduleName.replace('.', '/') + ".gwt.xml");
       }
 
-      this.servletDescriptors = this.getGwtServletDescriptors(moduleName);
+      this.servletDescriptors = this.getGwtServletDescriptors(moduleName, webXmlServletPath);
 
       if (this.servletDescriptors.size() == 0) {
          throw new ExitException("No servlets found.");
       }
    }
 
-   public GwtWebInfProcessor(String moduleName, File moduleDefinition, String targetWebXml, String sourceWebXml)
+   /**
+    * 
+    * @param moduleName
+    * @param moduleDefinition
+    * @param targetWebXml
+    * @param sourceWebXml
+    * @param webXmlServletPath
+    * @throws Exception
+    */
+   public GwtWebInfProcessor(String moduleName, File moduleDefinition, String targetWebXml, String sourceWebXml, boolean webXmlServletPath)
             throws Exception {
 
       this.moduleName = moduleName;
@@ -86,7 +103,7 @@ public class GwtWebInfProcessor {
 
       this.destination = new File(targetWebXml);
 
-      this.servletDescriptors = this.getGwtServletDescriptors(null);
+      this.servletDescriptors = this.getGwtServletDescriptors(null, webXmlServletPath);
 
       if (this.servletDescriptors.size() == 0) {
          throw new ExitException("No servlets found.");
@@ -97,11 +114,12 @@ public class GwtWebInfProcessor {
     * Return List of ServletDescriptor from gwt module file.
     *
     * @param gwtModFile
+    * @param webXmlServletPath
     * @return
     */
-   protected List getGwtServletDescriptors(String module) throws IOException, JDOMException {
+   protected List getGwtServletDescriptors(String module, boolean webXmlServletPath) throws IOException, JDOMException {
 
-      System.out.println("GwtWebInfProcessor getGwtServletDescriptors (module - " + module + ")");
+      ///System.out.println("GwtWebInfProcessor getGwtServletDescriptors (module - " + module + ")");
 
       ArrayList servletElements = new ArrayList();
       checkedModules.add(module);
@@ -147,7 +165,7 @@ public class GwtWebInfProcessor {
       for (int i = 0; (inherits != null) && (i < inherits.size()); i++) {
          Element inherit = (Element) inherits.get(i);
          if (!checkedModules.contains(inherit.getAttributeValue("name")))
-            servletElements.addAll(this.getGwtServletDescriptors(inherit.getAttributeValue("name")));
+            servletElements.addAll(this.getGwtServletDescriptors(inherit.getAttributeValue("name"), webXmlServletPath));
       }
 
       List servlets = element.getChildren("servlet");
@@ -155,14 +173,18 @@ public class GwtWebInfProcessor {
          ///System.out.println("   servlets found in module - " + servlets.size());        
          for (int i = 0; i < servlets.size(); i++) {
             Element servlet = (Element) servlets.get(i);
-            ///System.out.println("   processing servlet element - " + servlet.getAttributeValue("class"));            
-            String servletPath = "/" + this.moduleName + servlet.getAttributeValue("path");
+            ///System.out.println("   processing servlet element - " + servlet.getAttributeValue("class"));
+            String servletPath = null;
+            if (webXmlServletPath) {
+               servletPath = servlet.getAttributeValue("path");
+            } else {
+               servletPath = "/" + this.moduleName + servlet.getAttributeValue("path");               
+            }
             String servletClass = servlet.getAttributeValue("class");
             ServletDescriptor servletDesc = new ServletDescriptor(servletPath, servletClass);
             servletElements.add(servletDesc);
          }
       }
-
       return servletElements;
    }
 
