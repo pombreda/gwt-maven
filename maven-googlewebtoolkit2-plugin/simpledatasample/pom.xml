@@ -86,7 +86,7 @@
             <type>jar</type>
         </dependency>
         
-        <!--  test with scope runtime -->
+        <!--  test with scope provided -->
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
