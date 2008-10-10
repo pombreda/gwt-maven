@@ -74,9 +74,9 @@ GWT-Maven Setup
 
   The plugin needs to know where to find GWT (jars *and* native libraries).  There are two ways you can do this.
 
-    [[1]]  Use the maven dependency plugin to automatically extract GWT native libraries from central repo (automatic mode)
+    [[1]]  Use the Maven dependency plugin to automatically extract GWT native libraries from central repo (automatic mode)
 
-    [[1]]  Download and unpack GWT yourself and set the google.webtoolkit.home property to the location where it is installed (manual mode)  
+    [[1]]  Download and unpack GWT yourself and set the gwtHome plugin configuration property to the location where it is installed (manual mode)  
     
 ** Automatic Mode Setup
 
