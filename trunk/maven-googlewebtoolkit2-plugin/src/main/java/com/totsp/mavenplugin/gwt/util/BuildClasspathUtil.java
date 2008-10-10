@@ -33,6 +33,11 @@ import org.apache.maven.project.MavenProject;
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 import com.totsp.mavenplugin.gwt.util.ArtifactNameUtil;
 
+/**
+ * Util to consolidate classpath manipulation stuff in one place.
+ * 
+ * @author ccollins
+ */
 public class BuildClasspathUtil {    
 
     /**
@@ -44,7 +49,6 @@ public class BuildClasspathUtil {
      * regardless of the Maven scopes (still want to use the Maven scopes for everything else
      * Maven, but for GWT-Maven we need to access deps differently - directly at times).
      * 
-     * @author ccollins
      * 
      * @param mojo
      * @param scope
