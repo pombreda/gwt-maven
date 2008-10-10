@@ -197,7 +197,7 @@ GWT-Maven Setup
     </profiles> 
 +--
  
-  For a complete automatic mode POM example see the examples page (menu at left), specifically:
+  For a complete automatic mode POM example see the {{{examples.html}Examples}} page, specifically:
   {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom.xml}pom.xml}}. 
  
 ** Manual Setup
@@ -271,7 +271,7 @@ GWT-Maven Setup
         </plugin>
 +--   
    
-  For a complete manual mode POM example see the examples page (menu at left), specifically: 
+  For a complete manual mode POM example see the {{{examples.html}Examples}} page, specifically: 
   {{{http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom-with-gwthome.xml}pom-with-gwthome.xml}}.
 
  
