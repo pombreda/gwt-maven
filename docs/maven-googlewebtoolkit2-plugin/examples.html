@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-10-02
+        Last Published: 2008-10-10
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -269,7 +269,7 @@
                         &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
                     &lt;/i18nMessagesNames&gt;
                     &lt;!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps --&gt;
-                    &lt;!--  if this is set incorrect (not a match), or left out (default is currently 1.5.2) you will have mysterious errors --&gt;
+                    &lt;!--  if this does not match (default if left out is 1.5.2) you will have mysterious errors --&gt;
                     &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
                 &lt;/configuration&gt;
                 &lt;executions&gt;
@@ -386,33 +386,41 @@
 <div class="section"><h3>Manual Configuration</h3>
 <p>Below is an another example from the simple sample project that uses manual configuration. Manual configuration assumes you already have downloaded and unpacked GWT to a location on the local file system (for manual you still need GWT dependencies, for the regular maven lifecycle goals - but these dependencies can be local and use system scope).</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
     &lt;!--  GWT-Maven example POM with google.webtoolkit.home SET (GWT already installed on machine) --&gt;
+    &lt;!--  For this to work you have to have environment variable GWT_HOME set, or you have to change &quot;systemPath&quot; and &quot;gwtHome&quot; here. --&gt;
     &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
     &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
     &lt;artifactId&gt;maven-gwt-sample-withhome&lt;/artifactId&gt;
     &lt;packaging&gt;war&lt;/packaging&gt;
     &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
     &lt;name&gt;maven-gwt-sample-withhome&lt;/name&gt;
+    
+    &lt;!--  include pluginRepository and repository for GWT-Maven --&gt;
     &lt;pluginRepositories&gt;
-      &lt;pluginRepository&gt;
-        &lt;id&gt;gwt-maven&lt;/id&gt;
-        &lt;url&gt;http://gwt-maven.googlecode.com/svn/trunk/mavenrepo&lt;/url&gt;
-      &lt;/pluginRepository&gt;
-    &lt;/pluginRepositories&gt;
-    &lt;repositories&gt;
-       &lt;repository&gt;
-         &lt;id&gt;gwt-maven&lt;/id&gt;
-         &lt;url&gt;
-           http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
-        &lt;/url&gt;
-      &lt;/repository&gt;        
+        &lt;pluginRepository&gt;
+            &lt;id&gt;gwt-maven-plugins&lt;/id&gt;
+            &lt;url&gt;
+                http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+            &lt;/url&gt;
+        &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;    
+    &lt;repositories&gt;        
+        &lt;repository&gt;
+            &lt;id&gt;gwt-maven&lt;/id&gt;
+            &lt;url&gt;
+                http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
+            &lt;/url&gt;
+        &lt;/repository&gt;
     &lt;/repositories&gt;
+    
     &lt;!--  convenience to define GWT version in one place --&gt;
     &lt;properties&gt;
        &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
     &lt;/properties&gt;
+    
     &lt;dependencies&gt;
         &lt;!--  GWT deps --&gt;
         &lt;!--  you still need gwt as deps, so that standard maven goals will work (like compile)
@@ -428,7 +436,7 @@
             &lt;artifactId&gt;gwt-user&lt;/artifactId&gt;
             &lt;version&gt;${gwtVersion}&lt;/version&gt;
             &lt;scope&gt;system&lt;/scope&gt;
-            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-user.jar&lt;/systemPath&gt;
+            &lt;systemPath&gt;${env.GWT_HOME}/gwt-user.jar&lt;/systemPath&gt;
         &lt;/dependency&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;com.google.gwt&lt;/groupId&gt;
@@ -436,7 +444,7 @@
             &lt;version&gt;${gwtVersion}&lt;/version&gt;
             &lt;classifier&gt;${platform}&lt;/classifier&gt;
             &lt;scope&gt;system&lt;/scope&gt;
-            &lt;systemPath&gt;/opt/gwt-mac-1.5.2/gwt-dev-mac.jar&lt;/systemPath&gt;
+            &lt;systemPath&gt;${env.GWT_HOME}/gwt-dev-${platform}.jar&lt;/systemPath&gt;
         &lt;/dependency&gt;       
         
         &lt;dependency&gt;
@@ -446,6 +454,7 @@
             &lt;scope&gt;test&lt;/scope&gt;
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
+    
     &lt;build&gt;
         &lt;plugins&gt;
             &lt;!--  configure the GWT-Maven plugin --&gt;
@@ -454,7 +463,7 @@
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
                 &lt;version&gt;2.0-beta24&lt;/version&gt;
                 &lt;configuration&gt;
-                    &lt;gwtHome&gt;/opt/gwt-mac-1.5.2&lt;/gwtHome&gt;
+                    &lt;gwtHome&gt;${env.GWT_HOME}&lt;/gwtHome&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
                     &lt;compileTargets&gt;
                         &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
@@ -462,14 +471,14 @@
                     &lt;runTarget&gt;com.totsp.sample.Application/Application.html&lt;/runTarget&gt;
                     &lt;style&gt;DETAILED&lt;/style&gt;
                     &lt;noServer&gt;false&lt;/noServer&gt;
-                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;                    
+                    &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
                     &lt;i18nConstantsNames&gt;
                        &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
                     &lt;/i18nConstantsNames&gt;
                     &lt;i18nMessagesNames&gt;
                        &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
-                    &lt;/i18nMessagesNames&gt;   
-                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;                 
+                    &lt;/i18nMessagesNames&gt;
+                    &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;                  
                 &lt;/configuration&gt;
                 &lt;executions&gt;
                     &lt;execution&gt;
@@ -478,25 +487,24 @@
                             &lt;goal&gt;i18n&lt;/goal&gt;                            
                             &lt;goal&gt;compile&lt;/goal&gt;                            
                             &lt;goal&gt;gwt&lt;/goal&gt;                            
-                            &lt;goal&gt;test&lt;/goal&gt;                        
+                            &lt;!-- &lt;goal&gt;test&lt;/goal&gt;--&gt;
                         &lt;/goals&gt;
                     &lt;/execution&gt;
                 &lt;/executions&gt;
             &lt;/plugin&gt;           
             &lt;!--
                 If you want to use the target/web.xml file mergewebxml produces,
-                tell the war plugin to use it. 
-                Also, exclude what you want from the final artifact here. 
+                tell the war plugin to use it
             --&gt;
             &lt;plugin&gt;
                 &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
                 &lt;configuration&gt;
                     &lt;webXml&gt;target/web.xml&lt;/webXml&gt;
-                    &lt;warSourceExcludes&gt;.gwt-tmp/**&lt;/warSourceExcludes&gt;                  
-                &lt;/configuration&gt;                
+                    &lt;warSourceExcludes&gt;.gwt-tmp/**&lt;/warSourceExcludes&gt;
+                &lt;/configuration&gt;
             &lt;/plugin&gt;
-            &lt;!--  tell the compiler we can use 1.5 --&gt;  
+            &lt;!--  tell the compiler we can use 1.5 --&gt;
             &lt;plugin&gt;
                 &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
