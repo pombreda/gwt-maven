@@ -203,7 +203,7 @@ GWT-Maven Setup
 ** Manual Setup
 
   If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html).
-  Then, you will need to tell GWT-Maven where GWT is. This can be done with the "gwtHome" plugin configuration property.
+  Then, you will need to tell GWT-Maven where GWT is. This can be done with the <<gwtHome>> plugin configuration property (this property is unset for automatic mode, but required for manual mode).
 
   For manual mode you also still need the GWT dependencies defined (these are required because plugins and goals other than GWT-Maven need them, like the standard compiler). 
   
