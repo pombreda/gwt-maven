@@ -12,8 +12,7 @@ Install:
  * cd maven-googlewebtoolkit2-sample _Navigate to the maven-googlewebtoolkit2-sample directory_
  * Read the README.txt file for notes (the platform change that might be necessary being the import part). 
  * Ask maven to compile, execute.. run the project. Note it'll take a while downloading maven plugins & gwt libraries. You could get timeouts due to load on the servers!
-  * mvn clean install _this will build and pack the entire project_
-  * cd war
+  * mvn clean install _this will build and pack the entire project into a WAR_
   * mvn gwt:gwt _this will run the webapp in hosted mode_
 
 = Mess with it =
