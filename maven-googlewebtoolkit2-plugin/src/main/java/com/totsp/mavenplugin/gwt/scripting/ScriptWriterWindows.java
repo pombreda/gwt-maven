@@ -129,6 +129,16 @@ public class ScriptWriterWindows implements ScriptWriter {
      */
     public File writeI18nScript(AbstractGWTMojo mojo) throws MojoExecutionException {
         File file = new File(mojo.getBuildDir(), "i18n.cmd");
+        if (!file.exists()) {
+        	if (mojo.getLog().isDebugEnabled()) mojo.getLog().debug("File '" + file.getAbsolutePath() + "' does not exsists, trying to create.");
+        	try {
+        		file.getParentFile().mkdirs();
+        		file.createNewFile();
+        		if (mojo.getLog().isDebugEnabled()) mojo.getLog().debug("New file '" + file.getAbsolutePath() + "' created.");
+        	} catch (Exception exe) {
+        		mojo.getLog().error("Couldn't create file '" + file.getAbsolutePath() + "'. Reason: " + exe.getMessage(), exe);
+        	}
+        }
         PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
 
         // constants
