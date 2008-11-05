@@ -37,10 +37,9 @@ GWT-Maven Testing Support
    <executions>
       <execution>
         <goals>
-          <goal>gwt</goal>
           <goal>compile</goal>
           <goal>test</goal>
-          </goals>
+        </goals>
       </execution>
    </executions> 
 +--
