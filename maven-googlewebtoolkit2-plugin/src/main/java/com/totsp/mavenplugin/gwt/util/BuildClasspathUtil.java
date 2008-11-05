@@ -20,6 +20,8 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Vector;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
@@ -172,10 +174,12 @@ public class BuildClasspathUtil {
                 mojo.getGwtVersion(), "jar", null);
         Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
                 mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
-
+	
+	List remoteRepositories = mojo.getRemoteRepositories();
+	
         try {
-            mojo.getResolver().resolve(gwtUser, null, mojo.getLocalRepository());
-            mojo.getResolver().resolve(gwtDev, null, mojo.getLocalRepository());
+            mojo.getResolver().resolve(gwtUser, remoteRepositories, mojo.getLocalRepository());
+            mojo.getResolver().resolve(gwtDev, remoteRepositories, mojo.getLocalRepository());
             items.add(gwtUser.getFile());
             items.add(gwtDev.getFile());
         } catch (ArtifactNotFoundException e) {
