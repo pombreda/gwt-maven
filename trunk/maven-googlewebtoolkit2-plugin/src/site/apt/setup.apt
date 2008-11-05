@@ -38,7 +38,6 @@ GWT-Maven Setup
                             <goal>mergewebxml</goal>
                             <!--<goal>i18n</goal>-->
                             <goal>compile</goal>                            
-                            <goal>gwt</goal>                            
                             <!-- <goal>test</goal>-->
                         </goals>
                     </execution>
@@ -264,7 +263,6 @@ GWT-Maven Setup
                             <goal>mergewebxml</goal>
                             <goal>i18n</goal>                            
                             <goal>compile</goal>                            
-                            <goal>gwt</goal>                            
                         </goals>
                     </execution>
                 </executions>

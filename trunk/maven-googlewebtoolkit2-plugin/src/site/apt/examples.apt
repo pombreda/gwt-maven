@@ -121,7 +121,6 @@ GWT-Maven Examples
                         <goals>
                             <goal>mergewebxml</goal>
                             <goal>i18n</goal>
-                            <goal>gwt</goal>
                             <goal>compile</goal>                            
                             <goal>test</goal>
                         </goals>
