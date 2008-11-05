@@ -140,7 +140,6 @@
 					<execution>
 						<goals>
 							<goal>mergewebxml</goal>
-							<goal>gwt</goal>
 							<goal>compile</goal>
 							<!--  tests are a TODO in this sample at the moment - context errors in JUnitShell -->							
                             <!-- <goal>test</goal>-->
