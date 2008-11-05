@@ -234,11 +234,11 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private String extraTestArgs;
    /**
-    * Whether or not to skip testing (including gwt:test testing).
+    * Whether or not to skip GWT testing.
     * 
-    * @parameter expression="${maven.test.skip}"
+    * @parameter default-value="false"
     */
-   private boolean skip;
+   private boolean testSkip;
    /**
     * Whether or not to add resources and compile source root to classpath.
     * 
@@ -652,12 +652,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
       this.extraTestArgs = extraTestArgs;
    }
 
-   public boolean isSkip() {
-      return this.skip;
+   public boolean isTestSkip() {
+      return this.testSkip;
    }
 
-   public void setSkip(boolean skip) {
-      this.skip = skip;
+   public void setTestSkip(boolean skip) {
+      this.testSkip = skip;
    }
 
 }
