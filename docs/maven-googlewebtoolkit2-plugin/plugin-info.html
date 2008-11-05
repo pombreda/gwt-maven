@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-10-10
+        Last Published: 2008-11-05
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -180,35 +180,6 @@
 <table class="bodyTable"><tr class="a"><th>Goal</th>
 <th>Description</th>
 </tr>
-<tr class="b"><td><a href="debug-mojo.html">googlewebtoolkit2:debug</a>
-</td>
-<td>Extends the gwt goal and runs the project in the GWTShell with a
-debugger port hook (optionally suspended).</td>
-</tr>
-<tr class="a"><td><a href="i18n-mojo.html">googlewebtoolkit2:i18n</a>
-</td>
-<td>Creates I18N interfaces for constants and messages files.</td>
-</tr>
-<tr class="b"><td><a href="test-mojo.html">googlewebtoolkit2:test</a>
-</td>
-<td>Runs special (non surefire) test phase for GWTTestCase derived
-tests. This is necessary because of several complications with
-regard to surefire and the classpath for GWTTestCase/JUnitShell.
-See further notes in source.</td>
-</tr>
-<tr class="a"><td><a href="generateClientBeans-mojo.html">googlewebtoolkit2:generateClientBeans</a>
-</td>
-<td>Generates client beans for the project (currently unsupported).</td>
-</tr>
-<tr class="b"><td><a href="compile-mojo.html">googlewebtoolkit2:compile</a>
-</td>
-<td>Invokes the GWTCompiler for the project source.</td>
-</tr>
-<tr class="a"><td><a href="mergewebxml-mojo.html">googlewebtoolkit2:mergewebxml</a>
-</td>
-<td>Merges GWT servlet elements into deployment descriptor (and non GWT
-servlets into shell).</td>
-</tr>
 <tr class="b"><td><a href="gwt-mojo.html">googlewebtoolkit2:gwt</a>
 </td>
 <td>Runs the the project in the GWTShell for development. Note that
@@ -216,6 +187,35 @@ this goal is intended to be explicitly run from the command line
 (execute phase=), whereas other GWT-Maven goals are not (others
 happen as part of the standard Maven life-cycle phases: "compile"
 "test" "install").</td>
+</tr>
+<tr class="a"><td><a href="mergewebxml-mojo.html">googlewebtoolkit2:mergewebxml</a>
+</td>
+<td>Merges GWT servlet elements into deployment descriptor (and non GWT
+servlets into shell).</td>
+</tr>
+<tr class="b"><td><a href="debug-mojo.html">googlewebtoolkit2:debug</a>
+</td>
+<td>Extends the gwt goal and runs the project in the GWTShell with a
+debugger port hook (optionally suspended).</td>
+</tr>
+<tr class="a"><td><a href="test-mojo.html">googlewebtoolkit2:test</a>
+</td>
+<td>Runs special (non surefire) test phase for GWTTestCase derived
+tests. This is necessary because of several complications with
+regard to surefire and the classpath for GWTTestCase/JUnitShell.
+See further notes in source.</td>
+</tr>
+<tr class="b"><td><a href="compile-mojo.html">googlewebtoolkit2:compile</a>
+</td>
+<td>Invokes the GWTCompiler for the project source.</td>
+</tr>
+<tr class="a"><td><a href="generateClientBeans-mojo.html">googlewebtoolkit2:generateClientBeans</a>
+</td>
+<td>Generates client beans for the project (currently unsupported).</td>
+</tr>
+<tr class="b"><td><a href="i18n-mojo.html">googlewebtoolkit2:i18n</a>
+</td>
+<td>Creates I18N interfaces for constants and messages files.</td>
 </tr>
 </table>
 </div>
@@ -245,7 +245,7 @@ happen as part of the standard Maven life-cycle phases: "compile"
         &lt;plugin&gt;
           &lt;groupId&gt;com.totsp.gwt&lt;groupId&gt;
           &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;artifactId&gt;
-          &lt;version&gt;2.0-beta24&lt;version&gt;
+          &lt;version&gt;2.0-beta25&lt;version&gt;
         &lt;/plugin&gt;
         ...
       &lt;/plugins&gt;
@@ -255,7 +255,7 @@ happen as part of the standard Maven life-cycle phases: "compile"
       &lt;plugin&gt;
         &lt;groupId&gt;com.totsp.gwt&lt;groupId&gt;
         &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;artifactId&gt;
-        &lt;version&gt;2.0-beta24&lt;version&gt;
+        &lt;version&gt;2.0-beta25&lt;version&gt;
       &lt;/plugin&gt;
       ...
     &lt;/plugins&gt;
@@ -264,7 +264,7 @@ happen as part of the standard Maven life-cycle phases: "compile"
 &lt;/project&gt;
 </pre>
 </div>
-For more information, see <a href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html" class="externalLink">&quot;Guide to Configuring Plug-ins&quot;</a>
+For more information, see <a class="externalLink" href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">&quot;Guide to Configuring Plug-ins&quot;</a>
 </p>
 </div>
 

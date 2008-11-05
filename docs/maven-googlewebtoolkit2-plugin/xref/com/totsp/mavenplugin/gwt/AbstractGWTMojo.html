@@ -244,11 +244,11 @@
 <a name="234" href="#234">234</a> <em class="jxr_javadoccomment">    */</em>
 <a name="235" href="#235">235</a>    <strong class="jxr_keyword">private</strong> String extraTestArgs;
 <a name="236" href="#236">236</a>    <em class="jxr_javadoccomment">/**</em>
-<a name="237" href="#237">237</a> <em class="jxr_javadoccomment">    * Whether or not to skip testing (including gwt:test testing).</em>
+<a name="237" href="#237">237</a> <em class="jxr_javadoccomment">    * Whether or not to skip GWT testing.</em>
 <a name="238" href="#238">238</a> <em class="jxr_javadoccomment">    * </em>
-<a name="239" href="#239">239</a> <em class="jxr_javadoccomment">    * @parameter expression="${maven.test.skip}"</em>
+<a name="239" href="#239">239</a> <em class="jxr_javadoccomment">    * @parameter default-value="false"</em>
 <a name="240" href="#240">240</a> <em class="jxr_javadoccomment">    */</em>
-<a name="241" href="#241">241</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> skip;
+<a name="241" href="#241">241</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> testSkip;
 <a name="242" href="#242">242</a>    <em class="jxr_javadoccomment">/**</em>
 <a name="243" href="#243">243</a> <em class="jxr_javadoccomment">    * Whether or not to add resources and compile source root to classpath.</em>
 <a name="244" href="#244">244</a> <em class="jxr_javadoccomment">    * </em>
@@ -662,12 +662,12 @@
 <a name="652" href="#652">652</a>       <strong class="jxr_keyword">this</strong>.extraTestArgs = extraTestArgs;
 <a name="653" href="#653">653</a>    }
 <a name="654" href="#654">654</a> 
-<a name="655" href="#655">655</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSkip() {
-<a name="656" href="#656">656</a>       <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.skip;
+<a name="655" href="#655">655</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTestSkip() {
+<a name="656" href="#656">656</a>       <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.testSkip;
 <a name="657" href="#657">657</a>    }
 <a name="658" href="#658">658</a> 
-<a name="659" href="#659">659</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setSkip(<strong class="jxr_keyword">boolean</strong> skip) {
-<a name="660" href="#660">660</a>       <strong class="jxr_keyword">this</strong>.skip = skip;
+<a name="659" href="#659">659</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setTestSkip(<strong class="jxr_keyword">boolean</strong> skip) {
+<a name="660" href="#660">660</a>       <strong class="jxr_keyword">this</strong>.testSkip = skip;
 <a name="661" href="#661">661</a>    }
 <a name="662" href="#662">662</a> 
 <a name="663" href="#663">663</a> }
