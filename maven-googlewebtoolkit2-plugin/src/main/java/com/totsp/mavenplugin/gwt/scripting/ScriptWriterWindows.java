@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -267,13 +268,21 @@ public class ScriptWriterWindows implements ScriptWriter {
 
             for (File f : classpath) {
                 cpString.append("\"" + f.getAbsolutePath() + "\";");
-
                 // break the line at 4000 characters to try to avoid max size
                 if (cpString.length() > 4000) {
                     writer.println(cpString);
                     cpString = new StringBuffer();
                     writer.print("set CLASSPATH=%CLASSPATH%;");
                 }
+            }
+            // add test classes
+            for (Iterator it = mojo.getProject().getTestClasspathElements().iterator(); it.hasNext();) {
+                cpString.append("\"" + new File(it.next().toString()).getAbsolutePath() + "\";");
+                if (cpString.length() > 4000) {
+                   writer.println(cpString);
+                   cpString = new StringBuffer();
+                   writer.print("set CLASSPATH=%CLASSPATH%;");
+               }
             }
             writer.println(cpString);
             writer.println();
