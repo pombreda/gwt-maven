@@ -1,1 +1,0 @@
-DEBUG 07-Nov-2008 13:04:42 [http-8888-Processor4] com.totsp.sample.server.SampleRemoteServiceImpl  - Some logging stuff - where does it end up! (see src/main/resources/log4j.xml)
