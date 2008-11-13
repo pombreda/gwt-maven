@@ -274,16 +274,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                     cpString = new StringBuffer();
                     writer.print("set CLASSPATH=%CLASSPATH%;");
                 }
-            }
-            // add test classes
-            for (Iterator it = mojo.getProject().getTestClasspathElements().iterator(); it.hasNext();) {
-                cpString.append("\"" + new File(it.next().toString()).getAbsolutePath() + "\";");
-                if (cpString.length() > 4000) {
-                   writer.println(cpString);
-                   cpString = new StringBuffer();
-                   writer.print("set CLASSPATH=%CLASSPATH%;");
-               }
-            }
+            }            
             writer.println(cpString);
             writer.println();
         } catch (DependencyResolutionRequiredException e) {

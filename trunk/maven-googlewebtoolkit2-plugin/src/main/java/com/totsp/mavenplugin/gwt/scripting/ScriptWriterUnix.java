@@ -300,11 +300,7 @@ public class ScriptWriterUnix implements ScriptWriter {
             writer.print("export CLASSPATH=");
             for (File f : classpath) {
                 writer.print("\"" + f.getAbsolutePath() + "\":");
-            }
-            // add test classes
-            for (Iterator it = mojo.getProject().getTestClasspathElements().iterator(); it.hasNext();) {
-                writer.print("\"" + new File(it.next().toString()).getAbsolutePath() + "\":");
-            }
+            }            
         } catch (DependencyResolutionRequiredException e) {
             throw new MojoExecutionException("Error creating script - " + file, e);
         }
