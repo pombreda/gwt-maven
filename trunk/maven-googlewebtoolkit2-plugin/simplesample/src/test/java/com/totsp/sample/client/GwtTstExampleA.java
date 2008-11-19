@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class GwtTestExampleA extends GWTTestCase {
+public class GwtTstExampleA extends GWTTestCase {
 
    public String getModuleName() {
       return "com.totsp.sample.Application";

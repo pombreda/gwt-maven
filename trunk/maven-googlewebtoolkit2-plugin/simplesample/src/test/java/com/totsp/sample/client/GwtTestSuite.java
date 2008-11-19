@@ -31,13 +31,17 @@ public class MapsTestSuite extends GWTTestSuite {
 public class GwtTestSuite extends GWTTestSuite {
     public static Test suite() {
       TestSuite suite = new TestSuite("sample app test suite");
-      // note, for GWT-Maven, if you NAME these tests 
+      // Note, for GWT-Maven, if you NAME these tests 
       // so they DON"T match the test filter (start with GwtTest)
-      // then they won't run individually - name them TestExampleA.java, or such
-      // here we leave then named GwtTest* so they demonstrate 
-      // running individually AND running as a suite
-      suite.addTestSuite(GwtTestExampleA.class); 
-      suite.addTestSuite(GwtTestExampleB.class);
+      // then they won't run individually - name them TstExampleA.java, or such.
+      //
+      // (Also, if you name them "TestSomething" or "SomethingTest" Surefire will pick them up, and that won't work I used "Tst" and not "Test".)
+      //
+      suite.addTestSuite(GwtTstExampleA.class); 
+      suite.addTestSuite(GwtTstExampleB.class);
+      
+      // If you DO name them GwtTestSomething (start with GwtTest) they will still
+      // work but they will be run individually, the suite like this is better).
       suite.addTestSuite(GwtTestExampleC.class);
       return suite;
     }

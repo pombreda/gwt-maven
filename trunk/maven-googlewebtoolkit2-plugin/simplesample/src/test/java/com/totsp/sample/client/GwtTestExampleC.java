@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
+// this class is named "GwtTest"Exammple to demonstrate that it WILL be picked up individually (see the GwtTestSuite for more info).
 public class GwtTestExampleC extends GWTTestCase {
 
    public String getModuleName() {
