@@ -240,11 +240,17 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private boolean testSkip;
    /**
-    * Whether or not to add resources and compile source root to classpath.
+    * Whether or not to add compile source root to classpath.
     * 
     * @parameter default-value="true"
     */
    private boolean sourcesOnPath;
+   /**
+    * Whether or not to add resources root to classpath.
+    *
+    * @parameter default-value="true"
+    */
+   private boolean resourcesOnPath;
    /**
     * Whether or not to enable assertions in generated scripts (-ea).
     * 
@@ -572,7 +578,15 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
       this.sourcesOnPath = value;
    }
 
-   public boolean isEnableAssertions() {
+    public boolean getResourcesOnPath() {
+        return resourcesOnPath;
+    }
+
+    public void setResourcesOnPath(boolean resourcesOnPath) {
+        this.resourcesOnPath = resourcesOnPath;
+    }
+
+    public boolean isEnableAssertions() {
       return this.enableAssertions;
    }
 
