@@ -80,9 +80,14 @@ public class BuildClasspathUtil {
          items.addAll(BuildClasspathUtil.injectGwtDepsFromRepo(mojo));
       }
 
-      // add sources and resources
+      // add sources
       if (mojo.getSourcesOnPath()) {
-         BuildClasspathUtil.addSourcesAndResourcesWithActiveProjects(project, items, DependencyScope.COMPILE);
+         BuildClasspathUtil.addSourcesWithActiveProjects(project, items, DependencyScope.COMPILE);
+      }
+
+      // add resources
+      if (mojo.getResourcesOnPath()) {
+         BuildClasspathUtil.addResourcesWithActiveProjects(project, items, DependencyScope.COMPILE);
       }
 
       // add classes dir
@@ -102,7 +107,8 @@ public class BuildClasspathUtil {
          }
 
          // add test sources and resources
-         BuildClasspathUtil.addSourcesAndResourcesWithActiveProjects(project, items, scope);
+         BuildClasspathUtil.addSourcesWithActiveProjects(project, items, scope);
+         BuildClasspathUtil.addResourcesWithActiveProjects(project, items, scope);
       }
 
       // add compile (even when scope is other than)
@@ -133,8 +139,7 @@ public class BuildClasspathUtil {
    public static Collection<File> injectGwtDepsFromGwtHome(final File gwtHome, final AbstractGWTMojo mojo) {
       mojo
                .getLog()
-               .debug(
-                        "injecting gwt-user and gwt-dev for script classpath from google.webtoolkit.home (and expecting relative native libs)");
+               .debug("injecting gwt-user and gwt-dev for script classpath from google.webtoolkit.home (and expecting relative native libs)");
       Collection<File> items = new LinkedHashSet<File>();
       File userJar = new File(gwtHome, "gwt-user.jar");
       File devJar = new File(gwtHome, ArtifactNameUtil.guessDevJarName());
@@ -188,12 +193,11 @@ public class BuildClasspathUtil {
     * @param items
     * @param scope
     */
-   private static void addSourcesAndResourcesWithActiveProjects(final MavenProject project, final Set<File> items,
+   private static void addSourcesWithActiveProjects(final MavenProject project, final Set<File> items,
             final DependencyScope scope) {
       final List<Artifact> scopeArtifacts = BuildClasspathUtil.getScopeArtifacts(project, scope);
 
-      BuildClasspathUtil.addSourcesAndResources(items, BuildClasspathUtil.getSourceRoots(project, scope),
-               BuildClasspathUtil.getResources(project, scope));
+      BuildClasspathUtil.addSources(items, BuildClasspathUtil.getSourceRoots(project, scope));
 
       for (Artifact artifact : scopeArtifacts) {
          if (artifact instanceof ActiveProjectArtifact) {
@@ -201,8 +205,33 @@ public class BuildClasspathUtil {
                      BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact
                               .getVersion()));
             if (refProject != null) {
-               BuildClasspathUtil.addSourcesAndResources(items, BuildClasspathUtil.getSourceRoots(refProject, scope),
-                        BuildClasspathUtil.getResources(refProject, scope));
+               BuildClasspathUtil.addSources(items, BuildClasspathUtil.getSourceRoots(refProject, scope));
+            }
+         }
+      }
+   }
+
+   /**
+    * Add all sources and resources also with active (maven reactor active) referenced project sources and resources.
+    * Addresses issue no. 147.
+    *
+    * @param project
+    * @param items
+    * @param scope
+    */
+   private static void addResourcesWithActiveProjects(final MavenProject project, final Set<File> items,
+            final DependencyScope scope) {
+      final List<Artifact> scopeArtifacts = BuildClasspathUtil.getScopeArtifacts(project, scope);
+
+      BuildClasspathUtil.addResources(items, BuildClasspathUtil.getResources(project, scope));
+
+      for (Artifact artifact : scopeArtifacts) {
+         if (artifact instanceof ActiveProjectArtifact) {
+            MavenProject refProject = (MavenProject) project.getProjectReferences().get(
+                     BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact
+                              .getVersion()));
+            if (refProject != null) {
+               BuildClasspathUtil.addResources(items, BuildClasspathUtil.getResources(refProject, scope));
             }
          }
       }
@@ -268,12 +297,19 @@ public class BuildClasspathUtil {
     * Add source path and resource paths of the project to the list of classpath items.
     * @param items Classpath items.
     * @param sourceRoots
-    * @param resources
     */
-   private static void addSourcesAndResources(final Set<File> items, final List sourceRoots, final List resources) {
+   private static void addSources(final Set<File> items, final List sourceRoots) {
       for (Iterator it = sourceRoots.iterator(); it.hasNext();) {
          items.add(new File(it.next().toString()));
       }
+   }
+
+   /**
+    * Add source path and resource paths of the project to the list of classpath items.
+    * @param items Classpath items.
+    * @param resources
+    */
+   private static void addResources(final Set<File> items, final List resources) {
       for (Iterator it = resources.iterator(); it.hasNext();) {
          Resource r = (Resource) it.next();
          items.add(new File(r.getDirectory()));
