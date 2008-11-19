@@ -14,7 +14,7 @@ GWT-Maven Setup
  
 +-- 
           <properties>
-             <gwtVersion>1.5.2</gwtVersion>
+             <gwtVersion>1.5.3</gwtVersion>
            </properties>
 
             <plugin>
@@ -215,7 +215,7 @@ GWT-Maven Setup
         . . . .
  
         <properties>
-           <gwtVersion>1.5.2</gwtVersion>
+           <gwtVersion>1.5.3</gwtVersion>
         </properties>
     
         . . . .

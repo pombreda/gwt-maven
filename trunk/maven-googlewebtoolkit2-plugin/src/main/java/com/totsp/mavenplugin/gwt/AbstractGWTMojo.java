@@ -103,7 +103,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * Set the GWT version number - used to build dependency paths, should match
     * the "version" in the Maven repo.
     * 
-    * @parameter default-value="1.5.2"
+    * @parameter default-value="1.5.3"
     */
    private String gwtVersion;
    /**
