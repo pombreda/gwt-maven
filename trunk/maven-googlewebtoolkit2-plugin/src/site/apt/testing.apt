@@ -66,6 +66,6 @@ GWT-Maven Testing Support
  This is a BIG time saver, and GWTTestSuite is easy to use, so using it is a good idea. 
  
  Another tip for GWT-Maven and GWTTestSuite is to name your test suite "GwtTest*Suite.java" so that the test filter picks it up, but name the actual tests
- with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT end with Test.  For example
- "TestMyClass.java".  This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests. 
+ with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT start OR end with Test.  
+ For example "GwtTstMyClass.java".  This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests (and Surefire does not pick it up either). 
  
