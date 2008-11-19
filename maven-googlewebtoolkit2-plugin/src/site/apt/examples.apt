@@ -50,7 +50,7 @@ GWT-Maven Examples
     
     <!--  convenience to define GWT version in one place -->
     <properties>
-        <gwtVersion>1.5.2</gwtVersion>
+        <gwtVersion>1.5.3</gwtVersion>
     </properties>
     
     <dependencies>
@@ -113,7 +113,7 @@ GWT-Maven Examples
                         <value>com.totsp.sample.client.AppMessages</value>
                     </i18nMessagesNames>
                     <!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps -->
-                    <!--  if this does not match (default if left out is 1.5.2) you will have mysterious errors -->
+                    <!--  if this does not match (default if left out is 1.5.3) you will have mysterious errors -->
                     <gwtVersion>${gwtVersion}</gwtVersion>
                 </configuration>
                 <executions>
@@ -267,7 +267,7 @@ GWT-Maven Examples
     
     <!--  convenience to define GWT version in one place -->
     <properties>
-       <gwtVersion>1.5.2</gwtVersion>
+       <gwtVersion>1.5.3</gwtVersion>
     </properties>
     
     <dependencies>
