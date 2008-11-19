@@ -53,291 +53,299 @@
 <a name="43" href="#43">43</a>  <em class="jxr_javadoccomment"> * @author rcooper</em>
 <a name="44" href="#44">44</a>  <em class="jxr_javadoccomment"> */</em>
 <a name="45" href="#45">45</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriterUnix.html">ScriptWriterUnix</a> implements <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriter.html">ScriptWriter</a> {
-<a name="46" href="#46">46</a>      <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Creates a new instance of <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriterUnix.html">ScriptWriterUnix</a> */</em>
-<a name="47" href="#47">47</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriterUnix.html">ScriptWriterUnix</a>() {
-<a name="48" href="#48">48</a>      }
+<a name="46" href="#46">46</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Creates a new instance of <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriterUnix.html">ScriptWriterUnix</a> */</em>
+<a name="47" href="#47">47</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ScriptWriterUnix.html">ScriptWriterUnix</a>() {
+<a name="48" href="#48">48</a>     }
 <a name="49" href="#49">49</a>  
-<a name="50" href="#50">50</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="51" href="#51">51</a>  <em class="jxr_javadoccomment">     * Write run script.</em>
-<a name="52" href="#52">52</a>  <em class="jxr_javadoccomment">     */</em>
-<a name="53" href="#53">53</a>      <strong class="jxr_keyword">public</strong> File writeRunScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a name="54" href="#54">54</a>          String filename = (mojo instanceof DebugMojo) ? <span class="jxr_string">"debug.sh"</span> : <span class="jxr_string">"run.sh"</span>;
-<a name="55" href="#55">55</a>          File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), filename);
-<a name="56" href="#56">56</a>          PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
+<a name="50" href="#50">50</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="51" href="#51">51</a>  <em class="jxr_javadoccomment">    * Write run script.</em>
+<a name="52" href="#52">52</a>  <em class="jxr_javadoccomment">    */</em>
+<a name="53" href="#53">53</a>     <strong class="jxr_keyword">public</strong> File writeRunScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a name="54" href="#54">54</a>        String filename = (mojo instanceof DebugMojo) ? <span class="jxr_string">"debug.sh"</span> : <span class="jxr_string">"run.sh"</span>;
+<a name="55" href="#55">55</a>        File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), filename);
+<a name="56" href="#56">56</a>        PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
 <a name="57" href="#57">57</a>  
-<a name="58" href="#58">58</a>          String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
-<a name="59" href="#59">59</a>          <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
-<a name="60" href="#60">60</a>              extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
-<a name="61" href="#61">61</a>          }
+<a name="58" href="#58">58</a>        String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
+<a name="59" href="#59">59</a>        <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
+<a name="60" href="#60">60</a>           extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
+<a name="61" href="#61">61</a>        }
 <a name="62" href="#62">62</a>  
-<a name="63" href="#63">63</a>          writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH "</span>);
+<a name="63" href="#63">63</a>        writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH "</span>);
 <a name="64" href="#64">64</a>  
-<a name="65" href="#65">65</a>          <strong class="jxr_keyword">if</strong> (mojo instanceof DebugMojo) {
-<a name="66" href="#66">66</a>              writer.print(<span class="jxr_string">" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address="</span>);
-<a name="67" href="#67">67</a>              writer.print(mojo.getDebugPort());
-<a name="68" href="#68">68</a>              writer.print(mojo.isDebugSuspend() ? <span class="jxr_string">",suspend=y "</span> : <span class="jxr_string">",suspend=n "</span>);
-<a name="69" href="#69">69</a>          }
+<a name="65" href="#65">65</a>        <strong class="jxr_keyword">if</strong> (mojo instanceof DebugMojo) {
+<a name="66" href="#66">66</a>           writer.print(<span class="jxr_string">" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address="</span>);
+<a name="67" href="#67">67</a>           writer.print(mojo.getDebugPort());
+<a name="68" href="#68">68</a>           writer.print(mojo.isDebugSuspend() ? <span class="jxr_string">",suspend=y "</span> : <span class="jxr_string">",suspend=n "</span>);
+<a name="69" href="#69">69</a>        }
 <a name="70" href="#70">70</a>  
-<a name="71" href="#71">71</a>          writer.print(<span class="jxr_string">"-Dcatalina.base=\&quot;"</span> + mojo.getTomcat().getAbsolutePath() + <span class="jxr_string">"\&quot; "</span>);
-<a name="72" href="#72">72</a>          writer.print(<span class="jxr_string">" com.google.gwt.dev.GWTShell"</span>);
-<a name="73" href="#73">73</a>          writer.print(<span class="jxr_string">" -gen \&quot;"</span>);
-<a name="74" href="#74">74</a>          writer.print(mojo.getGen().getAbsolutePath());
-<a name="75" href="#75">75</a>          writer.print(<span class="jxr_string">"\&quot; -logLevel "</span>);
-<a name="76" href="#76">76</a>          writer.print(mojo.getLogLevel());
-<a name="77" href="#77">77</a>          writer.print(<span class="jxr_string">" -style "</span>);
-<a name="78" href="#78">78</a>          writer.print(mojo.getStyle());
-<a name="79" href="#79">79</a>          writer.print(<span class="jxr_string">" -out "</span>);
-<a name="80" href="#80">80</a>          writer.print(<span class="jxr_string">"\&quot;"</span> + mojo.getOutput().getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
-<a name="81" href="#81">81</a>          writer.print(<span class="jxr_string">" -port "</span>);
-<a name="82" href="#82">82</a>          writer.print(Integer.toString(mojo.getPort()));
+<a name="71" href="#71">71</a>        writer.print(<span class="jxr_string">"-Dcatalina.base=\&quot;"</span> + mojo.getTomcat().getAbsolutePath() + <span class="jxr_string">"\&quot; "</span>);
+<a name="72" href="#72">72</a>        writer.print(<span class="jxr_string">" com.google.gwt.dev.GWTShell"</span>);
+<a name="73" href="#73">73</a>        writer.print(<span class="jxr_string">" -gen \&quot;"</span>);
+<a name="74" href="#74">74</a>        writer.print(mojo.getGen().getAbsolutePath());
+<a name="75" href="#75">75</a>        writer.print(<span class="jxr_string">"\&quot; -logLevel "</span>);
+<a name="76" href="#76">76</a>        writer.print(mojo.getLogLevel());
+<a name="77" href="#77">77</a>        writer.print(<span class="jxr_string">" -style "</span>);
+<a name="78" href="#78">78</a>        writer.print(mojo.getStyle());
+<a name="79" href="#79">79</a>        writer.print(<span class="jxr_string">" -out "</span>);
+<a name="80" href="#80">80</a>        writer.print(<span class="jxr_string">"\&quot;"</span> + mojo.getOutput().getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
+<a name="81" href="#81">81</a>        writer.print(<span class="jxr_string">" -port "</span>);
+<a name="82" href="#82">82</a>        writer.print(Integer.toString(mojo.getPort()));
 <a name="83" href="#83">83</a>  
-<a name="84" href="#84">84</a>          <strong class="jxr_keyword">if</strong> (mojo.isNoServer()) {
-<a name="85" href="#85">85</a>              writer.print(<span class="jxr_string">" -noserver "</span>);
-<a name="86" href="#86">86</a>          }
+<a name="84" href="#84">84</a>        <strong class="jxr_keyword">if</strong> (mojo.isNoServer()) {
+<a name="85" href="#85">85</a>           writer.print(<span class="jxr_string">" -noserver "</span>);
+<a name="86" href="#86">86</a>        }
 <a name="87" href="#87">87</a>  
-<a name="88" href="#88">88</a>          writer.print(<span class="jxr_string">" "</span> + mojo.getRunTarget());
-<a name="89" href="#89">89</a>          writer.println();
+<a name="88" href="#88">88</a>        writer.print(<span class="jxr_string">" "</span> + mojo.getRunTarget());
+<a name="89" href="#89">89</a>        writer.println();
 <a name="90" href="#90">90</a>  
-<a name="91" href="#91">91</a>          writer.flush();
-<a name="92" href="#92">92</a>          writer.close();
+<a name="91" href="#91">91</a>        writer.flush();
+<a name="92" href="#92">92</a>        writer.close();
 <a name="93" href="#93">93</a>  
-<a name="94" href="#94">94</a>          <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
-<a name="95" href="#95">95</a>          <strong class="jxr_keyword">return</strong> file;
-<a name="96" href="#96">96</a>      }
+<a name="94" href="#94">94</a>        <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
+<a name="95" href="#95">95</a>        <strong class="jxr_keyword">return</strong> file;
+<a name="96" href="#96">96</a>     }
 <a name="97" href="#97">97</a>  
-<a name="98" href="#98">98</a>      <em class="jxr_javadoccomment">/**</em>
-<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">     * Write compile script.</em>
-<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">     */</em>
-<a name="101" href="#101">101</a>     <strong class="jxr_keyword">public</strong> File writeCompileScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a name="102" href="#102">102</a>         File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"compile.sh"</span>);
-<a name="103" href="#103">103</a>         PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
+<a name="98" href="#98">98</a>     <em class="jxr_javadoccomment">/**</em>
+<a name="99" href="#99">99</a>  <em class="jxr_javadoccomment">    * Write compile script.</em>
+<a name="100" href="#100">100</a> <em class="jxr_javadoccomment">    */</em>
+<a name="101" href="#101">101</a>    <strong class="jxr_keyword">public</strong> File writeCompileScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a name="102" href="#102">102</a>       File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"compile.sh"</span>);
+<a name="103" href="#103">103</a>       PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
 <a name="104" href="#104">104</a> 
-<a name="105" href="#105">105</a>         <strong class="jxr_keyword">for</strong> (String target : mojo.getCompileTarget()) {
+<a name="105" href="#105">105</a>       <strong class="jxr_keyword">for</strong> (String target : mojo.getCompileTarget()) {
 <a name="106" href="#106">106</a> 
-<a name="107" href="#107">107</a>             String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
-<a name="108" href="#108">108</a>             <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
-<a name="109" href="#109">109</a>                 extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
-<a name="110" href="#110">110</a>             }
+<a name="107" href="#107">107</a>          String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
+<a name="108" href="#108">108</a>          <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
+<a name="109" href="#109">109</a>             extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
+<a name="110" href="#110">110</a>          }
 <a name="111" href="#111">111</a> 
-<a name="112" href="#112">112</a>             writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH "</span>);
-<a name="113" href="#113">113</a>             writer.print(<span class="jxr_string">" com.google.gwt.dev.GWTCompiler "</span>);
-<a name="114" href="#114">114</a>             writer.print(<span class="jxr_string">" -gen "</span>);
-<a name="115" href="#115">115</a>             writer.print(mojo.getGen().getAbsolutePath());
-<a name="116" href="#116">116</a>             writer.print(<span class="jxr_string">" -logLevel "</span>);
-<a name="117" href="#117">117</a>             writer.print(mojo.getLogLevel());
-<a name="118" href="#118">118</a>             writer.print(<span class="jxr_string">" -style "</span>);
-<a name="119" href="#119">119</a>             writer.print(mojo.getStyle());
-<a name="120" href="#120">120</a>             writer.print(<span class="jxr_string">" -out "</span>);
+<a name="112" href="#112">112</a>          writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH "</span>);
+<a name="113" href="#113">113</a>          writer.print(<span class="jxr_string">" com.google.gwt.dev.GWTCompiler "</span>);
+<a name="114" href="#114">114</a>          writer.print(<span class="jxr_string">" -gen "</span>);
+<a name="115" href="#115">115</a>          writer.print(mojo.getGen().getAbsolutePath());
+<a name="116" href="#116">116</a>          writer.print(<span class="jxr_string">" -logLevel "</span>);
+<a name="117" href="#117">117</a>          writer.print(mojo.getLogLevel());
+<a name="118" href="#118">118</a>          writer.print(<span class="jxr_string">" -style "</span>);
+<a name="119" href="#119">119</a>          writer.print(mojo.getStyle());
+<a name="120" href="#120">120</a>          writer.print(<span class="jxr_string">" -out "</span>);
 <a name="121" href="#121">121</a> 
-<a name="122" href="#122">122</a>             <strong class="jxr_keyword">if</strong> (mojo.isEnableAssertions()) {
-<a name="123" href="#123">123</a>                 writer.print(<span class="jxr_string">" -ea "</span>);
-<a name="124" href="#124">124</a>             }
+<a name="122" href="#122">122</a>          <strong class="jxr_keyword">if</strong> (mojo.isEnableAssertions()) {
+<a name="123" href="#123">123</a>             writer.print(<span class="jxr_string">" -ea "</span>);
+<a name="124" href="#124">124</a>          }
 <a name="125" href="#125">125</a> 
-<a name="126" href="#126">126</a>             writer.print(mojo.getOutput().getAbsolutePath());
-<a name="127" href="#127">127</a>             writer.print(<span class="jxr_string">" "</span>);
-<a name="128" href="#128">128</a>             writer.print(target);
-<a name="129" href="#129">129</a>             writer.println();
-<a name="130" href="#130">130</a>         }
+<a name="126" href="#126">126</a>          writer.print(mojo.getOutput().getAbsolutePath());
+<a name="127" href="#127">127</a>          writer.print(<span class="jxr_string">" "</span>);
+<a name="128" href="#128">128</a>          writer.print(target);
+<a name="129" href="#129">129</a>          writer.println();
+<a name="130" href="#130">130</a>       }
 <a name="131" href="#131">131</a> 
-<a name="132" href="#132">132</a>         writer.flush();
-<a name="133" href="#133">133</a>         writer.close();
+<a name="132" href="#132">132</a>       writer.flush();
+<a name="133" href="#133">133</a>       writer.close();
 <a name="134" href="#134">134</a> 
-<a name="135" href="#135">135</a>         <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
-<a name="136" href="#136">136</a>         <strong class="jxr_keyword">return</strong> file;
-<a name="137" href="#137">137</a>     }
+<a name="135" href="#135">135</a>       <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
+<a name="136" href="#136">136</a>       <strong class="jxr_keyword">return</strong> file;
+<a name="137" href="#137">137</a>    }
 <a name="138" href="#138">138</a> 
-<a name="139" href="#139">139</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="140" href="#140">140</a> <em class="jxr_javadoccomment">     * Write i18n script.</em>
-<a name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * </em>
-<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">     */</em>
-<a name="143" href="#143">143</a>     <strong class="jxr_keyword">public</strong> File writeI18nScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a name="139" href="#139">139</a>    <em class="jxr_javadoccomment">/**</em>
+<a name="140" href="#140">140</a> <em class="jxr_javadoccomment">    * Write i18n script.</em>
+<a name="141" href="#141">141</a> <em class="jxr_javadoccomment">    * </em>
+<a name="142" href="#142">142</a> <em class="jxr_javadoccomment">    */</em>
+<a name="143" href="#143">143</a>    <strong class="jxr_keyword">public</strong> File writeI18nScript(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
 <a name="144" href="#144">144</a> 
-<a name="145" href="#145">145</a>         File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"i18n.sh"</span>);
-<a name="146" href="#146">146</a>         <strong class="jxr_keyword">if</strong> (!file.exists()) {
-<a name="147" href="#147">147</a>         	<strong class="jxr_keyword">if</strong> (mojo.getLog().isDebugEnabled()) mojo.getLog().debug(<span class="jxr_string">"File '"</span> + file.getAbsolutePath() + <span class="jxr_string">"' does not exsists, trying to create."</span>);
-<a name="148" href="#148">148</a>         	<strong class="jxr_keyword">try</strong> {
-<a name="149" href="#149">149</a>         		file.getParentFile().mkdirs();
-<a name="150" href="#150">150</a>         		file.createNewFile();
-<a name="151" href="#151">151</a>         		<strong class="jxr_keyword">if</strong> (mojo.getLog().isDebugEnabled()) mojo.getLog().debug(<span class="jxr_string">"New file '"</span> + file.getAbsolutePath() + <span class="jxr_string">"' created."</span>);
-<a name="152" href="#152">152</a>         	} <strong class="jxr_keyword">catch</strong> (Exception exe) {
-<a name="153" href="#153">153</a>         		mojo.getLog().error(<span class="jxr_string">"Couldn't create file '"</span> + file.getAbsolutePath() + <span class="jxr_string">"'. Reason: "</span> + exe.getMessage(), exe);
-<a name="154" href="#154">154</a>         	}
-<a name="155" href="#155">155</a>         }        
-<a name="156" href="#156">156</a>         PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
-<a name="157" href="#157">157</a> 
-<a name="158" href="#158">158</a>         <em class="jxr_comment">// constants</em>
-<a name="159" href="#159">159</a>         <strong class="jxr_keyword">if</strong> (mojo.getI18nConstantsNames() != <strong class="jxr_keyword">null</strong>) {
-<a name="160" href="#160">160</a>             <strong class="jxr_keyword">for</strong> (String target : mojo.getI18nConstantsNames()) {
-<a name="161" href="#161">161</a>                 String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
-<a name="162" href="#162">162</a>                 <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
-<a name="163" href="#163">163</a>                     extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
-<a name="164" href="#164">164</a>                 }
-<a name="165" href="#165">165</a> 
-<a name="166" href="#166">166</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH"</span>);
-<a name="167" href="#167">167</a>                 writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
-<a name="168" href="#168">168</a>                 writer.print(<span class="jxr_string">" -out "</span>);
-<a name="169" href="#169">169</a>                 writer.print(mojo.getI18nOutputDir());
-<a name="170" href="#170">170</a>                 writer.print(<span class="jxr_string">" "</span>);
-<a name="171" href="#171">171</a>                 writer.print(target);
-<a name="172" href="#172">172</a>                 writer.println();
-<a name="173" href="#173">173</a>             }
-<a name="174" href="#174">174</a>         }
-<a name="175" href="#175">175</a> 
-<a name="176" href="#176">176</a>         <em class="jxr_comment">// messages</em>
-<a name="177" href="#177">177</a>         <strong class="jxr_keyword">if</strong> (mojo.getI18nMessagesNames() != <strong class="jxr_keyword">null</strong>) {
-<a name="178" href="#178">178</a>             <strong class="jxr_keyword">for</strong> (String target : mojo.getI18nMessagesNames()) {
-<a name="179" href="#179">179</a>                 String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
-<a name="180" href="#180">180</a>                 <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
-<a name="181" href="#181">181</a>                     extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
-<a name="182" href="#182">182</a>                 }
-<a name="183" href="#183">183</a> 
-<a name="184" href="#184">184</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH"</span>);
-<a name="185" href="#185">185</a>                 writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
-<a name="186" href="#186">186</a>                 writer.print(<span class="jxr_string">" -createMessages "</span>);
-<a name="187" href="#187">187</a>                 writer.print(<span class="jxr_string">" -out "</span>);
-<a name="188" href="#188">188</a>                 writer.print(mojo.getI18nOutputDir());
-<a name="189" href="#189">189</a>                 writer.print(<span class="jxr_string">" "</span>);
-<a name="190" href="#190">190</a>                 writer.print(target);
-<a name="191" href="#191">191</a>                 writer.println();
-<a name="192" href="#192">192</a>             }
-<a name="193" href="#193">193</a>         }
-<a name="194" href="#194">194</a> 
-<a name="195" href="#195">195</a>         writer.flush();
-<a name="196" href="#196">196</a>         writer.close();
-<a name="197" href="#197">197</a> 
-<a name="198" href="#198">198</a>         <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
-<a name="199" href="#199">199</a>         <strong class="jxr_keyword">return</strong> file;
-<a name="200" href="#200">200</a>     }    
+<a name="145" href="#145">145</a>       File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"i18n.sh"</span>);
+<a name="146" href="#146">146</a>       <strong class="jxr_keyword">if</strong> (!file.exists()) {
+<a name="147" href="#147">147</a>          <strong class="jxr_keyword">if</strong> (mojo.getLog().isDebugEnabled())
+<a name="148" href="#148">148</a>             mojo.getLog().debug(<span class="jxr_string">"File '"</span> + file.getAbsolutePath() + <span class="jxr_string">"' does not exsists, trying to create."</span>);
+<a name="149" href="#149">149</a>          <strong class="jxr_keyword">try</strong> {
+<a name="150" href="#150">150</a>             file.getParentFile().mkdirs();
+<a name="151" href="#151">151</a>             file.createNewFile();
+<a name="152" href="#152">152</a>             <strong class="jxr_keyword">if</strong> (mojo.getLog().isDebugEnabled())
+<a name="153" href="#153">153</a>                mojo.getLog().debug(<span class="jxr_string">"New file '"</span> + file.getAbsolutePath() + <span class="jxr_string">"' created."</span>);
+<a name="154" href="#154">154</a>          }
+<a name="155" href="#155">155</a>          <strong class="jxr_keyword">catch</strong> (Exception exe) {
+<a name="156" href="#156">156</a>             mojo.getLog().error(<span class="jxr_string">"Couldn't create file '"</span> + file.getAbsolutePath() + <span class="jxr_string">"'. Reason: "</span> + exe.getMessage(),
+<a name="157" href="#157">157</a>                      exe);
+<a name="158" href="#158">158</a>          }
+<a name="159" href="#159">159</a>       }
+<a name="160" href="#160">160</a>       PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
+<a name="161" href="#161">161</a> 
+<a name="162" href="#162">162</a>       <em class="jxr_comment">// constants</em>
+<a name="163" href="#163">163</a>       <strong class="jxr_keyword">if</strong> (mojo.getI18nConstantsNames() != <strong class="jxr_keyword">null</strong>) {
+<a name="164" href="#164">164</a>          <strong class="jxr_keyword">for</strong> (String target : mojo.getI18nConstantsNames()) {
+<a name="165" href="#165">165</a>             String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
+<a name="166" href="#166">166</a>             <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
+<a name="167" href="#167">167</a>                extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
+<a name="168" href="#168">168</a>             }
+<a name="169" href="#169">169</a> 
+<a name="170" href="#170">170</a>             writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH"</span>);
+<a name="171" href="#171">171</a>             writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
+<a name="172" href="#172">172</a>             writer.print(<span class="jxr_string">" -out "</span>);
+<a name="173" href="#173">173</a>             writer.print(mojo.getI18nOutputDir());
+<a name="174" href="#174">174</a>             writer.print(<span class="jxr_string">" "</span>);
+<a name="175" href="#175">175</a>             writer.print(target);
+<a name="176" href="#176">176</a>             writer.println();
+<a name="177" href="#177">177</a>          }
+<a name="178" href="#178">178</a>       }
+<a name="179" href="#179">179</a> 
+<a name="180" href="#180">180</a>       <em class="jxr_comment">// messages</em>
+<a name="181" href="#181">181</a>       <strong class="jxr_keyword">if</strong> (mojo.getI18nMessagesNames() != <strong class="jxr_keyword">null</strong>) {
+<a name="182" href="#182">182</a>          <strong class="jxr_keyword">for</strong> (String target : mojo.getI18nMessagesNames()) {
+<a name="183" href="#183">183</a>             String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
+<a name="184" href="#184">184</a>             <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
+<a name="185" href="#185">185</a>                extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
+<a name="186" href="#186">186</a>             }
+<a name="187" href="#187">187</a> 
+<a name="188" href="#188">188</a>             writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span> + extra + <span class="jxr_string">" -cp $CLASSPATH"</span>);
+<a name="189" href="#189">189</a>             writer.print(<span class="jxr_string">" com.google.gwt.i18n.tools.I18NSync"</span>);
+<a name="190" href="#190">190</a>             writer.print(<span class="jxr_string">" -createMessages "</span>);
+<a name="191" href="#191">191</a>             writer.print(<span class="jxr_string">" -out "</span>);
+<a name="192" href="#192">192</a>             writer.print(mojo.getI18nOutputDir());
+<a name="193" href="#193">193</a>             writer.print(<span class="jxr_string">" "</span>);
+<a name="194" href="#194">194</a>             writer.print(target);
+<a name="195" href="#195">195</a>             writer.println();
+<a name="196" href="#196">196</a>          }
+<a name="197" href="#197">197</a>       }
+<a name="198" href="#198">198</a> 
+<a name="199" href="#199">199</a>       writer.flush();
+<a name="200" href="#200">200</a>       writer.close();
 <a name="201" href="#201">201</a> 
-<a name="202" href="#202">202</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="203" href="#203">203</a> <em class="jxr_javadoccomment">     * Write test scripts.</em>
-<a name="204" href="#204">204</a> <em class="jxr_javadoccomment">     */</em>
-<a name="205" href="#205">205</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> writeTestScripts(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a name="206" href="#206">206</a>         
-<a name="207" href="#207">207</a>         <em class="jxr_comment">// get extras</em>
-<a name="208" href="#208">208</a>         String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
-<a name="209" href="#209">209</a>         <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
-<a name="210" href="#210">210</a>             extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
-<a name="211" href="#211">211</a>         }
-<a name="212" href="#212">212</a>         String testExtra = mojo.getExtraTestArgs() != <strong class="jxr_keyword">null</strong> ? mojo.getExtraTestArgs() : <span class="jxr_string">""</span>; 
-<a name="213" href="#213">213</a>         
-<a name="214" href="#214">214</a>         <em class="jxr_comment">// make sure output dir is present</em>
-<a name="215" href="#215">215</a>         File outputDir = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"gwtTest"</span>);
-<a name="216" href="#216">216</a>         outputDir.mkdirs();
-<a name="217" href="#217">217</a>         outputDir.mkdir();
-<a name="218" href="#218">218</a> 
-<a name="219" href="#219">219</a>         <em class="jxr_comment">// for each test compile source root, build a test script</em>
-<a name="220" href="#220">220</a>         List&lt;String&gt; testCompileRoots = mojo.getProject().getTestCompileSourceRoots();
-<a name="221" href="#221">221</a>         <strong class="jxr_keyword">for</strong> (String currRoot : testCompileRoots) {
+<a name="202" href="#202">202</a>       <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
+<a name="203" href="#203">203</a>       <strong class="jxr_keyword">return</strong> file;
+<a name="204" href="#204">204</a>    }
+<a name="205" href="#205">205</a> 
+<a name="206" href="#206">206</a>    <em class="jxr_javadoccomment">/**</em>
+<a name="207" href="#207">207</a> <em class="jxr_javadoccomment">    * Write test scripts.</em>
+<a name="208" href="#208">208</a> <em class="jxr_javadoccomment">    */</em>
+<a name="209" href="#209">209</a>    <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> writeTestScripts(<a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a name="210" href="#210">210</a> 
+<a name="211" href="#211">211</a>       <em class="jxr_comment">// get extras</em>
+<a name="212" href="#212">212</a>       String extra = (mojo.getExtraJvmArgs() != <strong class="jxr_keyword">null</strong>) ? mojo.getExtraJvmArgs() : <span class="jxr_string">""</span>;
+<a name="213" href="#213">213</a>       <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(<span class="jxr_string">"mac"</span>) &amp;&amp; (extra.indexOf(<span class="jxr_string">"-XstartOnFirstThread"</span>) == -1)) {
+<a name="214" href="#214">214</a>          extra = <span class="jxr_string">"-XstartOnFirstThread "</span> + extra;
+<a name="215" href="#215">215</a>       }
+<a name="216" href="#216">216</a>       String testExtra = mojo.getExtraTestArgs() != <strong class="jxr_keyword">null</strong> ? mojo.getExtraTestArgs() : <span class="jxr_string">""</span>;
+<a name="217" href="#217">217</a> 
+<a name="218" href="#218">218</a>       <em class="jxr_comment">// make sure output dir is present</em>
+<a name="219" href="#219">219</a>       File outputDir = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir(), <span class="jxr_string">"gwtTest"</span>);
+<a name="220" href="#220">220</a>       outputDir.mkdirs();
+<a name="221" href="#221">221</a>       outputDir.mkdir();
 <a name="222" href="#222">222</a> 
-<a name="223" href="#223">223</a>             <em class="jxr_comment">// TODO better file filter here</em>
-<a name="224" href="#224">224</a>             Collection&lt;File&gt; coll = FileUtils.listFiles(<strong class="jxr_keyword">new</strong> File(currRoot),
-<a name="225" href="#225">225</a>                     <strong class="jxr_keyword">new</strong> WildcardFileFilter(mojo.getTestFilter()), HiddenFileFilter.VISIBLE);
+<a name="223" href="#223">223</a>       <em class="jxr_comment">// for each test compile source root, build a test script</em>
+<a name="224" href="#224">224</a>       List&lt;String&gt; testCompileRoots = mojo.getProject().getTestCompileSourceRoots();
+<a name="225" href="#225">225</a>       <strong class="jxr_keyword">for</strong> (String currRoot : testCompileRoots) {
 <a name="226" href="#226">226</a> 
-<a name="227" href="#227">227</a>             <strong class="jxr_keyword">for</strong> (File currFile : coll) {
-<a name="228" href="#228">228</a>                 
-<a name="229" href="#229">229</a>                 String testName = currFile.toString();                
-<a name="230" href="#230">230</a>                 mojo.getLog().debug((<span class="jxr_string">"gwtTest test match found (after filter applied) - "</span> + testName));
-<a name="231" href="#231">231</a> 
-<a name="232" href="#232">232</a>                 <em class="jxr_comment">// parse off the extension</em>
-<a name="233" href="#233">233</a>                 <strong class="jxr_keyword">if</strong> (testName.lastIndexOf('.') &gt; testName.lastIndexOf(File.separatorChar)) {
-<a name="234" href="#234">234</a>                     testName = testName.substring(0, testName.lastIndexOf('.'));
-<a name="235" href="#235">235</a>                 }
-<a name="236" href="#236">236</a>                 <strong class="jxr_keyword">if</strong> (testName.startsWith(currRoot)) {
-<a name="237" href="#237">237</a>                     testName = testName.substring(currRoot.length());
-<a name="238" href="#238">238</a>                 }
-<a name="239" href="#239">239</a>                 <strong class="jxr_keyword">if</strong> (testName.startsWith(File.separator)) {
-<a name="240" href="#240">240</a>                     testName = testName.substring(1);
-<a name="241" href="#241">241</a>                 }
-<a name="242" href="#242">242</a>                 testName = StringUtils.replace(testName, File.separatorChar, '.');
-<a name="243" href="#243">243</a>                 mojo.getLog().debug(<span class="jxr_string">"testName after parsing - "</span> + testName);
-<a name="244" href="#244">244</a> 
-<a name="245" href="#245">245</a>                 <em class="jxr_comment">// start script inside gwtTest output dir, and name it with test class name</em>
-<a name="246" href="#246">246</a>                 File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir() + File.separator + <span class="jxr_string">"gwtTest"</span>, <span class="jxr_string">"gwtTest-"</span> + testName + <span class="jxr_string">".sh"</span>);
-<a name="247" href="#247">247</a>                 PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
+<a name="227" href="#227">227</a>          <em class="jxr_comment">// TODO better file filter here</em>
+<a name="228" href="#228">228</a>          Collection&lt;File&gt; coll = FileUtils.listFiles(<strong class="jxr_keyword">new</strong> File(currRoot), <strong class="jxr_keyword">new</strong> WildcardFileFilter(mojo.getTestFilter()),
+<a name="229" href="#229">229</a>                   HiddenFileFilter.VISIBLE);
+<a name="230" href="#230">230</a> 
+<a name="231" href="#231">231</a>          <strong class="jxr_keyword">for</strong> (File currFile : coll) {
+<a name="232" href="#232">232</a> 
+<a name="233" href="#233">233</a>             String testName = currFile.toString();
+<a name="234" href="#234">234</a>             mojo.getLog().debug((<span class="jxr_string">"gwtTest test match found (after filter applied) - "</span> + testName));
+<a name="235" href="#235">235</a> 
+<a name="236" href="#236">236</a>             <em class="jxr_comment">// parse off the extension</em>
+<a name="237" href="#237">237</a>             <strong class="jxr_keyword">if</strong> (testName.lastIndexOf('.') &gt; testName.lastIndexOf(File.separatorChar)) {
+<a name="238" href="#238">238</a>                testName = testName.substring(0, testName.lastIndexOf('.'));
+<a name="239" href="#239">239</a>             }
+<a name="240" href="#240">240</a>             <strong class="jxr_keyword">if</strong> (testName.startsWith(currRoot)) {
+<a name="241" href="#241">241</a>                testName = testName.substring(currRoot.length());
+<a name="242" href="#242">242</a>             }
+<a name="243" href="#243">243</a>             <strong class="jxr_keyword">if</strong> (testName.startsWith(File.separator)) {
+<a name="244" href="#244">244</a>                testName = testName.substring(1);
+<a name="245" href="#245">245</a>             }
+<a name="246" href="#246">246</a>             testName = StringUtils.replace(testName, File.separatorChar, '.');
+<a name="247" href="#247">247</a>             mojo.getLog().debug(<span class="jxr_string">"testName after parsing - "</span> + testName);
 <a name="248" href="#248">248</a> 
-<a name="249" href="#249">249</a>                 <em class="jxr_comment">// build Java command</em>
-<a name="250" href="#250">250</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span>);
-<a name="251" href="#251">251</a>                 <strong class="jxr_keyword">if</strong> (extra.length() &gt; 0) {
-<a name="252" href="#252">252</a>                     writer.print(<span class="jxr_string">" "</span> + extra + <span class="jxr_string">" "</span>);
-<a name="253" href="#253">253</a>                 }
-<a name="254" href="#254">254</a>                 <strong class="jxr_keyword">if</strong> (testExtra.length() &gt; 0) {
-<a name="255" href="#255">255</a>                     writer.print(<span class="jxr_string">" "</span> + testExtra + <span class="jxr_string">" "</span>);
-<a name="256" href="#256">256</a>                 }
-<a name="257" href="#257">257</a>                 writer.print(<span class="jxr_string">" -cp $CLASSPATH "</span>);
-<a name="258" href="#258">258</a>                 writer.print(<span class="jxr_string">"junit.textui.TestRunner "</span>);
-<a name="259" href="#259">259</a>                 writer.print(testName);
-<a name="260" href="#260">260</a> 
-<a name="261" href="#261">261</a>                 <em class="jxr_comment">// write script out                </em>
-<a name="262" href="#262">262</a>                 writer.flush();
-<a name="263" href="#263">263</a>                 writer.close();
-<a name="264" href="#264">264</a>                 <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);               
-<a name="265" href="#265">265</a>             }
-<a name="266" href="#266">266</a>         }      
-<a name="267" href="#267">267</a>     }
-<a name="268" href="#268">268</a> 
-<a name="269" href="#269">269</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="270" href="#270">270</a> <em class="jxr_javadoccomment">     * Util to get a PrintWriter with Unix preamble and classpath.</em>
-<a name="271" href="#271">271</a> <em class="jxr_javadoccomment">     * </em>
-<a name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * @param mojo</em>
-<a name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * @param file</em>
-<a name="274" href="#274">274</a> <em class="jxr_javadoccomment">     * @return</em>
-<a name="275" href="#275">275</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException</em>
-<a name="276" href="#276">276</a> <em class="jxr_javadoccomment">     */</em>
-<a name="277" href="#277">277</a>     <strong class="jxr_keyword">private</strong> PrintWriter getPrintWriterWithClasspath(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo, File file, <strong class="jxr_keyword">final</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/util/DependencyScope.html">DependencyScope</a> scope)
-<a name="278" href="#278">278</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a name="279" href="#279">279</a> 
-<a name="280" href="#280">280</a>         PrintWriter writer = <strong class="jxr_keyword">null</strong>;
-<a name="281" href="#281">281</a>         <strong class="jxr_keyword">try</strong> {
-<a name="282" href="#282">282</a>             writer = <strong class="jxr_keyword">new</strong> PrintWriter(<strong class="jxr_keyword">new</strong> FileWriter(file));
-<a name="283" href="#283">283</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a name="284" href="#284">284</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error creating script - "</span> + file, e);
-<a name="285" href="#285">285</a>         }
-<a name="286" href="#286">286</a>         File sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/bin/bash"</span>);
-<a name="287" href="#287">287</a> 
-<a name="288" href="#288">288</a>         <strong class="jxr_keyword">if</strong> (!sh.exists()) {
-<a name="289" href="#289">289</a>             sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/usr/bin/bash"</span>);
-<a name="290" href="#290">290</a>         }
-<a name="291" href="#291">291</a> 
-<a name="292" href="#292">292</a>         <strong class="jxr_keyword">if</strong> (!sh.exists()) {
-<a name="293" href="#293">293</a>             sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/bin/sh"</span>);
-<a name="294" href="#294">294</a>         }
-<a name="295" href="#295">295</a>         writer.println(<span class="jxr_string">"#!"</span> + sh.getAbsolutePath());
-<a name="296" href="#296">296</a>         writer.println();
-<a name="297" href="#297">297</a> 
-<a name="298" href="#298">298</a>         <strong class="jxr_keyword">try</strong> {
-<a name="299" href="#299">299</a>             Collection&lt;File&gt; classpath = BuildClasspathUtil.buildClasspathList(mojo, scope);
-<a name="300" href="#300">300</a>             writer.print(<span class="jxr_string">"export CLASSPATH="</span>);
-<a name="301" href="#301">301</a>             <strong class="jxr_keyword">for</strong> (File f : classpath) {
-<a name="302" href="#302">302</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + f.getAbsolutePath() + <span class="jxr_string">"\&quot;:"</span>);
-<a name="303" href="#303">303</a>             }
-<a name="304" href="#304">304</a>             <em class="jxr_comment">// add test classes</em>
-<a name="305" href="#305">305</a>             <strong class="jxr_keyword">for</strong> (Iterator it = mojo.getProject().getTestClasspathElements().iterator(); it.hasNext();) {
-<a name="306" href="#306">306</a>                 writer.print(<span class="jxr_string">"\&quot;"</span> + <strong class="jxr_keyword">new</strong> File(it.next().toString()).getAbsolutePath() + <span class="jxr_string">"\&quot;:"</span>);
-<a name="307" href="#307">307</a>             }
-<a name="308" href="#308">308</a>         } <strong class="jxr_keyword">catch</strong> (DependencyResolutionRequiredException e) {
-<a name="309" href="#309">309</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error creating script - "</span> + file, e);
-<a name="310" href="#310">310</a>         }
-<a name="311" href="#311">311</a>         writer.println();
-<a name="312" href="#312">312</a>         writer.println();
-<a name="313" href="#313">313</a>         <strong class="jxr_keyword">return</strong> writer;
-<a name="314" href="#314">314</a>     }
-<a name="315" href="#315">315</a> 
-<a name="316" href="#316">316</a>     <em class="jxr_javadoccomment">/**</em>
-<a name="317" href="#317">317</a> <em class="jxr_javadoccomment">     * Util to chmod Unix file.</em>
-<a name="318" href="#318">318</a> <em class="jxr_javadoccomment">     * </em>
-<a name="319" href="#319">319</a> <em class="jxr_javadoccomment">     * @param file</em>
-<a name="320" href="#320">320</a> <em class="jxr_javadoccomment">     */</em>
-<a name="321" href="#321">321</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> chmodUnixFile(File file) {
-<a name="322" href="#322">322</a>         <strong class="jxr_keyword">try</strong> {
-<a name="323" href="#323">323</a>             <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a> pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<span class="jxr_string">"chmod +x "</span> + file.getAbsolutePath());
-<a name="324" href="#324">324</a>             pw.startProcess(System.out, System.err);
-<a name="325" href="#325">325</a>             pw.waitFor();
-<a name="326" href="#326">326</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a name="327" href="#327">327</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(e);
-<a name="328" href="#328">328</a>         }
-<a name="329" href="#329">329</a>     }
-<a name="330" href="#330">330</a> }
+<a name="249" href="#249">249</a>             <em class="jxr_comment">// start script inside gwtTest output dir, and name it with test class name</em>
+<a name="250" href="#250">250</a>             File file = <strong class="jxr_keyword">new</strong> File(mojo.getBuildDir() + File.separator + <span class="jxr_string">"gwtTest"</span>, <span class="jxr_string">"gwtTest-"</span> + testName + <span class="jxr_string">".sh"</span>);
+<a name="251" href="#251">251</a>             PrintWriter writer = <strong class="jxr_keyword">this</strong>.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
+<a name="252" href="#252">252</a> 
+<a name="253" href="#253">253</a>             <em class="jxr_comment">// build Java command</em>
+<a name="254" href="#254">254</a>             writer.print(<span class="jxr_string">"\&quot;"</span> + AbstractGWTMojo.JAVA_COMMAND + <span class="jxr_string">"\&quot; "</span>);
+<a name="255" href="#255">255</a>             <strong class="jxr_keyword">if</strong> (extra.length() &gt; 0) {
+<a name="256" href="#256">256</a>                writer.print(<span class="jxr_string">" "</span> + extra + <span class="jxr_string">" "</span>);
+<a name="257" href="#257">257</a>             }
+<a name="258" href="#258">258</a>             <strong class="jxr_keyword">if</strong> (testExtra.length() &gt; 0) {
+<a name="259" href="#259">259</a>                writer.print(<span class="jxr_string">" "</span> + testExtra + <span class="jxr_string">" "</span>);
+<a name="260" href="#260">260</a>             }
+<a name="261" href="#261">261</a>             writer.print(<span class="jxr_string">" -cp $CLASSPATH "</span>);
+<a name="262" href="#262">262</a>             writer.print(<span class="jxr_string">"junit.textui.TestRunner "</span>);
+<a name="263" href="#263">263</a>             writer.print(testName);
+<a name="264" href="#264">264</a> 
+<a name="265" href="#265">265</a>             <em class="jxr_comment">// write script out                </em>
+<a name="266" href="#266">266</a>             writer.flush();
+<a name="267" href="#267">267</a>             writer.close();
+<a name="268" href="#268">268</a>             <strong class="jxr_keyword">this</strong>.chmodUnixFile(file);
+<a name="269" href="#269">269</a>          }
+<a name="270" href="#270">270</a>       }
+<a name="271" href="#271">271</a>    }
+<a name="272" href="#272">272</a> 
+<a name="273" href="#273">273</a>    <em class="jxr_javadoccomment">/**</em>
+<a name="274" href="#274">274</a> <em class="jxr_javadoccomment">    * Util to get a PrintWriter with Unix preamble and classpath.</em>
+<a name="275" href="#275">275</a> <em class="jxr_javadoccomment">    * </em>
+<a name="276" href="#276">276</a> <em class="jxr_javadoccomment">    * @param mojo</em>
+<a name="277" href="#277">277</a> <em class="jxr_javadoccomment">    * @param file</em>
+<a name="278" href="#278">278</a> <em class="jxr_javadoccomment">    * @return</em>
+<a name="279" href="#279">279</a> <em class="jxr_javadoccomment">    * @throws MojoExecutionException</em>
+<a name="280" href="#280">280</a> <em class="jxr_javadoccomment">    */</em>
+<a name="281" href="#281">281</a>    <strong class="jxr_keyword">private</strong> PrintWriter getPrintWriterWithClasspath(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/AbstractGWTMojo.html">AbstractGWTMojo</a> mojo, File file, <strong class="jxr_keyword">final</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/util/DependencyScope.html">DependencyScope</a> scope)
+<a name="282" href="#282">282</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a name="283" href="#283">283</a> 
+<a name="284" href="#284">284</a>       PrintWriter writer = <strong class="jxr_keyword">null</strong>;
+<a name="285" href="#285">285</a>       <strong class="jxr_keyword">try</strong> {
+<a name="286" href="#286">286</a>          writer = <strong class="jxr_keyword">new</strong> PrintWriter(<strong class="jxr_keyword">new</strong> FileWriter(file));
+<a name="287" href="#287">287</a>       }
+<a name="288" href="#288">288</a>       <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a name="289" href="#289">289</a>          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error creating script - "</span> + file, e);
+<a name="290" href="#290">290</a>       }
+<a name="291" href="#291">291</a>       File sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/bin/bash"</span>);
+<a name="292" href="#292">292</a> 
+<a name="293" href="#293">293</a>       <strong class="jxr_keyword">if</strong> (!sh.exists()) {
+<a name="294" href="#294">294</a>          sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/usr/bin/bash"</span>);
+<a name="295" href="#295">295</a>       }
+<a name="296" href="#296">296</a> 
+<a name="297" href="#297">297</a>       <strong class="jxr_keyword">if</strong> (!sh.exists()) {
+<a name="298" href="#298">298</a>          sh = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/bin/sh"</span>);
+<a name="299" href="#299">299</a>       }
+<a name="300" href="#300">300</a>       writer.println(<span class="jxr_string">"#!"</span> + sh.getAbsolutePath());
+<a name="301" href="#301">301</a>       writer.println();
+<a name="302" href="#302">302</a> 
+<a name="303" href="#303">303</a>       <strong class="jxr_keyword">try</strong> {
+<a name="304" href="#304">304</a>          Collection&lt;File&gt; classpath = BuildClasspathUtil.buildClasspathList(mojo, scope);
+<a name="305" href="#305">305</a>          writer.print(<span class="jxr_string">"export CLASSPATH="</span>);
+<a name="306" href="#306">306</a>          Iterator it = classpath.iterator();
+<a name="307" href="#307">307</a>          <strong class="jxr_keyword">while</strong> (it.hasNext()) {
+<a name="308" href="#308">308</a>             File f = (File) it.next();
+<a name="309" href="#309">309</a>             <strong class="jxr_keyword">if</strong> (it.hasNext())
+<a name="310" href="#310">310</a>                writer.print(<span class="jxr_string">"\&quot;"</span> + f.getAbsolutePath() + <span class="jxr_string">"\&quot;:"</span>);
+<a name="311" href="#311">311</a>             <strong class="jxr_keyword">else</strong>
+<a name="312" href="#312">312</a>                writer.print(<span class="jxr_string">"\&quot;"</span> + f.getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
+<a name="313" href="#313">313</a>          }
+<a name="314" href="#314">314</a>       }
+<a name="315" href="#315">315</a>       <strong class="jxr_keyword">catch</strong> (DependencyResolutionRequiredException e) {
+<a name="316" href="#316">316</a>          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Error creating script - "</span> + file, e);
+<a name="317" href="#317">317</a>       }
+<a name="318" href="#318">318</a>       writer.println();
+<a name="319" href="#319">319</a>       writer.println();
+<a name="320" href="#320">320</a>       <strong class="jxr_keyword">return</strong> writer;
+<a name="321" href="#321">321</a>    }
+<a name="322" href="#322">322</a> 
+<a name="323" href="#323">323</a>    <em class="jxr_javadoccomment">/**</em>
+<a name="324" href="#324">324</a> <em class="jxr_javadoccomment">    * Util to chmod Unix file.</em>
+<a name="325" href="#325">325</a> <em class="jxr_javadoccomment">    * </em>
+<a name="326" href="#326">326</a> <em class="jxr_javadoccomment">    * @param file</em>
+<a name="327" href="#327">327</a> <em class="jxr_javadoccomment">    */</em>
+<a name="328" href="#328">328</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> chmodUnixFile(File file) {
+<a name="329" href="#329">329</a>       <strong class="jxr_keyword">try</strong> {
+<a name="330" href="#330">330</a>          <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a> pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<span class="jxr_string">"chmod +x "</span> + file.getAbsolutePath());
+<a name="331" href="#331">331</a>          pw.startProcess(System.out, System.err);
+<a name="332" href="#332">332</a>          pw.waitFor();
+<a name="333" href="#333">333</a>       }
+<a name="334" href="#334">334</a>       <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a name="335" href="#335">335</a>          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(e);
+<a name="336" href="#336">336</a>       }
+<a name="337" href="#337">337</a>    }
+<a name="338" href="#338">338</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

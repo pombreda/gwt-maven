@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-06
+        Last Published: 2008-11-19
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -163,11 +163,11 @@
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Examples</h2>
 <div class="section"><h3>Sample Projects</h3>
-<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
+<ul><li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/">Simple sample project</a>
 </li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a>
+<li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/">Simple sample with database and GWT-RPC project</a>
 </li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a>
+<li><a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/">Full multi project and composition sample</a>
  </li>
 </ul>
 </div>
@@ -206,7 +206,7 @@
     
     &lt;!--  convenience to define GWT version in one place --&gt;
     &lt;properties&gt;
-        &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
+        &lt;gwtVersion&gt;1.5.3&lt;/gwtVersion&gt;
     &lt;/properties&gt;
     
     &lt;dependencies&gt;
@@ -252,7 +252,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta25&lt;/version&gt;
+                &lt;version&gt;2.0-beta26&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
                     &lt;compileTargets&gt;
@@ -269,7 +269,7 @@
                         &lt;value&gt;com.totsp.sample.client.AppMessages&lt;/value&gt;
                     &lt;/i18nMessagesNames&gt;
                     &lt;!--  this parameter is VERY important with automatic mode - has to match the version in your declared deps --&gt;
-                    &lt;!--  if this does not match (default if left out is 1.5.2) you will have mysterious errors --&gt;
+                    &lt;!--  if this does not match (default if left out is 1.5.3) you will have mysterious errors --&gt;
                     &lt;gwtVersion&gt;${gwtVersion}&lt;/gwtVersion&gt;
                 &lt;/configuration&gt;
                 &lt;executions&gt;
@@ -417,7 +417,7 @@
     
     &lt;!--  convenience to define GWT version in one place --&gt;
     &lt;properties&gt;
-       &lt;gwtVersion&gt;1.5.2&lt;/gwtVersion&gt;
+       &lt;gwtVersion&gt;1.5.3&lt;/gwtVersion&gt;
     &lt;/properties&gt;
     
     &lt;dependencies&gt;
@@ -460,7 +460,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta25&lt;/version&gt;
+                &lt;version&gt;2.0-beta26&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;gwtHome&gt;${env.GWT_HOME}&lt;/gwtHome&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;

@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-06
+        Last Published: 2008-11-19
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -164,7 +164,7 @@
         <div class="section"><h2><a name="googlewebtoolkit2:debug"></a>
 googlewebtoolkit2:debug</h2>
 <p><strong>Full name</strong>:</p>
-<p>com.totsp.gwt:maven-googlewebtoolkit2-plugin:2.0-beta25:debug</p>
+<p>com.totsp.gwt:maven-googlewebtoolkit2-plugin:2.0-beta26:debug</p>
 <p><strong>Description</strong>:</p>
 <p>Extends the gwt goal and runs the project in the GWTShell with a
 debugger port hook (optionally suspended).</p>
@@ -295,7 +295,7 @@ generated classes. </td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Set the GWT version number - used to build dependency paths, should
-match the &quot;version&quot; in the Maven repo. Default value is: <code>1.5.2</code>.</td>
+match the &quot;version&quot; in the Maven repo. Default value is: <code>1.5.3</code>.</td>
 </tr>
 <tr class="a"><td><strong><a href="#i18nConstantsNames">i18nConstantsNames</a>
 </strong></td>
@@ -363,54 +363,59 @@ option to GWTCompiler). </td>
 <td><code>-</code></td>
 <td>(no description) </td>
 </tr>
-<tr class="a"><td><strong><a href="#shellServletMappingURL">shellServletMappingURL</a>
+<tr class="a"><td><strong><a href="#resourcesOnPath">resourcesOnPath</a>
+</strong></td>
+<td><code>boolean</code></td>
+<td><code>-</code></td>
+<td>Whether or not to add resources root to classpath. Default value is: <code>true</code>.</td>
+</tr>
+<tr class="b"><td><strong><a href="#shellServletMappingURL">shellServletMappingURL</a>
 </strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Specifies the mapping URL to be used with the shell servlet. Default value is: <code>/*</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#sourcesOnPath">sourcesOnPath</a>
+<tr class="a"><td><strong><a href="#sourcesOnPath">sourcesOnPath</a>
 </strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
-<td>Whether or not to add resources and compile source root to
-classpath. Default value is: <code>true</code>.</td>
+<td>Whether or not to add compile source root to classpath. Default value is: <code>true</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#style">style</a>
+<tr class="b"><td><strong><a href="#style">style</a>
 </strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>GWT JavaScript compiler output style (-style OBF[USCATED], PRETTY,
 or DETAILED). Default value is: <code>OBF</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#testFilter">testFilter</a>
+<tr class="a"><td><strong><a href="#testFilter">testFilter</a>
 </strong></td>
 <td><code>String</code></td>
 <td><code>-</code></td>
 <td>Simple string filter for classes that should be treated as
 GWTTestCase type (and therefore invoked during gwtTest goal). Default value is: <code>GwtTest*</code>.</td>
 </tr>
-<tr class="a"><td><strong><a href="#testSkip">testSkip</a>
+<tr class="b"><td><strong><a href="#testSkip">testSkip</a>
 </strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
 <td>Whether or not to skip GWT testing. Default value is: <code>false</code>.</td>
 </tr>
-<tr class="b"><td><strong><a href="#tomcat">tomcat</a>
+<tr class="a"><td><strong><a href="#tomcat">tomcat</a>
 </strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Specify the location on the filesystem for the generated embedded
 Tomcat directory. </td>
 </tr>
-<tr class="a"><td><strong><a href="#webXml">webXml</a>
+<tr class="b"><td><strong><a href="#webXml">webXml</a>
 </strong></td>
 <td><code>File</code></td>
 <td><code>-</code></td>
 <td>Source web.xml deployment descriptor that is used for GWT shell and
 for deployment WAR to &quot;merge&quot; servlet entries. </td>
 </tr>
-<tr class="b"><td><strong><a href="#webXmlServletPathAsIs">webXmlServletPathAsIs</a>
+<tr class="a"><td><strong><a href="#webXmlServletPathAsIs">webXmlServletPathAsIs</a>
 </strong></td>
 <td><code>boolean</code></td>
 <td><code>-</code></td>
@@ -544,7 +549,7 @@ generated classes.</p>
 match the &quot;version&quot; in the Maven repo.</p>
 <ul><li><strong>Type</strong>: <code>java.lang.String</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
-<li><strong>Default</strong>: <code>1.5.2</code></li>
+<li><strong>Default</strong>: <code>1.5.3</code></li>
 </ul>
 <hr />
 <p><strong><a name="i18nConstantsNames">i18nConstantsNames</a>
@@ -630,6 +635,14 @@ option to GWTCompiler).</p>
 <li><strong>Expression</strong>: <code>${project.remoteArtifactRepositories}</code></li>
 </ul>
 <hr />
+<p><strong><a name="resourcesOnPath">resourcesOnPath</a>
+:</strong></p>
+<p>Whether or not to add resources root to classpath.</p>
+<ul><li><strong>Type</strong>: <code>boolean</code></li>
+<li><strong>Required</strong>: <code>No</code></li>
+<li><strong>Default</strong>: <code>true</code></li>
+</ul>
+<hr />
 <p><strong><a name="runTarget">runTarget</a>
 :</strong></p>
 <p>URL that should be automatically opened by default in the GWT
@@ -648,8 +661,7 @@ shell.</p>
 <hr />
 <p><strong><a name="sourcesOnPath">sourcesOnPath</a>
 :</strong></p>
-<p>Whether or not to add resources and compile source root to
-classpath.</p>
+<p>Whether or not to add compile source root to classpath.</p>
 <ul><li><strong>Type</strong>: <code>boolean</code></li>
 <li><strong>Required</strong>: <code>No</code></li>
 <li><strong>Default</strong>: <code>true</code></li>
