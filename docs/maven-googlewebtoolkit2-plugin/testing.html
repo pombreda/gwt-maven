@@ -179,8 +179,8 @@
 <p>If you need to, you can change the default <b>GwtTest</b>
  prefix by setting the <b>testFilter</b>
  plugin property. </p>
-<p>Look at the full source for the <a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/">Simple sample</a>
- and the <a class="externalLink" href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/">Full sample</a>
+<p>Look at the full source for the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample</a>
+ and the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full sample</a>
  projects for reference. </p>
 </div>
 <div class="section"><h3>Invoking tests</h3>
@@ -209,7 +209,7 @@
 <p>GWTTestCase derived tests are slow. This is because the JUnitShell has to load the module for each test (create the shell, hook into it, etc). <b>GWTTestSuite</b>
  mitigates this by grouping all the tests that are for the same module (those that return the same value for getModuleName) together and running them via the same shell instance. </p>
 <p>This is a BIG time saver, and GWTTestSuite is easy to use, so using it is a good idea. </p>
-<p>Another tip for GWT-Maven and GWTTestSuite is to name your test suite &quot;GwtTest*Suite.java&quot; so that the test filter picks it up, but name the actual tests with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT end with Test. For example &quot;TestMyClass.java&quot;. This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests. </p>
+<p>Another tip for GWT-Maven and GWTTestSuite is to name your test suite &quot;GwtTest*Suite.java&quot; so that the test filter picks it up, but name the actual tests with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT start OR end with Test. For example &quot;GwtTstMyClass.java&quot;. This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests (and Surefire does not pick it up either). </p>
 </div>
 </div>
 
