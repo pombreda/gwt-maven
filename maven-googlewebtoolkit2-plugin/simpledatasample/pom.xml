@@ -92,14 +92,16 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.1</version>
             <type>jar</type>
-            <scope>provided</scope>
+            <!-- (provided or not depends on your container setup - but it's needed in the shell) -->
+            <!-- <scope>provided</scope>--> 
         </dependency>
         <dependency>
             <groupId>commons-pool</groupId>
             <artifactId>commons-pool</artifactId>
             <version>1.4</version>
             <type>jar</type>
-            <scope>provided</scope>
+            <!-- (provided or not depends on your container setup - but it's needed in the shell) -->
+            <!-- <scope>provided</scope>--> 
         </dependency>		
 		
 		<!--  test -->
