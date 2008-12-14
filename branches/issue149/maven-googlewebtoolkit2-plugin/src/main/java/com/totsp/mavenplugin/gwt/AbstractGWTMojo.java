@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuilder;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
 import org.codehaus.plexus.util.FileUtils;
@@ -315,7 +316,17 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter
     */
    private boolean overwriteGeneratedClasses;
-
+   /**
+    * File containing definition for redirecting artifacts classpath from maven repo to direct artifact project.
+    * 
+    * @parameter
+    */
+   private File artifactDevelProjects;
+   
+   /**
+    * @component
+    */
+   private MavenProjectBuilder projectBuilder;
    // ctor
 
    /** Creates a new instance of AbstractGWTMojo */
@@ -357,7 +368,22 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    //
    // accessors/mutators
    //
-
+   public File getArtifactDevelProjects() {
+		return artifactDevelProjects;
+   }
+   
+   public void setArtifactDevelProjects(File artifactClassPathRedirect) {
+		this.artifactDevelProjects = artifactClassPathRedirect;
+   }
+   
+   public MavenProjectBuilder getProjectBuilder() {
+		return projectBuilder;
+   }
+   
+   public void setProjectBuilder(MavenProjectBuilder projectBuilder) {
+		this.projectBuilder = projectBuilder;
+   }
+   
    public void setBuildDir(File buildDir) {
       this.buildDir = buildDir;
    }
