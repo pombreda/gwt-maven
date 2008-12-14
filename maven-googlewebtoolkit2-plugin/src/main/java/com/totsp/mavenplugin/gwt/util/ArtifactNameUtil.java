@@ -16,6 +16,8 @@
  */
 package com.totsp.mavenplugin.gwt.util;
 
+import java.io.File;
+
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 
 public class ArtifactNameUtil {
@@ -57,5 +59,15 @@ public class ArtifactNameUtil {
         } else {
             return "gwt-dev-linux.jar";
         }
+    }
+    
+    /**
+     * Transforms artifact description containing groupId and artifactId in short form i.e. "com.totsp.gwt:maven-googlewebtoolkit2-plugin" to relative filesystem path i.e. "com/totsp/gwt/maven-googlewebtoolkit2-plugin".
+     * 
+     * @param artifactDescription Description of artifact in form "&lt;groupId&gt;:&lt;artifactId&gt;"
+     * @return Relative path with file separator in the end.
+     */
+    public static final String getMavenPathPartFromArtifactDescription(String artifactDescription) {
+    	return artifactDescription.replaceAll("\\.", "\\" + File.separator).replaceAll("\\:", "\\" + File.separator) + File.separator;
     }
 }
