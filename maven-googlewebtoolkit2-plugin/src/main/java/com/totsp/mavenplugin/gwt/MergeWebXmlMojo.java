@@ -90,14 +90,15 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
                         getLog().info("Module file: " + moduleFile.getAbsolutePath());
                         processor = new GwtWebInfProcessor(this.getCompileTarget()[i], moduleFile, destination
                                 .getAbsolutePath(), destination.getAbsolutePath(), this.isWebXmlServletPathAsIs());
+                        processor.process();
                     } else {
                         throw new MojoExecutionException("module file null");
                     }
                 } catch (ExitException e) {
-                    this.getLog().warn(e.getMessage());
-                    return;
+                    this.getLog().info(e.getMessage());
+                   // return;
                 }
-                processor.process();
+                
             }
         } catch (Exception e) {
             throw new MojoExecutionException("Unable to merge web.xml", e);
