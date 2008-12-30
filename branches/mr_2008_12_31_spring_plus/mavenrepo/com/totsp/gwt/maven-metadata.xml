@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <plugins>
+    <plugin>
+      <name>Maven 2 Plugin for Google Web Toolkit</name>
+      <prefix>gwt</prefix>
+      <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+    </plugin>
+  </plugins>
+</metadata>

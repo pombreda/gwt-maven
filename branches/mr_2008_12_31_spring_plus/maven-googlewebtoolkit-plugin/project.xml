@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <pomVersion>3</pomVersion>
+    <groupId>com.totsp.gwt</groupId>
+    <artifactId>maven-googlewebtoolkit-plugin</artifactId>
+    <currentVersion>1.6.0</currentVersion>
+    <organization>
+        <name>TotSP</name>
+    </organization>
+    <shortDescription>This is a maven 1 plugin for GWT.</shortDescription>
+    <name>Maven 1 Plugin for the Google Web Toolkit</name>
+    <package>com.totsp.gwt</package>
+    <inceptionYear>2006</inceptionYear>
+    <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+    <repository>
+        <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
+        <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
+        <url>http://gwt-maven.googlecode.com/svn</url>
+    </repository>
+    <developers>
+        <developer>
+            <name>Charlie Collins</name>
+            <email>charlie . collins @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+        <developer>
+            <name>Robert Cooper</name>
+            <email>kebernet @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+    </developers>
+    <mailingLists>
+        <mailingList>
+            <name>gwt-maven/topics</name>
+            <post>http://groups.google.com/group/gwt-maven/topics</post>
+            <subscribe>http://groups.google.com/group/gwt-maven/subscribe</subscribe>
+            <unsubscribe>http://groups.google.com/group/gwt-maven/subscribe</unsubscribe>
+            <archive>http://groups.google.com/group/gwt-maven/topics</archive>
+        </mailingList>
+    </mailingLists>    
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>plugin.jelly</include>
+                    <include>plugin.properties</include>
+                    <include>project.properties</include>
+                    <include>project.xml</include>
+                </includes>
+            </resource>            
+        </resources>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.totsp.gwt</groupId>
+            <artifactId>maven-googlewebtoolkit-support</artifactId>
+            <version>1.6.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+</project>
+

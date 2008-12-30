@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Document : ServiceExample.xml.xml Created on : May 29, 2007, 10:50 AM
+		Author : rcooper Description: Purpose of the document follows.
+	-->
+<service>
+	<package>com.totsp.example</package>
+	<shortName>AService</shortName>
+	<implementation>com.totsp.example.AServiceImpl</implementation>
+	<method>
+		<name>serviceMethod</name>
+		<returnType>
+			<package>java.lang</package>
+			<shortName>Integer</shortName>
+		</returnType>
+		<argument>
+			<name>int1</name>
+			<package>java.lang</package>
+			<shortName>Integer</shortName>
+		</argument>
+		<argument>
+			<name>int2</name>
+			<arrayDepth>2</arrayDepth>
+			<package>java.lang</package>
+			<shortName>Integer</shortName>
+		</argument>
+		<thrown>
+			<package>com.totsp.example</package>
+			<shortName>MyException</shortName>
+		</thrown>
+		<thrown>
+			<package>com.totsp.example</package>
+			<shortName>MyOtherException</shortName>
+		</thrown>
+	</method>
+	<method>
+		<name>emptyService</name>
+	</method>
+</service>

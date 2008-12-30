@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="maven-googlewebtoolkit-sample 1.x (gwt-maven)">
+  <title>maven-googlewebtoolkit-sample 1.x (gwt-maven)</title>
+  <body>
+    <breadcrumbs>
+      <item name="Apache" href="http://www.apache.org"/>
+      <item name="Maven" href="http://maven.apache.org/"/>      
+    </breadcrumbs>
+    <links>
+      <item name="gwt-maven" href="http://code.google.com/p/gwt-maven/"/>
+    </links>
+    <sitemap/>    
+  </body>
+</project>

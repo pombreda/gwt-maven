@@ -1,0 +1,15 @@
+<module>
+
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name='com.google.gwt.user.User' />
+	
+	<!-- Inherit the server project, which defines a service servlet endpoint -->
+	<inherits name='com.totsp.mavenplugin.gwt.sample.server.ApplicationServices' />
+
+	<!-- Specify the app entry point class.                   -->
+	<entry-point class='com.totsp.mavenplugin.gwt.sample.client.Application' />
+
+	<!-- Specify a css to load into your gwt application -->
+	<stylesheet src='styles/sample.css'/>
+	
+</module>

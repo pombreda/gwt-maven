@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+
+	<properties>
+		<title>
+			Configure GWT with -noserver
+		</title>
+	</properties>
+
+	<body>
+		<section
+			name="Configure GWT with -noserver">
+			
+			<subsection
+				name="Start from a working GWT project">
+				<p>
+				Start from a project that runs in the standard GWTShell and can be successfully
+				compiled with the GWTCompiler. 
+				<br /><br />
+				Compile the project and have the following files, which should be in the compiler out directory (www is the default), handy for later copying to the external container instance:
+				<source>
+[ModuleName].nocache.js 
+[ModuleName].html 
+gwt.js 
+hosted.html
+				</source>
+				</p>
+			</subsection>
+			
+			<subsection
+				name="Setup an external container context with the necessary GWT files">
+				<p>
+				Create an external container context where you can "point" the GWTShell.
+				<br />
+				In Tomcat terms this means create the following:
+				<code>
+				a $CATALINA_HOME/conf/Catalina/localhost/ModuleName.xml context descriptor
+				a $CATALINA_HOME/webapps/ModuleName directory
+				</code>
+				Then place the files from the previous GWT compile step (nocache.js, Module.html, gwt.js, hosted.html) in the webapps/ModuleName directory.
+				<br />
+				Then, before proceeding, BROWSE to that location in a regular browser and ensure you can load the host page (it will not show dynamic elements - yet, but still should be present). 
+				</p>
+			</subsection>
+			
+			<subsection
+				name="Launch the GWTShell directed at the external container instance">
+				<p>
+				Launch the GWTShell with the -noserver option, and the necessary port and path/host page.
+				</p>
+				<p>If you are using GWT-Maven then you need to simply set google.webtoolkit.noserver=true in project.properties.  And then launch the shell via "maven gwt".
+				</p>
+				<p>
+				If you are NOT using GWT-Maven then you will need to pass -noserver to the shell on your own. 
+				<br />
+				An example MODIFIED shell startup script, for those NOT using GWT-Maven, including the -noserver and -port options is shown below:
+				<source>
+#!/bin/sh
+
+ENTRY_POINT=com.package.Module
+HOST_PAGE=Module.html
+
+APPDIR=`dirname $0`;
+CPGWT=$APPDIR/src
+CPGWT=$CPGWT:$GWT_HOME/gwt-user.jar
+CPGWT=$CPGWT:$GWT_HOME/gwt-dev-mac.jar
+java -XstartOnFirstThread -cp $CPGWT com.google.gwt.dev.GWTShell -logLevel DEBUG -noserver -port 8080 "$@" $ENTRY_POINT/
+$HOST_PAGE
+				</source>
+				</p>
+			</subsection>
+			
+			<subsection
+				name="Use whatever you need in the external container">
+				<p>
+				Once you are using -noserver, in a simple setup such as is described here, you can then 
+				also add GWT service servlets (with the correct classes and elements in the deployment descriptor - web.xml),
+				other servlets, servlet filters, servlet init-params, data sources, security realms, and so on -
+				anything you typically use with any standard container.  
+				<br /><br />
+				You can also use more advanced JEE containers that can handle EJB, JMS and so on, with this
+				same setup. Configuring server side resources becomes just a matter of working with which ever 
+				external container you have chosen - AND HAS NOTHING TO DO WITH GWT.
+				</p>
+			</subsection>
+
+		</section>
+	</body>
+</document>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>com.totsp.gwt</groupId>
+  <artifactId>maven-googlewebtoolkit2-archetype</artifactId>
+  <version>1.0.3</version>
+  <versioning>
+    <latest>1.0.3</latest>
+    <versions>
+      <version>1.0.3</version>
+    </versions>
+    <lastUpdated>20081119193931</lastUpdated>
+  </versioning>
+</metadata>

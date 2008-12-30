@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <pomVersion>3</pomVersion>
+  <groupId>com.manning.gwtip</groupId>
+  <artifactId>gwt-scriptaculous</artifactId>
+  <name>Script.aculo.us for GWT</name>
+  <currentVersion>1.0.0</currentVersion>
+  <inceptionYear>2006</inceptionYear>
+  <package>com.manning.gwtip.javascript.scriptaculous</package>
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
+    <unitTest>
+      <resources>
+        <resource>
+          <directory>/opt/projects/GWTIP/code/Ch6-IntegrateJavaScript/Scriptaculous/src/main/webapp</directory>
+        </resource>
+        <resource>
+          <directory>/opt/projects/GWTIP/code/Ch6-IntegrateJavaScript/Scriptaculous/src/main/java</directory>
+        </resource>
+        <resource>
+          <directory>/opt/projects/GWTIP/code/Ch6-IntegrateJavaScript/Scriptaculous/src/test/java</directory>
+        </resource>
+      </resources>
+      <includes>
+        <include>**/*GwtTest.java</include>
+      </includes>
+    </unitTest>
+    <resources>
+      <resource>
+        <directory>/opt/projects/GWTIP/code/Ch6-IntegrateJavaScript/Scriptaculous/src/main/java</directory>
+      </resource>
+      <resource>
+        <directory>/opt/projects/GWTIP/code/Ch6-IntegrateJavaScript/Scriptaculous/src/main/resources</directory>
+      </resource>
+    </resources>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+      <version>1.4.60</version>
+    </dependency>
+  </dependencies>
+</project>

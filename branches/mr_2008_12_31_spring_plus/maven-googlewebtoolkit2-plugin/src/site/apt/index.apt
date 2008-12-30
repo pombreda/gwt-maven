@@ -1,0 +1,36 @@
+GWT-Maven (maven-googlewebtoolkit2-plugin)
+
+
+ GWT-Maven is a plugin to provide support for Google Web Toolkit projects, including
+ running the GWT developer tools (the compiler and shell) and performing support operations to help
+ developers make GWT fit more closely in with their standard JEE web application
+ development (debugging, managing the emebedded server, running noserver, merging web.xml, generating I18N interfaces, generating client beans, and more).
+
+* Goals, Setup, and Examples
+
+  To provide you with better understanding of some usages of GWT-Maven,
+  you can take a look at the following goals, setup, and examples information:
+
+  ** {{{plugin-info.html}Goals and Parameters}} (*Note* goal prefix is "gwt" currently, not "googlewebtoolkit2" as this auto generated page reports)
+
+  ** {{{setup.html}Setup}}
+  
+  ** {{{examples.html}Examples}}
+  
+* More Details on Specific Goals and Features
+
+  ** {{{testing.html}Testing Support}} 
+  
+  ** {{{tomcatlite.html}Tomcat Configuration}}  
+  
+  ** {{{archetype.html}Using the Archetype}}  
+  
+* More General Information
+
+  ** {{{http://code.google.com/p/gwt-maven/}Google Code hosting page}}
+  
+  ** {{{http://groups.google.com/group/gwt-maven/}Mailing list}}
+  
+  ** {{{http://code.google.com/p/gwt-maven/issues/list}Issue tracker}}
+  
+  ** {{{http://code.google.com/p/gwt-maven/wiki/M2FAQ}FAQ}}

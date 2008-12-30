@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <pomVersion>3</pomVersion>
+    <id>gwt-maven-sample</id>
+    <currentVersion>1.0.2</currentVersion>
+    <name>gwt-maven-sample</name>
+    <package>com.totsp.sample</package>
+    <inceptionYear>2006</inceptionYear>
+    <organization>
+        <name>TotSP</name>
+        <url>http://www.screaming-penguin.com</url>
+    </organization>
+    <shortDescription>Sample for Maven gwt plugin</shortDescription>    
+    <siteAddress>http://code.google.com/p/gwt-maven/</siteAddress>
+    <repository>
+        <connection>scm:svn:http://gwt-maven.googlecode.com/svn</connection>
+        <developerConnection>scm:svn:https://gwt-maven.googlecode.com/svn</developerConnection>
+        <url>http://gwt-maven.googlecode.com/svn</url>
+    </repository>
+    <developers>
+        <developer>
+            <name>Charlie Collins</name>
+            <email>charlie . collins @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+        <developer>
+            <name>Robert Cooper</name>
+            <email>kebernet @ gmail.com</email>
+            <organization>TotSP</organization>
+        </developer>
+    </developers>   
+    <build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*gwt.xml</include>
+				</includes>
+			</resource>			
+		</resources>
+		<unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/*GwtTest.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>${basedir}/src/main/webapp</directory>
+				</resource>				
+				<resource>
+					<directory>${basedir}/src/main/java</directory>
+				</resource>
+				<resource>
+					<directory>${basedir}/src/test/java</directory>
+				</resource>
+			</resources>
+		</unitTest>
+	</build>  
+    
+    <dependencies>
+		<!--  stuff that IS war bundled -->		
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>1.5.1</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.7</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+		
+		<!--  stuff that is NOT war bundled -->		
+		<!--  dev-build only for GWT -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>1.5.1</version>
+			<type>jar</type>
+		</dependency>
+		<!--  MUST BE PLATFORM SPECIFIC, only needed for shell (see project.properties for override) -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev-platform</artifactId>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+				
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.1</version>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.totsp.gwt</groupId>
+			<artifactId>maven-googlewebtoolkit-plugin</artifactId>
+			<version>1.6.0</version>
+			<type>plugin</type>
+		</dependency>		         	
+	</dependencies>
+	
+</project>
+

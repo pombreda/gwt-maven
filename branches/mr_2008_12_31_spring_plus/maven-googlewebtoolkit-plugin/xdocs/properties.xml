@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<document>
+	<properties>
+		<title>
+			maven-googlewebtoolkit-plugin 1.x (gwt-maven) properties
+		</title>
+	</properties>
+
+	<body>
+		<section name="Properties">
+			<table>
+				<tr>
+					<th>Property name</th>
+					<th>Optional?</th>
+					<th>Default</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.home</td>
+					<td>No</td>
+					<td>
+						${basedir}/../gwt-amiga-1.7.58 (make sure to
+						change this, please)
+					</td>
+					<td>
+						Specifies the location where the Google Web
+						Toolkit is installed.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.extrajvmargs</td>
+					<td>Yes</td>
+					<td>none</td>
+					<td>
+						Specifies extra args that are passed to the
+						GWTShell, most importantly used for Macs to
+						specify "-XstartOnFirstThread" (required on the
+						Mac).
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.runtarget</td>
+					<td>No</td>
+					<td>MyModule/MyModule.html</td>
+					<td>
+						Specifies the relative URL (GWT module and Host
+						Page) the Hosted Mode Browser should invoke when
+						launched.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.compiletarget</td>
+					<td>No</td>
+					<td>MyModule</td>
+					<td>
+						Specifies the GWT module the GWTCompiler will
+						build.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.output</td>
+					<td>Yes</td>
+					<td>${maven.war.webapp.dir}</td>
+					<td>
+						Specifies the location where generated web files
+						will be written.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.style</td>
+					<td>Yes</td>
+					<td>OBF</td>
+					<td>
+						Specifies the style of the GWTCompiler
+						JavaScript output (PRETTY, DETAILED, OBF).
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.tomcat</td>
+					<td>Yes</td>
+					<td>${maven.build.dir}/tomcat</td>
+					<td>
+						Specifies the location where tomcat directory
+						will be created.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.port</td>
+					<td>Yes</td>
+					<td>8888</td>
+					<td>
+						Specifies the port where the development mode
+						server will run (default 8888).
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.debugport</td>
+					<td>Yes</td>
+					<td>8887</td>
+					<td>
+						Specifies the port the external JVM debugger will listen, if using gwt:debug.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.gen</td>
+					<td>Yes</td>
+					<td>${maven.war.webapp.dir}</td>
+					<td>
+						Specifies the -gen flag to the GWTShell
+						(temporary output files location).
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.loglevel</td>
+					<td>Yes</td>
+					<td>INFO</td>
+					<td>
+						Specifies the logging level the GWTShell console
+						will display.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.noserver</td>
+					<td>Yes</td>
+					<td>false</td>
+					<td>
+						Run GWTShell with the -noserver option supplied.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.contextxml</td>
+					<td>Yes</td>
+					<td>
+						${maven.war.webapp.dir}/META-INF/context.xml
+					</td>
+					<td>
+						Location of context.xml to be copied into GWT
+						Tomcat. (Note that you can specify the location
+						of web.xml using $maven.war.webxml in the POM.)
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.generatorRootClasses</td>
+					<td>Yes</td>
+					<td>com.totsp.sample.server.ABean</td>
+					<td>
+						Generate GWT IsSerializable beans from existing
+						model beans, this defines where the existing
+						model beans are located.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						google.webtoolkit.generatePropertyChangeSupport
+					</td>
+					<td>Yes</td>
+					<td>false</td>
+					<td>
+						Automatically generate PropertyChangeSupport on
+						generated beans.
+					</td>
+				</tr>
+				<tr>
+					<td>google.webtoolkit.generateGettersAndSetters</td>
+					<td>Yes</td>
+					<td>false</td>
+					<td>
+						Include getters and setters, or not, on
+						generated beans.
+					</td>
+				</tr>
+				<tr>
+					<td>
+						google.webtoolkit.generatorDestinationPackage
+					</td>
+					<td>Yes</td>
+					<td>com.totsp.sample.client</td>
+					<td>Destination package for generated beans.</td>
+				</tr>
+
+			</table>
+		</section>
+
+	</body>
+</document>

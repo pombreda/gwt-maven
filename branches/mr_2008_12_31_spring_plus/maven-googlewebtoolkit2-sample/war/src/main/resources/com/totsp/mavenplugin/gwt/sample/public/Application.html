@@ -1,0 +1,79 @@
+<html>
+	<head>
+	<title>maven-googlewebtoolkit2-sample</title>
+	<style>
+			html,body{
+				font-family:arial,sans-serif;
+				height: 100%;
+				width: 800px;
+				align: center;
+				overflow: hidden;
+			}
+	</style>
+<!--                                           -->
+<!-- This script loads your compiled module.   -->
+<!-- If you add any GWT meta tags, they must   -->
+<!-- be added before this line.                -->
+<!--                                           -->
+<script language='javascript'
+	src='com.totsp.mavenplugin.gwt.sample.Application.nocache.js'></script>
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic ui         -->
+<!--                                           -->
+<body>
+
+<!-- OPTIONAL: include this if you want history support -->
+<iframe src="javascript:''" id="__gwt_historyFrame"
+	style="width: 0; height: 0; border: 0"></iframe>
+<table align=center>
+	<tr align="center">
+		<td>
+			<h1>Welcome to the maven-googlewebtoolkit2-sample</h1>
+			<table>
+				<tr>
+					<td>
+							<p>This is a <i>simple</i> gwt-maven example project, based on GWT v1.4.6x and maven v2.0.9+.</p>
+							
+							Inside this example you will find a...
+							<ul>
+								<li>Maven Multi-Module project</li>
+								<li>GWT client that makes an RPC/AJAX call to a Java1.5 GWT server</li>
+								<li>Automatic Resource Inclusion (css)</li>
+								<li>Automatic Resource Inclusion (images via an ImageBundle)</li>
+							</ul>
+							
+							Maven Modules Explained:
+							<ul>
+								<li>parent: this is the root/parent of the project</li>
+								<li>war: this is the client GWT code</li>
+								<li>rpc: this is an interface to a GWT server (not an
+								implementation)</li>
+								<li>server: is the implementation of the rpc interface (in
+								Java1.5+)</li>
+								<li>Look inside the pom.xml's for more comments and docs</li>
+							</ul>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr align="center">
+		<td>The Demo is Below<hr/></td>
+	</tr>	
+	<!-- Below is where the gwt widgets are injected -->
+	<tr align="center">
+		<td id="gwtLogo"></td>
+	</tr>
+	<tr align="center">
+		<td id="rpcButton"></td>
+	</tr>
+	<tr align="center">
+		<td id="rpcResponse"></td>
+	</tr>
+</table>
+</body>
+</html>
