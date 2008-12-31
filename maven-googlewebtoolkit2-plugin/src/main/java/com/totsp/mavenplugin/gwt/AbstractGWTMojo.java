@@ -25,14 +25,19 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.maven.artifact.DefaultArtifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.repository.DefaultArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
 import org.codehaus.plexus.util.FileUtils;
 
+import com.totsp.mavenplugin.gwt.support.util.DependencyScope;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
-import com.totsp.mavenplugin.gwt.util.DependencyScope;
 
 /**
  * Abstract Mojo for GWT-Maven.
@@ -85,23 +90,23 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @required
     * @readonly
     */
-   private List pluginClasspathList;
+   private List<DefaultArtifact> pluginClasspathList;
    /**
     * @component
     */
-   private org.apache.maven.artifact.factory.ArtifactFactory artifactFactory;
+   private ArtifactFactory artifactFactory;
    /**
     * @component
     */
-   private org.apache.maven.artifact.resolver.ArtifactResolver resolver;
+   private ArtifactResolver resolver;
    /**
     * @parameter expression="${localRepository}"
     */
-   private org.apache.maven.artifact.repository.ArtifactRepository localRepository;
+   private ArtifactRepository localRepository;
    /**
     * @parameter expression="${project.remoteArtifactRepositories}"
     */
-   private java.util.List remoteRepositories;
+   private List<DefaultArtifactRepository> remoteRepositories;
 
    // GWT-Maven properties
 
@@ -129,8 +134,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * Location on filesystem where GWT will write output files (-out option to
     * GWTCompiler).
     * 
-    * @parameter 
-    *            expression="${project.build.directory}/${project.build.finalName}"
+    * @parameter expression="${project.build.directory}/${project.build.finalName}"
     */
    private File output;
    /**
@@ -374,333 +378,256 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
       }
    }
 
-   //
-   // accessors/mutators
-   //
+   
+   
+  // ===========================================================================
+  // GETTERS AND SETTERS
+  // ===========================================================================
 
    public void setBuildDir(File buildDir) {
       this.buildDir = buildDir;
    }
-
    public File getBuildDir() {
       return this.buildDir;
    }
-
    public void setCompileTarget(String[] compileTarget) {
       this.compileTarget = compileTarget;
    }
-
    public String[] getCompileTarget() {
       return this.compileTarget;
    }
-
    public void setContextXml(File contextXml) {
       this.contextXml = contextXml;
    }
-
    public File getContextXml() {
       return this.contextXml;
    }
-
    public void setExtraJvmArgs(String extraJvmArgs) {
       this.extraJvmArgs = extraJvmArgs;
    }
-
    public String getExtraJvmArgs() {
       return this.extraJvmArgs;
    }
-
    public void setGen(File gen) {
       this.gen = gen;
    }
-
    public File getGen() {
       return this.gen;
    }
-
    public void setGwtHome(File gwtHome) {
       this.gwtHome = gwtHome;
    }
-
    public File getGwtHome() {
       return this.gwtHome;
    }
-
    public void setLogLevel(String logLevel) {
       this.logLevel = logLevel;
    }
-
    public String getLogLevel() {
       return this.logLevel;
    }
-
    public void setNoServer(boolean noServer) {
       this.noServer = noServer;
    }
-
    public boolean isNoServer() {
       return this.noServer;
    }
-
    public void setOutput(File output) {
       this.output = output;
    }
-
    public File getOutput() {
       return this.output;
    }
-
    public void setPort(int port) {
       this.port = port;
    }
-
    public int getPort() {
       return this.port;
    }
-
    public void setProject(MavenProject project) {
       this.project = project;
    }
-
    public MavenProject getProject() {
       return this.project;
    }
-
    public void setRunTarget(String runTarget) {
       this.runTarget = runTarget;
    }
-
    public String getRunTarget() {
       return this.runTarget;
    }
-
    public void setStyle(String style) {
       this.style = style;
    }
-
    public String getStyle() {
       return this.style;
    }
-
    public void setTomcat(File tomcat) {
       this.tomcat = tomcat;
    }
-
    public File getTomcat() {
       return this.tomcat;
    }
-
    public void setWebXml(File webXml) {
       this.webXml = webXml;
    }
-
    public File getWebXml() {
       return this.webXml;
    }
-
    public boolean isWebXmlServletPathAsIs() {
       return this.webXmlServletPathAsIs;
    }
-
    public void setWebXmlServletPathAsIs(boolean webXmlServletPathAsIs) {
       this.webXmlServletPathAsIs = webXmlServletPathAsIs;
    }
-
    public String getShellServletMappingURL() {
       return this.shellServletMappingURL;
    }
-
    public void setShellServletMappingURL(String shellServletMappingURL) {
       this.shellServletMappingURL = shellServletMappingURL;
    }
-
    public String[] getGeneratorRootClasses() {
       return this.generatorRootClasses;
    }
-
    public void setGeneratorRootClasses(String[] generatorRootClasses) {
       this.generatorRootClasses = generatorRootClasses;
    }
-
    public String getGeneratorDestinationPackage() {
       return this.generatorDestinationPackage;
    }
-
    public void setGeneratorDestinationPackage(String generatorDestinationPackage) {
       this.generatorDestinationPackage = generatorDestinationPackage;
    }
-
    public boolean isGenerateGettersAndSetters() {
       return this.generateGettersAndSetters;
    }
-
    public void setGenerateGettersAndSetters(boolean generateGettersAndSetters) {
       this.generateGettersAndSetters = generateGettersAndSetters;
    }
-
    public boolean isGeneratePropertyChangeSupport() {
       return this.generatePropertyChangeSupport;
    }
-
    public void setGeneratePropertyChangeSupport(boolean generatePropertyChangeSupport) {
       this.generatePropertyChangeSupport = generatePropertyChangeSupport;
    }
-
    public boolean isOverwriteGeneratedClasses() {
       return this.overwriteGeneratedClasses;
    }
-
    public void setOverwriteGeneratedClasses(boolean overwriteGeneratedClasses) {
       this.overwriteGeneratedClasses = overwriteGeneratedClasses;
    }
-
    public int getDebugPort() {
       return this.debugPort;
    }
-
    public void setDebugPort(int debugPort) {
       this.debugPort = debugPort;
    }
-
    public boolean isDebugSuspend() {
       return this.debugSuspend;
    }
-
    public void setDebugSuspend(boolean debugSuspend) {
       this.debugSuspend = debugSuspend;
    }
-
    public String getGwtVersion() {
       return this.gwtVersion;
    }
-
    public void setGwtVersion(String gwtVersion) {
       this.gwtVersion = gwtVersion;
    }
-
    public void setCompileTargets(String[] targets) {
       this.compileTarget = targets;
    }
-
    public String getTestFilter() {
       return this.testFilter;
    }
-
    public void setTestFilter(String testFilter) {
       this.testFilter = testFilter;
    }
-
    public boolean getSourcesOnPath() {
       return this.sourcesOnPath;
    }
-
    public void setSourcesOnPath(boolean value) {
       this.sourcesOnPath = value;
    }
-
-    public boolean getResourcesOnPath() {
-        return resourcesOnPath;
-    }
-
-    public void setResourcesOnPath(boolean resourcesOnPath) {
-        this.resourcesOnPath = resourcesOnPath;
-    }
-
-    public boolean isEnableAssertions() {
-      return this.enableAssertions;
+   public boolean getResourcesOnPath() {
+     return resourcesOnPath;
    }
-
+  public void setResourcesOnPath(boolean resourcesOnPath) {
+    this.resourcesOnPath = resourcesOnPath;
+  }
+  public boolean isEnableAssertions() {
+    return this.enableAssertions;
+  }
    public void setEnableAssertions(boolean enableAssertions) {
       this.enableAssertions = enableAssertions;
    }
-
-   public List getPluginClasspathList() {
+   public List<DefaultArtifact> getPluginClasspathList() {
       return this.pluginClasspathList;
    }
-
-   public void setPluginClasspathList(List pluginClasspathList) {
+   public void setPluginClasspathList(List<DefaultArtifact> pluginClasspathList) {
       this.pluginClasspathList = pluginClasspathList;
    }
-
-   public org.apache.maven.artifact.factory.ArtifactFactory getArtifactFactory() {
+   public ArtifactFactory getArtifactFactory() {
       return this.artifactFactory;
    }
-
-   public void setArtifactFactory(org.apache.maven.artifact.factory.ArtifactFactory artifactFactory) {
+   public void setArtifactFactory(ArtifactFactory artifactFactory) {
       this.artifactFactory = artifactFactory;
    }
-
-   public org.apache.maven.artifact.resolver.ArtifactResolver getResolver() {
+   public ArtifactResolver getResolver() {
       return this.resolver;
    }
-
-   public void setResolver(org.apache.maven.artifact.resolver.ArtifactResolver resolver) {
+   public void setResolver(ArtifactResolver resolver) {
       this.resolver = resolver;
    }
-
-   public org.apache.maven.artifact.repository.ArtifactRepository getLocalRepository() {
+   public ArtifactRepository getLocalRepository() {
       return this.localRepository;
    }
-
-   public void setLocalRepository(org.apache.maven.artifact.repository.ArtifactRepository localRepository) {
+   public void setLocalRepository(ArtifactRepository localRepository) {
       this.localRepository = localRepository;
    }
-
-   public java.util.List getRemoteRepositories() {
+   public List<DefaultArtifactRepository> getRemoteRepositories() {
       return this.remoteRepositories;
    }
-
-   public void setRemoteRepositories(java.util.List remoteRepositories) {
+   public void setRemoteRepositories(List<DefaultArtifactRepository> remoteRepositories) {
       this.remoteRepositories = remoteRepositories;
    }
-
    public File getI18nOutputDir() {
       return this.i18nOutputDir;
    }
-
    public void setI18nOutputDir(File outputDir) {
       this.i18nOutputDir = outputDir;
    }
-
    public String[] getI18nMessagesNames() {
       return this.i18nMessagesNames;
    }
-
    public void setI18nMessagesNames(String[] messagesNames) {
       this.i18nMessagesNames = messagesNames;
    }
-
    public String[] getI18nConstantsNames() {
       return this.i18nConstantsNames;
    }
-
    public void setI18nConstantsNames(String[] constantsNames) {
       this.i18nConstantsNames = constantsNames;
    }
-
    public String getExtraTestArgs() {
       return this.extraTestArgs;
    }
-
    public void setExtraTestArgs(String extraTestArgs) {
       this.extraTestArgs = extraTestArgs;
    }
-
    public boolean isTestSkip() {
       return this.testSkip;
    }
-
    public void setTestSkip(boolean skip) {
       this.testSkip = skip;
    }
-
   public String[] getI18nConstantsWithLookupNames() {
     return i18nConstantsWithLookupNames;
   }
-
   public void setI18nConstantsWithLookupNames(
       String[] i18nConstantsWithLookupNames) {
     this.i18nConstantsWithLookupNames = i18nConstantsWithLookupNames;
   }
-
 }
+
+

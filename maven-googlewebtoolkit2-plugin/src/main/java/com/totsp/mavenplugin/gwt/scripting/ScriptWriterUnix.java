@@ -25,8 +25,8 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
+import com.totsp.mavenplugin.gwt.support.util.DependencyScope;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
-import com.totsp.mavenplugin.gwt.util.DependencyScope;
 
 
 

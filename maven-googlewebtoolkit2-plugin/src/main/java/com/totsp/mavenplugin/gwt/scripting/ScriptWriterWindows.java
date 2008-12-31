@@ -26,8 +26,8 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
+import com.totsp.mavenplugin.gwt.support.util.DependencyScope;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
-import com.totsp.mavenplugin.gwt.util.DependencyScope;
 
 
 
@@ -55,22 +55,22 @@ public class ScriptWriterWindows extends AbstractScriptWriter {
     }
 
     try {
-      Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo,
-          scope);
+      Collection<File> classpath = 
+        BuildClasspathUtil.buildClasspathList(mojo, scope);
       writer.print("set CLASSPATH=");
 
-      StringBuffer cpString = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       for (File f : classpath) {
-        cpString.append("\"" + f.getAbsolutePath() + "\";");
+        sb.append("\"" + f.getAbsolutePath() + "\";");
         // break the line at 4000 characters to try to avoid max size
-        if (cpString.length() > 4000) {
-          writer.println(cpString);
-          cpString = new StringBuffer();
+        if (sb.length() > 4000) {
+          writer.println(sb);
+          sb = new StringBuilder();
           writer.print("set CLASSPATH=%CLASSPATH%;");
         }
       }
-      writer.println(cpString);
+      writer.println(sb);
       writer.println();
     } catch (DependencyResolutionRequiredException e) {
       throw new MojoExecutionException("Error creating script - " + file, e);

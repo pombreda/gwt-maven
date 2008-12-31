@@ -25,6 +25,9 @@ import java.util.ArrayList;
 
 
 /**
+ * Special processor which adds to web.xml only one servlet descriptor -
+ * with name <code>shell</code> and class 
+ * <code>com.google.gwt.dev.shell.GWTShellServlet</code>.
  * @author cooper
  * @author Marek Romanowski
  */
