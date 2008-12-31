@@ -90,8 +90,7 @@ public class GWTBeanGenerator extends BeanGeneratorBase{
                 (line.getOptions().length == 0) ||
                 (line.hasOption("help"))
                 ) {
-            GWTBeanGenerator.formatter.printHelp("GWTBeanGenerator",
-                    options);
+            GWTBeanGenerator.formatter.printHelp("GWTBeanGenerator", options);
         }
         
         Class startBean = Class.forName( line.getOptionValue("startBean") );

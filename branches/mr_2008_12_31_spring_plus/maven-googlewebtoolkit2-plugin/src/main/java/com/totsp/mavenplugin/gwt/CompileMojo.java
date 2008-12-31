@@ -24,6 +24,7 @@ package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -32,7 +33,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
-import com.totsp.mavenplugin.gwt.util.FileIOUtils;
+import com.totsp.mavenplugin.gwt.support.util.FileIOUtils;
 
 
 
@@ -64,6 +65,7 @@ public class CompileMojo extends AbstractGWTMojo {
     // run it
     ScriptUtil.runScript(exec);
 
+    try {
     // copy files for WEB-INF (except for web.xml - not to change behaviour)
     File webappWebInf = new File(getTomcat(), "webapps/ROOT/WEB-INF");
     webappWebInf.mkdirs();
@@ -79,7 +81,10 @@ public class CompileMojo extends AbstractGWTMojo {
     };
     
     // copy files from project output directory to webapp
-    FileIOUtils.copyRecursive(getOutput(), webappWebInf.getParentFile(), null);
+      FileIOUtils.copyRecursive(getOutput(), webappWebInf.getParentFile(), null);
+    } catch (IOException e) {
+      throw new MojoExecutionException("File copy error", e);
+    }
   }
 }
 

@@ -33,6 +33,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.artifact.ActiveProjectArtifact;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
+import com.totsp.mavenplugin.gwt.support.util.DependencyScope;
 
 /**
  * Util to consolidate classpath manipulation stuff in one place.

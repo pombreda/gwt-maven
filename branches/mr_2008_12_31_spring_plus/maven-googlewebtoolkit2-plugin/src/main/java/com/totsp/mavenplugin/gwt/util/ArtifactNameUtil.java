@@ -18,21 +18,21 @@ package com.totsp.mavenplugin.gwt.util;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 
+
+
+/**
+ * Util for artifact and platform names stuff.
+ */
 public class ArtifactNameUtil {
 
     /**
      * Util for artifact and platform names stuff.
-     * 
-     * @author ccollins
-     * 
      */
     private ArtifactNameUtil() {
     }
 
     /**
      * Convenience return platform name.
-     * 
-     * @return
      */
     public static final String getPlatformName() {
         return AbstractGWTMojo.platformName;
@@ -40,10 +40,10 @@ public class ArtifactNameUtil {
 
     /**
      * Guess dev jar name based on platform.
-     * 
-     * @return
      */
     public static final String guessDevJarName() {
       return "gwt-dev-" + AbstractGWTMojo.platformName + ".jar";
     }
 }
+
+
