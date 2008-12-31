@@ -81,17 +81,18 @@ public class MakeCatalinaBase {
         new File(catalinaBase, "work").mkdirs();
         
         FileOutputStream fos = new FileOutputStream( new File( conf, "web.xml") );
-        MakeCatalinaBase.copyStream( MakeCatalinaBase.class.getResourceAsStream("baseWeb.xml"),
-                fos);
+        MakeCatalinaBase.copyStream(
+            MakeCatalinaBase.class.getResourceAsStream("baseWeb.xml"), fos);
         File mergeWeb = new File( webinf, "web.xml");
         File sourceWeb = new File( sourceWebXml );
         if( sourceWeb.exists() ){
-            GwtShellWebProcessor p = new GwtShellWebProcessor( mergeWeb.getAbsolutePath(), sourceWebXml, shellServletMappingURL );
+            GwtShellWebProcessor p = new GwtShellWebProcessor(
+                mergeWeb.getAbsolutePath(), sourceWebXml, shellServletMappingURL);
             p.process();
         } else {
             fos = new FileOutputStream( mergeWeb );
-            MakeCatalinaBase.copyStream( MakeCatalinaBase.class.getResourceAsStream("emptyWeb.xml"),
-                    fos);
+            MakeCatalinaBase.copyStream(
+                MakeCatalinaBase.class.getResourceAsStream("emptyWeb.xml"), fos);
         }
         
     }

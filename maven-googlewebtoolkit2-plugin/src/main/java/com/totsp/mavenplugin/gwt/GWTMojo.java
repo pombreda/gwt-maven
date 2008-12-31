@@ -27,7 +27,6 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
 
 import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
-import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
 import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 
@@ -65,12 +64,19 @@ public class GWTMojo extends AbstractGWTMojo {
         }
 
         // build it for the correct platform
-        ScriptWriter writer = ScriptWriterFactory.getInstance();
-        File exec = writer.writeRunScript(this);        
+        File exec = writeScript();        
         
         // run it
         ScriptUtil.runScript(exec);
     }
+    
+    
+    
+    protected File writeScript() throws MojoExecutionException {
+      return ScriptWriterFactory.getInstance().writeRunScript(this);
+    }
+    
+    
 
     /**
      * Create embedded GWT tomcat base dir based on properties.

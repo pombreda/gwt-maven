@@ -25,7 +25,7 @@ public final class ScriptWriterFactory {
     
     public static ScriptWriter getInstance() {
         ScriptWriter sw = null;
-        if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {            
+        if (AbstractGWTMojo.isWindows) {            
             sw = new ScriptWriterWindows();
         } else {
             sw = new ScriptWriterUnix();

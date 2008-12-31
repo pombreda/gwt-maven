@@ -90,9 +90,6 @@ public class BuildClasspathUtil {
          BuildClasspathUtil.addResourcesWithActiveProjects(project, items, DependencyScope.COMPILE);
       }
 
-      // add classes dir
-      items.add(new File(project.getBasedir(), "classes"));
-
       // if runtime add runtime
       if (scope == DependencyScope.RUNTIME) {
          for (Iterator it = project.getRuntimeClasspathElements().iterator(); it.hasNext();) {
@@ -156,10 +153,7 @@ public class BuildClasspathUtil {
     * @return
     */
    public static Collection<File> injectGwtDepsFromRepo(final AbstractGWTMojo mojo) throws MojoExecutionException {
-      mojo
-               .getLog()
-               .debug(
-                        "injecting gwt-user and gwt-dev for script classpath from local repository (and expecting relative native libs)");
+      mojo.getLog().debug("injecting gwt-user and gwt-dev for script classpath from local repository (and expecting relative native libs)");
       Collection<File> items = new LinkedHashSet<File>();
 
       Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-user",

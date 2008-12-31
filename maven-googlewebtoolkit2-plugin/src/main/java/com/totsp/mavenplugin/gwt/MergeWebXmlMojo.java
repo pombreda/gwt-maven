@@ -34,6 +34,18 @@ import com.totsp.mavenplugin.gwt.util.FileIOUtils;
 
 /**
  * Merges GWT servlet elements into deployment descriptor (and non GWT servlets into shell).
+ * Things done:
+ * <ol>
+ *   <li>Copy web.xml file from <code>${webXml}</code> to <code>buildDir</code>.</li>
+ *   <li>For each <code>moduleName</code> from <code>${compileTargets}</code> do:
+ *   <p>
+ *   <ol>
+ *     <li>Search for GWT module descriptor (<code>moduleName.gwt.xml</code>).
+ *     Searching in all compile source roots and resources dirs of project.</li>
+ *     <li></li>
+ *     <li></li>
+ *   </ol>
+ * </ol>
  * 
  * @goal mergewebxml
  * @phase process-resources

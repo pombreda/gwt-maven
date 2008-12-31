@@ -35,13 +35,7 @@ public class ArtifactNameUtil {
      * @return
      */
     public static final String getPlatformName() {
-        String result = AbstractGWTMojo.WINDOWS;
-        if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.MAC)) {
-            result = AbstractGWTMojo.MAC;
-        } else if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.LINUX)) {
-            result = AbstractGWTMojo.LINUX;
-        }
-        return result;
+        return AbstractGWTMojo.platformName;
     }
 
     /**
@@ -50,12 +44,6 @@ public class ArtifactNameUtil {
      * @return
      */
     public static final String guessDevJarName() {
-        if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
-            return "gwt-dev-windows.jar";
-        } else if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.MAC)) {
-            return "gwt-dev-mac.jar";
-        } else {
-            return "gwt-dev-linux.jar";
-        }
+      return "gwt-dev-" + AbstractGWTMojo.platformName + ".jar";
     }
 }

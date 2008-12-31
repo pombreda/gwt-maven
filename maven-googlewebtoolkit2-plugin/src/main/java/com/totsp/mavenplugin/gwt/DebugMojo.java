@@ -20,27 +20,40 @@
  */
 package com.totsp.mavenplugin.gwt;
 
+import java.io.File;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
+
+
+
 /**
- * Extends the gwt goal and runs the project in the GWTShell with a debugger port hook (optionally suspended).
- * 
+ * Extends the gwt goal and runs the project in the GWTShell with a debugger
+ * port hook (optionally suspended).
  * @goal debug
- * @description Runs the project with a debugger port hook (optionally suspended). 
- * 
+ * @description Runs the project with a debugger port hook (optionally suspended).
  * @author cooper
  */
 public class DebugMojo extends GWTMojo {
-    public DebugMojo() {
-        super();
-    }
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        if (isDebugSuspend())
-            getLog().info("starting debugger on port " + getDebugPort() + " in suspend mode");
-        else
-            getLog().info("starting debugger on port " + getDebugPort());
-        super.execute();
-    }
+  
+  
+  protected File writeScript() throws MojoExecutionException {
+    return ScriptWriterFactory.getInstance().writeDebugScript(this);
+  }
+
+
+
+  public void execute() throws MojoExecutionException, MojoFailureException {
+    if (isDebugSuspend())
+      getLog().info(
+          "starting debugger on port " + getDebugPort() + " in suspend mode");
+    else
+      getLog().info("starting debugger on port " + getDebugPort());
+    super.execute();
+  }
 }
+
+
