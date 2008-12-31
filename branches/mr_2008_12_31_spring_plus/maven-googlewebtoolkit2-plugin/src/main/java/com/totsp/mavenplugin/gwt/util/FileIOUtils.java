@@ -17,11 +17,14 @@
 package com.totsp.mavenplugin.gwt.util;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Consolidate file and IO related utils from other classes.
@@ -30,10 +33,49 @@ import java.io.OutputStream;
  */
 public class FileIOUtils {
 
+  
+  
     public static final int DEFAULT_BUFFER_SIZE = 1024;
 
+    
+    
     private FileIOUtils() {
     }
+    
+    
+    
+    /**
+     * Copy all files from <code>from</code> directory to </code>to</code>
+     * directory. If you pass additional parameter - <code>filter</code> then
+     * it will copy only files matching that filter.
+     */
+    public static void copyRecursive(File from, File to, FileFilter filter
+        ) throws MojoExecutionException {
+      to.mkdirs();
+      
+      // for every file in "from" directory
+      for (File fileToCopy : from.listFiles()) {
+        File destinationFile = new File(to, fileToCopy.getName());
+        // if it is directory, copy files recursively
+        if (fileToCopy.isDirectory()) {
+          copyRecursive(fileToCopy, destinationFile, filter);
+        } else if ((filter == null) || (filter.accept(fileToCopy.getAbsoluteFile()))) {
+          // do not overwriter if not needed
+          if (destinationFile.exists() 
+              && (destinationFile.lastModified() > fileToCopy.lastModified())) {
+            continue;
+          }
+          
+          try {
+            FileIOUtils.copyFile(fileToCopy, destinationFile);
+          } catch (IOException e) {
+            throw new MojoExecutionException("Error", e);
+          }
+        }
+      }
+    }
+    
+    
 
     /**
      * Copies the data from an InputStream object to an OutputStream object.
@@ -46,7 +88,8 @@ public class FileIOUtils {
      * @exception IOException
      *                from java.io calls.
      */
-    public static int copyStream(InputStream sourceStream, OutputStream destinationStream) throws IOException {
+    public static int copyStream(InputStream sourceStream, 
+        OutputStream destinationStream) throws IOException {
         int bytesRead = 0;
         int totalBytes = 0;
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
@@ -65,20 +108,21 @@ public class FileIOUtils {
         return totalBytes;
     }
 
+    
+    
     /**
      * Copy a file from source to destination.
-     * 
      * @param source
      * @param destination
      * @throws IOException
      */
-    public static void copyFile(File source, File destination) throws IOException {
+    public static void copyFile(
+        File source, File destination) throws IOException {
         FileOutputStream fos = new FileOutputStream(destination);
         FileInputStream fis = new FileInputStream(source);
         copyStream(fis, fos);
-        fos.flush();
-        fos.close();
         fis.close();
     }
-
 }
+
+

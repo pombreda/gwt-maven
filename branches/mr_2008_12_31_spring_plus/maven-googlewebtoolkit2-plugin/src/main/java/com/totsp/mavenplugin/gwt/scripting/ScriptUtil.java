@@ -14,7 +14,7 @@ public final class ScriptUtil {
 
    public static void runScript(final File exec) throws MojoExecutionException {
       ProcessWatcher pw = null;
-      if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
+      if (AbstractGWTMojo.isWindows) {
          pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
       }
       else {
@@ -38,7 +38,7 @@ public final class ScriptUtil {
       StringBuilder out = new StringBuilder();
       StringBuilder err = new StringBuilder();
       ProcessWatcher pw = null;
-      if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
+      if (AbstractGWTMojo.isWindows) {
          pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
       }
       else {
@@ -54,7 +54,7 @@ public final class ScriptUtil {
             boolean validError = true;
 
             // the Mac VM will log CocoaComponent messages to stderr, falsely triggering the exception
-            if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.MAC)) {
+            if (AbstractGWTMojo.isMac) {
                validError = false;
                final String[] errLines = err.toString().split("\n");
                for (int i = 0; i < errLines.length; ++i) {
@@ -89,7 +89,7 @@ public final class ScriptUtil {
          // OK (1 test)
 
          String[] lines = null;
-         if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
+         if (AbstractGWTMojo.isWindows) {
             lines = out.toString().split("\r\n");
          }
          else {

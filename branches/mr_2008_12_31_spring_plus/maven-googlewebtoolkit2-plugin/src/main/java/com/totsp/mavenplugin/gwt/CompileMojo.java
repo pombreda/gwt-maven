@@ -23,13 +23,18 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+import java.io.FileFilter;
 
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import com.totsp.mavenplugin.gwt.scripting.ScriptUtil;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriter;
 import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
+import com.totsp.mavenplugin.gwt.util.FileIOUtils;
+
+
 
 /**
  * Invokes the GWTCompiler for the project source.
@@ -41,24 +46,41 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
  * 
  * @author cooper
  * @author ccollins
+ * @author Marek Romanowski
  */
 public class CompileMojo extends AbstractGWTMojo {
 
-    /** Creates a new instance of CompileMojo */
-    public CompileMojo() {
-        super();
+
+
+  public void execute() throws MojoExecutionException, MojoFailureException {
+    if (!this.getOutput().exists()) {
+      this.getOutput().mkdirs();
     }
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        if (!this.getOutput().exists()) {
-            this.getOutput().mkdirs();
-        }
+    // build it for the correct platform
+    ScriptWriter writer = ScriptWriterFactory.getInstance();
+    File exec = writer.writeCompileScript(this);
 
-        // build it for the correct platform
-        ScriptWriter writer = ScriptWriterFactory.getInstance();
-        File exec = writer.writeCompileScript(this);        
-        
-        // run it
-        ScriptUtil.runScript(exec);
-    }
+    // run it
+    ScriptUtil.runScript(exec);
+
+    // copy files for WEB-INF (except for web.xml - not to change behaviour)
+    File webappWebInf = new File(getTomcat(), "webapps/ROOT/WEB-INF");
+    webappWebInf.mkdirs();
+    for (Object o : getProject().getResources()) {
+      File rootFile = new File(((Resource) o).getDirectory(), "WEB-INF");
+      if (rootFile.exists()) {
+        FileIOUtils.copyRecursive(rootFile, webappWebInf, new FileFilter() {
+          public boolean accept(File pathname) {
+            return !pathname.getName().equals("web.xml");
+          }
+        });
+      }
+    };
+    
+    // copy files from project output directory to webapp
+    FileIOUtils.copyRecursive(getOutput(), webappWebInf.getParentFile(), null);
+  }
 }
+
+

@@ -22,19 +22,22 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 
+
+
 /**
- * 
  * @author ccollins
- * 
  */
 public interface ScriptWriter {
 
     public File writeRunScript(AbstractGWTMojo mojo) throws MojoExecutionException;
+
+    public File writeDebugScript(AbstractGWTMojo mojo) throws MojoExecutionException;
 
     public File writeCompileScript(AbstractGWTMojo mojo) throws MojoExecutionException;
 
     public File writeI18nScript(AbstractGWTMojo mojo) throws MojoExecutionException;
     
     public void writeTestScripts(AbstractGWTMojo mojo) throws MojoExecutionException;
-
 }
+
+

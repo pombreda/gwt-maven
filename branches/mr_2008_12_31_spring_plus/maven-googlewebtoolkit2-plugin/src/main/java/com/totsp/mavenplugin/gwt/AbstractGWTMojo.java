@@ -22,7 +22,6 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,20 +40,33 @@ import com.totsp.mavenplugin.gwt.util.DependencyScope;
  * @author ccollins
  * @author cooper
  * @author willpugh
+ * @author Marek Romanowski
  */
 public abstract class AbstractGWTMojo extends AbstractMojo {
 
-   public static final String OS_NAME = System.getProperty("os.name").toLowerCase(Locale.US);
+   private static final String OS_NAME = 
+     System.getProperty("os.name").toLowerCase(Locale.US);
+   private static final String WINDOWS = "windows";
+   private static final String LINUX = "linux";
+   private static final String MAC = "mac";
+   private static final String LEOPARD = "leopard";
+   
+   public static final boolean isWindows = OS_NAME.startsWith(WINDOWS);
+   public static final boolean isLinux   = OS_NAME.startsWith(LINUX);
+   public static final boolean isMac     = OS_NAME.startsWith(MAC);
+   public static final boolean isLeopard = OS_NAME.startsWith(LEOPARD);
+   
+   public static final String platformName = isWindows ? 
+       WINDOWS : (isLinux ? LINUX : MAC);
+   
    public static final String GWT_GROUP_ID = "com.google.gwt";
-   public static final String WINDOWS = "windows";
-   public static final String LINUX = "linux";
-   public static final String MAC = "mac";
-   public static final String LEOPARD = "leopard";
    public static final String GOOGLE_WEBTOOLKIT_HOME = "google.webtoolkit.home";
 
-   public static final String JAVA_COMMAND = (System.getProperty("java.home") != null) ? FileUtils.normalize(System
-            .getProperty("java.home")
-            + File.separator + "bin" + File.separator + "java") : "java";
+   public static final String JAVA_COMMAND = 
+     (System.getProperty("java.home") != null) ? 
+         FileUtils.normalize(System.getProperty("java.home")
+            + File.separator + "bin" + File.separator + "java") 
+         : "java";
 
    // Maven properties
 
@@ -285,6 +297,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private String[] i18nConstantsNames;
    /**
+    * List of names of properties files that should be used to generate i18n
+    * ConstantsWithLookup interfaces.
+    * 
+    * @parameter
+    */
+   private String[] i18nConstantsWithLookupNames;
+   /**
     * Top level (root) of classes to begin generation from.
     * 
     * @parameter property="generatorRootClasses"
@@ -335,16 +354,17 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
          ClassWorld world = new ClassWorld();
 
          //use the existing ContextClassLoader in a realm of the classloading space
-         ClassRealm root = world.newRealm("gwt-plugin", Thread.currentThread().getContextClassLoader());
+         ClassRealm root = world.newRealm(
+             "gwt-plugin", Thread.currentThread().getContextClassLoader());
          ClassRealm realm = root.createChildRealm("gwt-project");
-
-         for (Iterator it = BuildClasspathUtil.buildClasspathList(this, DependencyScope.COMPILE).iterator(); it
-                  .hasNext();) {
-            realm.addConstituent(((File) it.next()).toURI().toURL());
+         
+         // add all classpath elements to new realm
+         for (File file : BuildClasspathUtil.buildClasspathList(this, DependencyScope.COMPILE)) {
+            realm.addConstituent(file.toURI().toURL());
          }
-
+         
+         // set new thread classloader
          Thread.currentThread().setContextClassLoader(realm.getClassLoader());
-         ///System.out.println("AbstractGwtMojo realm classloader = " + realm.getClassLoader().toString());
 
          return realm.getClassLoader();
       }
@@ -673,5 +693,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public void setTestSkip(boolean skip) {
       this.testSkip = skip;
    }
+
+  public String[] getI18nConstantsWithLookupNames() {
+    return i18nConstantsWithLookupNames;
+  }
+
+  public void setI18nConstantsWithLookupNames(
+      String[] i18nConstantsWithLookupNames) {
+    this.i18nConstantsWithLookupNames = i18nConstantsWithLookupNames;
+  }
 
 }
