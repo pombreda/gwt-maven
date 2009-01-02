@@ -10,18 +10,18 @@ This document was written to document *2.0-mr-beta1* version of plugin.
 
 = New features =
 
-# ConstantsWithLookup generation
-# conditional GWT compilation
-# `maven.test.skip` parameter adoption
-# JVM for script execution is changeable
-# default platform is Unix
-# WEB-INF resources are copied to `target/tomcat/webapps/ROOT/WEB-INF`
-# `target/<project_name>-<project_version>` files are copied to 
-  `target/tomcat/webapps/ROOT/`
+  # !ConstantsWithLookup generation
+  # conditional GWT compilation
+  # `maven.test.skip` parameter adoption
+  # JVM for script execution is changeable
+  # default platform is Unix
+  # WEB-INF resources are copied to `target/tomcat/webapps/ROOT/WEB-INF`
+  # `target/<project_name>-<project_version>` files are copied to 
+    `target/tomcat/webapps/ROOT/`
 
 = Changes Description =
-== ConstantsWithLookup generation ==
-i18n goal uses new parameter - `i18nConstantsWithLookupNames`. It works like
+== !ConstantsWithLookup generation ==
+i18n goal uses new parameter - `i18n!ConstantsWithLookupNames`. It works like
 `i18nConstantsNames` but generates ConstantWithLookup extensions.
 
 == conditional GWT compilation ==
@@ -89,14 +89,14 @@ This is made at the same moment as copying WEB-INF/ resources. Add
 
 = Further work =
 
-* Jetty container better integration - I still have problems with running
-  war with my app on jetty. I'll try to make some research why.
-* More automation 
-  ** `compileTargets`, `runTargets` and `generatorRootClasses`
-     looks like they are strongly connected to each other. Maybe configuration
-     could be simpler and plugin could guess some values.
-  ** Messages, Constants and ConstantsWithLookup automatic search (by adding
-     simple comment to this files like: "# @gwt:generateMessages").
+  * Jetty container better integration - I still have problems with running
+    war with my app on jetty. I'll try to make some research why.
+  * More automation 
+    ** `compileTargets`, `runTargets` and `generatorRootClasses`
+       looks like they are strongly connected to each other. Maybe configuration
+       could be simpler and plugin could guess some values.
+    ** Messages, Constants and !ConstantsWithLookup automatic search (by adding
+       simple comment to this files like: "# @gwt:generateMessages").
 
 = Epilogue =
 
