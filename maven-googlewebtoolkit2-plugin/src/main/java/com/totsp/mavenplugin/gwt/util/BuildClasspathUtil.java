@@ -17,6 +17,7 @@
 package com.totsp.mavenplugin.gwt.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -37,28 +38,30 @@ import com.totsp.mavenplugin.gwt.support.util.DependencyScope;
 
 /**
  * Util to consolidate classpath manipulation stuff in one place.
- * 
  * @author ccollins
+ * @author Marek Romanowski
  */
 public class BuildClasspathUtil {
 
+  
+  
    /**
     * Build classpath list using either gwtHome (if present) or using *project*
     * dependencies. Note that this is ONLY used for the script/cmd writers (so
     * the scopes are not for the compiler, or war plugins, etc).
     * 
-    * This is required so that the script writers can get the dependencies they need
+    * <p>This is required so that the script writers can get the dependencies they need
     * regardless of the Maven scopes (still want to use the Maven scopes for everything else
     * Maven, but for GWT-Maven we need to access deps differently - directly at times).
-    * 
     * 
     * @param mojo
     * @param scope
     * @return file collection for classpath
     * @throws DependencyResolutionRequiredException
     */
-   public static Collection<File> buildClasspathList(final AbstractGWTMojo mojo, final DependencyScope scope)
-            throws DependencyResolutionRequiredException, MojoExecutionException {
+   public static Collection<File> buildClasspathList(
+       final AbstractGWTMojo mojo, final DependencyScope scope
+       ) throws DependencyResolutionRequiredException, MojoExecutionException {
 
       mojo.getLog().info("establishing classpath list (buildClaspathList - scope = " + scope + ")");
 
@@ -93,31 +96,23 @@ public class BuildClasspathUtil {
 
       // if runtime add runtime
       if (scope == DependencyScope.RUNTIME) {
-         for (Iterator it = project.getRuntimeClasspathElements().iterator(); it.hasNext();) {
-            items.add(new File(it.next().toString()));
-         }
+        items.addAll(createFilesViaToString(project.getRuntimeClasspathElements()));
       }
 
       // if test add test
       if (scope == DependencyScope.TEST) {
-         for (Iterator it = project.getTestClasspathElements().iterator(); it.hasNext();) {
-            items.add(new File(it.next().toString()));
-         }
+        items.addAll(createFilesViaToString(project.getTestClasspathElements()));
 
-         // add test sources and resources
-         BuildClasspathUtil.addSourcesWithActiveProjects(project, items, scope);
-         BuildClasspathUtil.addResourcesWithActiveProjects(project, items, scope);
+        // add test sources and resources
+        BuildClasspathUtil.addSourcesWithActiveProjects(project, items, scope);
+        BuildClasspathUtil.addResourcesWithActiveProjects(project, items, scope);
       }
 
       // add compile (even when scope is other than)
-      for (Iterator it = project.getCompileClasspathElements().iterator(); it.hasNext();) {
-         items.add(new File(it.next().toString()));
-      }
+      items.addAll(createFilesViaToString(project.getCompileClasspathElements()));
 
       // add system 
-      for (Iterator it = project.getSystemClasspathElements().iterator(); it.hasNext();) {
-         items.add(new File(it.next().toString()));
-      }
+      items.addAll(createFilesViaToString(project.getSystemClasspathElements()));
 
       mojo.getLog().debug("SCRIPT INJECTION CLASSPATH LIST");
       for (File f : items) {
@@ -126,18 +121,30 @@ public class BuildClasspathUtil {
 
       return items;
    }
+   
+   
+   
+   /**
+    * Creates file from objects by <code>new File(object.toString())</code>.
+    */
+   protected static List<File> createFilesViaToString(Collection<?> objects) {
+     List<File> files = new ArrayList<File>();
+     for (Object object : objects) {
+      files.add(new File(object.toString()));
+    }
+     return files;
+   }
+   
+   
 
    /**
     * Helper to inject gwt-user and gwt-dev into classpath from gwtHome, ONLY
     * for compile and run scripts.
-    * 
-    * @param mojo
-    * @return
     */
-   public static Collection<File> injectGwtDepsFromGwtHome(final File gwtHome, final AbstractGWTMojo mojo) {
-      mojo
-               .getLog()
-               .debug("injecting gwt-user and gwt-dev for script classpath from google.webtoolkit.home (and expecting relative native libs)");
+   public static Collection<File> injectGwtDepsFromGwtHome(
+       final File gwtHome, final AbstractGWTMojo mojo) {
+      mojo.getLog().debug("injecting gwt-user and gwt-dev for script " +
+      		"classpath from google.webtoolkit.home (and expecting relative native libs)");
       Collection<File> items = new LinkedHashSet<File>();
       File userJar = new File(gwtHome, "gwt-user.jar");
       File devJar = new File(gwtHome, ArtifactNameUtil.guessDevJarName());
@@ -145,24 +152,25 @@ public class BuildClasspathUtil {
       items.add(devJar);
       return items;
    }
+   
+   
 
    /**
     * Helper to inject gwt-user and gwt-dev into classpath from repo, ONLY for
     * compile and run scripts.
-    * 
-    * @param mojo
-    * @return
     */
-   public static Collection<File> injectGwtDepsFromRepo(final AbstractGWTMojo mojo) throws MojoExecutionException {
-      mojo.getLog().debug("injecting gwt-user and gwt-dev for script classpath from local repository (and expecting relative native libs)");
+   public static Collection<File> injectGwtDepsFromRepo(
+       final AbstractGWTMojo mojo) throws MojoExecutionException {
+      mojo.getLog().debug("injecting gwt-user and gwt-dev for script " +
+      		"classpath from local repository (and expecting relative native libs)");
       Collection<File> items = new LinkedHashSet<File>();
 
-      Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-user",
-               mojo.getGwtVersion(), "jar", null);
-      Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
-               mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
+      Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier(
+          "com.google.gwt", "gwt-user", mojo.getGwtVersion(), "jar", null);
+      Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier(
+          "com.google.gwt", "gwt-dev", mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
 
-      List remoteRepositories = mojo.getRemoteRepositories();
+      List<?> remoteRepositories = mojo.getRemoteRepositories();
 
       try {
          mojo.getResolver().resolve(gwtUser, remoteRepositories, mojo.getLocalRepository());
@@ -179,67 +187,71 @@ public class BuildClasspathUtil {
 
       return items;
    }
+   
+   
 
    /**
-    * Add all sources and resources also with active (maven reactor active) referenced project sources and resources.
-    * Addresses issue no. 147.
-    * 
-    * @param project
-    * @param items
-    * @param scope
+    * Add all sources and resources also with active (maven reactor active) 
+    * referenced project sources and resources.
+    * <p>Addresses issue no. 147.
     */
-   private static void addSourcesWithActiveProjects(final MavenProject project, final Set<File> items,
-            final DependencyScope scope) {
+   private static void addSourcesWithActiveProjects(
+       final MavenProject project, 
+       final Set<File> items,
+       final DependencyScope scope) {
       final List<Artifact> scopeArtifacts = BuildClasspathUtil.getScopeArtifacts(project, scope);
 
       BuildClasspathUtil.addSources(items, BuildClasspathUtil.getSourceRoots(project, scope));
 
       for (Artifact artifact : scopeArtifacts) {
          if (artifact instanceof ActiveProjectArtifact) {
-            MavenProject refProject = (MavenProject) project.getProjectReferences().get(
-                     BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact
-                              .getVersion()));
+            MavenProject refProject = 
+              (MavenProject) project.getProjectReferences().get(
+                     BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion()));
             if (refProject != null) {
-               BuildClasspathUtil.addSources(items, BuildClasspathUtil.getSourceRoots(refProject, scope));
+               BuildClasspathUtil.addSources(
+                   items, BuildClasspathUtil.getSourceRoots(refProject, scope));
             }
          }
       }
    }
+   
+   
 
    /**
-    * Add all sources and resources also with active (maven reactor active) referenced project sources and resources.
-    * Addresses issue no. 147.
-    *
-    * @param project
-    * @param items
-    * @param scope
+    * Add all sources and resources also with active (maven reactor active) 
+    * referenced project sources and resources.
+    * <p>Addresses issue no. 147.
     */
-   private static void addResourcesWithActiveProjects(final MavenProject project, final Set<File> items,
-            final DependencyScope scope) {
+   private static void addResourcesWithActiveProjects(
+       final MavenProject project, 
+       final Set<File> items,
+       final DependencyScope scope) {
       final List<Artifact> scopeArtifacts = BuildClasspathUtil.getScopeArtifacts(project, scope);
 
       BuildClasspathUtil.addResources(items, BuildClasspathUtil.getResources(project, scope));
 
       for (Artifact artifact : scopeArtifacts) {
          if (artifact instanceof ActiveProjectArtifact) {
-            MavenProject refProject = (MavenProject) project.getProjectReferences().get(
-                     BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact
-                              .getVersion()));
+            MavenProject refProject = 
+              (MavenProject) project.getProjectReferences().get(
+                     BuildClasspathUtil.getProjectReferenceId(artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion()));
             if (refProject != null) {
-               BuildClasspathUtil.addResources(items, BuildClasspathUtil.getResources(refProject, scope));
+               BuildClasspathUtil.addResources
+               (items, BuildClasspathUtil.getResources(refProject, scope));
             }
          }
       }
    }
+   
+   
 
    /**
     * Get artifacts for specific scope.
-    * @param project
-    * @param scope
-    * @return
     */
    @SuppressWarnings("unchecked")
-   private static List<Artifact> getScopeArtifacts(final MavenProject project, final DependencyScope scope) {
+   private static List<Artifact> getScopeArtifacts(
+       final MavenProject project, final DependencyScope scope) {
       if (DependencyScope.COMPILE.equals(scope)) {
          return project.getCompileArtifacts();
       }
@@ -250,14 +262,14 @@ public class BuildClasspathUtil {
          throw new RuntimeException("Not allowed scope " + scope);
       }
    }
+   
+   
 
    /**
     * Get source roots for specific scope.
-    * @param project
-    * @param scope
-    * @return
     */
-   private static List getSourceRoots(final MavenProject project, final DependencyScope scope) {
+   private static List<?> getSourceRoots(
+       final MavenProject project, final DependencyScope scope) {
       if (DependencyScope.COMPILE.equals(scope)) {
          return project.getCompileSourceRoots();
       }
@@ -268,15 +280,15 @@ public class BuildClasspathUtil {
          throw new RuntimeException("Not allowed scope " + scope);
       }
    }
+   
+   
 
    /**
     * Get resources for specific scope.
-    * @param project
-    * @param scope
-    * @return
     */
    @SuppressWarnings("unchecked")
-   private static List<Artifact> getResources(final MavenProject project, final DependencyScope scope) {
+   private static List<Artifact> getResources(
+       final MavenProject project, final DependencyScope scope) {
       if (DependencyScope.COMPILE.equals(scope)) {
          return project.getResources();
       }
@@ -287,39 +299,41 @@ public class BuildClasspathUtil {
          throw new RuntimeException("Not allowed scope " + scope);
       }
    }
+   
+   
 
    /**
     * Add source path and resource paths of the project to the list of classpath items.
     * @param items Classpath items.
     * @param sourceRoots
     */
-   private static void addSources(final Set<File> items, final List sourceRoots) {
-      for (Iterator it = sourceRoots.iterator(); it.hasNext();) {
-         items.add(new File(it.next().toString()));
-      }
+   private static void addSources(final Set<File> items, final List<?> sourceRoots) {
+     items.addAll(createFilesViaToString(sourceRoots));
    }
+   
+   
 
    /**
     * Add source path and resource paths of the project to the list of classpath items.
     * @param items Classpath items.
     * @param resources
     */
-   private static void addResources(final Set<File> items, final List resources) {
-      for (Iterator it = resources.iterator(); it.hasNext();) {
+   private static void addResources(final Set<File> items, final List<?> resources) {
+      for (Iterator<?> it = resources.iterator(); it.hasNext();) {
          Resource r = (Resource) it.next();
          items.add(new File(r.getDirectory()));
       }
    }
+   
+   
 
    /**
     * Cut from MavenProject.java
-    * 
-    * @param groupId
-    * @param artifactId
-    * @param version
-    * @return
     */
-   private static String getProjectReferenceId(final String groupId, final String artifactId, final String version) {
+   private static String getProjectReferenceId(final String groupId, 
+       final String artifactId, final String version) {
       return groupId + ":" + artifactId + ":" + version;
    }
 }
+
+

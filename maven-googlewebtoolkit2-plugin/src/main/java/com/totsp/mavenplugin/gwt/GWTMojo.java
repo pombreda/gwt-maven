@@ -38,7 +38,7 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  * part of the standard Maven life-cycle phases: "compile" "test" "install").
  * 
  * @goal gwt
- * @execute phase=compile
+ * @execute goal="copy-webapp-resources"
  * @requiresDependencyResolution compile
  * @description Runs the the project in the GWTShell for development.
  * 

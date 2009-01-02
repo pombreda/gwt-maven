@@ -42,16 +42,14 @@ import com.totsp.mavenplugin.gwt.support.util.FileIOUtils;
  *   <ol>
  *     <li>Search for GWT module descriptor (<code>moduleName.gwt.xml</code>).
  *     Searching in all compile source roots and resources dirs of project.</li>
- *     <li></li>
- *     <li></li>
  *   </ol>
  * </ol>
  * 
  * @goal mergewebxml
  * @phase process-resources
  * @requiresDependencyResolution compile
- * @description Merges GWT servlet elements into deployment descriptor (and non GWT servlets into shell).
- * 
+ * @description Merges GWT servlet elements into deployment descriptor 
+ * (and non GWT servlets into shell).
  * @author cooper
  */
 public class MergeWebXmlMojo extends AbstractGWTMojo {
