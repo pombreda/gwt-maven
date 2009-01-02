@@ -73,7 +73,7 @@ public class GWTMojo extends AbstractGWTMojo {
     
     
     protected File writeScript() throws MojoExecutionException {
-      return ScriptWriterFactory.getInstance().writeRunScript(this);
+      return ScriptWriterFactory.getInstance(getJavaCommand()).writeRunScript(this);
     }
     
     

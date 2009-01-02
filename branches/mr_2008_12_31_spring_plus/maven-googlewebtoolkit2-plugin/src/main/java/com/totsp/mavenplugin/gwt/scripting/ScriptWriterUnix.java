@@ -42,6 +42,15 @@ public class ScriptWriterUnix extends AbstractScriptWriter {
   
   
   /**
+   * @param javaHome
+   */
+  public ScriptWriterUnix(String javaHome) {
+    super(javaHome);
+  }
+
+
+
+  /**
    * Util to get a PrintWriter with Unix preamble and classpath.
    */
   protected PrintWriter getPrintWriterWithClasspath(final AbstractGWTMojo mojo,
