@@ -18,6 +18,7 @@
 
   <properties>
     <gwt.version>1.5.3</gwt.version>
+    <repository.url></repository.url>
   </properties>
 
   <build>
@@ -46,7 +47,7 @@
 		<repository>
 			<id>local.repo</id>
 			<name>file repository to svn</name>
-			<url>file://${basedir}/../../mavenrepo</url>
+			<url>file://${basedir}${repository.url}/../../trunk/mavenrepo</url>
 		</repository>
 	</distributionManagement>
 	
