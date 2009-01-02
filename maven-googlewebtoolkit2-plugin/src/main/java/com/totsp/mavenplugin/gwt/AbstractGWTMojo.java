@@ -37,6 +37,7 @@ import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
@@ -73,11 +74,28 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public static final String GWT_GROUP_ID = "com.google.gwt";
    public static final String GOOGLE_WEBTOOLKIT_HOME = "google.webtoolkit.home";
 
-   public static final String JAVA_COMMAND = 
-     (System.getProperty("java.home") != null) ? 
+   
+   
+   /**
+    * Returns path to java command that should be used when executing script.
+    */
+   public String getJavaCommand() throws MojoExecutionException {
+     final File javaHome = getJavaHomeForScriptExecutions();
+     // if JAVA_HOME for scripts is set, then use it
+     if (javaHome != null) {
+       File javaCommandFile = new File(javaHome, "bin/java");
+       if (!javaCommandFile.exists()) {
+         throw new MojoExecutionException(
+             "could not find java in <javaHomeForScriptExecutions>:"+javaHome.getAbsolutePath());
+       }
+       return javaCommandFile.getAbsolutePath();
+     }
+     
+     // else use standard java
+     return (System.getProperty("java.home") != null) ? 
          FileUtils.normalize(System.getProperty("java.home")
-            + File.separator + "bin" + File.separator + "java") 
-         : "java";
+             + File.separator + "bin" + File.separator + "java") : "java";
+   }
 
    // Maven properties
 
@@ -344,6 +362,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter
     */
    private boolean overwriteGeneratedClasses;
+   /**
+    * If this property is set, scripts will be fired like this was JAVA_HOME
+    * directory.
+    * @parameter
+    */
+   private File javaHomeForScriptExecutions;
 
    // ctor
 
@@ -458,6 +482,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
         new File(getProject().getBuild().getOutputDirectory()).getParentFile(), 
         sourceChangedMarkerFile);
     
+    // remove marker file if exists
     if (markerFile.exists()) {
       markerFile.delete();
     }
@@ -756,6 +781,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
   public void setI18nConstantsWithLookupNames(
       String[] i18nConstantsWithLookupNames) {
     this.i18nConstantsWithLookupNames = i18nConstantsWithLookupNames;
+  }
+  public File getJavaHomeForScriptExecutions() {
+    return javaHomeForScriptExecutions;
+  }
+  public void setJavaHomeForScriptExecutions(File javaHomeForScriptExecutions) {
+    this.javaHomeForScriptExecutions = javaHomeForScriptExecutions;
   }
 }
 

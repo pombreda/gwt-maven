@@ -42,6 +42,16 @@ public abstract class AbstractScriptWriter implements ScriptWriter {
   
   
   
+  protected String javaHome;
+  
+  
+  
+  public AbstractScriptWriter(String javaHome) {
+    this.javaHome = javaHome;
+  }
+  
+  
+  
   /**
    * From base like "debug" makes runnable file name like "debug.sh" (unix)
    * or "debug.cmd" (windows).
@@ -68,7 +78,7 @@ public abstract class AbstractScriptWriter implements ScriptWriter {
    * definition.
    */
   protected String getCommandWithExtraJvmArgs(AbstractGWTMojo mojo) {
-    return "\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + getExtraArgs(mojo) + " -cp $CLASSPATH ";
+    return "\"" + javaHome + "\" " + getExtraArgs(mojo) + " -cp $CLASSPATH ";
   }
   
   
@@ -289,7 +299,7 @@ public abstract class AbstractScriptWriter implements ScriptWriter {
               DependencyScope.TEST, new ScriptWriterPart() {
             public void write(PrintWriter writer) {
               // build Java command
-              writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" ");
+              writer.print("\"" + javaHome + "\" ");
               writer.print(" " + extra + " ");
               writer.print(" -cp $CLASSPATH ");
               writer.print("junit.textui.TestRunner ");

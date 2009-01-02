@@ -41,7 +41,7 @@ public class DebugMojo extends GWTMojo {
   
   
   protected File writeScript() throws MojoExecutionException {
-    return ScriptWriterFactory.getInstance().writeDebugScript(this);
+    return ScriptWriterFactory.getInstance(getJavaCommand()).writeDebugScript(this);
   }
 
 

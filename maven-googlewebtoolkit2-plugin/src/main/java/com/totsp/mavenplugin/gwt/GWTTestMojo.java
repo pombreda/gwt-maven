@@ -97,7 +97,7 @@ public class GWTTestMojo extends AbstractGWTMojo {
 
     // build scripts for each test case for the correct platform
     // (note that scripts end up in outputDirectory/gwtTest)
-    ScriptWriter writer = ScriptWriterFactory.getInstance();
+    ScriptWriter writer = ScriptWriterFactory.getInstance(getJavaCommand());
     writer.writeTestScripts(this);
 
     // run the scripts

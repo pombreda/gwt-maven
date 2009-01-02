@@ -23,12 +23,12 @@ public final class ScriptWriterFactory {
     private ScriptWriterFactory() {
     }
     
-    public static ScriptWriter getInstance() {
+    public static ScriptWriter getInstance(String javaHome) {
         ScriptWriter sw = null;
         if (AbstractGWTMojo.isWindows) {            
-            sw = new ScriptWriterWindows();
+            sw = new ScriptWriterWindows(javaHome);
         } else {
-            sw = new ScriptWriterUnix();
+            sw = new ScriptWriterUnix(javaHome);
         }        
         return sw;        
     }    

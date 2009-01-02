@@ -40,6 +40,17 @@ import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
  */
 public class ScriptWriterWindows extends AbstractScriptWriter {
 
+  
+  
+  /**
+   * @param javaHome
+   */
+  public ScriptWriterWindows(String javaHome) {
+    super(javaHome);
+  }
+
+  
+  
   /**
    * Util to get a PrintWriter with Windows preamble.
    */
