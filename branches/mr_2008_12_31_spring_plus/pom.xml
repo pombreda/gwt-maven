@@ -94,6 +94,10 @@
       <id>mnasato</id>
       <name>Mirko Nasato</name>
     </developer>
+    <developer>
+      <id>mrm</id>
+      <name>Marek Romanowski</name>
+    </developer>
   </developers>
 
   <contributors>
@@ -138,7 +142,6 @@
       </plugin>
     </plugins>
   </reporting>
-  
   
   <dependencyManagement>
     <dependencies>

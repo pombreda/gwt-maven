@@ -22,9 +22,9 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -65,7 +65,6 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
 
   
   
-  @SuppressWarnings("unchecked")
   public void execute() throws MojoExecutionException, MojoFailureException {
     try {
       this.getLog().info("copy source web.xml - " + this.getWebXml()
@@ -80,30 +79,22 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
 
       for (String compileTarget : getCompileTarget()) {
         final String moduleFileName = "/" + compileTarget.replace('.', '/') + ".gwt.xml";
-        File moduleFile = null;
-        final List<String> compileSourceRoots = getProject().getCompileSourceRoots();
-        for (String compileSourceRoot : compileSourceRoots) {
-          File check = new File(compileSourceRoot + moduleFileName);
-          getLog().debug("Looking for file: " + check.getAbsolutePath());
-          if (check.exists()) {
-            moduleFile = check;
-            break;
+        final List<File> moduleFiles = new ArrayList<File>();
+        
+        traverseeAllCompileSourceRootsAndResourcesDirectories(new IFileExecution() {
+          public void executeForFile(File file) {
+            File check = new File(file, moduleFileName);
+            getLog().debug("Looking for file: " + check.getAbsolutePath());
+            if (check.exists()) {
+              moduleFiles.add(check);
+            }
           }
-
-        }
-        final List<Resource> resources = getProject().getResources();
-        for (Resource resource : resources) {
-          File check = new File(resource.getDirectory() + moduleFileName);
-          getLog().debug("Looking for file: " + check.getAbsolutePath());
-          if (check.exists()) {
-            moduleFile = check;
-            break;
-          }
-        }
+        });
 
         // (o) change thread classloader
         fixThreadClasspath();
 
+        final File moduleFile = moduleFiles.size() > 0 ? moduleFiles.get(0) : null;
         GwtWebInfProcessor processor = null;
         try {
           if (moduleFile != null) {

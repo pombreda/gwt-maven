@@ -22,14 +22,20 @@
 package com.totsp.mavenplugin.gwt;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.DefaultArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.classworlds.ClassRealm;
@@ -347,39 +353,162 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
    // methods
 
-   /**
-    * Helper hack for classpath problems, used as a fallback.
-    * 
-    * @return
-    */
-   protected ClassLoader fixThreadClasspath() {
+  /**
+   * Helper hack for classpath problems, used as a fallback.
+   * 
+   * @return
+   */
+  protected ClassLoader fixThreadClasspath() {
 
-      try {
-         ClassWorld world = new ClassWorld();
+    try {
+      ClassWorld world = new ClassWorld();
 
-         //use the existing ContextClassLoader in a realm of the classloading space
-         ClassRealm root = world.newRealm(
-             "gwt-plugin", Thread.currentThread().getContextClassLoader());
-         ClassRealm realm = root.createChildRealm("gwt-project");
-         
-         // add all classpath elements to new realm
-         for (File file : BuildClasspathUtil.buildClasspathList(this, DependencyScope.COMPILE)) {
-            realm.addConstituent(file.toURI().toURL());
-         }
-         
-         // set new thread classloader
-         Thread.currentThread().setContextClassLoader(realm.getClassLoader());
+      // use the existing ContextClassLoader in a realm of the classloading
+      // space
+      ClassRealm root = world.newRealm("gwt-plugin", 
+          Thread.currentThread().getContextClassLoader());
+      ClassRealm realm = root.createChildRealm("gwt-project");
 
-         return realm.getClassLoader();
+      // add all classpath elements to new realm
+      for (File file : BuildClasspathUtil.buildClasspathList(this, DependencyScope.COMPILE)) {
+        realm.addConstituent(file.toURI().toURL());
       }
-      catch (Exception e) {
-         e.printStackTrace();
-         throw new RuntimeException(e);
-      }
-   }
 
+      // set new thread classloader
+      Thread.currentThread().setContextClassLoader(realm.getClassLoader());
+
+      return realm.getClassLoader();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+  }
    
    
+   
+  public static final String sourceChangedMarkerFile = ".sourceChangedMarkerFile";
+
+
+
+  /**
+   * Check did sources changed.
+   */
+  protected boolean sourcesChanged() {
+    try {
+      File markerFile = new File (
+          new File(getProject().getBuild().getOutputDirectory()).getParentFile(), 
+          sourceChangedMarkerFile);
+
+      // if marker does not exist create it with current date and return true
+      if (!markerFile.exists()) {
+        markerFile.createNewFile();
+        RandomAccessFile marker = new RandomAccessFile(markerFile, "rw");
+        // write current date to marker file
+        marker.writeLong(new Date().getTime());
+        marker.close();
+        // ok, sources changed
+        return true;
+      } else {
+        // younges modification dates
+        final SortedSet<Long> modificationDates = new TreeSet<Long>();
+        // walker that collects modification dates
+        final ModificationDateCollectingDirectoryWalker walker =
+          new ModificationDateCollectingDirectoryWalker();
+        // check last modification dates of all files
+        traverseeAllCompileSourceRoots(new IFileExecution() {
+          public void executeForFile(final File file) {
+            modificationDates.add(walker.walk(file));
+          }
+        });
+        
+        long lastModification = modificationDates.last();
+        RandomAccessFile marker = new RandomAccessFile(markerFile, "r");
+        long markerValue = marker.readLong();
+        // if last changes are newer then last compilation
+        if (lastModification > markerValue) {
+          // delete marker file and create it again
+          markerFile.delete();
+          markerFile.createNewFile();
+          marker = new RandomAccessFile(markerFile, "rw");
+          // update marker
+          marker.writeLong(lastModification);
+          marker.close();
+          // sources changed
+          return true;
+        }
+      }
+
+      return false;
+    } catch (IOException e) {
+      // if exception occured log it and return true (compile)
+      getLog().warn("Error occured while accessing marker file. " 
+          + "Plugin will work like if there were no marker file on disk.", e);
+      return true;
+    }
+  }
+  
+  
+  
+  /**
+   * Force compilation next time. Removes source changed marker so compilation
+   * will be fired.
+   */
+  protected void forceCompile() {
+    File markerFile = new File (
+        new File(getProject().getBuild().getOutputDirectory()).getParentFile(), 
+        sourceChangedMarkerFile);
+    
+    if (markerFile.exists()) {
+      markerFile.delete();
+    }
+  }
+  
+  
+  
+  /**
+   * Execute some job for all compile source roots and resource directories.
+   * @param fileExecution
+   */
+  protected void traverseeAllCompileSourceRootsAndResourcesDirectories(
+      IFileExecution fileExecution) {
+    traverseeAllCompileSourceRoots(fileExecution);
+    traverseeAllResourcesDirectories(fileExecution);
+  }
+  
+  
+  
+  /**
+   * Execute some job for all compile source roots and resource directories.
+   * @param fileExecution
+   */
+  @SuppressWarnings("unchecked")
+  protected void traverseeAllCompileSourceRoots(
+      IFileExecution fileExecution) {
+    final List<String> compileSourceRoots = getProject().getCompileSourceRoots();
+    // do it for all compile source roots
+    for (String compileSourceRoot : compileSourceRoots) {
+      fileExecution.executeForFile(new File(compileSourceRoot));
+    }
+  }
+  
+  
+  
+  /**
+   * Execute some job for all compile source roots and resource directories.
+   * @param fileExecution
+   */
+  @SuppressWarnings("unchecked")
+  protected void traverseeAllResourcesDirectories(
+      IFileExecution fileExecution) {
+    // do it for all resource directories
+    final List<Resource> resources = getProject().getResources();
+    for (Resource resource : resources) {
+      fileExecution.executeForFile( new File(resource.getDirectory()));
+    }
+  }
+  
+  
+  
   // ===========================================================================
   // GETTERS AND SETTERS
   // ===========================================================================
