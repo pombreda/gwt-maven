@@ -1,38 +1,62 @@
 package com.totsp.mavenplugin.gwt.scripting;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
 import com.totsp.mavenplugin.gwt.scripting.TestResult.TestCode;
 
+
+
 public final class ScriptUtil {
 
+  
+  
    private ScriptUtil() {
    }
-
-   public static void runScript(final File exec) throws MojoExecutionException {
-      ProcessWatcher pw = null;
-      if (AbstractGWTMojo.isWindows) {
-         pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
-      }
-      else {
-         pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
-      }
+   
+   
+   
+   public static int runScript(final File exec, final boolean exceptionOnFailure) throws MojoExecutionException {
+     ProcessWatcher pw = null;
+     if (AbstractGWTMojo.isWindows) {
+        pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+     } else {
+        pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+     }
 
       try {
-         pw.startProcess(System.out, System.err);
-         int retVal = pw.waitFor();
-         if (retVal != 0) {
-            throw new MojoExecutionException(exec.getName() + " script exited abnormally with code - " + retVal);
-         }
-      }
-      catch (Exception e) {
-         throw new MojoExecutionException("Exception attempting to run script - " + exec.getName(), e);
+        pw.startProcess(System.out, System.err);
+        int retVal = pw.waitFor();
+        
+        if (!exceptionOnFailure) {
+          return retVal;
+        }
+        
+        if (retVal != 0) {
+           throw new MojoExecutionException(exec.getName() + " script exited abnormally with code - " + retVal);
+        } else {
+          return 0;
+        }
+      } catch (IOException e) {
+        throw new MojoExecutionException(
+            "Exception attempting to run script - " + exec.getName(), e);
+      } catch (InterruptedException e) {
+        throw new MojoExecutionException(
+            "Exception attempting to run script - " + exec.getName(), e);
       }
    }
 
+   
+   
+   public static void runScript(final File exec) throws MojoExecutionException {
+      runScript(exec, true);
+   }
+
+   
+   
    public static TestResult runTestScript(final File exec) throws MojoExecutionException {
       TestResult testResult = new TestResult();
       StringBuilder out = new StringBuilder();
@@ -113,3 +137,5 @@ public final class ScriptUtil {
       return testResult;
    }
 }
+
+

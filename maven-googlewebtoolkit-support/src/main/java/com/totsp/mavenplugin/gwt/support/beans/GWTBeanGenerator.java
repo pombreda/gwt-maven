@@ -30,83 +30,69 @@ import org.apache.commons.cli.Options;
 
 
 /**
- *
  * @author cooper
  */
 public class GWTBeanGenerator extends BeanGeneratorBase{
-    private static final HelpFormatter formatter = new HelpFormatter();
-    private static final Option helpOpt = new Option(
-            "help", "print this message"
-            );
-    private static final Option startBean = OptionBuilder
-            .withArgName("startBean")
-            .hasArg()
-            .withDescription("bean to begin mapping from")
-            .create("startBean");
-    private static final Option destinationPackage = OptionBuilder
-            .withArgName("destinationPackage")
-            .hasArg()
-            .withDescription("package to put generated beans into")
-            .create("destinationPackage");
-    private static final Option destinationDirectory = OptionBuilder
-            .withArgName("destinationDirectory")
-            .hasArg()
-            .withDescription("directory to put generated java files into")
-            .create("destinationDirectory");
-    private static final Option withGetSet = new Option("withGetSet",
-            "create getters and setters for GWT classes");
-    private static final Option withPropertyChangeSupport = new Option( "withPropertyChangeSupport",
-            "create change events for beans (implies withGetSet)");
-    private static final Option overWrite = new Option("overwrite",
-            "if there are existing files, this will overwrite them");
+  private static final HelpFormatter formatter = new HelpFormatter();
+  private static final Option helpOpt = 
+    new Option("help", "print this message");
+  private static final Option startBean =
+    OptionBuilder.withArgName("startBean").hasArg().withDescription("bean to begin mapping from").create("startBean");
+  private static final Option destinationPackage = 
+    OptionBuilder.withArgName("destinationPackage").hasArg().withDescription("package to put generated beans into").create("destinationPackage");
+  private static final Option destinationDirectory = 
+    OptionBuilder.withArgName("destinationDirectory").hasArg().withDescription("directory to put generated java files into").create("destinationDirectory");
+  private static final Option withGetSet = 
+    new Option("withGetSet", "create getters and setters for GWT classes");
+  private static final Option withPropertyChangeSupport = 
+    new Option( "withPropertyChangeSupport", "create change events for beans (implies withGetSet)");
+  private static final Option overWrite = 
+    new Option("overwrite", "if there are existing files, this will overwrite them");
+  
+  private final static Options options = new Options();
+  
+  static {
+      options.addOption(helpOpt);
+      options.addOption(startBean);
+      options.addOption(destinationPackage);
+      options.addOption(destinationDirectory);
+      options.addOption(withPropertyChangeSupport);
+      options.addOption(withGetSet);
+      options.addOption(overWrite);
+  }
     
-    private final static Options options = new Options();
     
-    static {
-        options.addOption(helpOpt);
-        options.addOption(startBean);
-        options.addOption(destinationPackage);
-        options.addOption(destinationDirectory);
-        options.addOption(withPropertyChangeSupport);
-        options.addOption(withGetSet);
-        options.addOption(overWrite);
+  /** Creates a new instance of GWTBeanGenerator */
+  public GWTBeanGenerator() {
+    super();
+  }
+    
+  public static void main(String args[]) throws Exception {
+    CommandLineParser parser = new GnuParser();
+
+    // parse the command line arguments
+    CommandLine line = parser.parse(options, args);
+
+    // help
+    if ((line == null) || (line.getOptions() == null)
+        || (line.getOptions().length == 0) || (line.hasOption("help"))) {
+      GWTBeanGenerator.formatter.printHelp("GWTBeanGenerator", options);
     }
-    
-    
-    /** Creates a new instance of GWTBeanGenerator */
-    public GWTBeanGenerator() {
-        super();
-    }
-    
-    public static void main(String args[]) throws Exception{
-        CommandLineParser parser = new GnuParser();
-        
-        // parse the command line arguments
-        CommandLine line = parser.parse(options, args);
-        
-        // help
-        if(
-                (line == null) || (line.getOptions() == null) ||
-                (line.getOptions().length == 0) ||
-                (line.hasOption("help"))
-                ) {
-            GWTBeanGenerator.formatter.printHelp("GWTBeanGenerator", options);
-        }
-        
-        Class startBean = Class.forName( line.getOptionValue("startBean") );
-        File directory = new File( line.getOptionValue("destinationDirectory"));
-        directory.mkdirs();
-        Bean root = new Bean( startBean );
-        String packageName = line.getOptionValue( "destinationPackage");
-        String packagePath = packageName.replace( '.', File.separatorChar );
-        File packageDirectory = new File( directory, packagePath );
-        
-        packageDirectory.mkdirs();
-        boolean getSet = line.hasOption("withGetSet");
-        boolean propertyChangeSupport = line.hasOption("withPropertyChangeSupport");
-        writeBean( packageName, packageDirectory, getSet, propertyChangeSupport, line.hasOption("overwrite"), root );
-        
-    }
-    
-    
+
+    Class startBean = Class.forName(line.getOptionValue("startBean"));
+    File directory = new File(line.getOptionValue("destinationDirectory"));
+    directory.mkdirs();
+    Bean root = new Bean(startBean);
+    String packageName = line.getOptionValue("destinationPackage");
+    String packagePath = packageName.replace('.', File.separatorChar);
+    File packageDirectory = new File(directory, packagePath);
+
+    packageDirectory.mkdirs();
+    boolean getSet = line.hasOption("withGetSet");
+    boolean propertyChangeSupport = line.hasOption("withPropertyChangeSupport");
+    writeBean(packageName, packageDirectory, getSet, propertyChangeSupport,
+        line.hasOption("overwrite"), root);
+
+  }
+
 }

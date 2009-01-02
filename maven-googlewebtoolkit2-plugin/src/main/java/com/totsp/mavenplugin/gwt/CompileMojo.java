@@ -58,12 +58,20 @@ public class CompileMojo extends AbstractGWTMojo {
       this.getOutput().mkdirs();
     }
 
-    // build it for the correct platform
-    ScriptWriter writer = ScriptWriterFactory.getInstance();
-    File exec = writer.writeCompileScript(this);
+    if (sourcesChanged()) {
+      // build it for the correct platform
+      ScriptWriter writer = ScriptWriterFactory.getInstance();
+      File exec = writer.writeCompileScript(this);
 
-    // run it
-    ScriptUtil.runScript(exec);
+      // run it
+      if (ScriptUtil.runScript(exec, false) != 0) {
+        forceCompile();
+        throw new MojoExecutionException("GWT compilation failed - " +
+        		"see GWTCompiler logs for more information");
+      }
+    } else {
+      getLog().info("No changes found - does not compile");
+    }
 
     try {
     // copy files for WEB-INF (except for web.xml - not to change behaviour)
