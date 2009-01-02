@@ -33,6 +33,7 @@ import com.totsp.mavenplugin.gwt.scripting.ScriptWriterFactory;
  * Extends the gwt goal and runs the project in the GWTShell with a debugger
  * port hook (optionally suspended).
  * @goal debug
+ * @execute goal="compile"
  * @description Runs the project with a debugger port hook (optionally suspended).
  * @author cooper
  */

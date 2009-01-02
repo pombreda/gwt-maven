@@ -39,6 +39,7 @@ import com.totsp.mavenplugin.gwt.scripting.TestResult.TestCode;
  * 
  * @goal test
  * @phase test
+ * @execute goal="copy-webapp-resources"
  * @requiresDependencyResolution test
  * @description Runs special (non surefire) test phase for GWTTestCase derived
  *              tests.
@@ -86,12 +87,12 @@ public class GWTTestMojo extends AbstractGWTMojo {
    */
 
   public void execute() throws MojoExecutionException, MojoFailureException {
-    if (isTestSkip()) {
+    if (isTestSkip() || isMavenTestSkip()) {
       return;
     }
 
-    this.getLog().info(
-        "running GWTTestCase tests (using test name filter -  " + this.getTestFilter() + ")");
+    this.getLog().info("running GWTTestCase tests (using test name filter -  " 
+        + this.getTestFilter() + ")");
 
     FileWriter testResultsWriter = null;
 

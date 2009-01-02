@@ -49,6 +49,10 @@ public class FileIOUtils {
      */
     public static void copyRecursive(File from, File to, FileFilter filter
         ) throws IOException {
+      if (!from.exists()) {
+        return;
+      }
+      
       to.mkdirs();
       
       // for every file in "from" directory

@@ -24,7 +24,6 @@ package com.totsp.mavenplugin.gwt;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -68,14 +67,16 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public static final boolean isMac     = OS_NAME.startsWith(MAC);
    public static final boolean isLeopard = OS_NAME.startsWith(LEOPARD);
    
+   /**
+    * Platform on which mvn runs. Default is Linux (should work for all 
+    * unix-like systems).
+    */
    public static final String platformName = isWindows ? 
-       WINDOWS : (isLinux ? LINUX : MAC);
+       WINDOWS : ((isMac || isLeopard) ? MAC : LINUX);
    
    public static final String GWT_GROUP_ID = "com.google.gwt";
    public static final String GOOGLE_WEBTOOLKIT_HOME = "google.webtoolkit.home";
 
-   
-   
    /**
     * Returns path to java command that should be used when executing script.
     */
@@ -86,7 +87,8 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
        File javaCommandFile = new File(javaHome, "bin/java");
        if (!javaCommandFile.exists()) {
          throw new MojoExecutionException(
-             "could not find java in <javaHomeForScriptExecutions>:"+javaHome.getAbsolutePath());
+             "could not find java in <javaHomeForScriptExecutions>:" 
+             + javaHome.getAbsolutePath());
        }
        return javaCommandFile.getAbsolutePath();
      }
@@ -276,9 +278,15 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    /**
     * Whether or not to skip GWT testing.
     * 
-    * @parameter default-value="false"
+    * @parameter 
     */
    private boolean testSkip;
+   /**
+    * Whether or not to skip GWT testing.
+    * 
+    * @parameter default-value="${maven.test.skip}"
+    */
+   private boolean mavenTestSkip;
    /**
     * Whether or not to add compile source root to classpath.
     * 
@@ -368,6 +376,12 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter
     */
    private File javaHomeForScriptExecutions;
+   /**
+    * Compile GWT sources even if compilation time marker is newer then all
+    * source files.
+    * @parameter default-value="false"
+    */
+   private boolean forceCompile;
 
    // ctor
 
@@ -417,57 +431,74 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
   /**
    * Check did sources changed.
    */
-  protected boolean sourcesChanged() {
+  protected Long sourcesChanged() {
+    // younges modification dates
+    final SortedSet<Long> modificationDates = new TreeSet<Long>();
+    // walker that collects modification dates
+    final ModificationDateCollectingDirectoryWalker walker =
+      new ModificationDateCollectingDirectoryWalker();
+    // check last modification dates of all files
+    traverseeAllCompileSourceRoots(new IFileExecution() {
+      public void executeForFile(final File file) {
+        modificationDates.add(walker.walk(file));
+      }
+    });
+    
+    long lastModification = modificationDates.last();
+    long markerValue = getMarker();
+    // if last changes are newer then last compilation
+    if (lastModification > markerValue) {
+      return lastModification;
+    } else {
+      return null;
+    }
+  }
+  
+  
+  
+  protected void saveCompilationTimeMarker(long markerValue) {
+    setMarker(markerValue);
+  }
+  
+  
+  
+  private long getMarker() {
     try {
       File markerFile = new File (
           new File(getProject().getBuild().getOutputDirectory()).getParentFile(), 
           sourceChangedMarkerFile);
-
-      // if marker does not exist create it with current date and return true
+      // if marker file does not exist return min value - force compile
       if (!markerFile.exists()) {
-        markerFile.createNewFile();
-        RandomAccessFile marker = new RandomAccessFile(markerFile, "rw");
-        // write current date to marker file
-        marker.writeLong(new Date().getTime());
-        marker.close();
-        // ok, sources changed
-        return true;
-      } else {
-        // younges modification dates
-        final SortedSet<Long> modificationDates = new TreeSet<Long>();
-        // walker that collects modification dates
-        final ModificationDateCollectingDirectoryWalker walker =
-          new ModificationDateCollectingDirectoryWalker();
-        // check last modification dates of all files
-        traverseeAllCompileSourceRoots(new IFileExecution() {
-          public void executeForFile(final File file) {
-            modificationDates.add(walker.walk(file));
-          }
-        });
-        
-        long lastModification = modificationDates.last();
-        RandomAccessFile marker = new RandomAccessFile(markerFile, "r");
-        long markerValue = marker.readLong();
-        // if last changes are newer then last compilation
-        if (lastModification > markerValue) {
-          // delete marker file and create it again
-          markerFile.delete();
-          markerFile.createNewFile();
-          marker = new RandomAccessFile(markerFile, "rw");
-          // update marker
-          marker.writeLong(lastModification);
-          marker.close();
-          // sources changed
-          return true;
-        }
+        return Long.MIN_VALUE;
       }
-
-      return false;
+      RandomAccessFile marker = new RandomAccessFile(markerFile, "r");
+      return marker.readLong();
     } catch (IOException e) {
       // if exception occured log it and return true (compile)
       getLog().warn("Error occured while accessing marker file. " 
+          + "Plugin will work like if there were no marker file on disk.");
+      // force compilation
+      return Long.MIN_VALUE;
+    }
+  }
+  
+  
+  
+  private void setMarker(long markerValue) {
+    try {
+      File markerFile = new File (
+          new File(getProject().getBuild().getOutputDirectory()).getParentFile(), 
+          sourceChangedMarkerFile);
+      markerFile.delete();
+        markerFile.createNewFile();
+      RandomAccessFile marker = new RandomAccessFile(markerFile, "rw");
+      // update marker
+      marker.writeLong(markerValue);
+      marker.close();
+    } catch (IOException e) {
+      // do nothing when problems with marker file occured beside logging
+      getLog().warn("Error occured while accessing marker file. " 
           + "Plugin will work like if there were no marker file on disk.", e);
-      return true;
     }
   }
   
@@ -787,6 +818,18 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
   }
   public void setJavaHomeForScriptExecutions(File javaHomeForScriptExecutions) {
     this.javaHomeForScriptExecutions = javaHomeForScriptExecutions;
+  }
+  public boolean isMavenTestSkip() {
+    return mavenTestSkip;
+  }
+  public void setMavenTestSkip(boolean mavenTestSkip) {
+    this.mavenTestSkip = mavenTestSkip;
+  }
+  public boolean isForceCompile() {
+    return forceCompile;
+  }
+  public void setForceCompile(boolean forceCompile) {
+    this.forceCompile = forceCompile;
   }
 }
 
