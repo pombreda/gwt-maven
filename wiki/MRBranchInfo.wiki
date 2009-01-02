@@ -4,7 +4,7 @@
 
 In mr branch I'm trying to implement new plugin functionality. Branch is always in development. As for now it is strongly different from head, so I want to describe a few features which are not reachable in releases made on head.
 
-This document was written to document *2.0-mr-beta1* version of plugin.
+This wiki was written to document *2.0-mr-beta1* version of plugin.
 
 = New features =
 
