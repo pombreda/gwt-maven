@@ -4,7 +4,21 @@
 
 In mr branch I'm trying to implement new plugin functionality. Branch is always in development. As for now it is strongly different from head, so I want to describe a few features which are not reachable in releases made on head.
 
-This wiki was written to document *2.0-mr-beta1* version of plugin.
+This wiki was written to document *2.0-mr-beta1* version of plugin. This version is not availible in gwt-maven trunk repository but in branch repository. So if you would like to use it then try changing plugin repository from:
+{{{
+    <pluginRepository>
+      <id>gwt-maven</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </pluginRepository>
+}}}
+to:
+{{{
+    <pluginRepository>
+      <id>gwt-maven-mr-branch</id>
+      <url>http://gwt-maven.googlecode.com/svn/branches/mr_2008_12_31_spring_plus/mavenrepo/</url>
+    </pluginRepository>
+}}}
+or simply add second pluginRepository to your `pom.xml`
 
 = New features =
 
