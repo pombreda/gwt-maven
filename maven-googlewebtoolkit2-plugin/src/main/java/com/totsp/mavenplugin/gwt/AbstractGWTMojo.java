@@ -315,8 +315,25 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter
     */
    private boolean overwriteGeneratedClasses;
+    
+   /**
+    * Whitelist URL pattern for GWTShell and JUnitShell
+    *
+    * @parameter
+    */
+   private String whitelist;
+
+   /**
+    * Whitelist URL pattern for GWTShell and JUnitShell
+    *
+    * @parameter
+    */
+   private String blacklist;
+
 
    // ctor
+
+
 
    /** Creates a new instance of AbstractGWTMojo */
    public AbstractGWTMojo() {
@@ -673,5 +690,19 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public void setTestSkip(boolean skip) {
       this.testSkip = skip;
    }
+
+    /**
+     * @return the whitelist
+     */
+    public String getWhitelist() {
+        return whitelist;
+    }
+
+    /**
+     * @return the blacklist
+     */
+    public String getBlacklist() {
+        return blacklist;
+    }
 
 }

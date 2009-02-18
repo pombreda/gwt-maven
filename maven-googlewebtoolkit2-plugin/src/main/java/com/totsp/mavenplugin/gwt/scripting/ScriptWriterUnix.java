@@ -85,6 +85,17 @@ public class ScriptWriterUnix implements ScriptWriter {
          writer.print(" -noserver ");
       }
 
+      if (mojo.getWhitelist() != null && mojo.getWhitelist().length() > 0){
+            writer.print(" -whitelist \"");
+            writer.print(mojo.getWhitelist() );
+            writer.print("\" ");
+        }
+        if (mojo.getBlacklist() != null && mojo.getBlacklist().length() > 0){
+            writer.print(" -blacklist \"");
+            writer.print(mojo.getBlacklist() );
+            writer.print("\" ");
+        }
+
       writer.print(" " + mojo.getRunTarget());
       writer.println();
 
