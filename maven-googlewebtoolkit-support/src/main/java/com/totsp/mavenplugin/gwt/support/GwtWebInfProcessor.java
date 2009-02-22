@@ -185,6 +185,11 @@ public class GwtWebInfProcessor {
             servletElements.add(servletDesc);
          }
       }
+      String rename = element.getAttributeValue("rename-to");
+      //System.out.println( rename + " -- " + module + " == " + this.moduleName );
+      if( rename != null && module == null ){
+          this.moduleName = rename;
+      }
       return servletElements;
    }
 
