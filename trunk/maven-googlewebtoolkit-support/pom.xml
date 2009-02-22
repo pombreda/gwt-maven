@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>maven-googlewebtoolkit-support</artifactId>
 	<packaging>jar</packaging>
-	<version>1.6.1</version>
+	<version>1.6.2</version>
 	<parent>
 		<groupId>com.totsp.gwt</groupId>
 		<artifactId>maven-googlewebtoolkit</artifactId>
