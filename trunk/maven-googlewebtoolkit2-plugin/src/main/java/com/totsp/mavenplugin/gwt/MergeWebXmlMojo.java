@@ -31,6 +31,9 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.totsp.mavenplugin.gwt.support.ExitException;
 import com.totsp.mavenplugin.gwt.support.GwtWebInfProcessor;
 import com.totsp.mavenplugin.gwt.util.FileIOUtils;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Merges GWT servlet elements into deployment descriptor (and non GWT servlets into shell).
@@ -82,7 +85,25 @@ public class MergeWebXmlMojo extends AbstractGWTMojo {
                     }
                 }
 
-                this.fixThreadClasspath();
+
+
+                ClassLoader loader = this.fixThreadClasspath();
+
+                if(moduleFile == null){
+                    try{
+                        String classpath = "/"+this.getCompileTarget()[i].replace('.', '/')+".gwt.xml";
+                        InputStream is = loader.getResourceAsStream( classpath);
+                        System.out.println("Looking for classpath: "+classpath+ "("+(is!=null)+")");
+                        if( is != null ){
+                            File temp = new File( this.getBuildDir() , this.getCompileTarget()[i].concat(".gwt.xml"));
+                            FileOutputStream fos = new FileOutputStream(temp);
+                            FileIOUtils.copyStream(is, fos);
+                            moduleFile = temp;
+                        }
+                    } catch(IOException e){
+                        this.getLog().info(e);
+                    }
+                }
 
                 GwtWebInfProcessor processor = null;
                 try {
