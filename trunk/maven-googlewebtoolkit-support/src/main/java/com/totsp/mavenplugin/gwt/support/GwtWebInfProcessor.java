@@ -117,11 +117,11 @@ public class GwtWebInfProcessor {
     * @param webXmlServletPath
     * @return
     */
-   protected List getGwtServletDescriptors(String module, boolean webXmlServletPath) throws IOException, JDOMException {
+   protected List<ServletDescriptor> getGwtServletDescriptors(String module, boolean webXmlServletPath) throws IOException, JDOMException {
 
       ///System.out.println("GwtWebInfProcessor getGwtServletDescriptors (module - " + module + ")");
 
-      ArrayList servletElements = new ArrayList();
+      ArrayList<ServletDescriptor> servletElements = new ArrayList<ServletDescriptor>();
       checkedModules.add(module);
       Document document = null;
       SAXBuilder builder = null;
@@ -188,7 +188,10 @@ public class GwtWebInfProcessor {
       String rename = element.getAttributeValue("rename-to");
       //System.out.println( rename + " -- " + module + " == " + this.moduleName );
       if( rename != null && module == null ){
-          this.moduleName = rename;
+          for(ServletDescriptor d: servletElements ){
+              d.setPath( d.getPath().replaceAll(this.moduleName, rename));
+          }
+
       }
       return servletElements;
    }
