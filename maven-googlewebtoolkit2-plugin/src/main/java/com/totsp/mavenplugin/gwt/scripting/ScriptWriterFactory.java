@@ -23,12 +23,16 @@ public final class ScriptWriterFactory {
     private ScriptWriterFactory() {
     }
     
-    public static ScriptWriter getInstance() {
+    public static ScriptWriter getInstance(AbstractGWTMojo mojo) {
         ScriptWriter sw = null;
         if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {            
             sw = new ScriptWriterWindows();
         } else {
-            sw = new ScriptWriterUnix();
+            if( mojo.getGwtVersion().startsWith("1.6") ){
+                sw = new ScriptWriterUnix16();
+            } else {
+                sw = new ScriptWriterUnix();
+            }
         }        
         return sw;        
     }    
