@@ -55,7 +55,7 @@ public class CompileMojo extends AbstractGWTMojo {
         }
 
         // build it for the correct platform
-        ScriptWriter writer = ScriptWriterFactory.getInstance();
+        ScriptWriter writer = ScriptWriterFactory.getInstance(this);
         File exec = writer.writeCompileScript(this);        
         
         // run it

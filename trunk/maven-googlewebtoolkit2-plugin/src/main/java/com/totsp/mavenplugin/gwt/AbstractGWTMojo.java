@@ -331,6 +331,32 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    private String blacklist;
 
 
+   /**
+    * Toggles the graphical logger (1.6+)
+    * 
+    * @parameter default-value="false"
+    *  
+    */
+   private boolean showTreeLogger;
+
+   /**
+    * Specifies the number of worker threads to use to compile (1.6+)
+    * @parameter default-value="2"
+    */
+   private int localWorkers;
+
+   /**
+    * Compiler work directory (1.6+)
+    * @parameter default-value="${project.build.directory}/gwtWork"
+    */
+   private File workDir;
+
+   /**
+    * Non-deployable files directory (1.6+)
+    * @parameter default-value="${project.build.directory}/gwtExtra"
+    */
+   private File extraDir;
+   
    // ctor
 
 
@@ -703,6 +729,62 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     public String getBlacklist() {
         return blacklist;
+    }
+
+    /**
+     * @return the showTreeLogger
+     */
+    public boolean isShowTreeLogger() {
+        return showTreeLogger;
+    }
+
+    /**
+     * @param showTreeLogger the showTreeLogger to set
+     */
+    public void setShowTreeLogger(boolean showTreeLogger) {
+        this.showTreeLogger = showTreeLogger;
+    }
+
+    /**
+     * @return the localWorkers
+     */
+    public int getLocalWorkers() {
+        return localWorkers;
+    }
+
+    /**
+     * @param localWorkers the localWorkers to set
+     */
+    public void setLocalWorkers(int localWorkers) {
+        this.localWorkers = localWorkers;
+    }
+
+    /**
+     * @return the workDir
+     */
+    public File getWorkDir() {
+        return workDir;
+    }
+
+    /**
+     * @param workDir the workDir to set
+     */
+    public void setWorkDir(File workDir) {
+        this.workDir = workDir;
+    }
+
+    /**
+     * @return the extraDir
+     */
+    public File getExtraDir() {
+        return extraDir;
+    }
+
+    /**
+     * @param extraDir the extraDir to set
+     */
+    public void setExtraDir(File extraDir) {
+        this.extraDir = extraDir;
     }
 
 }
