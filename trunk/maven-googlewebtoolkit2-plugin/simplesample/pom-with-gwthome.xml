@@ -84,6 +84,7 @@
 					<style>DETAILED</style>
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
+					<i18nConstantsWithLookup>false</i18nConstantsWithLookup>
 					<i18nConstantsNames>
 					   <value>com.totsp.sample.client.AppConstants</value>
 					</i18nConstantsNames>

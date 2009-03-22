@@ -263,7 +263,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
                 writer.print(mojo.getI18nOutputDir());
-                writer.print(" ");
+                writer.print(mojo.isI18nConstantsWithLookup() ? " -createConstantsWithLookup " : " ");
                 writer.print(target);
                 writer.println();
             }
