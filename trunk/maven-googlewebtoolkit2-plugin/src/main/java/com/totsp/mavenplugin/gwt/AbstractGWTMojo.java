@@ -236,9 +236,17 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    /**
     * Whether or not to skip GWT testing.
     * 
-    * @parameter default-value="false"
+    * @parameter expression="${google.webtoolkit.testSkip}" default-value="false"
     */
    private boolean testSkip;
+
+    /**
+     * Whether or not to skip GWT compilation.
+     * 
+     * @parameter expression="${google.webtoolkit.compileSkip}" default-value="false"
+     */
+    private boolean compileSkip;
+    
    /**
     * Whether or not to add compile source root to classpath.
     * 
@@ -731,6 +739,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public void setTestSkip(boolean skip) {
       this.testSkip = skip;
    }
+
+    public boolean isCompileSkip() {
+        return compileSkip;
+    }
 
     /**
      * @return the whitelist

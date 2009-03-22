@@ -50,6 +50,9 @@ public class CompileMojo extends AbstractGWTMojo {
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (isCompileSkip()) {
+            return;
+        }
         if (!this.getOutput().exists()) {
             this.getOutput().mkdirs();
         }
