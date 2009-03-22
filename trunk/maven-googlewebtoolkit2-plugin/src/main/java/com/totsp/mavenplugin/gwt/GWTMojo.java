@@ -39,7 +39,7 @@ import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
  * part of the standard Maven life-cycle phases: "compile" "test" "install").
  * 
  * @goal gwt
- * @execute phase=compile
+ * @execute phase=package
  * @requiresDependencyResolution compile
  * @description Runs the the project in the GWTShell for development.
  * 
