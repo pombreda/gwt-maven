@@ -37,4 +37,5 @@ public interface ScriptWriter {
     
     public void writeTestScripts(AbstractGWTMojo mojo) throws MojoExecutionException;
 
+
 }
