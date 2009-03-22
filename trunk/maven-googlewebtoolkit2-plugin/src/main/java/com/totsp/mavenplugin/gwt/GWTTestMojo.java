@@ -58,7 +58,7 @@ public class GWTTestMojo extends AbstractGWTMojo {
  */    
     
    public void execute() throws MojoExecutionException, MojoFailureException {
-      if (isTestSkip() || isCompileSkip()) {
+      if (isTestSkip()) {
          return;
       }
 
