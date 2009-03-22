@@ -12,13 +12,19 @@
 	</parent>
 	<name>Maven-GoogleWebToolkit-Support</name>
 	<url>http://maven.apache.org</url>
-	<distributionManagement>
+	<!--distributionManagement>
 		<repository>
 			<id>local.repo</id>
 			<name>file repository to svn</name>
 			<url>file://${basedir}/../mavenrepo</url>
 		</repository>
-	</distributionManagement>
+	</distributionManagement-->
+        <distributionManagement>
+        <repository>
+          <id>internal</id>
+          <url>dav:http://ca-devsrv02:9080/archiva/repository/internal/</url>
+        </repository>
+    </distributionManagement>
 	<!--  needed at the moment for jdom 1.1 (not in central) -->
 	<!-- 
 	<repositories>

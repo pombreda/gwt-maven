@@ -271,6 +271,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     */
    private File i18nOutputDir;
    /**
+    * Whether or not to generate i18n Constants interfaces with the added
+    * ability to look up values at runtime with a string key. 
+    * 
+    * @parameter default-value="false"
+    */
+   private boolean i18nConstantsWithLookup;   
+   /**
     * List of names of properties files that should be used to generate i18n
     * Messages interfaces.
     * 
@@ -683,6 +690,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
    public void setI18nOutputDir(File outputDir) {
       this.i18nOutputDir = outputDir;
+   }
+   
+   public boolean isI18nConstantsWithLookup() {
+      return this.i18nConstantsWithLookup;
+   }
+   
+   public void setI18nConstantsWithLookup(boolean i18nConstantsWithLookup) {
+      this.i18nConstantsWithLookup = i18nConstantsWithLookup;
    }
 
    public String[] getI18nMessagesNames() {

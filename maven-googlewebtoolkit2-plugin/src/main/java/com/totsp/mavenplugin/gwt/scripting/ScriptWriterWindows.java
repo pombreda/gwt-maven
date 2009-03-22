@@ -161,7 +161,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
                 writer.print("\"" + mojo.getI18nOutputDir() + "\"");
-                writer.print(" ");
+                writer.print(mojo.isI18nConstantsWithLookup() ? " -createConstantsWithLookup " : " ");
                 writer.print(target);
                 writer.println();
             }
