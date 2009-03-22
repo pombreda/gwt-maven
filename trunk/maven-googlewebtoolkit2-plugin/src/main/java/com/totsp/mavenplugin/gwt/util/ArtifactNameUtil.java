@@ -35,11 +35,11 @@ public class ArtifactNameUtil {
      * @return
      */
     public static final String getPlatformName() {
-        String result = AbstractGWTMojo.WINDOWS;
-        if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.MAC)) {
+        String result = AbstractGWTMojo.LINUX;
+        if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
+            result = AbstractGWTMojo.WINDOWS;
+        } else if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.MAC)) {
             result = AbstractGWTMojo.MAC;
-        } else if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.LINUX)) {
-            result = AbstractGWTMojo.LINUX;
         }
         return result;
     }
