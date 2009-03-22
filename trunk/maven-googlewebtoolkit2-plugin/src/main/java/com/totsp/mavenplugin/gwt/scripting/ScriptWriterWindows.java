@@ -56,7 +56,7 @@ public class ScriptWriterWindows implements ScriptWriter {
         PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);        
         
         String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
-        writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH% ");
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -108,7 +108,7 @@ public class ScriptWriterWindows implements ScriptWriter {
 
         for (String target : mojo.getCompileTarget()) {
             String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
-            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH% ");
+            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH% ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
             writer.print(" -gen \"");
             writer.print(mojo.getGen().getAbsolutePath());
@@ -157,7 +157,7 @@ public class ScriptWriterWindows implements ScriptWriter {
             for (String target : mojo.getI18nConstantsNames()) {
                 String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH%");
+                writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH%");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
                 writer.print("\"" + mojo.getI18nOutputDir() + "\"");
@@ -172,7 +172,7 @@ public class ScriptWriterWindows implements ScriptWriter {
             for (String target : mojo.getI18nMessagesNames()) {
                 String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra + " -cp %CLASSPATH%");
+                writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH%");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -createMessages ");
                 writer.print(" -out ");
@@ -233,7 +233,7 @@ public class ScriptWriterWindows implements ScriptWriter {
                 PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
 
                 // build Java command
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" ");
+                writer.print("\"" + mojo.getJavaCommand() + "\" ");
                 if (extra.length() > 0) {
                     writer.print(" " + extra + " ");
                 }
