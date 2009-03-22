@@ -51,7 +51,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
 
         String extra = (mojo.getExtraJvmArgs() != null)
             ? mojo.getExtraJvmArgs() : "";
-        writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra +
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
             " -cp %CLASSPATH% ");
 
         if (mojo instanceof DebugMojo) {
@@ -127,7 +127,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
         for (String target : mojo.getCompileTarget()) {
             String extra = (mojo.getExtraJvmArgs() != null)
                 ? mojo.getExtraJvmArgs() : "";
-            writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " + extra +
+            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
                 " -cp %CLASSPATH% ");
             writer.print(" com.google.gwt.dev.GWTCompiler ");
             writer.print(" -gen \"");
@@ -197,7 +197,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
                 String extra = (mojo.getExtraJvmArgs() != null)
                     ? mojo.getExtraJvmArgs() : "";
 
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " +
+                writer.print("\"" + mojo.getJavaCommand() + "\" " +
                     extra + " -cp %CLASSPATH%");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
@@ -214,7 +214,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
                 String extra = (mojo.getExtraJvmArgs() != null)
                     ? mojo.getExtraJvmArgs() : "";
 
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" " +
+                writer.print("\"" + mojo.getJavaCommand() + "\" " +
                     extra + " -cp %CLASSPATH%");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -createMessages ");
@@ -287,7 +287,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
                         file, DependencyScope.TEST);
 
                 // build Java command
-                writer.print("\"" + AbstractGWTMojo.JAVA_COMMAND + "\" ");
+                writer.print("\"" + mojo.getJavaCommand() + "\" ");
 
                 if (extra.length() > 0) {
                     writer.print(" " + extra + " ");

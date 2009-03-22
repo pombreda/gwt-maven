@@ -52,7 +52,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    public static final String LEOPARD = "leopard";
    public static final String GOOGLE_WEBTOOLKIT_HOME = "google.webtoolkit.home";
 
-   public static final String JAVA_COMMAND = (System.getProperty("java.home") != null) ? FileUtils.normalize(System
+   private static final String JAVA_COMMAND = (System.getProperty("java.home") != null) ? FileUtils.normalize(System
             .getProperty("java.home")
             + File.separator + "bin" + File.separator + "java") : "java";
 
@@ -211,6 +211,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter default-value="true"
     */
    private boolean debugSuspend;
+   /**
+    * Option to specify the jvm (or path to the java executable) to use with the test cases. 
+    * For the default, the jvm will be the same as JAVA_HOME. 
+    * 
+    * @parameter expression="${google.webtoolkit.jvm}"
+    */
+   private String jvm;
    /**
     * Extra JVM arguments that are passed to the GWT-Maven generated scripts
     * (for compiler, shell, etc - typically use -Xmx512m here, or
@@ -438,6 +445,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
    public File getContextXml() {
       return this.contextXml;
+   }
+
+   public void setJvm(String jvm) {
+	  this.jvm = jvm;
+   }
+
+   public String getJvm() {
+	 return jvm;
    }
 
    public void setExtraJvmArgs(String extraJvmArgs) {
@@ -730,6 +745,10 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
    public void setExtraTestArgs(String extraTestArgs) {
       this.extraTestArgs = extraTestArgs;
+   }
+   
+   public String getJavaCommand() {
+	  return ((getJvm() != null) ? getJvm() : JAVA_COMMAND);
    }
 
    public boolean isTestSkip() {
