@@ -27,6 +27,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * Extends the gwt goal and runs the project in the GWTShell with a debugger port hook (optionally suspended).
  * 
  * @goal debug
+ * @execute phase=install
  * @description Runs the project with a debugger port hook (optionally suspended). 
  * 
  * @author cooper
