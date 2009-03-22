@@ -69,6 +69,22 @@ public class BuildClasspathUtil {
 
         Set<File> items = new LinkedHashSet<File>();
 
+        // inject GWT jars and relative native libs for all scopes
+        // (gwt-user and gwt-dev should be scoped provided to keep them out of
+        // other maven stuff - not end up in war, etc - this util is only used for GWT-Maven scripts)
+        // TODO filter the rest of the stuff so we don't double add these
+        if (gwtHome != null) {
+            mojo.getLog()
+                .info("google.webtoolkit.home (gwtHome) set, using it for GWT dependencies - " +
+                gwtHome.getAbsolutePath());
+            items.addAll(BuildClasspathUtil.injectGwtDepsFromGwtHome(gwtHome,
+                    mojo));
+        } else {
+            mojo.getLog()
+                .info("google.webtoolkit.home (gwtHome) *not* set, using project POM for GWT dependencies");
+            items.addAll(BuildClasspathUtil.injectGwtDepsFromRepo(mojo));
+        }
+
         
         // add sources
         if (mojo.getSourcesOnPath()) {
@@ -110,6 +126,7 @@ public class BuildClasspathUtil {
         // add compile (even when scope is other than)
         for (Iterator it = project.getCompileClasspathElements().iterator();
                 it.hasNext();) {
+
             items.add(new File(it.next().toString()));
         }
 
@@ -134,22 +151,7 @@ public class BuildClasspathUtil {
             mojo.getLog().debug("   " + f.getAbsolutePath());
         }
 
-        // inject GWT jars and relative native libs for all scopes
-        // (gwt-user and gwt-dev should be scoped provided to keep them out of
-        // other maven stuff - not end up in war, etc - this util is only used for GWT-Maven scripts)
-        // TODO filter the rest of the stuff so we don't double add these
-        if (gwtHome != null) {
-            mojo.getLog()
-                .info("google.webtoolkit.home (gwtHome) set, using it for GWT dependencies - " +
-                gwtHome.getAbsolutePath());
-            items.addAll(BuildClasspathUtil.injectGwtDepsFromGwtHome(gwtHome,
-                    mojo));
-        } else {
-            mojo.getLog()
-                .info("google.webtoolkit.home (gwtHome) *not* set, using project POM for GWT dependencies");
-            items.addAll(BuildClasspathUtil.injectGwtDepsFromRepo(mojo));
-        }
-
+        
 
         return items;
     }
