@@ -18,6 +18,16 @@ mvn com.totsp.gwt:maven-googlewebtoolkit2-plugin:gwt
 }}}
 
 
+*Q) So what's the deal with the Codehaus Mojo GWT Plugin and this one (the Google Code one named GWT-Maven) merging - has it happened, is it happening, what? 
+TODO
+
+
+*Q) I'm getting "too long" errors for lines on Windows, what can I do about this?
+
+We have tried various approaches to address this problem, and honestly have never solved it here completely. There are complications with the different approaches - for details see issue 88 (http://code.google.com/p/gwt-maven/issues/detail?id=88).  We aren't working on this more here for several reasons, 1. we have never gotten a reliable Windows user/owner for testing and hashing out the issue, 2. the help we do get works on one version of Windows but not another, 3. the Codehaus Mojo GWT plugin claims to have solved this problem - we haven't verified - see FAQ item 2 - so it's not a priority for this codebase at this time (though it is a valid issue). 
+
+There are a few workarounds, see issue 88, for example try something simple such as moving your Maven repo to a short path location, or making an alias for it. Rather than "c:\documents and settings\my fancy username\.m2\repository" place your m2 repo somewhere else - like C:\m2repo, and see if that helps. 
+
 *Q)  I'm having problems compiling multi-module GWT applications.  How do I make it work?
 
 When building client code, the GWT compiler, not only needs bytecode for dependent classes, but also needs access to the source code.  This means any GWT modules your module depends on will need to have the source code packaged in it.  The easiest way to do this is to use the `resources` section of your POM's `build` stanza.  e.g.
