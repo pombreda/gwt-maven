@@ -19,10 +19,17 @@ mvn com.totsp.gwt:maven-googlewebtoolkit2-plugin:gwt
 
 
 *Q) So what's the deal with the Codehaus Mojo GWT Plugin and this one (the Google Code one named GWT-Maven) merging - has it happened, is it happening, what? 
-TODO
+
+The Codehaus Mojo GWT Plugin (http://mojo.codehaus.org/gwt-maven-plugin/) has merged our source code (GWT-Maven) into ITSELF. We have not merged any of their code here. They have also copied our documentation style, same sections, etc (goes beyond just the Maven defaults, they copied our docs and modified), so it's a bit confusing.
+
+At some point we will work on new issues via the Codehaus plugin because that is the "Maven way" for third party plugins, and we agree we should try to follow the standard path. 
+
+The current status of this plugin is SUPPORTED, BUT NO NEW FEATURES WILL BE ADDED. The status of the "merge" at Codehaus is that the developers there (at Codehaus) did that, and we agreed to join that project and contribute there, when we get the chance to catch devote the time to get up to speed there. We have not yet had time to get familiar with that code base and sign off on it. We will validate that it all works as expected, same goals and features, and it's documented, has an archetype, has samples, etc - BEFORE we discontinue support here. 
+
+For now, the GWT-Maven developers recommend you use GWT-Maven, because that is what we know and support - we can't vouch for the Codehaus GWT plugin in any way (we do plan to do that in the future, and support things there, etc, but we have not YET been able to get involved there). That recommendation though is no reflection on the quality of the Codehaus plugin, we simply don't know much about it, so we can't recommend it, it might be great, you might want to check it out, but we can't tell you whether or not it's good or bad. We can tell you that we know this plugin, and if you have a question in the GWT-Maven forum, we will respond. 
 
 
-*Q) I'm getting "too long" errors for lines on Windows, what can I do about this?
+*Q) I'm getting classpath "too long" errors for lines on Windows, what can I do about this?
 
 We have tried various approaches to address this problem, and honestly have never solved it here completely. There are complications with the different approaches - for details see issue 88 (http://code.google.com/p/gwt-maven/issues/detail?id=88).  We aren't working on this more here for several reasons, 1. we have never gotten a reliable Windows user/owner for testing and hashing out the issue, 2. the help we do get works on one version of Windows but not another, 3. the Codehaus Mojo GWT plugin claims to have solved this problem - we haven't verified - see FAQ item 2 - so it's not a priority for this codebase at this time (though it is a valid issue). 
 
