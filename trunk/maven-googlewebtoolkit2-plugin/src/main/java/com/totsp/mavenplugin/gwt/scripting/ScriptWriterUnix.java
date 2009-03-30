@@ -268,8 +268,12 @@ public class ScriptWriterUnix implements ScriptWriter {
             }
             if (testExtra.length() > 0) {
                writer.print(" " + testExtra + " ");
-            }
-            writer.print(" -cp $CLASSPATH ");
+            }            
+            
+            writer.print("-cp $CLASSPATH ");
+            
+            writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() + "\" ");
+            
             writer.print("junit.textui.TestRunner ");
             writer.print(testName);
 
