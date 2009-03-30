@@ -32,6 +32,7 @@ import org.codehaus.classworlds.ClassRealm;
 import org.codehaus.classworlds.ClassWorld;
 import org.codehaus.plexus.util.FileUtils;
 
+import com.totsp.mavenplugin.gwt.support.MakeCatalinaBase;
 import com.totsp.mavenplugin.gwt.util.BuildClasspathUtil;
 import com.totsp.mavenplugin.gwt.util.DependencyScope;
 
@@ -418,6 +419,30 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
          throw new RuntimeException(e);
       }
    }
+   
+   /**
+    * Create embedded GWT tomcat base dir based on properties.
+    * 
+    * @throws Exception
+    */
+   public void makeCatalinaBase() throws Exception {
+       getLog().debug("make catalina base for embedded Tomcat");        
+       
+       if (this.getWebXml() != null && this.getWebXml().exists()) {
+           this.getLog().info("source web.xml present - " + this.getWebXml() + " - using it with embedded Tomcat");
+       } else {
+           this.getLog().info("source web.xml NOT present, using default empty web.xml for shell");
+       }
+
+       // note that MakeCatalinaBase (support jar) will use emptyWeb.xml if webXml does not exist 
+       String[] args = { this.getTomcat().getAbsolutePath(), this.getWebXml().getAbsolutePath(), this.getShellServletMappingURL() };
+       MakeCatalinaBase.main(args);
+
+       if ((this.getContextXml() != null) && this.getContextXml().exists()) {
+           this.getLog().info("contextXml parameter present - " + this.getContextXml() + " - using it for embedded Tomcat ROOT.xml");
+           FileUtils.copyFile(this.getContextXml(), new File(this.getTomcat(), "conf/gwt/localhost/ROOT.xml"));
+       }
+   }
 
    //
    // accessors/mutators
@@ -452,7 +477,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    }
 
    public String getJvm() {
-	 return jvm;
+	 return this.jvm;
    }
 
    public void setExtraJvmArgs(String extraJvmArgs) {
@@ -652,7 +677,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    }
 
     public boolean getResourcesOnPath() {
-        return resourcesOnPath;
+        return this.resourcesOnPath;
     }
 
     public void setResourcesOnPath(boolean resourcesOnPath) {
@@ -760,28 +785,28 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
    }
 
     public boolean isCompileSkip() {
-        return compileSkip;
+        return this.compileSkip;
     }
 
     /**
      * @return the whitelist
      */
     public String getWhitelist() {
-        return whitelist;
+        return this.whitelist;
     }
 
     /**
      * @return the blacklist
      */
     public String getBlacklist() {
-        return blacklist;
+        return this.blacklist;
     }
 
     /**
      * @return the showTreeLogger
      */
     public boolean isShowTreeLogger() {
-        return showTreeLogger;
+        return this.showTreeLogger;
     }
 
     /**
@@ -795,7 +820,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @return the localWorkers
      */
     public int getLocalWorkers() {
-        return localWorkers;
+        return this.localWorkers;
     }
 
     /**
@@ -809,7 +834,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @return the workDir
      */
     public File getWorkDir() {
-        return workDir;
+        return this.workDir;
     }
 
     /**
@@ -823,7 +848,7 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @return the extraDir
      */
     public File getExtraDir() {
-        return extraDir;
+        return this.extraDir;
     }
 
     /**
@@ -831,6 +856,5 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     public void setExtraDir(File extraDir) {
         this.extraDir = extraDir;
-    }
-
+    }   
 }
