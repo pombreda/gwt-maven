@@ -12,9 +12,6 @@ public class GwtTestMyProjectController extends GWTTestCase {
     public String getModuleName() {
         return "com.totsp.sample.MyProject";
     }
-
-    // TODO - for now have to skip this test, jdbc context not present error 
-    // (need to investigate JUnitShell handing of catalina base and context, etc)
     
     // an example of a GWT RPC test, delay in straight line OUTSIDE the callback
     // finish and assert INSIDE the callback

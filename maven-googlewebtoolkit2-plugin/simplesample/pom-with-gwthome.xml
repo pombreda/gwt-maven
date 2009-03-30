@@ -99,7 +99,7 @@
 							<goal>mergewebxml</goal>
 							<goal>i18n</goal>                            
 							<goal>compile</goal>							
-                            <!-- <goal>test</goal>-->
+                            <goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
