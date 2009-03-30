@@ -27,7 +27,7 @@
 	</repositories>
 
     <properties>
-       <gwtVersion>1.5.2</gwtVersion>
+       <gwtVersion>1.5.3</gwtVersion>
     </properties>
 
 	<dependencyManagement>
