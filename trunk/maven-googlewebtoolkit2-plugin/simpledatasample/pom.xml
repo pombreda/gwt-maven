@@ -143,8 +143,7 @@
 						<goals>
 							<goal>mergewebxml</goal>
 							<goal>compile</goal>
-							<!--  tests are a TODO in this sample at the moment - context errors in JUnitShell -->							
-                            <!-- <goal>test</goal>-->
+                            <goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
