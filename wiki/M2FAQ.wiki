@@ -28,6 +28,8 @@ The current status of this plugin is SUPPORTED, BUT NO NEW FEATURES WILL BE ADDE
 
 For now, the GWT-Maven developers recommend you use GWT-Maven, because that is what we know and support - we can't vouch for the Codehaus GWT plugin in any way (we do plan to do that in the future, and support things there, etc, but we have not YET been able to get involved there). That recommendation though is no reflection on the quality of the Codehaus plugin, we simply don't know much about it, so we can't recommend it, it might be great, you might want to check it out, but we can't tell you whether or not it's good or bad. We can tell you that we know this plugin, and if you have a question in the GWT-Maven forum, we will respond. 
 
+The issue tracker for the Codehaus GWT Maven plugin is here: http://jira.codehaus.org/browse/MGWT.  We will update things there as we get into that code base and note things there - that might be your best barometer as to how involved we (the GWT-Maven peeps) are at Codehaus at any given time.
+
 
 *Q) I'm getting classpath "too long" errors for lines on Windows, what can I do about this?
 
