@@ -90,7 +90,7 @@ public class BuildClasspathUtil {
         }
 
         // add classes dir
-        items.add(new File(project.getBasedir(), "classes"));
+        items.add(new File(project.getBuild().getDirectory() + File.separator + "classes"));
 
         // if runtime add runtime
         if (scope == DependencyScope.RUNTIME) {
@@ -105,6 +105,9 @@ public class BuildClasspathUtil {
             for (Artifact a : (Collection<Artifact>) project.getTestArtifacts()) {
                 items.add(a.getFile());
             }
+            
+            // add test classes dir
+            items.add(new File(project.getBuild().getDirectory() + File.separator + "test-classes"));
 
             // add test sources and resources
             BuildClasspathUtil.addSourcesWithActiveProjects(project, items, scope);
