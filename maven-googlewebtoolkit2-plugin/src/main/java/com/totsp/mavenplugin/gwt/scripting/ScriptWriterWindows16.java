@@ -298,6 +298,9 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
                 }
 
                 writer.print(" -cp %CLASSPATH% ");
+                
+                writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() + "\" ");
+                
                 writer.print("junit.textui.TestRunner ");
                 writer.print(testName);
 
