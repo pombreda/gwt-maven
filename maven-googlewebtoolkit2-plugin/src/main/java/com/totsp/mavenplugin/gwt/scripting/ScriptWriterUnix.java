@@ -60,7 +60,7 @@ public class ScriptWriterUnix implements ScriptWriter {
          extra = "-XstartOnFirstThread " + extra;
       }
 
-      writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp $CLASSPATH ");
+      writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
 
       if (mojo instanceof DebugMojo) {
          writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -120,7 +120,7 @@ public class ScriptWriterUnix implements ScriptWriter {
             extra = "-XstartOnFirstThread " + extra;
          }
 
-         writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp $CLASSPATH ");
+         writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
          writer.print(" com.google.gwt.dev.GWTCompiler ");
          writer.print(" -gen ");
          writer.print(mojo.getGen().getAbsolutePath());
@@ -178,7 +178,7 @@ public class ScriptWriterUnix implements ScriptWriter {
                extra = "-XstartOnFirstThread " + extra;
             }
 
-            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp $CLASSPATH");
+            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
             writer.print(" com.google.gwt.i18n.tools.I18NSync");
             writer.print(" -out ");
             writer.print(mojo.getI18nOutputDir());
@@ -196,7 +196,7 @@ public class ScriptWriterUnix implements ScriptWriter {
                extra = "-XstartOnFirstThread " + extra;
             }
 
-            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp $CLASSPATH");
+            writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
             writer.print(" com.google.gwt.i18n.tools.I18NSync");
             writer.print(" -createMessages ");
             writer.print(" -out ");
@@ -270,7 +270,7 @@ public class ScriptWriterUnix implements ScriptWriter {
                writer.print(" " + testExtra + " ");
             }            
             
-            writer.print("-cp $CLASSPATH ");
+            writer.print("-cp \"$CP\" ");
             
             writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() + "\" ");
             
@@ -317,10 +317,10 @@ public class ScriptWriterUnix implements ScriptWriter {
 
       try {
          Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, scope);
-         writer.print("export CLASSPATH=");
-         Iterator it = classpath.iterator();
+         writer.print("CP=");
+         Iterator<File> it = classpath.iterator();
          while (it.hasNext()) {
-            File f = (File) it.next();
+            File f = it.next();
             if (it.hasNext())
                writer.print("\"" + f.getAbsolutePath() + "\":");
             else
@@ -341,8 +341,8 @@ public class ScriptWriterUnix implements ScriptWriter {
     * @param file
     */
    private void chmodUnixFile(File file) {
-      try {
-         ProcessWatcher pw = new ProcessWatcher("chmod +x " + file.getAbsolutePath());
+      try {          
+         ProcessWatcher pw = new ProcessWatcher(new String[] {"chmod", "+x", file.getAbsolutePath()});
          pw.startProcess(System.out, System.err);
          pw.waitFor();
       }
