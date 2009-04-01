@@ -4,7 +4,7 @@
   <artifactId>maven-googlewebtoolkit2-archetype</artifactId>
   <packaging>maven-archetype</packaging>
   <name>Maven 2 Archetype for GWT-Maven</name>
-  <version>1.0.3</version>  
+  <version>1.0.4</version>  
   <build>
     <extensions>
       <extension>
