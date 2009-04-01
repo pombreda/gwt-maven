@@ -43,7 +43,7 @@ GWT-Maven Testing Support
       </execution>
    </executions> 
 +--
- 
+
 * GwtTest scripts
 
  Each test that is named with the GwtTest prefix and picked up and run by GWT-Maven is turned into a 
@@ -69,3 +69,11 @@ GWT-Maven Testing Support
  with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT start OR end with Test.  
  For example "GwtTstMyClass.java".  This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests (and Surefire does not pick it up either). 
  
+* Skipping tests
+
+ The GWT-Maven testing support is special, as explained above. Because of this it runs it's own test goal during the test phase,
+ if you want to skip this if it's configured to run in your POM (via the test execution), you can, using the <<-Dgoogle.webtoolkit.testSkip=true>> system property
+ on the command line. 
+ 
+ This is NOT the same property that the standard Surefire plugin uses to skip tests, on purpose (there you use <<-DskipTests=true>> or the deprecated <<-Dmaven.test.skip=true>>.
+ The Surefire skips still work, GWT-Maven doesn't touch them, but they are for skipping Surefire tests. 
