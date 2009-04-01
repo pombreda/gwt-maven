@@ -15,10 +15,10 @@ public final class ScriptUtil {
    public static void runScript(final File exec) throws MojoExecutionException {
       ProcessWatcher pw = null;
       if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
-         pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+         pw = new ProcessWatcher(new String[] {"\"" + exec.getAbsolutePath() + "\""});
       }
       else {
-         pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+         pw = new ProcessWatcher(new String[] {exec.getAbsolutePath()});
       }
 
       try {
@@ -39,10 +39,10 @@ public final class ScriptUtil {
       StringBuilder err = new StringBuilder();
       ProcessWatcher pw = null;
       if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
-         pw = new ProcessWatcher("\"" + exec.getAbsolutePath() + "\"");
+         pw = new ProcessWatcher(new String[] {"\"" + exec.getAbsolutePath() + "\""});
       }
       else {
-         pw = new ProcessWatcher(exec.getAbsolutePath().replaceAll(" ", "\\ "));
+         pw = new ProcessWatcher(new String[] {exec.getAbsolutePath()});
       }
 
       try {

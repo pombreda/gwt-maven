@@ -1,18 +1,15 @@
 /*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * 
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  */
 package com.totsp.mavenplugin.gwt.scripting;
 
@@ -39,53 +36,47 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-
 /**
  * Handler for writing shell scripts for GWT 1.6+ on the mac and linux platforms.
- *
+ * 
  * @author ccollins
  * @author rcooper
  */
 public class ScriptWriterUnix16 implements ScriptWriter16 {
+
     /** Creates a new instance of ScriptWriterUnix */
     public ScriptWriterUnix16() {
     }
 
     /**
      * Write run script.
+     * 
      * @param mojo The Mojo calling this (contianing config parametersd)
      * @return the script file that was written.
      * @throws org.apache.maven.plugin.MojoExecutionException general purpose exception.
      */
-    public File writeRunScript(AbstractGWTMojo mojo)
-        throws MojoExecutionException {
+    public File writeRunScript(AbstractGWTMojo mojo) throws MojoExecutionException {
         String filename = (mojo instanceof DebugMojo) ? "debug.sh" : "run.sh";
         File file = new File(mojo.getBuildDir(), filename);
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file,
-                DependencyScope.RUNTIME);
+        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.RUNTIME);
 
-        String extra = (mojo.getExtraJvmArgs() != null)
-            ? mojo.getExtraJvmArgs() : "";
+        String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-        if (AbstractGWTMojo.OS_NAME.startsWith("mac") &&
-                (extra.indexOf("-XstartOnFirstThread") == -1)) {
+        if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
             extra = "-XstartOnFirstThread " + extra;
         }
-        
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
-            " -cp $CLASSPATH ");
+
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
 
         if (mojo instanceof DebugMojo) {
-            writer.print(
-                " -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
+            writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
             writer.print(mojo.getDebugPort());
             writer.print(mojo.isDebugSuspend() ? ",suspend=y " : ",suspend=n ");
         }
 
-        writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() +
-            "\" ");
+        writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() + "\" ");
         writer.print(" com.google.gwt.dev.HostedMode");
-         writer.print(" -gen ");
+        writer.print(" -gen ");
         writer.print(mojo.getGen().getAbsolutePath());
         writer.print(" -logLevel ");
         writer.print(mojo.getLogLevel());
@@ -106,7 +97,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         writer.print(mojo.getExtraDir());
         writer.print(" -war ");
         writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\" ");
-        writer.print( "-localWorkers ");
+        writer.print("-localWorkers ");
         writer.print(mojo.getLocalWorkers());
         writer.print(" -port ");
         writer.print(Integer.toString(mojo.getPort()));
@@ -115,23 +106,21 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
             writer.print(" -server ");
         }
 
-        if ((mojo.getWhitelist() != null) &&
-                (mojo.getWhitelist().length() > 0)) {
+        if ((mojo.getWhitelist() != null) && (mojo.getWhitelist().length() > 0)) {
             writer.print(" -whitelist \"");
             writer.print(mojo.getWhitelist());
             writer.print("\" ");
         }
 
-        if ((mojo.getBlacklist() != null) &&
-                (mojo.getBlacklist().length() > 0)) {
+        if ((mojo.getBlacklist() != null) && (mojo.getBlacklist().length() > 0)) {
             writer.print(" -blacklist \"");
             writer.print(mojo.getBlacklist());
             writer.print("\" ");
         }
 
         writer.print(" -startupUrl " + mojo.getRunTarget());
-        writer.print( " ");
-        writer.print( mojo.getCompileTarget()[0]);
+        writer.print(" ");
+        writer.print(mojo.getCompileTarget()[0]);
         writer.println();
 
         writer.flush();
@@ -144,6 +133,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
 
     /**
      * Write compile script.
+     * 
      * @param mojo The Mojo calling this (contianing config parametersd)
      * @return the script file that was written.
      * @throws org.apache.maven.plugin.MojoExecutionException general purpose exception.
@@ -154,26 +144,23 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
 
     /**
      * Write compile script.
+     * 
      * @param mojo The Mojo calling this (contianing config parametersd)
      * @return the script file that was written.
      * @throws org.apache.maven.plugin.MojoExecutionException general purpose exception.
      */
     protected File writeCompilerInvocationScript(AbstractGWTMojo mojo, boolean validateOnly)
         throws MojoExecutionException {
-        File file = new File(mojo.getBuildDir(),  validateOnly ? "validate.sh": "compile.sh");
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file,
-                DependencyScope.COMPILE);
+        File file = new File(mojo.getBuildDir(), validateOnly ? "validate.sh" : "compile.sh");
+        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
 
-        String extra = (mojo.getExtraJvmArgs() != null)
-            ? mojo.getExtraJvmArgs() : "";
+        String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-        if (AbstractGWTMojo.OS_NAME.startsWith("mac") &&
-                (extra.indexOf("-XstartOnFirstThread") == -1)) {
+        if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
             extra = "-XstartOnFirstThread " + extra;
         }
 
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
-            " -cp $CLASSPATH ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
         writer.print(" com.google.gwt.dev.Compiler ");
         writer.print(" -gen ");
         writer.print(mojo.getGen().getAbsolutePath());
@@ -215,17 +202,14 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
 
     /**
      * Write i18n script.
-     *
+     * 
      */
-    public File writeI18nScript(AbstractGWTMojo mojo)
-        throws MojoExecutionException {
+    public File writeI18nScript(AbstractGWTMojo mojo) throws MojoExecutionException {
         File file = new File(mojo.getBuildDir(), "i18n.sh");
 
         if (!file.exists()) {
             if (mojo.getLog().isDebugEnabled()) {
-                mojo.getLog()
-                    .debug("File '" + file.getAbsolutePath() +
-                    "' does not exsists, trying to create.");
+                mojo.getLog().debug("File '" + file.getAbsolutePath() + "' does not exsists, trying to create.");
             }
 
             try {
@@ -233,33 +217,26 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
                 file.createNewFile();
 
                 if (mojo.getLog().isDebugEnabled()) {
-                    mojo.getLog()
-                        .debug("New file '" + file.getAbsolutePath() +
-                        "' created.");
+                    mojo.getLog().debug("New file '" + file.getAbsolutePath() + "' created.");
                 }
             } catch (Exception exe) {
-                mojo.getLog()
-                    .error("Couldn't create file '" + file.getAbsolutePath() +
-                    "'. Reason: " + exe.getMessage(), exe);
+                mojo.getLog().error(
+                    "Couldn't create file '" + file.getAbsolutePath() + "'. Reason: " + exe.getMessage(), exe);
             }
         }
 
-        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file,
-                DependencyScope.COMPILE);
+        PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.COMPILE);
 
         // constants
         if (mojo.getI18nConstantsNames() != null) {
             for (String target : mojo.getI18nConstantsNames()) {
-                String extra = (mojo.getExtraJvmArgs() != null)
-                    ? mojo.getExtraJvmArgs() : "";
+                String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-                if (AbstractGWTMojo.OS_NAME.startsWith("mac") &&
-                        (extra.indexOf("-XstartOnFirstThread") == -1)) {
+                if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
                     extra = "-XstartOnFirstThread " + extra;
                 }
 
-                writer.print("\"" + mojo.getJavaCommand() + "\" " +
-                    extra + " -cp $CLASSPATH");
+                writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -out ");
                 writer.print(mojo.getI18nOutputDir());
@@ -272,16 +249,13 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         // messages
         if (mojo.getI18nMessagesNames() != null) {
             for (String target : mojo.getI18nMessagesNames()) {
-                String extra = (mojo.getExtraJvmArgs() != null)
-                    ? mojo.getExtraJvmArgs() : "";
+                String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-                if (AbstractGWTMojo.OS_NAME.startsWith("mac") &&
-                        (extra.indexOf("-XstartOnFirstThread") == -1)) {
+                if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
                     extra = "-XstartOnFirstThread " + extra;
                 }
 
-                writer.print("\"" + mojo.getJavaCommand() + "\" " +
-                    extra + " -cp $CLASSPATH");
+                writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
                 writer.print(" com.google.gwt.i18n.tools.I18NSync");
                 writer.print(" -createMessages ");
                 writer.print(" -out ");
@@ -303,19 +277,15 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
     /**
      * Write test scripts.
      */
-    public void writeTestScripts(AbstractGWTMojo mojo)
-        throws MojoExecutionException {
+    public void writeTestScripts(AbstractGWTMojo mojo) throws MojoExecutionException {
         // get extras
-        String extra = (mojo.getExtraJvmArgs() != null)
-            ? mojo.getExtraJvmArgs() : "";
+        String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
-        if (AbstractGWTMojo.OS_NAME.startsWith("mac") &&
-                (extra.indexOf("-XstartOnFirstThread") == -1)) {
+        if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
             extra = "-XstartOnFirstThread " + extra;
         }
 
-        String testExtra = (mojo.getExtraTestArgs() != null)
-            ? mojo.getExtraTestArgs() : "";
+        String testExtra = (mojo.getExtraTestArgs() != null) ? mojo.getExtraTestArgs() : "";
 
         // make sure output dir is present
         File outputDir = new File(mojo.getBuildDir(), "gwtTest");
@@ -323,24 +293,19 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         outputDir.mkdir();
 
         // for each test compile source root, build a test script
-        List<String> testCompileRoots = mojo.getProject()
-                                            .getTestCompileSourceRoots();
+        List<String> testCompileRoots = mojo.getProject().getTestCompileSourceRoots();
 
         for (String currRoot : testCompileRoots) {
             // TODO better file filter here
             Collection<File> coll = FileUtils.listFiles(new File(currRoot),
-                    new WildcardFileFilter(mojo.getTestFilter()),
-                    HiddenFileFilter.VISIBLE);
+                new WildcardFileFilter(mojo.getTestFilter()), HiddenFileFilter.VISIBLE);
 
             for (File currFile : coll) {
                 String testName = currFile.toString();
-                mojo.getLog()
-                    .debug(("gwtTest test match found (after filter applied) - " +
-                    testName));
+                mojo.getLog().debug(("gwtTest test match found (after filter applied) - " + testName));
 
                 // parse off the extension
-                if (testName.lastIndexOf('.') > testName.lastIndexOf(
-                            File.separatorChar)) {
+                if (testName.lastIndexOf('.') > testName.lastIndexOf(File.separatorChar)) {
                     testName = testName.substring(0, testName.lastIndexOf('.'));
                 }
 
@@ -356,10 +321,8 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
                 mojo.getLog().debug("testName after parsing - " + testName);
 
                 // start script inside gwtTest output dir, and name it with test class name
-                File file = new File(mojo.getBuildDir() + File.separator +
-                        "gwtTest", "gwtTest-" + testName + ".sh");
-                PrintWriter writer = this.getPrintWriterWithClasspath(mojo,
-                        file, DependencyScope.TEST);
+                File file = new File(mojo.getBuildDir() + File.separator + "gwtTest", "gwtTest-" + testName + ".sh");
+                PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file, DependencyScope.TEST);
 
                 // build Java command
                 writer.print("\"" + mojo.getJavaCommand() + "\" ");
@@ -372,11 +335,11 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
                     writer.print(" " + testExtra + " ");
                 }
 
-                writer.print(" -cp $CLASSPATH ");
+                writer.print(" -cp \"$CP\" ");
                 writer.print("junit.textui.TestRunner ");
                 writer.print(testName);
 
-                // write script out                
+                // write script out
                 writer.flush();
                 writer.close();
                 this.chmodUnixFile(file);
@@ -386,22 +349,20 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
 
     /**
      * Util to get a PrintWriter with Unix preamble and classpath.
-     *
+     * 
      * @param mojo
      * @param file
      * @return
      * @throws MojoExecutionException
      */
-    private PrintWriter getPrintWriterWithClasspath(
-        final AbstractGWTMojo mojo, File file, final DependencyScope scope)
+    private PrintWriter getPrintWriterWithClasspath(final AbstractGWTMojo mojo, File file, final DependencyScope scope)
         throws MojoExecutionException {
         PrintWriter writer = null;
 
         try {
             writer = new PrintWriter(new FileWriter(file));
         } catch (IOException e) {
-            throw new MojoExecutionException("Error creating script - " + file,
-                e);
+            throw new MojoExecutionException("Error creating script - " + file, e);
         }
 
         File sh = new File("/bin/bash");
@@ -418,9 +379,8 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         writer.println();
 
         try {
-            Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo,
-                    scope);
-            writer.print("export CLASSPATH=");
+            Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo, scope);
+            writer.print("CP=");
 
             Iterator it = classpath.iterator();
 
@@ -434,8 +394,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
                 }
             }
         } catch (DependencyResolutionRequiredException e) {
-            throw new MojoExecutionException("Error creating script - " + file,
-                e);
+            throw new MojoExecutionException("Error creating script - " + file, e);
         }
 
         writer.println();
@@ -446,13 +405,12 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
 
     /**
      * Util to chmod Unix file.
-     *
+     * 
      * @param file
      */
     private void chmodUnixFile(File file) {
         try {
-            ProcessWatcher pw = new ProcessWatcher("chmod +x " +
-                    file.getAbsolutePath());
+            ProcessWatcher pw = new ProcessWatcher(new String[] { "chmod", "+x", file.getAbsolutePath() });
             pw.startProcess(System.out, System.err);
             pw.waitFor();
         } catch (Exception e) {

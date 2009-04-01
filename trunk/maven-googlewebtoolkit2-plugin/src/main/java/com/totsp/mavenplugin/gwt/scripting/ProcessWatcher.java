@@ -1,18 +1,15 @@
 /*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  * 
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  */
 package com.totsp.mavenplugin.gwt.scripting;
 
@@ -23,246 +20,226 @@ import java.io.OutputStream;
 
 /**
  * This class executes a commandline and watches it's output.
- *
+ * 
  * @author willpugh
  */
 public class ProcessWatcher {
-   public static final long DEFAULT_SLEEP = 200;
 
-   Process process;
-   Object command;
-   String[] envirionment;
-   File dir;
-   StreamSucker out;
-   StreamSucker err;
+    public static final long DEFAULT_SLEEP = 200;
 
-   private ProcessWatcher(Object command, String[] envirionment, File dir) {
-      this.command = command;
-      this.envirionment = envirionment;
-      this.dir = dir;
-   }
+    Process process;
+    String[] commands;
+    String[] environment;
+    File dir;
+    StreamSucker out;
+    StreamSucker err;
 
-   public ProcessWatcher(String command, String[] envirionment, File dir) {
-      this((Object) command, envirionment, dir);
-   }
+    // We REQUIRE the commands as an array, even if you only have one
+    // because Runtime.exec tokenizes it if the single String param is used
+    // (and that hoses commands with paths with spaces on Linux/Mac, etc)
 
-   public ProcessWatcher(String[] command, String[] envirionment, File dir) {
-      this((Object) command, envirionment, dir);
-   }
+    private ProcessWatcher(String[] commands, String[] environment, File dir) {
+        this.commands = commands;
+        this.environment = environment;
+        this.dir = dir;
+    }
 
-   public ProcessWatcher(String command, String[] envirionment) {
-      this((Object) command, envirionment, null);
-   }
+    public ProcessWatcher(String[] commands, String[] environment) {
+        this(commands, environment, null);
+    }
 
-   public ProcessWatcher(String[] command, String[] envirionment) {
-      this((Object) command, envirionment, null);
-   }
+    public ProcessWatcher(String[] commands) {
+        this(commands, null, null);
+    }
 
-   public ProcessWatcher(String command) {
-      this((Object) command, null, null);
-   }
+    public void startProcess() throws IOException {
+        process = Runtime.getRuntime().exec(commands, environment, dir);
 
-   public ProcessWatcher(String[] command) {
-      this((Object) command, null, null);
-   }
+        // Now start the suckers
+        if (out == null) {
+            out = new StreamSucker(new NulStream());
+        }
 
-   public void startProcess() throws IOException {
+        if (err == null) {
+            err = new StreamSucker(new NulStream());
+        }
 
-      //First start the process
-      if (command instanceof String[]) {
-         process = Runtime.getRuntime().exec((String[]) command, envirionment, dir);
-      }
-      else {
-         process = Runtime.getRuntime().exec((String) command, envirionment, dir);
-      }
+        out.setIn(process.getInputStream());
+        err.setIn(process.getErrorStream());
 
-      //Now start the suckers
-      if (out == null) {
-         out = new StreamSucker(new NulStream());
-      }
+        out.start();
+        err.start();
+    }
 
-      if (err == null) {
-         err = new StreamSucker(new NulStream());
-      }
+    public void startProcess(OutputStream stdout, OutputStream stderr) throws IOException {
+        if (stdout != null)
+            out = new StreamSucker(stdout);
 
-      out.setIn(process.getInputStream());
-      err.setIn(process.getErrorStream());
+        if (stderr != null)
+            err = new StreamSucker(stderr);
 
-      out.start();
-      err.start();
-   }
+        startProcess();
+    }
 
-   public void startProcess(OutputStream stdout, OutputStream stderr) throws IOException {
-      if (stdout != null)
-         out = new StreamSucker(stdout);
+    public void startProcess(StringBuffer stdout, StringBuffer stderr) throws IOException {
+        if (stdout != null)
+            out = new StreamSucker(new StringBufferStream(stdout));
 
-      if (stderr != null)
-         err = new StreamSucker(stderr);
+        if (stderr != null)
+            err = new StreamSucker(new StringBufferStream(stderr));
 
-      startProcess();
-   }
+        startProcess();
+    }
 
-   public void startProcess(StringBuffer stdout, StringBuffer stderr) throws IOException {
-      if (stdout != null)
-         out = new StreamSucker(new StringBufferStream(stdout));
+    public void startProcess(StringBuilder stdout, StringBuilder stderr) throws IOException {
+        if (stdout != null)
+            out = new StreamSucker(new StringBuilderStream(stdout));
 
-      if (stderr != null)
-         err = new StreamSucker(new StringBufferStream(stderr));
+        if (stderr != null)
+            err = new StreamSucker(new StringBuilderStream(stderr));
 
-      startProcess();
-   }
-   
-   public void startProcess(StringBuilder stdout, StringBuilder stderr) throws IOException {
-      if (stdout != null)
-         out = new StreamSucker(new StringBuilderStream(stdout));
+        startProcess();
+    }
 
-      if (stderr != null)
-         err = new StreamSucker(new StringBuilderStream(stderr));
+    public OutputStream getStdIn() {
+        return process.getOutputStream();
+    }
 
-      startProcess();
-   }
+    public int exitValue() {
+        return process.exitValue();
+    }
 
-   public OutputStream getStdIn() {
-      return process.getOutputStream();
-   }
+    public void destroy() {
+        process.destroy();
+    }
 
-   public int exitValue() {
-      return process.exitValue();
-   }
+    public int waitFor() throws InterruptedException {
+        try {
+            process.waitFor();
+        } finally {
+            out.shutdown();
+            err.shutdown();
+        }
 
-   public void destroy() {
-      process.destroy();
-   }
+        out.join();
+        err.join();
 
-   public int waitFor() throws InterruptedException {
-      try {
-         process.waitFor();
-      }
-      finally {
-         out.shutdown();
-         err.shutdown();
-      }
+        return process.exitValue();
+    }
 
-      out.join();
-      err.join();
+    static public class StreamSucker extends Thread {
 
-      return process.exitValue();
-   }
+        private final long sleeptime;
+        private final OutputStream out;
+        private InputStream in;
+        volatile boolean allDone = false;
 
-   static public class StreamSucker extends Thread {
+        public StreamSucker(OutputStream out, long sleeptime) {
+            this.sleeptime = sleeptime;
+            if (out == null)
+                this.out = new NulStream();
+            else
+                this.out = out;
+        }
 
-      private final long sleeptime;
-      private final OutputStream out;
-      private InputStream in;
-      volatile boolean allDone = false;
+        public StreamSucker(OutputStream out) {
+            this(out, DEFAULT_SLEEP);
+        }
 
-      public StreamSucker(OutputStream out, long sleeptime) {
-         this.sleeptime = sleeptime;
-         if (out == null)
-            this.out = new NulStream();
-         else
-            this.out = out;
-      }
+        public StreamSucker() {
+            this(null, DEFAULT_SLEEP);
+        }
 
-      public StreamSucker(OutputStream out) {
-         this(out, DEFAULT_SLEEP);
-      }
+        public void shutdown() {
+            allDone = true;
+        }
 
-      public StreamSucker() {
-         this(null, DEFAULT_SLEEP);
-      }
-
-      public void shutdown() {
-         allDone = true;
-      }
-
-      public void siphonAvailableBytes(byte[] buf) throws IOException {
-         int available = getIn().available();
-         while (available > 0) {
-            available = getIn().read(buf);
-            getOut().write(buf, 0, available);
-            available = getIn().available();
-         }
-      }
-
-      public void run() {
-         byte[] buf = new byte[4096];
-
-         try {
-
-            while (!allDone) {
-               synchronized (this) {
-                  this.wait(getSleeptime());
-               }
-               siphonAvailableBytes(buf);
+        public void siphonAvailableBytes(byte[] buf) throws IOException {
+            int available = getIn().available();
+            while (available > 0) {
+                available = getIn().read(buf);
+                getOut().write(buf, 0, available);
+                available = getIn().available();
             }
+        }
 
-            //One last siphoning to make sure we got everything
-            siphonAvailableBytes(buf);
+        public void run() {
+            byte[] buf = new byte[4096];
 
-         }
-         catch (InterruptedException e) {
-            //We got interupted, time to go. . .
-         }
-         catch (IOException e) {
-
-         }
-         finally {
             try {
-               out.flush();
+
+                while (!allDone) {
+                    synchronized (this) {
+                        this.wait(getSleeptime());
+                    }
+                    siphonAvailableBytes(buf);
+                }
+
+                // One last siphoning to make sure we got everything
+                siphonAvailableBytes(buf);
+
+            } catch (InterruptedException e) {
+                // We got interupted, time to go. . .
+            } catch (IOException e) {
+
+            } finally {
+                try {
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            catch (IOException e) {
-               e.printStackTrace();
-            }
-         }
 
-      }
+        }
 
-      public long getSleeptime() {
-         return sleeptime;
-      }
+        public long getSleeptime() {
+            return sleeptime;
+        }
 
-      public OutputStream getOut() {
-         return out;
-      }
+        public OutputStream getOut() {
+            return out;
+        }
 
-      public InputStream getIn() {
-         return in;
-      }
+        public InputStream getIn() {
+            return in;
+        }
 
-      public void setIn(InputStream in) {
-         this.in = in;
-      }
-   }
+        public void setIn(InputStream in) {
+            this.in = in;
+        }
+    }
 
-   static public class NulStream extends OutputStream {
-      public void write(int i) throws IOException {
-         //Null Op
-      }
-   }
+    static public class NulStream extends OutputStream {
 
-   static public class StringBufferStream extends OutputStream {
-      final StringBuffer buf;
+        public void write(int i) throws IOException {
+            // Null Op
+        }
+    }
 
-      public StringBufferStream(StringBuffer buf) {
-         this.buf = buf;
-      }
+    static public class StringBufferStream extends OutputStream {
 
-      public void write(int i) throws IOException {
-         buf.append((char) i);
-      }
-   }
-   
-   static public class StringBuilderStream extends OutputStream {
-      final StringBuilder buf;
+        final StringBuffer buf;
 
-      public StringBuilderStream(StringBuilder buf) {
-         this.buf = buf;
-      }
+        public StringBufferStream(StringBuffer buf) {
+            this.buf = buf;
+        }
 
-      public void write(int i) throws IOException {
-         buf.append((char) i);
-      }
-   }
+        public void write(int i) throws IOException {
+            buf.append((char) i);
+        }
+    }
+
+    static public class StringBuilderStream extends OutputStream {
+
+        final StringBuilder buf;
+
+        public StringBuilderStream(StringBuilder buf) {
+            this.buf = buf;
+        }
+
+        public void write(int i) throws IOException {
+            buf.append((char) i);
+        }
+    }
 
 }
