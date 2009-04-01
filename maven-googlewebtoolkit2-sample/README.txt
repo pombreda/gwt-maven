@@ -22,7 +22,7 @@ then choose the example that is closest to the function of your project (likely 
 
 This sample uses GWT-Maven with the "automatic" GWT setup mode enabled. This means
 that you do *not* have to download and install GWT yourself, the plugin will 
-do this for you once the correct dependencies (included the zipped native libs, which are in the cetral repo)
+do this for you once the correct dependencies (included the zipped native libs, which are in the central repo)
 are included, and the dependency plugin is configured (as the sample WAR project demonstrates). 
 
 Which project to build:
@@ -75,7 +75,7 @@ To work with the WAR project, do the following:
 3. Execute "mvn package".
 4. Your sample WAR will be created in the war/target directory.
    
-  OR you can run the GWTShell locally by executing "mvn gwt:gwt".
+  OR you can run the GWTShell locally by executing "mvn gwt-maven:gwt".
    
   Optionally: Execute "mvn test" on its own to run the tests separately 
   (both standard Surefire and GWT-Maven for GWTTestCase will execute).
