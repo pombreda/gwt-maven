@@ -24,9 +24,9 @@ GWT-Maven (maven-googlewebtoolkit2-plugin)
   
   ** {{{examples.html}Examples}}
   
+  ** {{{usage.html}General Usage, and Tips}}
+  
 * More Details on Specific Goals and Features
-
-  ** {{{tips.html}General Usage, and Tips}}
 
   ** {{{testing.html}Testing Support}} 
   

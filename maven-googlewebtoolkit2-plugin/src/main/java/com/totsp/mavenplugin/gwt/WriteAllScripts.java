@@ -7,6 +7,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
+ * Simply writes out all the scripts to the target folder.
+ * 
  * @goal writeAllScripts
  * @description Simply writes out all the scripts to the target folder
  * @author kebernet
@@ -20,7 +22,7 @@ public class WriteAllScripts extends AbstractGWTMojo {
         writer.writeRunScript(this);
         writer.writeI18nScript(this);
         writer.writeTestScripts(this);
-        if(writer instanceof ScriptWriter16){
+        if (writer instanceof ScriptWriter16) {
             ((ScriptWriter16) writer).writeValidationScript(this);
         }
     }
