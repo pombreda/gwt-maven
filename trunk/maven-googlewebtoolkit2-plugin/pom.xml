@@ -66,19 +66,13 @@
 			<url>LICENSE.txt</url>
 		</license>
 	</licenses>
-	<!--distributionManagement>
+	<distributionManagement>
 		<repository>
 			<id>local.repo</id>
 			<name>file repository to svn</name>
 			<url>file://${basedir}/../mavenrepo</url>
 		</repository>
-	</distributionManagement-->
-        <distributionManagement>
-        <repository>
-          <id>internal</id>
-          <url>dav:http://ca-devsrv02:9080/archiva/repository/internal/</url>
-        </repository>
-    </distributionManagement>
+	</distributionManagement>        
 	<dependencies>
 		<dependency>
 			<groupId>com.totsp.gwt</groupId>
