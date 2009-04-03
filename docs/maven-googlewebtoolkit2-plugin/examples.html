@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-20
+        Last Published: 2009-04-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -89,6 +89,10 @@
     <li class="none">
               <strong>Examples</strong>
         </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage and Tips</a>
+          </li>
           </ul>
               <h5>Details on Specific Goals</h5>
             <ul>
@@ -163,18 +167,14 @@
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Examples</h2>
 <div class="section"><h3>Sample Projects</h3>
-<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a>
-</li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a>
-</li>
-<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a>
- </li>
+<ul><li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample project</a></li>
+<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simpledatasample/" class="externalLink">Simple sample with database and GWT-RPC project</a></li>
+<li><a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full multi project and composition sample</a> </li>
 </ul>
 </div>
 <div class="section"><h3>Auto Configuration</h3>
 <p>Below is more detail about the simple sample project, which uses the auto-configuration. Automatic configuration uses GWT dependencies from central repo, unpacks the native GWT libraries using the dependency plugin, and activates correct platform dependent dependencies based the platform in use.</p>
-<p>This is the <b>recommended way to use GWT-Maven</b>
- (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
+<p>This is the <b>recommended way to use GWT-Maven</b> (manual mode is still supported, see farther below, but it is more cumbersome than automatic mode).</p>
 <div class="source"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
     xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
@@ -252,7 +252,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta26&lt;/version&gt;
+                &lt;version&gt;2.0-RC1&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
                     &lt;compileTargets&gt;
@@ -460,7 +460,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta26&lt;/version&gt;
+                &lt;version&gt;2.0-RC1&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;gwtHome&gt;${env.GWT_HOME}&lt;/gwtHome&gt;
                     &lt;logLevel&gt;INFO&lt;/logLevel&gt;
@@ -471,6 +471,7 @@
                     &lt;style&gt;DETAILED&lt;/style&gt;
                     &lt;noServer&gt;false&lt;/noServer&gt;
                     &lt;extraJvmArgs&gt;-Xmx512m&lt;/extraJvmArgs&gt;
+                    &lt;i18nConstantsWithLookup&gt;false&lt;/i18nConstantsWithLookup&gt;
                     &lt;i18nConstantsNames&gt;
                        &lt;value&gt;com.totsp.sample.client.AppConstants&lt;/value&gt;
                     &lt;/i18nConstantsNames&gt;
@@ -565,7 +566,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2009
     
           
   

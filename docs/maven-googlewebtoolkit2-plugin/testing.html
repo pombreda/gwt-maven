@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-20
+        Last Published: 2009-04-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -88,6 +88,10 @@
               
     <li class="none">
                     <a href="examples.html">Examples</a>
+          </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage and Tips</a>
           </li>
           </ul>
               <h5>Details on Specific Goals</h5>
@@ -162,31 +166,17 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section"><h2>GWT-Maven Testing Support</h2>
-<p>One special aspect of GWT-Maven to be familiar with is that it runs its own special <b>test</b>
- goal during the &quot;test&quot; phase in order to support <b>GWTTestCase</b>
- and <b>GWTTestSuite</b>
- derived GWT tests. </p>
+<p>One special aspect of GWT-Maven to be familiar with is that it runs its own special <b>test</b> goal during the &quot;test&quot; phase in order to support <b>GWTTestCase</b> and <b>GWTTestSuite</b> derived GWT tests. </p>
 <p>It's a long story as to why this is needed (having to do with classpath inspection and setup issues inside GWTTestCase/JUnitShell), but the regular Maven Surefire testing plugin does not work for GWTTestCase tests (at least not with any configuration we have tried, and we have given it a lot of effort). </p>
 <p>Using this special testing support though, requires that you know a few key things, as outlined below:</p>
 <div class="section"><h3>GwtTest test name prefix filter</h3>
-<p>Because you will likely want to run <b>BOTH</b>
- Surefire and GWT-Maven based tests (for regular server side JUnit tests with Surefire, and for client model and controller tests with GWT) you need to distinguish these tests from each other. This is done using a naming convention.</p>
-<p>By default GWT-Maven looks for test classes that are named <b>GwtTest&quot;Something.java</b>
- - they <b>START WITH &quot;GwtTest&quot;</b>
-. Surefire looks for tests that are named <b>Something&quot;Test&quot;.java</b>
- by default - they <b>END WITH &quot;Test&quot;</b>
-. </p>
-<p>If you need to, you can change the default <b>GwtTest</b>
- prefix by setting the <b>testFilter</b>
- plugin property. </p>
-<p>Look at the full source for the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample</a>
- and the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full sample</a>
- projects for reference. </p>
+<p>Because you will likely want to run <b>BOTH</b> Surefire and GWT-Maven based tests (for regular server side JUnit tests with Surefire, and for client model and controller tests with GWT) you need to distinguish these tests from each other. This is done using a naming convention.</p>
+<p>By default GWT-Maven looks for test classes that are named <b>GwtTest&quot;Something.java</b> - they <b>START WITH &quot;GwtTest&quot;</b>. Surefire looks for tests that are named <b>Something&quot;Test&quot;.java</b> by default - they <b>END WITH &quot;Test&quot;</b>. </p>
+<p>If you need to, you can change the default <b>GwtTest</b> prefix by setting the <b>testFilter</b> plugin property. </p>
+<p>Look at the full source for the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/" class="externalLink">Simple sample</a> and the <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-sample/" class="externalLink">Full sample</a> projects for reference. </p>
 </div>
 <div class="section"><h3>Invoking tests</h3>
-<p>The GWT-Maven testing support is <b>NOT intended to be run standalone</b>
-, rather it is bound to the Maven &quot;test&quot; phase. To get gwt:test to run, you should include the &quot;test&quot; goal in your plugin configuration executions, and you should invoke <b>mvn test</b>
-.</p>
+<p>The GWT-Maven testing support is <b>NOT intended to be run standalone</b>, rather it is bound to the Maven &quot;test&quot; phase. To get gwt:test to run, you should include the &quot;test&quot; goal in your plugin configuration executions, and you should invoke <b>mvn test</b>.</p>
 <div class="source"><pre>   &lt;executions&gt;
       &lt;execution&gt;
         &lt;goals&gt;
@@ -198,18 +188,19 @@
 </div>
 </div>
 <div class="section"><h3>GwtTest scripts</h3>
-<p>Each test that is named with the GwtTest prefix and picked up and run by GWT-Maven is turned into a script in the <b>target/gwtTest</b>
- directory and run. This is handy to know because you can re-run just these scripts for troubleshooting purposes. (This is the same MO as the compile and shell usage with GWT-Maven.) </p>
+<p>Each test that is named with the GwtTest prefix and picked up and run by GWT-Maven is turned into a script in the <b>target/gwtTest</b> directory and run. This is handy to know because you can re-run just these scripts for troubleshooting purposes. (This is the same MO as the compile and shell usage with GWT-Maven.) </p>
 </div>
 <div class="section"><h3>Test results output</h3>
-<p>Because GWT testing is different and is not run by Surefire, it also has different output. As well as summary output to the console, detailed output for each GwtTest script ends up in the <b>target/gwtTest</b>
- directory. </p>
+<p>Because GWT testing is different and is not run by Surefire, it also has different output. As well as summary output to the console, detailed output for each GwtTest script ends up in the <b>target/gwtTest</b> directory. </p>
 </div>
 <div class="section"><h3>Use GWTTestSuite padawan</h3>
-<p>GWTTestCase derived tests are slow. This is because the JUnitShell has to load the module for each test (create the shell, hook into it, etc). <b>GWTTestSuite</b>
- mitigates this by grouping all the tests that are for the same module (those that return the same value for getModuleName) together and running them via the same shell instance. </p>
+<p>GWTTestCase derived tests are slow. This is because the JUnitShell has to load the module for each test (create the shell, hook into it, etc). <b>GWTTestSuite</b> mitigates this by grouping all the tests that are for the same module (those that return the same value for getModuleName) together and running them via the same shell instance. </p>
 <p>This is a BIG time saver, and GWTTestSuite is easy to use, so using it is a good idea. </p>
 <p>Another tip for GWT-Maven and GWTTestSuite is to name your test suite &quot;GwtTest*Suite.java&quot; so that the test filter picks it up, but name the actual tests with a convention that neither GWT-Maven nor Surefire will pickup - something that does NOT start with GwtTest, and does NOT start OR end with Test. For example &quot;GwtTstMyClass.java&quot;. This way GWT-Maven picks up the SUITE, and runs it, but does not also run the individual tests (and Surefire does not pick it up either). </p>
+</div>
+<div class="section"><h3>Skipping tests</h3>
+<p>The GWT-Maven testing support is special, as explained above. Because of this it runs it's own test goal during the test phase, if you want to skip this if it's configured to run in your POM (via the test execution), you can, using the <b>-Dgoogle.webtoolkit.testSkip=true</b> system property on the command line. </p>
+<p>This is NOT the same property that the standard Surefire plugin uses to skip tests, on purpose (there you use <b>-DskipTests=true</b> or the deprecated <b>-Dmaven.test.skip=true</b>. The Surefire skips still work, GWT-Maven doesn't touch them, but they are for skipping Surefire tests. </p>
 </div>
 </div>
 
@@ -220,7 +211,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2009
     
           
   

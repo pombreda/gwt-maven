@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-20
+        Last Published: 2009-04-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -88,6 +88,10 @@
               
     <li class="none">
                     <a href="examples.html">Examples</a>
+          </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage and Tips</a>
           </li>
           </ul>
               <h5>Details on Specific Goals</h5>
@@ -164,9 +168,7 @@
         <div class="section"><h2>GWT-Maven Setup</h2>
 <p>In order to use GWT-Maven, you will need to configure GWT-Maven using the plugin configuration in your POM, and you will need to decide how you want to handle GWT being present (automatic or manual mode - more below). </p>
 <div class="section"><h3>Configuring GWT-Maven itself</h3>
-<p>Regardless of which &quot;mode&quot; you use, <b>automatic</b>
-, or <b>manual</b>
-, you also need to configure GWT-Maven itself, of course. </p>
+<p>Regardless of which &quot;mode&quot; you use, <b>automatic</b>, or <b>manual</b>, you also need to configure GWT-Maven itself, of course. </p>
 <p>Also, as a convenience it helps to define a property for the GWT version (so you can change it in one place later to upgrade).</p>
 <p>For example:</p>
 <div class="source"><pre>          &lt;properties&gt;
@@ -176,7 +178,7 @@
             &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta26&lt;/version&gt;
+                &lt;version&gt;2.0-RC1&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;compileTargets&gt;
                         &lt;value&gt;com.totsp.sample.Application&lt;/value&gt;
@@ -202,9 +204,7 @@
 </div>
 </div>
 <div class="section"><h3>Getting the Plugin</h3>
-<p>Getting the plugin is simple. You just need to add the GWT-Maven <b>pluginRepository</b>
-, and standard <b>repository</b>
- (used for support libraries) to your POM. </p>
+<p>Getting the plugin is simple. You just need to add the GWT-Maven <b>pluginRepository</b>, and standard <b>repository</b> (used for support libraries) to your POM. </p>
 <div class="source"><pre>&lt;pluginRepositories&gt;
     &lt;pluginRepository&gt;
       &lt;id&gt;gwt-maven&lt;/id&gt;
@@ -224,11 +224,11 @@
 </div>
 <div class="section"><h3>Handling GWT </h3>
 <p>The plugin needs to know where to find GWT (jars *and* native libraries). There are two ways you can do this.</p>
-<ol type="1"><li>Use the Maven dependency plugin to automatically extract GWT native libraries from central repo (automatic mode)</li>
-<li>Download and unpack GWT yourself and set the gwtHome plugin configuration property to the location where it is installed (manual mode) </li>
+<ol type="1"><li>Use the Maven dependency plugin to automatically extract GWT native libraries from central repo - <b>automatic mode</b></li>
+<li>Download and unpack GWT yourself and set the gwtHome plugin configuration property to the location where it is installed - <b>manual mode</b> </li>
 </ol>
 <div class="section"><h4>Automatic Mode Setup</h4>
-<p>If you are going to do automatic setup, you need to include the GWT dependencies in your POM. </p>
+<p>If you are going to do automatic setup, which is the recommended option, you need to include the GWT dependencies in your POM. </p>
 <p>For example:</p>
 <div class="source"><pre>  &lt;!--  GWT deps (from central repo) --&gt;
         &lt;dependency&gt;
@@ -332,13 +332,10 @@
         &lt;/profile&gt;
     &lt;/profiles&gt; </pre>
 </div>
-<p>For a complete automatic mode POM example see the <a href="examples.html">Examples</a>
- page, specifically: <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom.xml" class="externalLink">pom.xml</a>
-. </p>
+<p>For a complete automatic mode POM example see the <a href="examples.html">Examples</a> page, specifically: <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom.xml" class="externalLink">pom.xml</a>. </p>
 </div>
 <div class="section"><h4>Manual Setup</h4>
-<p>If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html). Then, you will need to tell GWT-Maven where GWT is. This can be done with the <b>gwtHome</b>
- plugin configuration property (this property is unset for automatic mode, but required for manual mode).</p>
+<p>If you are going to setup GWT manually, you will need to first download GWT, and unpackage it (http://code.google.com/webtoolkit/download.html). Then, you will need to tell GWT-Maven where GWT is. This can be done with the <b>gwtHome</b> plugin configuration property (this property is unset for automatic mode, but required for manual mode).</p>
 <p>For manual mode you also still need the GWT dependencies defined (these are required because plugins and goals other than GWT-Maven need them, like the standard compiler). </p>
 <p>Note that with manual mode even though the dependencies are still needed, the difference is that the source of the dependencies can be your locally installed GWT location (gwtHome), rather than a Maven repository, and there is no separate step to unpack the native libraries (they are already in gwtHome).</p>
 <p>For example:</p>
@@ -377,7 +374,7 @@
         &lt;plugin&gt;
                 &lt;groupId&gt;com.totsp.gwt&lt;/groupId&gt;
                 &lt;artifactId&gt;maven-googlewebtoolkit2-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.0-beta26&lt;/version&gt;
+                &lt;version&gt;2.0-RC1&lt;/version&gt;
                 &lt;configuration&gt;
                     &lt;gwtHome&gt;${env.GWT_HOME}&lt;/gwtHome&gt;
                     &lt;compileTargets&gt;
@@ -398,9 +395,7 @@
                 &lt;/executions&gt;
         &lt;/plugin&gt;</pre>
 </div>
-<p>For a complete manual mode POM example see the <a href="examples.html">Examples</a>
- page, specifically: <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom-with-gwthome.xml" class="externalLink">pom-with-gwthome.xml</a>
-.</p>
+<p>For a complete manual mode POM example see the <a href="examples.html">Examples</a> page, specifically: <a href="http://gwt-maven.googlecode.com/svn/trunk/maven-googlewebtoolkit2-plugin/simplesample/pom-with-gwthome.xml" class="externalLink">pom-with-gwthome.xml</a>.</p>
 </div>
 </div>
 </div>
@@ -412,7 +407,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2009
     
           
   

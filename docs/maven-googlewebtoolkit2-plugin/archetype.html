@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        Last Published: 2008-11-20
+        Last Published: 2009-04-02
                       </div>
             <div class="xright">            <a href="http://maven.apache.org/" class="externalLink">Maven 2</a>
             
@@ -88,6 +88,10 @@
               
     <li class="none">
                     <a href="examples.html">Examples</a>
+          </li>
+              
+    <li class="none">
+                    <a href="usage.html">Usage and Tips</a>
           </li>
           </ul>
               <h5>Details on Specific Goals</h5>
@@ -166,24 +170,22 @@
 <div class="section"><h3>One shot - create a project NOW using the remote repository</h3>
 <div class="source"><pre> mvn archetype:create -DarchetypeGroupId=com.totsp.gwt \
     -DarchetypeArtifactId=maven-googlewebtoolkit2-archetype \
-    -DarchetypeVersion=1.0.3 \
+    -DarchetypeVersion=1.0.4 \
     -DremoteRepositories=http://gwt-maven.googlecode.com/svn/trunk/mavenrepo \
     -DgroupId=myGroupId \
     -DartifactId=myArtifactId    </pre>
 </div>
 </div>
 <div class="section"><h3>Installing the Archetype locally</h3>
-<p>Download the <b>maven-googlewebtoolkit2-archetype-1.0.3.jar</b>
- file from:</p>
-<p><a href="http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0.3/" class="externalLink">http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0.3/</a>
-</p>
+<p>Download the <b>maven-googlewebtoolkit2-archetype-1.0.4.jar</b> file from:</p>
+<p><a href="http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0.4/" class="externalLink">http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/com/totsp/gwt/maven-googlewebtoolkit2-archetype/1.0.4/</a></p>
 <p>Then install it into your local repository: </p>
 <div class="source"><pre> mvn install:install-file \
    -DgroupId=com.totsp.gwt \
    -DartifactId=maven-googlewebtoolkit2-archetype \
-   -Dversion=1.0.3 \
+   -Dversion=1.0.4 \
    -Dpackaging=jar 
-   -Dfile=PATH_TO_JAR_YOU_DOWNLOADED/maven-googlewebtoolkit2-archetype-1.0.3.jar</pre>
+   -Dfile=PATH_TO_JAR_YOU_DOWNLOADED/maven-googlewebtoolkit2-archetype-1.0.4.jar</pre>
 </div>
 </div>
 <div class="section"><h3>Using the Archetype (if it's already installed locally)</h3>
@@ -191,7 +193,7 @@
 <div class="source"><pre> mvn archetype:create \
    -DarchetypeGroupId=com.totsp.gwt \
    -DarchetypeArtifactId=maven-googlewebtoolkit2-archetype \
-   -DarchetypeVersion=1.0.3 \
+   -DarchetypeVersion=1.0.4 \
    -DgroupId=myGroupId \
    -DartifactId=myArtifactId</pre>
 </div>
@@ -205,7 +207,7 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2008
+          2009
     
           
   

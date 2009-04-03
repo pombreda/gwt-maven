@@ -25,10 +25,10 @@
 <a name="15" href="#15">15</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> runScript(<strong class="jxr_keyword">final</strong> File exec) <strong class="jxr_keyword">throws</strong> MojoExecutionException {
 <a name="16" href="#16">16</a>        <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a> pw = <strong class="jxr_keyword">null</strong>;
 <a name="17" href="#17">17</a>        <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
-<a name="18" href="#18">18</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<span class="jxr_string">"\&quot;"</span> + exec.getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
+<a name="18" href="#18">18</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"\&quot;"</span> + exec.getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>});
 <a name="19" href="#19">19</a>        }
 <a name="20" href="#20">20</a>        <strong class="jxr_keyword">else</strong> {
-<a name="21" href="#21">21</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(exec.getAbsolutePath().replaceAll(<span class="jxr_string">" "</span>, <span class="jxr_string">"&#92;&#92; "</span>));
+<a name="21" href="#21">21</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<strong class="jxr_keyword">new</strong> String[] {exec.getAbsolutePath()});
 <a name="22" href="#22">22</a>        }
 <a name="23" href="#23">23</a>  
 <a name="24" href="#24">24</a>        <strong class="jxr_keyword">try</strong> {
@@ -49,10 +49,10 @@
 <a name="39" href="#39">39</a>        StringBuilder err = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a name="40" href="#40">40</a>        <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a> pw = <strong class="jxr_keyword">null</strong>;
 <a name="41" href="#41">41</a>        <strong class="jxr_keyword">if</strong> (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {
-<a name="42" href="#42">42</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<span class="jxr_string">"\&quot;"</span> + exec.getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>);
+<a name="42" href="#42">42</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">"\&quot;"</span> + exec.getAbsolutePath() + <span class="jxr_string">"\&quot;"</span>});
 <a name="43" href="#43">43</a>        }
 <a name="44" href="#44">44</a>        <strong class="jxr_keyword">else</strong> {
-<a name="45" href="#45">45</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(exec.getAbsolutePath().replaceAll(<span class="jxr_string">" "</span>, <span class="jxr_string">"&#92;&#92; "</span>));
+<a name="45" href="#45">45</a>           pw = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/totsp/mavenplugin/gwt/scripting/ProcessWatcher.html">ProcessWatcher</a>(<strong class="jxr_keyword">new</strong> String[] {exec.getAbsolutePath()});
 <a name="46" href="#46">46</a>        }
 <a name="47" href="#47">47</a>  
 <a name="48" href="#48">48</a>        <strong class="jxr_keyword">try</strong> {
