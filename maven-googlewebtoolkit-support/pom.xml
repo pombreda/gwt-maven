@@ -12,28 +12,13 @@
 	</parent>
 	<name>Maven-GoogleWebToolkit-Support</name>
 	<url>http://maven.apache.org</url>
-	<!--distributionManagement>
+	<distributionManagement>
 		<repository>
 			<id>local.repo</id>
 			<name>file repository to svn</name>
 			<url>file://${basedir}/../mavenrepo</url>
 		</repository>
-	</distributionManagement-->
-        <distributionManagement>
-        <repository>
-          <id>internal</id>
-          <url>dav:http://ca-devsrv02:9080/archiva/repository/internal/</url>
-        </repository>
-    </distributionManagement>
-	<!--  needed at the moment for jdom 1.1 (not in central) -->
-	<!-- 
-	<repositories>
-		<repository>		    
-			<id>random-for-jdom</id>
-			<url>http://www4.rothamsted.bbsrc.ac.uk/ondex/maven2</url>
-		</repository>
-	</repositories>
-	-->
+	</distributionManagement>    
 	<profiles>
 		<profile>
 			<id>default-tools.jar</id>
@@ -58,7 +43,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>1.5.2</version>
+			<version>1.5.3</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
