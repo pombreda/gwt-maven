@@ -66,7 +66,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
             extra = "-XstartOnFirstThread " + extra;
         }
 
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH% ");
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -74,7 +74,6 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
             writer.print(mojo.isDebugSuspend() ? ",suspend=y " : ",suspend=n ");
         }
 
-        writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() + "\" ");
         writer.print(" com.google.gwt.dev.HostedMode");
         writer.print(" -gen ");
         writer.print(mojo.getGen().getAbsolutePath());
@@ -91,10 +90,12 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
             writer.print(" -treeLogger ");
         }
 
-        writer.print(" -workDir ");
-        writer.print(mojo.getWorkDir().getAbsolutePath());
-        writer.print(" -extra ");
-        writer.print(mojo.getExtraDir());
+//        writer.print(" -workDir ");
+//        mojo.getWorkDir().mkdirs();
+//        writer.print(mojo.getWorkDir().getAbsolutePath());
+//        writer.print(" -extra ");
+//        mojo.getExtraDir().mkdirs();
+//        writer.print(mojo.getExtraDir());
         writer.print(" -war ");
         writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\" ");
         writer.print("-localWorkers ");
@@ -157,7 +158,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         String extra = (mojo.getExtraJvmArgs() != null) ? mojo.getExtraJvmArgs() : "";
 
         if (AbstractGWTMojo.OS_NAME.startsWith("mac") && (extra.indexOf("-XstartOnFirstThread") == -1)) {
-            extra = "-XstartOnFirstThread " + extra;
+            extra = "-d32 -XstartOnFirstThread " + extra;
         }
 
         writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp \"$CP\" ");

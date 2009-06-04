@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.totsp.mavenplugin.gwt.scripting;
 
 import com.totsp.mavenplugin.gwt.AbstractGWTMojo;
@@ -51,50 +47,64 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
 
         String extra = (mojo.getExtraJvmArgs() != null)
             ? mojo.getExtraJvmArgs() : "";
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
-            " -cp %CLASSPATH% ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CP% ");
 
         if (mojo instanceof DebugMojo) {
-            writer.print(
-                " -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
+            writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
             writer.print(mojo.getDebugPort());
-            writer.print(",suspend=y ");
+            writer.print(mojo.isDebugSuspend() ? ",suspend=y " : ",suspend=n ");
         }
 
-        writer.print("-Dcatalina.base=\"" + mojo.getTomcat().getAbsolutePath() +
-            "\" ");
-        writer.print(" com.google.gwt.dev.GWTShell");
-        writer.print(" -gen \"");
+        writer.print(" com.google.gwt.dev.HostedMode");
+        writer.print(" -gen ");
         writer.print(mojo.getGen().getAbsolutePath());
-        writer.print("\" -logLevel ");
+        writer.print(" -logLevel ");
         writer.print(mojo.getLogLevel());
         writer.print(" -style ");
         writer.print(mojo.getStyle());
-        writer.print(" -out ");
-        writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\"");
+
+        if (mojo.isEnableAssertions()) {
+            writer.print(" -ea ");
+        }
+
+        if ((mojo.isShowTreeLogger())) {
+            writer.print(" -treeLogger ");
+        }
+
+//        writer.print(" -workDir ");
+//        mojo.getWorkDir().mkdirs();
+//        writer.print(mojo.getWorkDir().getAbsolutePath());
+//        writer.print(" -extra ");
+//        mojo.getExtraDir().mkdirs();
+//        writer.print(mojo.getExtraDir());
+        writer.print(" -war ");
+        writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\" ");
+        writer.print("-localWorkers ");
+        writer.print(mojo.getLocalWorkers());
         writer.print(" -port ");
         writer.print(Integer.toString(mojo.getPort()));
 
         if (mojo.isNoServer()) {
-            writer.print(" -noserver ");
+            writer.print(" -server ");
         }
 
-        if ((mojo.getWhitelist() != null) &&
-                (mojo.getWhitelist().length() > 0)) {
+        if ((mojo.getWhitelist() != null) && (mojo.getWhitelist().length() > 0)) {
             writer.print(" -whitelist \"");
             writer.print(mojo.getWhitelist());
             writer.print("\" ");
         }
 
-        if ((mojo.getBlacklist() != null) &&
-                (mojo.getBlacklist().length() > 0)) {
+        if ((mojo.getBlacklist() != null) && (mojo.getBlacklist().length() > 0)) {
             writer.print(" -blacklist \"");
             writer.print(mojo.getBlacklist());
             writer.print("\" ");
         }
 
-        writer.print(" " + mojo.getRunTarget());
+        writer.print(" -startupUrl " + mojo.getRunTarget());
+        writer.print(" ");
+        writer.print(mojo.getCompileTarget()[0]);
         writer.println();
+
         writer.flush();
         writer.close();
 
@@ -124,34 +134,46 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
         PrintWriter writer = this.getPrintWriterWithClasspath(mojo, file,
                 DependencyScope.COMPILE);
 
-        for (String target : mojo.getCompileTarget()) {
+        
             String extra = (mojo.getExtraJvmArgs() != null)
                 ? mojo.getExtraJvmArgs() : "";
             writer.print("\"" + mojo.getJavaCommand() + "\" " + extra +
                 " -cp %CLASSPATH% ");
-            writer.print(" com.google.gwt.dev.GWTCompiler ");
-            writer.print(" -gen \"");
-            writer.print(mojo.getGen().getAbsolutePath());
-            writer.print("\" -logLevel ");
-            writer.print(mojo.getLogLevel());
-            writer.print(" -style ");
-            writer.print(mojo.getStyle());
-
-            writer.print(" -out ");
-            writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\"");
-            writer.print(" ");
-
-            if (mojo.isEnableAssertions()) {
-                writer.print(" -ea ");
-            }
-
-            writer.print(target);
-            writer.println();
+            writer.print(" com.google.gwt.dev.Compiler ");
+        if(validateOnly){
+            writer.print( " -validateOnly ");
         }
+        writer.print(" -gen ");
+        writer.print(mojo.getGen().getAbsolutePath());
+        writer.print(" -logLevel ");
+        writer.print(mojo.getLogLevel());
+        writer.print(" -style ");
+        writer.print(mojo.getStyle());
+
+        if (mojo.isEnableAssertions()) {
+            writer.print(" -ea ");
+        }
+
+        if ((mojo.isShowTreeLogger())) {
+            writer.print(" -treeLogger ");
+        }
+
+        writer.print(" -workDir ");
+        writer.print(mojo.getWorkDir().getAbsolutePath());
+        writer.print(" -extra ");
+        writer.print(mojo.getExtraDir());
+        writer.print(" -war ");
+        writer.print("\"" + mojo.getOutput().getAbsolutePath() + "\"");
+        writer.print(" -localWorkers ");
+        writer.print(mojo.getLocalWorkers());
+        writer.print(" ");
+        for (String target : mojo.getCompileTarget()) {
+            writer.print(target);
+        }
+        writer.println();
 
         writer.flush();
         writer.close();
-
         return file;
     }
 
