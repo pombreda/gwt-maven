@@ -27,6 +27,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * Validates the GWT source but does not compile.
  * 
  * @goal validate
+ * @requiresDependencyResolution compile
  * @description Validates the GWT source but does not compile.
  * @phase validate
  * 
