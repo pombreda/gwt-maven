@@ -104,7 +104,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         writer.print(Integer.toString(mojo.getPort()));
 
         if (mojo.isNoServer()) {
-            writer.print(" -server ");
+            writer.print(" -noserver ");
         }
 
         if ((mojo.getWhitelist() != null) && (mojo.getWhitelist().length() > 0)) {
