@@ -169,6 +169,7 @@ public class ScriptWriterWindows16 implements ScriptWriter16 {
         writer.print(" ");
         for (String target : mojo.getCompileTarget()) {
             writer.print(target);
+            writer.print(" ");
         }
         writer.println();
 

@@ -66,7 +66,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
             extra = "-XstartOnFirstThread " + extra;
         }
 
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH% ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp $CP ");
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -189,6 +189,7 @@ public class ScriptWriterUnix16 implements ScriptWriter16 {
         writer.print(" ");
         for (String target : mojo.getCompileTarget()) {
             writer.print(target);
+            writer.print(" ");
         }
 
         writer.println();
