@@ -154,6 +154,10 @@ public class BuildClasspathUtil {
                 "injecting gwt-user and gwt-dev for script classpath from google.webtoolkit.home (and expecting relative native libs)");
 
         Collection<File> items = new LinkedHashSet<File>();
+        if(mojo.isUseOophm()){
+            File oophmJar = new File(gwtHome, "gwt-dev-oophm.jar");
+            items.add(oophmJar);
+        }
         File userJar = new File(gwtHome, "gwt-user.jar");
         File devJar = new File(gwtHome, ArtifactNameUtil.guessDevJarName());
         items.add(userJar);
@@ -181,12 +185,20 @@ public class BuildClasspathUtil {
             mojo.getGwtVersion(), "jar", null);
         Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
             mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
-
+        Artifact oophm = null;
+        if(mojo.isUseOophm() ){
+            oophm = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev-oophm",
+            mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
+        }
         List<ArtifactRepository> remoteRepositories = mojo.getRemoteRepositories();
 
         try {
             mojo.getResolver().resolve(gwtUser, remoteRepositories, mojo.getLocalRepository());
             mojo.getResolver().resolve(gwtDev, remoteRepositories, mojo.getLocalRepository());
+            if(oophm !=null ){
+                 mojo.getResolver().resolve(oophm, remoteRepositories, mojo.getLocalRepository());
+                 items.add(oophm.getFile());
+            }
             items.add(gwtUser.getFile());
             items.add(gwtDev.getFile());
         } catch (ArtifactNotFoundException e) {
