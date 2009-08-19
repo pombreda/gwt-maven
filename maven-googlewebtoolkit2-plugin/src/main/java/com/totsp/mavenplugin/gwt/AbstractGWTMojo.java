@@ -67,6 +67,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @readonly
     */
    private MavenProject project;
+
+   /**
+    * Project instance, used to add new source directory to the build.
+    *
+    * @parameter default-value="false"
+    */
+   private boolean useOophm;
+
    /**
     * <i>Maven Internal</i>: List of artifacts for the plugin.
     * 
@@ -856,5 +864,19 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     public void setExtraDir(File extraDir) {
         this.extraDir = extraDir;
-    }   
+    }
+
+    /**
+     * @return the useOophm
+     */
+    public boolean isUseOophm() {
+        return useOophm;
+    }
+
+    /**
+     * @param useOophm the useOophm to set
+     */
+    public void setUseOophm(boolean useOophm) {
+        this.useOophm = useOophm;
+    }
 }
