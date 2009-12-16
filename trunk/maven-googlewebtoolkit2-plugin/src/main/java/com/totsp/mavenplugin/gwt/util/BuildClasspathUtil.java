@@ -159,7 +159,10 @@ public class BuildClasspathUtil {
             items.add(oophmJar);
         }
         File userJar = new File(gwtHome, "gwt-user.jar");
-        File devJar = new File(gwtHome, ArtifactNameUtil.guessDevJarName());
+        File devJar = mojo.getGwtVersion().startsWith("2.") ?
+             new File(gwtHome, "gwt-dev.jar")
+             :
+             new File(gwtHome, ArtifactNameUtil.guessDevJarName());
         items.add(userJar);
         items.add(devJar);
 
@@ -183,7 +186,11 @@ public class BuildClasspathUtil {
 
         Artifact gwtUser = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-user",
             mojo.getGwtVersion(), "jar", null);
-        Artifact gwtDev = mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
+        Artifact gwtDev = mojo.getGwtVersion().startsWith("2.") ?
+                mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
+            mojo.getGwtVersion(), "jar", null)
+                :
+                mojo.getArtifactFactory().createArtifactWithClassifier("com.google.gwt", "gwt-dev",
             mojo.getGwtVersion(), "jar", ArtifactNameUtil.getPlatformName());
         Artifact oophm = null;
         if(mojo.isUseOophm() ){
