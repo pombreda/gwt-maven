@@ -201,7 +201,7 @@ public class ScriptWriterUnix implements ScriptWriter {
             writer.print(" -createMessages ");
             writer.print(" -out ");
             writer.print(mojo.getI18nOutputDir());
-            writer.print(" ");
+            writer.print(mojo.isI18nConstantsWithLookup() ? " -createConstantsWithLookup " : " ");
             writer.print(target);
             writer.println();
          }

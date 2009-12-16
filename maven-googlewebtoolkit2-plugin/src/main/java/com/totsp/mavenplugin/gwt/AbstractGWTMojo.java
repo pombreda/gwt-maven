@@ -387,7 +387,21 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
     * @parameter default-value="${project.build.directory}/gwtExtra"
     */
    private File extraDir;
+
+
+   /**
+    * Toggles HTMLUnit testing (GWT 2.0+)
+    * @parameter
+    */
+   private boolean useHtmlUnit;
+
+   /**
+    * Browser configs to use in HTML unit
+    * @parameter 
+    */
+   private String[] htmlUnitBrowsers;
    
+
    // ctor
 
 
@@ -878,5 +892,33 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      */
     public void setUseOophm(boolean useOophm) {
         this.useOophm = useOophm;
+    }
+
+    /**
+     * @return the useHtmlUnit
+     */
+    public boolean isUseHtmlUnit() {
+        return useHtmlUnit;
+    }
+
+    /**
+     * @param useHtmlUnit the useHtmlUnit to set
+     */
+    public void setUseHtmlUnit(boolean useHtmlUnit) {
+        this.useHtmlUnit = useHtmlUnit;
+    }
+
+    /**
+     * @return the htmlUnitBrowsers
+     */
+    public String[] getHtmlUnitBrowsers() {
+        return htmlUnitBrowsers;
+    }
+
+    /**
+     * @param htmlUnitBrowsers the htmlUnitBrowsers to set
+     */
+    public void setHtmlUnitBrowsers(String[] htmlUnitBrowsers) {
+        this.htmlUnitBrowsers = htmlUnitBrowsers;
     }
 }
