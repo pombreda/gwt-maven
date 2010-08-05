@@ -26,7 +26,13 @@ public final class ScriptWriterFactory {
     public static ScriptWriter getInstance(AbstractGWTMojo mojo) {
         ScriptWriter sw = null;
         if (AbstractGWTMojo.OS_NAME.startsWith(AbstractGWTMojo.WINDOWS)) {            
-            sw = new ScriptWriterWindows();
+            if(mojo.getGwtVersion().startsWith("2.") ){
+                sw = new ScriptWriterWindows20();
+            } else if( mojo.getGwtVersion().startsWith("1.6") ){
+                sw = new ScriptWriterWindows16();
+            } else {
+                sw = new ScriptWriterWindows();
+            }
             System.out.println("windows");
         } else {
             if(mojo.getGwtVersion().startsWith("2.") ){
