@@ -47,7 +47,7 @@ public class ScriptWriterWindows20 implements ScriptWriter16 {
 
         String extra = (mojo.getExtraJvmArgs() != null)
                 ? mojo.getExtraJvmArgs() : "";
-        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CP% ");
+        writer.print("\"" + mojo.getJavaCommand() + "\" " + extra + " -cp %CLASSPATH% ");
 
         if (mojo instanceof DebugMojo) {
             writer.print(" -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,address=");
@@ -353,10 +353,11 @@ public class ScriptWriterWindows20 implements ScriptWriter16 {
             final AbstractGWTMojo mojo, File file, final DependencyScope scope)
             throws MojoExecutionException {
         PrintWriter writer = null;
-
+        File cp = new File("target/cp");
+        cp.mkdirs();
         try {
             writer = new PrintWriter(new FileWriter(file));
-            writer.println("@echo off");
+            //writer.println("@echo off");
         } catch (IOException e) {
             throw new MojoExecutionException("Error creating script - " + file,
                     e);
@@ -367,12 +368,19 @@ public class ScriptWriterWindows20 implements ScriptWriter16 {
             Collection<File> classpath = BuildClasspathUtil.buildClasspathList(mojo,
                     scope);
             
-            writer.println("mkdir target\\cp");
-           
+            StringBuilder dirs = new StringBuilder();
+
             for(File f: classpath){
-                writer.println("copy "+f.getAbsolutePath()+" target\\cp\\");
+                if(!f.isDirectory()) {
+                    writer.println("copy "+f.getAbsolutePath()+" target\\cp\\");
+                } else {
+                    dirs = dirs.append(f.getAbsolutePath()).append(";");
+                }
             }
-            writer.println("set CLASSPATH=\"target\\cp\\*;src\\main\\java;src\\main\\resources\"");
+            if(scope == DependencyScope.TEST){
+                dirs = dirs.append("src\\test\\java;src\\test\\resources;");
+            }
+            writer.println("set CLASSPATH=\"src\\main\\java;src\\main\\resources\";"+dirs.toString()+"target\\classes;target\\cp\\*;");
 //
 //            writer.print("set CLASSPATH"+counter+"=");
 //
