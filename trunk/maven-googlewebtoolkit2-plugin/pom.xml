@@ -67,11 +67,16 @@
 		</license>
 	</licenses>
 	<distributionManagement>
-		<repository>
+		<!--repository>
 			<id>local.repo</id>
 			<name>file repository to svn</name>
 			<url>file://${basedir}/../mavenrepo</url>
-		</repository>
+		</repository-->
+                <repository>
+            <id>archiva.internal</id>
+            <name>Internal Release Repository</name>
+            <url>dav:http://cvs.reachcall.com/archiva/repository/internal/</url>
+        </repository>
 	</distributionManagement>        
 	<dependencies>
 		<dependency>
