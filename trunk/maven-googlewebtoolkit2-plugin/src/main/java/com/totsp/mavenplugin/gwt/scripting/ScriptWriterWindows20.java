@@ -56,6 +56,11 @@ public class ScriptWriterWindows20 implements ScriptWriter16 {
         }
 
         writer.print(" com.google.gwt.dev.DevMode");
+        if(mojo.getServer() != null){
+            writer.print( " -server ");
+            writer.print(mojo.getServer());
+            writer.print(" ");
+        }
         writer.print(" -logLevel ");
         writer.print(mojo.getLogLevel());
         if (mojo.isEnableAssertions()) {
