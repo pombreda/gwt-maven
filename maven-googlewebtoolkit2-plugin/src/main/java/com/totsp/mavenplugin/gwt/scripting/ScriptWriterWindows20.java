@@ -385,7 +385,12 @@ public class ScriptWriterWindows20 implements ScriptWriter16 {
             if(scope == DependencyScope.TEST){
                 dirs = dirs.append("src\\test\\java;src\\test\\resources;");
             }
-            writer.println("set CLASSPATH=\"src\\main\\java;src\\main\\resources\";"+dirs.toString()+"target\\classes;target\\cp\\*;");
+            writer.print("set CLASSPATH=\"src\\main\\java;src\\main\\resources\";"+dirs.toString()+"target\\classes;target\\cp\\*;");
+            for(File f: BuildClasspathUtil.getSystemPaths(mojo)){
+                writer.print(f.getAbsolutePath());
+                writer.print(";");
+            }
+            writer.println();
 //
 //            writer.print("set CLASSPATH"+counter+"=");
 //
