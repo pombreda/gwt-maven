@@ -283,6 +283,14 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @required
      */
     private String[] compileTarget;
+    
+    /**
+     * List of GWT module names that should be compiled with the GWT compiler.
+     *
+     * @parameter property="codeserverTargets"
+     * @required
+     */
+    private String[] codeserverTargets;
 
     /**
      * Top level (root) of classes to begin generation from.
@@ -442,6 +450,13 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
      * @parameter default-value="8888"
      */
     private int port;
+    
+    /**
+     * Runs the embedded GWT Code server on the specified port.
+     *
+     * @parameter default-value="9876"
+     */
+    private int codeserverPort;
 
     // ctor
 
@@ -485,6 +500,22 @@ public abstract class AbstractGWTMojo extends AbstractMojo {
 
     public String[] getCompileTarget() {
         return this.compileTarget;
+    }
+    
+    public String[] getCodeserverTargets(){
+        return this.codeserverTargets;
+    }
+    
+    public void setCodeserverTargets(String[] targets){
+        this.codeserverTargets = targets;
+    }
+    
+    public int getCodeserverPort(){
+        return this.codeserverPort;
+    }
+    
+    public void setCodeserverPort(int port){
+        this.codeserverPort = port;
     }
 
     public void setCompileTargets(String[] targets) {
