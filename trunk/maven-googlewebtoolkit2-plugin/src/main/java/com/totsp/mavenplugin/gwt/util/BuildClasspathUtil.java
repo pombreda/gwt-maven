@@ -38,6 +38,17 @@ import java.util.Set;
  */
 public class BuildClasspathUtil {
 
+
+    public static Set<File> getSystemPaths(final AbstractGWTMojo mojo){
+        MavenProject project = mojo.getProject();
+        Set<File> items = new LinkedHashSet<File>();
+        // add system
+        for (Artifact a : (Collection<Artifact>) project.getSystemArtifacts()) {
+            items.add(a.getFile());
+        }
+        return items;
+    }
+
     // TODO all over this class we have methods that manipulate input parameters, remove that
     // we should return values and/or let the object keep state, not manipulate params    
     
@@ -124,11 +135,6 @@ public class BuildClasspathUtil {
             if ("sources".equals(a.getClassifier())) {
                 items.add(a.getFile());
             }
-        }
-
-        // add system
-        for (Artifact a : (Collection<Artifact>) project.getSystemArtifacts()) {
-            items.add(a.getFile());
         }
 
         mojo.getLog().debug("SCRIPT INJECTION CLASSPATH LIST");
