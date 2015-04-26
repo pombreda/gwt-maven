@@ -1,0 +1,38 @@
+Bean generation is currently unsupported and unavailable (until we get a maintainer - volunteers welcome).
+
+# Introduction #
+
+Bean Generation can be a little tricky.  The purpose of this Wiki Page is to try to flesh out some of the details for Bean Generation.  This page will discuss the Bean Generation process, and the parameters.
+
+
+# Details #
+
+The Bean Generation process runs over a set of classes defined in the _generatorRootClasses_ property defined in the POM.  It will create the generated beans in the _generatorDestinationPackage_ package.  The generation process works by running through all the root classes, and loading them through the class loader.
+
+It then:
+  1. Checks to see if the bean has a parent class.  If it does, it generates a new bean from that class.
+  1. It then runs through all the properties, generates accessors methods, and generates type names via three different ways:
+    1. Intrinsic Types -- anything in the _java.lang_ package will be referred to by it's Simple Name (_String_ rather than _java.lang.String_).
+    1. Java Types not in _java.lang_ -- We go through the Class Name Resolution mechanism described below.
+    1. Custom Types -- Types that are neither of the above types are considered Custom Types.  They go through the Class Name Resolution mechanism.  In addition, we then run the Bean Generation process on the custom type.
+  1. We then generate the file for the generated bean, using the list of imported types gathered from the Class Name Resolution mechanism, and the accessor methods generated from the property iteration.
+
+# Class Name Resolution #
+
+When we are resolving what to call a Class, we:
+
+  1. Look to see if we are already referring to a class with the same Simple Name.
+    1. If not, then refer to this class as the simple name, and add the Simple Name/Fully Qualified Name mapping to an import map.
+    1. If so, then refer to the class as the Fully Qualified Name
+
+# Future Possiblities #
+
+There is currently some work looking to base the Bean Generation off XSLT, to make the process more customizable and to make make it easier to add Service Wrappers and Editable Forms.
+
+# Feature Requests / Changes #
+
+  1. Request to add a mapping between Source Packages and Destination Packages
+  1. Request to add prefix + suffixes to generated classes
+  1. Look at using ASM for collecting information on classes rather than inspection (this helps us get away from potential problems with static constructors).
+  1. Jalopy integration for getting the formatting correct on generated classes
+  1. An option to have the Bean Generation to occur on every build (so people don't need to check in generated code, and the beans track the dependencies better.)

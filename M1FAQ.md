@@ -1,0 +1,8 @@
+# Introduction #
+
+These are commonly encountered questions regarding the M1 version of GWT-Maven.
+
+
+# Details #
+
+See the M1 sample for an example, no specific questions between me and the guy in the van down by the river who BOTH use the M1 version ;).  If you have a question though, just ask on the group, if it's not obvious, we will post it here.

@@ -1,0 +1,94 @@
+# Introduction #
+
+In mr branch I'm trying to implement new plugin functionality. Branch is always in development. As for now it is strongly different from head, so I want to describe a few features which are not reachable in releases made on head.
+
+This wiki was written to document **2.0-mr-beta1** version of plugin. This version is not availible in gwt-maven trunk repository but in branch repository. So if you would like to use it then try changing plugin repository from:
+```
+    <pluginRepository>
+      <id>gwt-maven</id>
+      <url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/</url>
+    </pluginRepository>
+```
+to:
+```
+    <pluginRepository>
+      <id>gwt-maven-mr-branch</id>
+      <url>http://gwt-maven.googlecode.com/svn/branches/mr_2008_12_31_spring_plus/mavenrepo/</url>
+    </pluginRepository>
+```
+or simply add second pluginRepository to your `pom.xml`
+
+# New features #
+
+  1. ConstantsWithLookup generation
+  1. conditional GWT compilation
+  1. `maven.test.skip` parameter adoption
+  1. JVM for script execution is changeable
+  1. default platform is Unix
+  1. WEB-INF resources are copied to `target/tomcat/webapps/ROOT/WEB-INF`
+  1. `target/<project_name>-<project_version>` files are copied to `target/tomcat/webapps/ROOT/`
+
+# Changes Description #
+## ConstantsWithLookup generation ##
+i18n goal uses new parameter - `i18n!ConstantsWithLookupNames`. It works like `i18nConstantsNames` but generates ConstantWithLookup extensions.
+
+## conditional GWT compilation ##
+As for now it works by checking last modification dates for all files in source directories (no resource directories!). After compilation plugin saves youngest modification date as time marker. Next compilation will be fired only when some file from source directory will be touched.
+
+There is a way to restore previous behaviour. Parameter `forceCompile` set to `true` will make this happen. Default is false, so compilations will occur less common.
+
+## maven.test.skip parameter adoption ##
+`maven.test.skip` parameter will turn of gwt tests.
+
+## JVM for script execution is changeable ##
+New parameter - `javaHomeForScriptExecutions` may be used to change JVM for script execution. If this param stays undefined then JAVA\_HOME property or `java` command will be used (the same way as it was till now).
+
+`javaHomeForScriptExecutions` should point to such a directory that ${javaHomeForScriptExecutions}/bin/java is present.
+
+## default platform is Unix ##
+I think it is better choice.
+
+## WEB-INF resources are copied to `target/tomcat/webapps/ROOT/WEB-INF` ##
+I've had problems with starting GWT app that used spring.  applicationContext.xml is searched only in WEB-INF/ directory and AFAIK there is no way to change this because of servlet API. Embedded tomcat does not include resources/WEB-INF/ directories so I have to copy their content to `target/tomcat/webapps/ROOT/WEB-INF`.
+
+This is fired after compilation and before gwt:gwt or gwt:debug. If you do not use this goals then add `<goal>copy-webapp-resources</goal>` to gwt plugin executions like:
+```
+      <plugin>
+        <groupId>com.totsp.gwt</groupId>
+        <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
+        <version>2.0-mr-beta1</version>
+        <configuration>
+          [...]
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <!-- embedded Tomcat + Spring  => use copy-webapp-resources -->
+              <goal>copy-webapp-resources</goal>
+              <goal>mergewebxml</goal>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+```
+
+## `target/<project_name>-<project_version>` files are copied to `target/tomcat/webapps/ROOT/` ##
+I'm not sure why, but when using Spring my app generated warnings about serialization policy. Copying them to webapps/ROOT/ helped for me.
+
+This is made at the same moment as copying WEB-INF/ resources. Add `copy-webapp-resources` goal to your plugins executions to make it happen always.
+
+# Further work #
+  * Jetty container better integration - I still have problems with running war with my app on jetty. I'll try to make some research why.
+  * More automation
+    * `compileTargets`, `runTargets` and `generatorRootClasses` looks like they are strongly connected to each other. Maybe configuration could be simpler and plugin could guess some values.
+    * Messages, Constants and ConstantsWithLookup automatic search (by adding simple comment to this files like: "# @gwt:generateMessages").
+
+# Epilogue #
+
+It is very important for me to get some feedback from you. Please try to use this branch releases and write to me what you think about it. If you have concepts what would be useful in this plugin then tell me about it!
+
+
+Marek Romanowski
+3 january 2009

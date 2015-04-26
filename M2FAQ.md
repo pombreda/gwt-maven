@@ -1,0 +1,202 @@
+# Introduction #
+
+These are commonly encountered questions regarding the M2 version of GWT-Maven.
+
+# Details #
+
+**Q)  I seem to have a conflict with another plugin that has the same prefix "gwt". How do I use multiple repositories that have different plugins with the same prefixes?**
+
+If you get errors that indicate the plugin does not exist, such as: "The plugin
+'org.apache.maven.plugins:maven-gwt-plugin' does not exist or no valid
+version could be found", it may be because you have another repository enabled that has a different plugin with the gwt prefix.
+
+To work around this (if you need both repos), try using the fully qualified name for the GWT-Maven plugin:
+```
+mvn com.totsp.gwt:maven-googlewebtoolkit2-plugin:gwt
+```
+
+
+**Q) So what's the deal with the Codehaus Mojo GWT Plugin and this one (the Google Code one named GWT-Maven) merging - has it happened, is it happening, what?**
+
+The Codehaus Mojo GWT Plugin (http://mojo.codehaus.org/gwt-maven-plugin/) has merged our source code (GWT-Maven) into ITSELF. We have not merged any of their code here. They have also copied our documentation style, same sections, etc (goes beyond just the Maven defaults, they copied our docs and modified), so it's a bit confusing.
+
+At some point we will work on new issues via the Codehaus plugin because that is the "Maven way" for third party plugins, and we agree we should try to follow the standard path.
+
+The current status of this plugin is SUPPORTED, BUT NO NEW FEATURES WILL BE ADDED. The status of the "merge" at Codehaus is that the developers there (at Codehaus) did that, and we agreed to join that project and contribute there, when we get the chance to devote the time to get up to speed there. We have not yet had time to get familiar with that code base and sign off on it. We will validate that it all works as expected, same goals and features, and it's documented, has an archetype, has samples, etc - BEFORE we discontinue support here.
+
+For now, the GWT-Maven developers recommend you use GWT-Maven, because that is what we know and support - we can't vouch for the Codehaus GWT plugin in any way (we do plan to do that in the future, and support things there, etc, but we have not YET been able to get involved there). That recommendation though is no reflection on the quality of the Codehaus plugin, we simply don't know much about it, so we can't recommend it, it might be great, you might want to check it out, but we can't tell you whether or not it's good or bad. We can tell you that we know this plugin, and if you have a question in the GWT-Maven forum, we will respond.
+
+The issue tracker for the Codehaus GWT Maven plugin is here: http://jira.codehaus.org/browse/MGWT.  We will update things there as we get into that code base and note things there - that might be your best barometer as to how involved we (the GWT-Maven peeps) are at Codehaus at any given time.
+
+
+**Q) I'm getting classpath "too long" errors for lines on Windows, what can I do about this?**
+
+We have tried various approaches to address this problem, and honestly have never solved it here completely. There are complications with the different approaches - for details see [issue 88](https://code.google.com/p/gwt-maven/issues/detail?id=88) (http://code.google.com/p/gwt-maven/issues/detail?id=88).  We aren't working on this more here for several reasons, 1. we have never gotten a reliable Windows user/owner for testing and hashing out the issue, 2. the help we do get works on one version of Windows but not another, 3. the Codehaus Mojo GWT plugin claims to have solved this problem - we haven't verified - see FAQ item 2 - so it's not a priority for this codebase at this time (though it is a valid issue).
+
+There are a few workarounds, see [issue 88](https://code.google.com/p/gwt-maven/issues/detail?id=88), for example try something simple such as moving your Maven repo to a short path location, or making an alias for it. Rather than "c:\documents and settings\my fancy username\.m2\repository" place your m2 repo somewhere else - like C:\m2repo, and see if that helps.
+
+**Q)  I'm having problems compiling multi-module GWT applications.  How do I make it work?**
+
+When building client code, the GWT compiler, not only needs bytecode for dependent classes, but also needs access to the source code.  This means any GWT modules your module depends on will need to have the source code packaged in it.  The easiest way to do this is to use the `resources` section of your POM's `build` stanza.  e.g.
+
+```
+<build>
+   <!-- All your plugins are here -->
+
+   <resources>
+    <resource>
+      <directory>src/main/java</directory>
+    </resource>
+  </resources>
+</build>  
+```
+
+another way to do this is to use the antrun plugin
+
+```
+<build>
+  <plugins>
+  ...
+    <plugin>
+      <artifactId>maven-antrun-plugin</artifactId>
+      <executions>
+        <execution>
+          <phase>process-classes</phase>
+          <configuration>
+            <tasks>
+              <copy todir="${project.build.outputDirectory}">
+                <fileset dir="${project.build.sourceDirectory}">
+                  <include name="**/*.java" />
+                </fileset>
+              </copy>
+            </tasks>
+          </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  ...
+  </plugins>
+</build>
+
+```
+
+and yet another way is to use the maven-source-plugin
+
+
+```
+
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+```
+
+Depend on the sources this way:
+```
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>gotm-jar</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+...
+   <dependency>
+      <groupId>com.company</groupId>
+      <artifactId>myservice</artifactId>
+      <version>1.0</version>
+      <classifier>sources</classifier>
+   </dependency>
+
+```
+
+
+**Q)  I want to filter stuff out from the final WAR, like the .gwt-tmp files, how do I do that?**
+
+You can use the standard maven war plugin filtering mechanisms to do that.  It's ok if things you don't want end up in the target/webappLocation folder, just so long as they don't actually get put in the final artifact.
+
+```
+   <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-war-plugin</artifactId>
+     <configuration>
+       <webXml>target/web.xml</webXml>
+       <warSourceExcludes>.gwt-tmp/**</warSourceExcludes>		
+     </configuration>				
+</plugin>
+```
+
+
+**Q)  I have some dependency with JDT in it, and things are not working (for example Drools).  What do I do?**
+
+The GWT dev jar itself includes JDT stuff, so you have to exclude it from other deps that have it to avoid conflicts.  For example:
+
+```
+<dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-core</artifactId>
+      <version>4.0.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-compiler</artifactId>
+      <version>4.0.4</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+```
+
+
+**Q)  I need some special files to end up at a particular path in the embedded hosted mode Tomcat instance - for example persistence.xml, or applicationContext.xml. How do I get them there?**
+
+For now, GWT-Maven does not do this automatically, if you have a setup like this though, you can use the AntRun plugin to copy them across (in the future we may add a property for GWT-Maven to handle these automatically, for now, use AntRun).
+
+```
+<plugin>				
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>applicationContextCopy</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<copy
+									file="${basedir}/src/main/webapp/WEB-INF/applicationContext.xml"
+									toFile="${basedir}/target/tomcat/webapps/ROOT/WEB-INF/applicationContext.xml" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+```
+
+Also, you can put files in the resources directory, and that works sometimes, depending on how the component looking for the files tries to find them - for example, src/main/resources/WEB-INF/applicationContext.xml.  Be advised though, if you try that, and it works for hosted mode, you may also want to configure the WAR plugin to filter that OUT of the final WAR (those resources should go in src/main/webapp/WEB-INF for standard war usage also).
